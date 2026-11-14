@@ -1,0 +1,33 @@
+{
+  "raizProjeto": "..",
+  "pastaTimes": "data/times",
+  "arquivoPartida": "data/partida.json",
+  "arquivoResultado": "data/resultado.json",
+  "arquivoCampeonato": "data/campeonato.json",
+  "emuladores": {
+    "pcsx": {
+      "nome": "PCSX-Redux (com ponte)",
+      "comando": "run-pcsx.bat debug"
+    },
+    "duckstation": {
+      "nome": "DuckStation (visual HD)",
+      "comando": "run-duckstation.bat"
+    }
+  },
+  "emuladorPadrao": "pcsx",
+  "confirmarAutomatico": true,
+  "pontos": {
+    "vitoria": 3,
+    "empate": 1,
+    "derrota": 0
+  },
+  "idWe": {
+    "casa": 41,
+    "visitante": 8
+  },
+  "estados": {
+    "p1_cpu": "states/amistoso.sstate",
+    "cpu_p1": "states/base_cpu_p1.sstate",
+    "cpu_cpu": "states/base_cpu_cpu.sstate"
+  }
+}

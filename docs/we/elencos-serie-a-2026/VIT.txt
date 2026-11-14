@@ -1,0 +1,29 @@
+# VIT — elenco: ecvitoria.com.br/elenco/masculino (42 nomes; cortados Davi, Darlan, Andrei, Kauan, Edenilson, Fabiano Souza, Wanderson, Nathan Mendes, Dudu, Hiago, Alejandro Almaraz, Wendell, Lucas Silva, Anderson Pato); camisa do site; aparência pelas fotos do Sofascore; pé/altura/nascimento/nacionalidade: Sofascore
+Lucas Arcanjo|L. Arcanjo|GK||1|1998-08-08|BRA|d|190|2|F|i1|A|C|A|L. Arcanjo
+Cacá|Caca|CB||25|1999-04-25|BRA|d|185|4|F|i1|A|A|A|Caca
+Luan Cândido|L. Candido|CB|SB|36|2001-02-02|BRA|c|187|3|F|k1|A|B|A|L. Candido
+Jamerson|Jamerson|SB||83|1998-09-09|BRA|c|177|3|F|k1|A|B|A|Jamerson
+Mateus Silva|M. Silva|SB||98|1998-10-07|BRA|d|175|3|E|k1|A|B|A|M. Silva
+Caíque Gonçalves|Caique|DH||95|1995-10-10|BRA|d|178|3|F|k1|A|B|A|Caique
+Gabriel Baralhas|Baralhas|DH||44|1998-10-10|BRA|d|178|1|F|i1|A|B|A|Baralhas
+Emmanuel Martínez|Martinez|OH||6|1994-06-04|ARG|d|177|1|F|i1|A|C|A|Martinez
+Renê|Rene|CF||91|2003-10-07|BRA|d|183|2|F|i1|A|A|A|Rene
+Matheuzinho|Matheuzin|WG|OH|10|1997-10-17|BRA|c|165|3|E|i1|A|B|A|Matheuzin
+Erick|Erick|WG||33|1997-12-10|BRA|c|173|2|E|i1|A|A|A|Erick
+Alexandre Fintelman|Fintelman|GK||35|2001-07-20|BRA|d|194|1|G|i1|A|B|A||-0.6|
+Yuri Sena|Yuri Sena|GK||71|2001-01-03|BRA|d|190|4|F|k1|A|A|A||-1.0|
+Camutanga|Camutanga|CB||4|1993-09-27|BRA|d|189|2|G|i1|A|A|A||0.0|cab
+Riccieli|Riccieli|CB||5|1998-09-17|BRA|d|184|2|F|i1|A|C|A||-0.2|
+Edu|Edu|CB||43|2000-06-16|BRA|d|188|3|G|i1|A|B|A||-0.4|
+Ramon|Ramon|SB||13|2001-03-12|BRA|c|176|4|F|k1|A|C|A|Ramon
+Emanuel Brítez|Britez|SB||2|1992-03-26|ARG|d|178|1|F|i1|A|C|A||0.0|vet
+Tomás Pochettino|Pochettino|DH|OH|8|1996-02-01|ARG|d|178|1|F|i1|B|A|A||0.2|cri
+Walace|Walace|DH||15|1995-04-04|BRA|d|188|4|G|k1|A|A|A|CRU:Walace
+Zé Vitor|Ze Vitor|DH||88|2000-05-02|BRA|d|194|2|G|i1|A|A|A||-0.3|
+Rúben Ismael|Ismael|OH|DH|16|1999-03-25|POR|d|184|1|F|i1|A|C|A||-0.3|
+Diego Tarzia|Tarzia|WG||12|2003-04-26|ARG|c|174|1|E|i1|B|A|A|Tarzia
+Marinho|Marinho|WG||7|1990-05-29|BRA|c|169|4|F|i1|A|C|A||0.3|vet dri
+Osvaldo|Osvaldo|WG||11|1987-04-11|BRA|d|170|2|E|i1|A|A|A||0.0|vet vel
+Renato Kayzer|R. Kayzer|CF||79|1996-02-17|BRA|d|178|1|F|i1|A|A|A|R. Kayzer
+Fabrício Santos|Fabri|CF||23|2000-10-08|BRA|d|186|2|G|i1|A|B|A||-0.3|
+Alex Bruno|Alex Bruno|CF||9|1999-01-07|BRA|c|190|2|G|i1|A|A|A||-0.4|cab

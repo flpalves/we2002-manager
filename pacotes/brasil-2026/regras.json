@@ -1,0 +1,16 @@
+{
+  "mercado": {
+    "janelas": [
+      {
+        "semana_inicio": 1,
+        "semana_fim": 18,
+        "nome": "Início da temporada"
+      },
+      {
+        "semana_inicio": 27,
+        "semana_fim": 32,
+        "nome": "Meio do Brasileirão"
+      }
+    ]
+  }
+}

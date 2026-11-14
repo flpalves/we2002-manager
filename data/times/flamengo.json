@@ -1,0 +1,919 @@
+{
+  "nome": "Flamengo",
+  "nome_tela": "FLAMENGO",
+  "sigla": "FLA",
+  "bandeira": "bandeiras/flamengo_teste.png",
+  "bandeira_ajuste": "esticar",
+  "formacao": "4-3-3B",
+  "observacao": "Elenco real da Série A 2026 (titulares = escalação da 34ª rodada, nov/2026). Vaga 0 = goleiro; 1-10 = titulares na ordem da formação; 11-21 = reservas; a vaga 22 fica com o jogador original. Atributos estimados (12-19). 'camisa_real' guarda o número verdadeiro quando passa de 32.",
+  "kit": {
+    "arte": "kits/desenhos/flamengo_4x.png",
+    "cor_numero": "#F2F2F2",
+    "design": {
+      "camisa": "#C8102E",
+      "detalhe": "#141414",
+      "calcao": "#F2F2F2",
+      "meiao": "#C8102E",
+      "faixas": [
+        {
+          "cor": "#141414",
+          "regiao": "frente",
+          "linhas": [
+            2,
+            6
+          ]
+        },
+        {
+          "cor": "#141414",
+          "regiao": "frente",
+          "linhas": [
+            10,
+            14
+          ]
+        },
+        {
+          "cor": "#141414",
+          "regiao": "frente",
+          "linhas": [
+            18,
+            22
+          ]
+        },
+        {
+          "cor": "#141414",
+          "regiao": "frente",
+          "linhas": [
+            26,
+            30
+          ]
+        },
+        {
+          "cor": "#141414",
+          "regiao": "costas",
+          "linhas": [
+            1,
+            4
+          ]
+        },
+        {
+          "cor": "#141414",
+          "regiao": "costas",
+          "linhas": [
+            8,
+            11
+          ]
+        },
+        {
+          "cor": "#141414",
+          "regiao": "costas",
+          "linhas": [
+            15,
+            18
+          ]
+        },
+        {
+          "cor": "#141414",
+          "regiao": "costas",
+          "linhas": [
+            21,
+            24
+          ]
+        },
+        {
+          "cor": "#141414",
+          "regiao": "mangas",
+          "linhas": [
+            4,
+            8
+          ]
+        }
+      ]
+    }
+  },
+  "jogadores": [
+    {
+      "vaga": 0,
+      "nome": "Rossi",
+      "posicao": "GK",
+      "camisa": 1,
+      "altura": 186,
+      "idade": 31,
+      "pe": "destro",
+      "outside": true,
+      "aparencia": {
+        "pele": 2,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "atributos": {
+        "OFF": 12,
+        "DEF": 17,
+        "BAL": 17,
+        "STA": 13,
+        "SPD": 14,
+        "ACC": 14,
+        "RES": 19,
+        "JMP": 17,
+        "HEAD": 12,
+        "TEC": 12,
+        "PASS": 12,
+        "SHPW": 16,
+        "SHAC": 12,
+        "DRI": 12,
+        "CRV": 12,
+        "AGR": 12
+      }
+    },
+    {
+      "vaga": 1,
+      "nome": "Leo Ortiz",
+      "posicao": "CB",
+      "camisa": 3,
+      "altura": 183,
+      "idade": 30,
+      "pe": "destro",
+      "outside": true,
+      "aparencia": {
+        "pele": 3,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "atributos": {
+        "OFF": 12,
+        "DEF": 19,
+        "BAL": 18,
+        "STA": 16,
+        "SPD": 15,
+        "ACC": 15,
+        "RES": 16,
+        "JMP": 17,
+        "HEAD": 18,
+        "TEC": 14,
+        "PASS": 14,
+        "SHPW": 15,
+        "SHAC": 12,
+        "DRI": 13,
+        "CRV": 12,
+        "AGR": 13
+      }
+    },
+    {
+      "vaga": 2,
+      "nome": "L. Pereira",
+      "posicao": "CB",
+      "camisa": 4,
+      "altura": 188,
+      "idade": 30,
+      "pe": "canhoto",
+      "outside": true,
+      "aparencia": {
+        "pele": 2,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "atributos": {
+        "OFF": 13,
+        "DEF": 19,
+        "BAL": 18,
+        "STA": 17,
+        "SPD": 15,
+        "ACC": 15,
+        "RES": 16,
+        "JMP": 19,
+        "HEAD": 19,
+        "TEC": 14,
+        "PASS": 14,
+        "SHPW": 16,
+        "SHAC": 12,
+        "DRI": 13,
+        "CRV": 12,
+        "AGR": 13
+      }
+    },
+    {
+      "vaga": 3,
+      "nome": "A. Sandro",
+      "posicao": "LB",
+      "camisa": 26,
+      "altura": 180,
+      "idade": 35,
+      "pe": "canhoto",
+      "outside": true,
+      "aparencia": {
+        "pele": 3,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "atributos": {
+        "OFF": 15,
+        "DEF": 16,
+        "BAL": 15,
+        "STA": 17,
+        "SPD": 17,
+        "ACC": 16,
+        "RES": 16,
+        "JMP": 15,
+        "HEAD": 13,
+        "TEC": 16,
+        "PASS": 17,
+        "SHPW": 15,
+        "SHAC": 13,
+        "DRI": 15,
+        "CRV": 17,
+        "AGR": 14
+      }
+    },
+    {
+      "vaga": 4,
+      "nome": "Varela",
+      "posicao": "RB",
+      "camisa": 2,
+      "altura": 173,
+      "idade": 33,
+      "pe": "destro",
+      "outside": true,
+      "aparencia": {
+        "pele": 2,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "atributos": {
+        "OFF": 16,
+        "DEF": 16,
+        "BAL": 15,
+        "STA": 17,
+        "SPD": 17,
+        "ACC": 17,
+        "RES": 16,
+        "JMP": 15,
+        "HEAD": 14,
+        "TEC": 15,
+        "PASS": 15,
+        "SHPW": 14,
+        "SHAC": 13,
+        "DRI": 16,
+        "CRV": 16,
+        "AGR": 14
+      }
+    },
+    {
+      "vaga": 5,
+      "nome": "Pulgar",
+      "posicao": "DH",
+      "camisa": 5,
+      "altura": 187,
+      "idade": 32,
+      "pe": "destro",
+      "outside": true,
+      "aparencia": {
+        "pele": 2,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "atributos": {
+        "OFF": 14,
+        "DEF": 19,
+        "BAL": 16,
+        "STA": 19,
+        "SPD": 15,
+        "ACC": 15,
+        "RES": 17,
+        "JMP": 16,
+        "HEAD": 16,
+        "TEC": 16,
+        "PASS": 17,
+        "SHPW": 16,
+        "SHAC": 14,
+        "DRI": 15,
+        "CRV": 15,
+        "AGR": 14
+      }
+    },
+    {
+      "vaga": 6,
+      "nome": "Jorginho",
+      "posicao": "DH",
+      "camisa": 21,
+      "altura": 180,
+      "idade": 34,
+      "pe": "destro",
+      "outside": true,
+      "aparencia": {
+        "pele": 1,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "B",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "atributos": {
+        "OFF": 14,
+        "DEF": 18,
+        "BAL": 17,
+        "STA": 18,
+        "SPD": 14,
+        "ACC": 14,
+        "RES": 17,
+        "JMP": 16,
+        "HEAD": 16,
+        "TEC": 17,
+        "PASS": 18,
+        "SHPW": 17,
+        "SHAC": 15,
+        "DRI": 15,
+        "CRV": 16,
+        "AGR": 14
+      }
+    },
+    {
+      "vaga": 7,
+      "nome": "Arrascaeta",
+      "posicao": "OH",
+      "camisa": 10,
+      "altura": 174,
+      "idade": 32,
+      "pe": "canhoto",
+      "outside": true,
+      "aparencia": {
+        "pele": 1,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "B",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "atributos": {
+        "OFF": 19,
+        "DEF": 15,
+        "BAL": 16,
+        "STA": 18,
+        "SPD": 17,
+        "ACC": 18,
+        "RES": 18,
+        "JMP": 15,
+        "HEAD": 15,
+        "TEC": 19,
+        "PASS": 19,
+        "SHPW": 18,
+        "SHAC": 18,
+        "DRI": 19,
+        "CRV": 19,
+        "AGR": 18
+      }
+    },
+    {
+      "vaga": 8,
+      "nome": "Pedro",
+      "posicao": "CF",
+      "camisa": 9,
+      "altura": 185,
+      "idade": 29,
+      "pe": "destro",
+      "outside": true,
+      "aparencia": {
+        "pele": 2,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "atributos": {
+        "OFF": 19,
+        "DEF": 13,
+        "BAL": 17,
+        "STA": 16,
+        "SPD": 17,
+        "ACC": 18,
+        "RES": 18,
+        "JMP": 18,
+        "HEAD": 19,
+        "TEC": 18,
+        "PASS": 15,
+        "SHPW": 19,
+        "SHAC": 19,
+        "DRI": 17,
+        "CRV": 15,
+        "AGR": 19
+      }
+    },
+    {
+      "vaga": 9,
+      "nome": "S. Lino",
+      "posicao": "LW",
+      "camisa": 16,
+      "altura": 175,
+      "idade": 26,
+      "pe": "destro",
+      "outside": true,
+      "aparencia": {
+        "pele": 3,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "atributos": {
+        "OFF": 19,
+        "DEF": 13,
+        "BAL": 15,
+        "STA": 17,
+        "SPD": 19,
+        "ACC": 19,
+        "RES": 17,
+        "JMP": 14,
+        "HEAD": 13,
+        "TEC": 18,
+        "PASS": 16,
+        "SHPW": 16,
+        "SHAC": 17,
+        "DRI": 19,
+        "CRV": 18,
+        "AGR": 19
+      }
+    },
+    {
+      "vaga": 10,
+      "nome": "Carrascal",
+      "posicao": "RW",
+      "camisa": 15,
+      "altura": 182,
+      "idade": 27,
+      "pe": "canhoto",
+      "outside": true,
+      "aparencia": {
+        "pele": 3,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "atributos": {
+        "OFF": 19,
+        "DEF": 13,
+        "BAL": 15,
+        "STA": 17,
+        "SPD": 19,
+        "ACC": 19,
+        "RES": 17,
+        "JMP": 14,
+        "HEAD": 13,
+        "TEC": 18,
+        "PASS": 16,
+        "SHPW": 16,
+        "SHAC": 17,
+        "DRI": 19,
+        "CRV": 18,
+        "AGR": 19
+      }
+    },
+    {
+      "vaga": 11,
+      "nome": "M. Cunha",
+      "posicao": "GK",
+      "camisa": 25,
+      "altura": 190,
+      "idade": 25,
+      "pe": "destro",
+      "outside": true,
+      "aparencia": {
+        "pele": 2,
+        "fisico": "G",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "atributos": {
+        "OFF": 12,
+        "DEF": 16,
+        "BAL": 16,
+        "STA": 12,
+        "SPD": 13,
+        "ACC": 13,
+        "RES": 18,
+        "JMP": 16,
+        "HEAD": 12,
+        "TEC": 12,
+        "PASS": 12,
+        "SHPW": 15,
+        "SHAC": 12,
+        "DRI": 12,
+        "CRV": 12,
+        "AGR": 12
+      }
+    },
+    {
+      "vaga": 12,
+      "nome": "Danilo",
+      "posicao": "CB",
+      "camisa": 13,
+      "altura": 184,
+      "idade": 35,
+      "pe": "destro",
+      "outside": true,
+      "aparencia": {
+        "pele": 3,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "atributos": {
+        "OFF": 12,
+        "DEF": 19,
+        "BAL": 18,
+        "STA": 15,
+        "SPD": 14,
+        "ACC": 13,
+        "RES": 16,
+        "JMP": 16,
+        "HEAD": 17,
+        "TEC": 14,
+        "PASS": 13,
+        "SHPW": 15,
+        "SHAC": 12,
+        "DRI": 13,
+        "CRV": 12,
+        "AGR": 12
+      }
+    },
+    {
+      "vaga": 13,
+      "nome": "A. Lucas",
+      "posicao": "LB",
+      "camisa": 6,
+      "altura": 176,
+      "idade": 29,
+      "pe": "canhoto",
+      "outside": true,
+      "aparencia": {
+        "pele": 3,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "atributos": {
+        "OFF": 15,
+        "DEF": 15,
+        "BAL": 14,
+        "STA": 18,
+        "SPD": 19,
+        "ACC": 18,
+        "RES": 15,
+        "JMP": 14,
+        "HEAD": 13,
+        "TEC": 14,
+        "PASS": 15,
+        "SHPW": 14,
+        "SHAC": 12,
+        "DRI": 15,
+        "CRV": 16,
+        "AGR": 13
+      }
+    },
+    {
+      "vaga": 14,
+      "nome": "E. Royal",
+      "posicao": "RB",
+      "camisa": 22,
+      "altura": 183,
+      "idade": 27,
+      "pe": "destro",
+      "outside": true,
+      "aparencia": {
+        "pele": 3,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "atributos": {
+        "OFF": 15,
+        "DEF": 16,
+        "BAL": 14,
+        "STA": 18,
+        "SPD": 18,
+        "ACC": 17,
+        "RES": 15,
+        "JMP": 14,
+        "HEAD": 13,
+        "TEC": 14,
+        "PASS": 15,
+        "SHPW": 14,
+        "SHAC": 12,
+        "DRI": 15,
+        "CRV": 15,
+        "AGR": 13
+      }
+    },
+    {
+      "vaga": 15,
+      "nome": "Saul",
+      "posicao": "DH",
+      "camisa": 8,
+      "altura": 182,
+      "idade": 31,
+      "pe": "canhoto",
+      "outside": true,
+      "aparencia": {
+        "pele": 1,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "B",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "atributos": {
+        "OFF": 13,
+        "DEF": 18,
+        "BAL": 16,
+        "STA": 19,
+        "SPD": 14,
+        "ACC": 14,
+        "RES": 16,
+        "JMP": 15,
+        "HEAD": 15,
+        "TEC": 16,
+        "PASS": 18,
+        "SHPW": 16,
+        "SHAC": 14,
+        "DRI": 14,
+        "CRV": 15,
+        "AGR": 14
+      }
+    },
+    {
+      "vaga": 16,
+      "nome": "E. Araujo",
+      "posicao": "DH",
+      "camisa": 30,
+      "altura": 178,
+      "idade": 23,
+      "pe": "destro",
+      "outside": true,
+      "aparencia": {
+        "pele": 3,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "atributos": {
+        "OFF": 13,
+        "DEF": 17,
+        "BAL": 15,
+        "STA": 18,
+        "SPD": 14,
+        "ACC": 14,
+        "RES": 15,
+        "JMP": 15,
+        "HEAD": 15,
+        "TEC": 15,
+        "PASS": 16,
+        "SHPW": 15,
+        "SHAC": 13,
+        "DRI": 14,
+        "CRV": 14,
+        "AGR": 13
+      }
+    },
+    {
+      "vaga": 17,
+      "nome": "Paqueta",
+      "posicao": "OH",
+      "camisa": 20,
+      "altura": 180,
+      "idade": 29,
+      "pe": "destro",
+      "outside": true,
+      "aparencia": {
+        "pele": 2,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "atributos": {
+        "OFF": 17,
+        "DEF": 14,
+        "BAL": 15,
+        "STA": 17,
+        "SPD": 16,
+        "ACC": 17,
+        "RES": 17,
+        "JMP": 14,
+        "HEAD": 14,
+        "TEC": 19,
+        "PASS": 19,
+        "SHPW": 17,
+        "SHAC": 17,
+        "DRI": 19,
+        "CRV": 19,
+        "AGR": 17
+      }
+    },
+    {
+      "vaga": 18,
+      "nome": "Plata",
+      "posicao": "RW",
+      "camisa": 19,
+      "altura": 178,
+      "idade": 26,
+      "pe": "canhoto",
+      "outside": true,
+      "aparencia": {
+        "pele": 4,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "atributos": {
+        "OFF": 18,
+        "DEF": 12,
+        "BAL": 13,
+        "STA": 16,
+        "SPD": 19,
+        "ACC": 19,
+        "RES": 16,
+        "JMP": 13,
+        "HEAD": 12,
+        "TEC": 17,
+        "PASS": 15,
+        "SHPW": 15,
+        "SHAC": 16,
+        "DRI": 19,
+        "CRV": 17,
+        "AGR": 17
+      }
+    },
+    {
+      "vaga": 19,
+      "nome": "L. Araujo",
+      "posicao": "RW",
+      "camisa": 7,
+      "altura": 175,
+      "idade": 30,
+      "pe": "canhoto",
+      "outside": true,
+      "aparencia": {
+        "pele": 2,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "atributos": {
+        "OFF": 17,
+        "DEF": 12,
+        "BAL": 13,
+        "STA": 16,
+        "SPD": 19,
+        "ACC": 19,
+        "RES": 15,
+        "JMP": 13,
+        "HEAD": 12,
+        "TEC": 17,
+        "PASS": 15,
+        "SHPW": 15,
+        "SHAC": 16,
+        "DRI": 18,
+        "CRV": 16,
+        "AGR": 17
+      }
+    },
+    {
+      "vaga": 20,
+      "nome": "B.Henrique",
+      "posicao": "CF",
+      "camisa": 27,
+      "altura": 184,
+      "idade": 35,
+      "pe": "destro",
+      "outside": true,
+      "aparencia": {
+        "pele": 3,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "atributos": {
+        "OFF": 19,
+        "DEF": 12,
+        "BAL": 16,
+        "STA": 12,
+        "SPD": 17,
+        "ACC": 16,
+        "RES": 17,
+        "JMP": 16,
+        "HEAD": 17,
+        "TEC": 16,
+        "PASS": 14,
+        "SHPW": 18,
+        "SHAC": 18,
+        "DRI": 16,
+        "CRV": 13,
+        "AGR": 18
+      }
+    },
+    {
+      "vaga": 21,
+      "nome": "Juninho",
+      "posicao": "CF",
+      "camisa": 23,
+      "altura": 178,
+      "idade": 29,
+      "pe": "destro",
+      "outside": true,
+      "aparencia": {
+        "pele": 3,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "atributos": {
+        "OFF": 19,
+        "DEF": 12,
+        "BAL": 15,
+        "STA": 14,
+        "SPD": 15,
+        "ACC": 16,
+        "RES": 16,
+        "JMP": 16,
+        "HEAD": 16,
+        "TEC": 15,
+        "PASS": 13,
+        "SHPW": 17,
+        "SHAC": 19,
+        "DRI": 16,
+        "CRV": 13,
+        "AGR": 18
+      }
+    }
+  ],
+  "kit_reserva": {
+    "arte": "kits/desenhos/flamengo_reserva_4x.png",
+    "cor_numero": "#C8102E",
+    "design": {
+      "camisa": "#F2F2F2",
+      "detalhe": "#C8102E",
+      "calcao": "#F2F2F2",
+      "meiao": "#F2F2F2"
+    }
+  }
+}

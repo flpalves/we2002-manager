@@ -1,0 +1,98 @@
+{
+  "versao": 2,
+  "observacao": "Modelo do data/partida.json usado pelo manager (fase 5). Os kits são das vagas fixas do estado base (casa = Brasil, visitante = Holanda). O manager troca partida_id, modo, controle, casa, visitante e grava data/partida.json.",
+  "partida_id": null,
+  "tipo": "carreira",
+  "modo": "pontos_corridos",
+  "controle": "p1_cpu",
+  "casa": null,
+  "visitante": null,
+  "estadio": null,
+  "edicoes": [],
+  "inicio_automatico": {
+    "ativo": true,
+    "botoes": [
+      "CIRCLE"
+    ],
+    "espera_inicial_frames": 30,
+    "intervalo_frames": 45
+  },
+  "kits": {
+    "casa": {
+      "pagina": "kits/brasil_pagina.bin",
+      "paleta": "kits/brasil_paleta.json",
+      "paleta_hash": "1BFCF65E8602C2B8",
+      "numeros_originais": [
+        5,
+        3,
+        4,
+        7,
+        16,
+        6,
+        2,
+        10,
+        11,
+        9
+      ],
+      "verificacao": [
+        [
+          100,
+          213,
+          "36B8884BF3418FCE"
+        ]
+      ],
+      "ps1": {
+        "ativo": true,
+        "paleta_vram": "kits/brasil_paleta_vram.bin",
+        "pagina_vram": [
+          576,
+          256
+        ],
+        "linhas_paleta": [
+          486,
+          490
+        ]
+      }
+    },
+    "visitante": {
+      "pagina": "kits/holanda_pagina.bin",
+      "paleta": "kits/holanda_paleta.json",
+      "paleta_hash": "C7107C20E7CBEB89",
+      "numeros_originais": [
+        3,
+        4,
+        5,
+        2,
+        6,
+        8,
+        10,
+        9,
+        7,
+        11
+      ],
+      "verificacao": [
+        [
+          100,
+          213,
+          "FB51BCCDD47CF405"
+        ]
+      ],
+      "ps1": {
+        "ativo": true,
+        "paleta_vram": "kits/holanda_paleta_vram.bin",
+        "pagina_vram": [
+          640,
+          256
+        ],
+        "linhas_paleta": [
+          487,
+          491
+        ]
+      }
+    }
+  },
+  "fechar_ao_final": {
+    "ativo": true,
+    "espera_segundos": 10
+  }
+}

@@ -1,0 +1,26 @@
+# PAL — elenco: palmeiras.com.br/elenco (13/11/2026); nome completo, nascimento, altura e naturalidade do site; pé e nacionalidade: Sofascore
+Carlos Miguel|C. Miguel|GK||1|1998-10-09|BRA|c|204|4|G|k1|A|C|A|C. Miguel
+Bruno Fuchs|B. Fuchs|CB||3|1999-04-01|BRA|d|190|1|F|i1|H|B|C|B. Fuchs
+Gustavo Gómez|G. Gomez|CB||15|1993-05-06|PAR|d|185|2|G|i1|A|C|A|G. Gomez
+Alexander Barboza|Barboza|CB||2|1995-03-16|ARG|c|193|2|F|i1|A|C|A|Barboza
+Marlon Freitas|M. Freitas|DH||17|1995-03-27|BRA|d|185|4|F|k1|A|B|A|M. Freitas
+Andreas Pereira|Andreas|DH|OH|8|1996-01-01|BRA|d|178|1|F|i1|A|B|A|Andreas
+Arthur Gabriel|Arthur|SH|SB|56|2005-09-04|BRA|c|176|2|E|i1|A|B|A|Arthur
+Khellven|Khellven|SH|SB|12|2001-02-25|BRA|d|177|2|E|i1|A|B|A|Khellven
+Jhon Arias|Arias|OH|WG|11|1997-09-21|COL|d|170|4|F|k1|A|A|A|Arias
+Vitor Roque|V. Roque|CF||9|2005-02-28|BRA|d|172|3|F|i1|H|A|A|V. Roque
+Mauricio|Mauricio|CF|OH|18|2001-06-22|PAR|c|175|1|E|i1|B|B|B|Mauricio
+Marcelo Lomba|M. Lomba|GK||14|1986-12-18|BRA|d|189|1|F|m1|B|C|B|M. Lomba
+Bruno Bertinato|Bertinato|GK||21|1998-05-30|BRA|c|195|1|F|i1|B|C|B||-0.8|
+Murilo|Murilo|CB||26|1997-03-27|BRA|d|188|3|F|i1|A|C|A|Murilo
+Benedetti|Benedetti|CB||43|2006-06-07|BRA|c|198|1|G|i1|B|A|A||-0.8|cab
+Joaquín Piquerez|Piquerez|SB|SH|22|1998-08-24|URU|c|183|1|F|i1|B|C|B|Piquerez
+Agustín Giay|Giay|SB|SH|4|2004-01-16|ARG|d|180|1|E|i1|B|A|A|Giay
+Jefté|Jefte|SB|SH|6|2003-12-21|BRA|c|183|3|F|i1|A|C|A||0.0|vel
+Emiliano Martínez|E. Martinez|DH||32|1999-08-17|URU|d|185|1|F|i1|B|B|B||0.4|mar
+Lucas Evangelista|L.Evangel.|DH|OH|30|1995-05-06|BRA|c|183|3|F|i1|A|C|A|L.Evangel.
+Larson|Larson|DH||48|2005-07-10|BRA|d|183|1|E|i1|B|A|A||-1.0|
+Felipe Anderson|F. Anderson|WG|OH|7|1993-04-15|BRA|d|175|3|F|i1|A|C|A|F.Anderson
+Ramón Sosa|Ramon Sosa|WG|SH|19|1999-08-31|PAR|d|178|2|E|i1|A|A|A|Ramon Sosa
+Paulinho|Paulinho|WG|CF|10|2000-07-15|BRA|d|177|2|F|i1|A|C|A||0.6|dri
+José Manuel López|Flaco|CF||42|2000-12-06|ARG|c|190|2|G|i1|A|C|A|Flaco

@@ -1,0 +1,29 @@
+# REM — elenco: clubedoremo.com.br/elenco (30 nomes; cortados os goleiros Alexandre e João Victor); camisa do site; aparência pelas fotos do Sofascore (Tico sem foto); pé/altura/nascimento/nacionalidade: Sofascore
+Marcelo Rangel|M. Rangel|GK||88|1988-05-17|BRA|d|186|1|F|i1|A|C|A|M. Rangel
+Marllon|Marllon|CB||13|1992-04-16|BRA|d|184|4|F|k1|A|A|A|Marllon
+Zé Ivaldo|Ze Ivaldo|CB||29|1997-02-21|BRA|d|185|2|F|k1|A|B|A|Ze Ivaldo
+Marlon|Marlon|SB||6|1994-02-13|BRA|c|177|1|E|i1|A|A|A|Marlon
+Marcelinho|Marcelinho|SB||79|1998-07-20|BRA|d|169|2|E|i1|A|C|A|Marcelinho
+Zé Welison|Z.Welisson|DH||28|1995-03-11|BRA|d|177|2|F|k1|A|C|A|Z.Welisson
+Leonel Picco|Picco|DH||15|1998-10-22|ARG|d|188|1|G|i1|A|B|A|Picco
+Patrick|Patrick|OH|DH|8|1992-07-29|BRA|c|176|4|F|k1|A|C|A|Patrick
+Gabriel Taliari|Taliari|CF||19|1997-04-12|BRA|d|176|1|F|i1|A|C|A|Taliari
+Jajá|Jaja|WG||7|1998-11-12|BRA|d|175|4|E|k1|A|A|A|Jaja
+David Braga|D. Braga|WG|OH|26|2001-12-11|BRA|c|186|4|G|i1|A|A|A|D. Braga
+Ivan|Ivan|GK||97|1997-02-07|BRA|d|195|2|G|i1|A|C|A||-0.5|
+Ygor Vinhas|Y. Vinhas|GK||94|1994-04-15|BRA|d|192|2|F|i1|A|C|A||-0.8|
+Duplexe Tchamba|Tchamba|CB||18|1998-07-10|CMR|c|191|4|G|k1|A|A|A||0.0|cab
+Léo Andrade|L. Andrade|CB||5|1998-04-03|POR|c|180|1|F|i1|B|A|A||-0.2|
+Matheus Felipe|M. Felipe|CB||4|1998-11-09|BRA|d|186|4|G|k1|A|A|A||-0.3|
+João Lucas|Joao Lucas|SB||2|1998-03-09|BRA|d|181|3|F|i1|A|A|A||-0.2|
+Matheus Alexandre|M. Alexand|SB||2|1999-04-07|BRA|d|188|4|F|i1|A|A|A||-0.4|
+Mayk|Mayk|SB||77|1999-08-31|BRA|c|172|1|F|i1|A|B|A||-0.2|
+Edson Fernando|Edson|DH||35|1998-04-24|BRA|d|178|2|F|i1|A|C|A||-0.4|
+Zé Ricardo|Ze Ricardo|DH||55|1999-02-03|BRA|d|180|3|F|i1|A|B|A||-0.2|
+Jáderson|Jaderson|OH|DH|10|2000-08-12|BRA|c|170|4|F|i1|A|A|A||0.0|cri
+Vitor Bueno|V. Bueno|OH||15|1994-09-05|BRA|d|183|1|F|i1|A|B|A||0.2|cri
+Antonio Galeano|Galeano|WG||21|2000-03-22|PAR|d|169|2|E|i1|A|B|A||0.0|dri
+Yago Pikachu|Pikachu|WG|SB|22|1992-06-05|BRA|d|170|3|E|i1|A|B|A||0.2|vet
+Gabriel Poveda|Poveda|CF||9|1998-07-07|BRA|d|183|1|F|i1|B|B|B||0.0|cab
+Eduardo Melo|E. Melo|CF||39|2001-05-13|BRA|d|186|4|G|o1|A|A|A||-0.3|
+Tico|Tico|WG||61|2006-09-18|BRA|c|170|3|E|i1|A|A|A||-1.0|

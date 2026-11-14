@@ -1,0 +1,267 @@
+/* Layout do app. Os componentes visuais vêm do bundle.css (design system). */
+
+html,
+body,
+#app {
+  height: 100%;
+}
+
+body {
+  overflow: hidden;
+  min-width: 1280px;
+  min-height: 720px;
+}
+
+*:focus-visible {
+  outline: 2px solid var(--foco);
+  outline-offset: 2px;
+}
+
+.app {
+  display: grid;
+  grid-template-rows: 1fr auto;
+  height: 100%;
+}
+
+.app__cheia {
+  min-height: 0;
+  overflow: auto;
+  background:
+    linear-gradient(180deg, transparent 0, var(--fundo) 70%),
+    repeating-linear-gradient(90deg, var(--gramado) 0 80px, var(--gramado-escuro) 80px 160px);
+}
+
+.app__fundo {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  min-height: 0;
+}
+
+.app__meio {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  min-height: 0;
+}
+
+.app__conteudo {
+  overflow: auto;
+  padding: var(--gap-painel);
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-painel);
+  min-width: 0;
+}
+
+/* Os blocos da tela não encolhem: a área de conteúdo rola. */
+.app__conteudo > * {
+  flex-shrink: 0;
+}
+
+.titulo-tela {
+  font-family: var(--font-display);
+  font-size: 20px;
+  line-height: 24px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--texto-forte);
+  margin: 0;
+}
+
+.grade {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--gap-painel);
+  align-items: start;
+}
+
+/* Barra superior */
+.topo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: 6px var(--space-3);
+  background: var(--cromo);
+  color: var(--cromo-texto);
+  border-bottom: 3px solid var(--clube);
+}
+
+.topo__clube {
+  font-family: var(--font-display);
+  font-size: 15px;
+  line-height: 18px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.topo__info {
+  display: flex;
+  gap: var(--space-4);
+  margin-left: auto;
+  align-items: center;
+}
+
+.topo .we-lb {
+  color: #a8a8a8;
+}
+
+.topo .we-vl {
+  color: #ffffff;
+}
+
+/* Menu lateral: o bloco do pé fica embaixo */
+.menu {
+  height: 100%;
+  overflow: auto;
+}
+
+.menu__pe {
+  margin-top: auto;
+  border-top: 1px solid var(--sombra-dura);
+}
+
+/* Rodapé */
+.rodape__direita {
+  margin-left: auto;
+}
+
+.aviso {
+  position: fixed;
+  right: var(--space-4);
+  bottom: 40px;
+  max-width: 420px;
+  padding: var(--space-2) var(--space-3);
+  background: var(--painel);
+  color: var(--texto);
+  border: 1px solid var(--linha-forte);
+  border-left: 4px solid var(--atencao);
+  box-shadow: 3px 3px 0 var(--sombra-dura);
+  border-radius: var(--radius-sm);
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.campo input {
+  font: inherit;
+  padding: 5px 8px;
+  color: var(--texto);
+  background: var(--fundo);
+  border: 1px solid var(--linha-forte);
+  border-radius: var(--radius-sm);
+}
+
+.acoes {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.campo select,
+.campo textarea {
+  font: inherit;
+  padding: 5px 8px;
+  color: var(--texto);
+  background: var(--fundo);
+  border: 1px solid var(--linha-forte);
+  border-radius: var(--radius-sm);
+}
+
+.campo textarea {
+  font-family: ui-monospace, Consolas, monospace;
+  font-size: 12px;
+  resize: vertical;
+}
+
+.campo input[type='number'] {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.campo input[type='color'] {
+  padding: 0;
+  height: 28px;
+  width: 48px;
+}
+
+.campo--check {
+  flex-direction: row;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+/* Duas colunas: lista à esquerda, formulário à direita */
+.mestre-detalhe {
+  display: grid;
+  grid-template-columns: minmax(240px, 300px) 1fr;
+  gap: var(--gap-painel);
+  align-items: start;
+  min-height: 0;
+}
+
+.lista-itens {
+  display: flex;
+  flex-direction: column;
+  max-height: calc(100vh - 260px);
+  overflow: auto;
+}
+
+.lista-itens button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 10px;
+  font: inherit;
+  text-align: left;
+  color: var(--texto);
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--linha);
+  border-left: 3px solid transparent;
+  cursor: pointer;
+}
+
+.lista-itens button:hover {
+  background: var(--botao-hover);
+}
+
+.lista-itens button[aria-current='true'] {
+  border-left-color: var(--clube);
+  background: var(--painel-alt);
+  font-weight: 700;
+  color: var(--texto-forte);
+}
+
+.lista-itens button:focus-visible {
+  outline-offset: -2px;
+}
+
+.lista-itens .marcador {
+  margin-left: auto;
+}
+
+.campos {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: var(--space-2) var(--space-4);
+}
+
+.campos--largo {
+  grid-column: 1 / -1;
+}
+
+.secao-form {
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--texto-suave);
+  border-bottom: 1px solid var(--linha);
+  padding-bottom: 2px;
+  margin: var(--space-2) 0 0;
+}

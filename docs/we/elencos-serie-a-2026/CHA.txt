@@ -1,0 +1,29 @@
+# CHA — elenco: chapecoense.com/elenco (31 nomes; cortados Kainã, Vinicius, Rosivan); camisa do site; aparência pelas fotos do Sofascore; pé/altura/nascimento/nacionalidade: Sofascore
+Anderson|Anderson|GK||98|1998-03-05|BRA|c|190|3|F|i1|A|B|A|Anderson
+Victor Caetano|V. Caetano|CB||25|1997-10-19|BRA|d|186|2|F|i1|A|C|A|V. Caetano
+Eduardo Doma|E. Doma|CB||3|1998-08-29|BRA|d|186|1|F|i1|B|A|A|E. Doma
+Bruno Pacheco|B. Pacheco|SB||91|1991-12-08|BRA|c|174|2|F|k1|A|C|A|B. Pacheco
+Bruno Tubarão|B. Tubarao|SB||20|1995-03-28|BRA|d|180|1|F|i1|A|A|A|B. Tubarao
+Camilo|Camilo|DH||27|1999-02-23|BRA|d|176|1|F|i1|A|B|A|Camilo
+Yago Felipe|Y. Felipe|DH|OH|88|1995-02-03|BRA|d|174|2|F|k1|A|C|A|Y. Felipe
+Giovanni Augusto|G. Augusto|OH||10|1989-09-05|BRA|d|177|2|F|i1|A|A|A|G. Augusto
+Túlio Eduardo|Tulio|CF||9|2004-10-27|BRA|c|187|3|F|i1|A|A|A|Tulio
+Dylan Borrero|Borrero|WG||77|2002-01-05|COL|d|179|3|E|i1|A|A|A||0.2|dri vel
+Marcinho|Marcinho|WG||7|1995-06-08|BRA|d|176|2|F|i1|A|C|A|Marcinho
+Gabriel Werner|G. Werner|GK||14|2003-07-14|BRA|d|191|1|G|i1|B|A|A||-0.6|
+Matheus Aurélio|Matheus|GK||30|1999-06-23|BRA|d|184|1|F|i1|A|A|A||-0.8|
+João Paulo|Joao Paulo|CB||4|1997-07-04|BRA|c|187|2|F|i1|A|C|A|Joao Paulo
+Kauan|Kauan|CB||21|2003-04-07|BRA|d|191|2|G|i1|A|A|A||-0.4|
+Everton|Everton|SB||26|1995-04-10|BRA|d|181|3|F|i1|A|A|A|Everton
+Fernando|Fernando|SB||12|1999-09-14|BRA|c|181|3|F|i1|A|B|A||-0.3|
+Heitor|Heitor|SB||5|2000-11-05|BRA|d|174|1|F|i1|A|C|A||-0.4|
+Mancha|Mancha|SB||6|2001-02-13|BRA|c|178|1|F|i1|B|A|A||-0.4|
+Vinicius Balieiro|Balieiro|DH||17|1999-05-28|BRA|d|177|3|E|i1|A|A|A|Balieiro
+Rafael Carvalheira|Carvalhei.|DH||99|1999-05-26|BRA|c|176|1|F|i1|A|A|A|Carvalhei.
+David Antunes|David|DH||19|2005-08-17|BRA|d|178|1|F|i1|B|A|A||-0.8|
+Max|Max|OH|DH|22|2001-05-11|BRA|c|187|4|G|i1|A|A|A|Max Alves
+Miguel Carvalho|M. Carvalho|OH||80|2005-03-09|ESP|c|183|1|F|i1|B|A|A||-0.2|
+Robert|Robert|OH|WG|8|2003-07-20|BRA|c|180|3|F|i1|A|B|A|Robert
+Franco Rossi|F. Rossi|WG||29|2002-06-26|URU|d|179|1|F|i1|B|A|A||0.0|
+Maurício Garcez|Garcez|CF|WG|31|1997-03-16|BRA|d|183|4|F|i1|A|A|A||0.0|
+Rubens|Rubens|WG||70|2003-03-28|BRA|c|178|1|F|i1|A|A|A||-0.4|

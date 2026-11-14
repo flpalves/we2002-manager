@@ -1,0 +1,29 @@
+# FLU — elenco: fluminense.com.br/o-time/futebol/profissional (31 nomes; cortados Júlio Fidelis, Riquelme, Matheus Reis); camisa do site; pé/altura/nascimento/nacionalidade: Sofascore
+Fábio|Fabio|GK||1|1980-09-30|BRA|d|188|1|F|m1|B|A|A|Fabio
+Thiago Silva|T. Silva|CB||3|1984-09-22|BRA|d|181|2|F|i1|A|A|A|T. Silva
+Juan Pablo Freytes|Freytes|CB||22|2000-01-11|ARG|c|182|1|F|i1|B|C|B|Freytes
+Renê|Rene|SB||6|1992-09-14|BRA|c|174|1|F|k1|A|A|A|Rene
+Guga|Guga|SB||23|1998-08-29|BRA|d|173|2|F|i1|A|B|A|Guga
+Hércules|Hercules|DH|OH|35|2000-10-20|BRA|d|178|3|F|i1|A|A|A|Hercules
+Nonato|Nonato|DH||16|1998-03-03|BRA|d|174|2|F|i1|A|C|A|Nonato
+Luciano Acosta|L. Acosta|OH||32|1994-05-31|ARG|d|160|1|E|i1|H|B|A|L. Acosta
+Hulk|Hulk|CF|WG|7|1986-07-25|BRA|c|180|3|H|k1|A|B|A|Hulk
+Agustín Canobbio|Canobbio|WG|SH|17|1998-10-01|URU|d|175|1|E|i1|B|A|A|Canobbio
+Jefferson Savarino|Savarino|WG|OH|11|1996-11-11|VEN|d|169|2|E|i1|A|A|A|Savarino
+Vitor Eudes|V. Eudes|GK||98|1998-10-21|BRA|d|195|1|F|i1|B|A|A|V. Eudes
+Marcelo Pitaluga|Pitaluga|GK||27|2002-12-20|BRA|d|192|1|F|i1|A|A|A||-1.0|
+Ignácio|Ignacio|CB||4|1996-12-01|BRA|d|192|1|F|i1|A|C|A|Ignacio
+Igor Rabello|I. Rabello|CB||21|1995-04-28|BRA|d|190|1|G|i1|B|C|B||0.0|cab
+Jemmes|Jemmes|CB||44|2000-04-09|BRA|d|187|1|F|i1|B|C|B|MIR:Jemmes
+Julián Millán|Millan|CB|SB|29|1998-03-26|COL|c|186|3|F|i1|A|A|A||-0.1|
+Samuel Xavier|S. Xavier|SB||2|1990-06-06|BRA|d|166|3|F|k1|A|C|A|S. Xavier
+Guilherme Arana|Arana|SB|SH|13|1997-04-14|BRA|c|176|2|F|i1|A|A|A|Arana
+Matheus Martinelli|Martinelli|DH||8|2001-10-05|BRA|d|176|1|F|i1|B|C|B|Martinelli
+Otávio|Otavio|DH||94|1994-05-04|BRA|d|173|3|G|k1|A|C|A||0.0|mar
+Alisson|Alisson|DH|OH|25|1993-06-24|BRA|d|174|3|F|k1|A|A|A||-0.2|
+Paulo Henrique Ganso|Ganso|OH||10|1989-10-12|BRA|c|184|1|F|i1|A|A|A|Ganso
+Kevin Serna|Serna|WG||90|1997-12-22|COL|d|181|2|F|i1|A|A|A|Serna
+Yeferson Soteldo|Soteldo|WG|OH|30|1997-06-30|VEN|d|160|1|E|i1|B|B|B||0.6|dri vel baixo
+John Kennedy|J. Kennedy|CF||9|2002-05-18|BRA|d|173|3|F|i1|A|B|A|J. Kennedy
+Rodrigo Castillo|Castillo|CF||19|1999-02-25|ARG|d|190|1|F|i1|B|A|A||0.0|cab fin
+Germán Cano|Cano|CF||14|1988-01-02|ARG|d|176|2|F|i1|A|A|A|Cano

@@ -1,0 +1,24 @@
+appId: br.dev.we2002manager
+productName: WE2002 Manager
+directories:
+  output: dist
+  buildResources: build
+files:
+  - out/**
+  - package.json
+  - "!**/*.map"
+extraResources:
+  - from: bridge
+    to: bridge
+  - from: tools
+    to: tools
+  - from: src/main/db/migracoes
+    to: migracoes
+asarUnpack:
+  - "**/*.node"
+win:
+  target: nsis
+nsis:
+  oneClick: false
+  allowToChangeInstallationDirectory: true
+npmRebuild: true

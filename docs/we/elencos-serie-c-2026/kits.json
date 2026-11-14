@@ -1,0 +1,103 @@
+{
+  "_comentario": "Uniformes da Série C 2026 (aproximações a partir das cores do clube; conferir no WE). Formato do kit.design de data/times (docs/guia-agente-novo-time.md, seção 6).",
+  "amazonas-fc": {
+    "kit": {"cor_numero": "#151515", "design": {"camisa": "#FFD200", "detalhe": "#151515", "calcao": "#151515", "meiao": "#FFD200", "listras_verticais": {"cores": ["#FFD200", "#151515"], "largura": 4}}},
+    "kit_reserva": {"cor_numero": "#151515", "design": {"camisa": "#F2F2F2", "detalhe": "#FFD200", "calcao": "#F2F2F2", "meiao": "#F2F2F2"}},
+    "kit_goleiro": {"cor_numero": "#F2F2F2", "design": {"camisa": "#2E7D32", "detalhe": "#151515", "calcao": "#151515", "meiao": "#2E7D32"}}
+  },
+  "anapolis": {
+    "kit": {"cor_numero": "#151515", "design": {"camisa": "#F2F2F2", "detalhe": "#C8102E", "calcao": "#F2F2F2", "meiao": "#F2F2F2", "faixas": [{"cor": "#C8102E", "regiao": "frente", "linhas": [10, 13]}, {"cor": "#151515", "regiao": "frente", "linhas": [14, 17]}]}},
+    "kit_reserva": {"cor_numero": "#F2F2F2", "design": {"camisa": "#151515", "detalhe": "#F2F2F2", "calcao": "#151515", "meiao": "#151515", "listras_verticais": {"cores": ["#151515", "#F2F2F2"], "largura": 4}}},
+    "kit_goleiro": {"cor_numero": "#151515", "design": {"camisa": "#FFD200", "detalhe": "#151515", "calcao": "#151515", "meiao": "#FFD200"}}
+  },
+  "barra-sc": {
+    "kit": {"cor_numero": "#F2F2F2", "design": {"camisa": "#1F4FA8", "detalhe": "#6CACE4", "calcao": "#F2F2F2", "meiao": "#1F4FA8"}},
+    "kit_reserva": {"cor_numero": "#1F4FA8", "design": {"camisa": "#F2F2F2", "detalhe": "#6CACE4", "calcao": "#1F4FA8", "meiao": "#F2F2F2"}},
+    "kit_goleiro": {"cor_numero": "#151515", "design": {"camisa": "#FFD200", "detalhe": "#E8559A", "calcao": "#151515", "meiao": "#FFD200"}}
+  },
+  "botafogo-pb": {
+    "kit": {"cor_numero": "#C8102E", "design": {"camisa": "#151515", "detalhe": "#F2F2F2", "calcao": "#151515", "meiao": "#151515", "listras_verticais": {"cores": ["#151515", "#F2F2F2"], "largura": 4}}},
+    "kit_reserva": {"cor_numero": "#151515", "design": {"camisa": "#F2F2F2", "detalhe": "#151515", "calcao": "#F2F2F2", "meiao": "#F2F2F2"}},
+    "kit_goleiro": {"cor_numero": "#151515", "design": {"camisa": "#2E9E4F", "detalhe": "#151515", "calcao": "#151515", "meiao": "#2E9E4F"}}
+  },
+  "brusque": {
+    "kit": {"cor_numero": "#00843D", "design": {"camisa": "#FFD200", "detalhe": "#C8102E", "calcao": "#00843D", "meiao": "#FFD200", "faixa_peito": {"cor": "#00843D", "linhas": [10, 13]}}},
+    "kit_reserva": {"cor_numero": "#00843D", "design": {"camisa": "#F2F2F2", "detalhe": "#C8102E", "calcao": "#F2F2F2", "meiao": "#F2F2F2", "faixa_peito": {"cor": "#FFD200", "linhas": [10, 13]}}},
+    "kit_goleiro": {"cor_numero": "#F2F2F2", "design": {"camisa": "#151515", "detalhe": "#FFD200", "calcao": "#151515", "meiao": "#151515"}}
+  },
+  "caxias": {
+    "kit": {"cor_numero": "#F2F2F2", "design": {"camisa": "#7A1E2C", "detalhe": "#F2F2F2", "calcao": "#F2F2F2", "meiao": "#7A1E2C"}},
+    "kit_reserva": {"cor_numero": "#7A1E2C", "design": {"camisa": "#F2F2F2", "detalhe": "#7A1E2C", "calcao": "#7A1E2C", "meiao": "#F2F2F2"}},
+    "kit_goleiro": {"cor_numero": "#151515", "design": {"camisa": "#F28C00", "detalhe": "#151515", "calcao": "#151515", "meiao": "#F28C00"}}
+  },
+  "confianca": {
+    "kit": {"cor_numero": "#F2F2F2", "design": {"camisa": "#1F5FBF", "detalhe": "#F2F2F2", "calcao": "#F2F2F2", "meiao": "#1F5FBF"}},
+    "kit_reserva": {"cor_numero": "#1F5FBF", "design": {"camisa": "#F2F2F2", "detalhe": "#1F5FBF", "calcao": "#1F5FBF", "meiao": "#F2F2F2"}},
+    "kit_goleiro": {"cor_numero": "#F2F2F2", "design": {"camisa": "#151515", "detalhe": "#FFD200", "calcao": "#151515", "meiao": "#151515"}}
+  },
+  "ferroviaria": {
+    "kit": {"cor_numero": "#F2F2F2", "design": {"camisa": "#7B1F2A", "detalhe": "#F2F2F2", "calcao": "#F2F2F2", "meiao": "#7B1F2A"}},
+    "kit_reserva": {"cor_numero": "#7B1F2A", "design": {"camisa": "#F2F2F2", "detalhe": "#7B1F2A", "calcao": "#F2F2F2", "meiao": "#F2F2F2"}},
+    "kit_goleiro": {"cor_numero": "#151515", "design": {"camisa": "#2E9E4F", "detalhe": "#151515", "calcao": "#151515", "meiao": "#2E9E4F"}}
+  },
+  "figueirense": {
+    "kit": {"cor_numero": "#C8102E", "design": {"camisa": "#151515", "detalhe": "#F2F2F2", "calcao": "#151515", "meiao": "#151515", "listras_verticais": {"cores": ["#151515", "#F2F2F2"], "largura": 4}}},
+    "kit_reserva": {"cor_numero": "#151515", "design": {"camisa": "#F2F2F2", "detalhe": "#151515", "calcao": "#F2F2F2", "meiao": "#F2F2F2"}},
+    "kit_goleiro": {"cor_numero": "#151515", "design": {"camisa": "#F28C00", "detalhe": "#151515", "calcao": "#151515", "meiao": "#F28C00"}}
+  },
+  "floresta-ce": {
+    "kit": {"cor_numero": "#F2F2F2", "design": {"camisa": "#00843D", "detalhe": "#F2F2F2", "calcao": "#F2F2F2", "meiao": "#00843D"}},
+    "kit_reserva": {"cor_numero": "#00843D", "design": {"camisa": "#F2F2F2", "detalhe": "#00843D", "calcao": "#00843D", "meiao": "#F2F2F2"}},
+    "kit_goleiro": {"cor_numero": "#F2F2F2", "design": {"camisa": "#151515", "detalhe": "#F28C00", "calcao": "#151515", "meiao": "#151515"}}
+  },
+  "guarani": {
+    "kit": {"cor_numero": "#F2F2F2", "design": {"camisa": "#00703C", "detalhe": "#F2F2F2", "calcao": "#F2F2F2", "meiao": "#00703C"}},
+    "kit_reserva": {"cor_numero": "#00703C", "design": {"camisa": "#F2F2F2", "detalhe": "#00703C", "calcao": "#00703C", "meiao": "#F2F2F2"}},
+    "kit_goleiro": {"cor_numero": "#F2F2F2", "design": {"camisa": "#151515", "detalhe": "#FFD200", "calcao": "#151515", "meiao": "#151515"}}
+  },
+  "inter-de-limeira": {
+    "kit": {"cor_numero": "#C8102E", "design": {"camisa": "#151515", "detalhe": "#F2F2F2", "calcao": "#151515", "meiao": "#151515", "listras_verticais": {"cores": ["#151515", "#F2F2F2"], "largura": 4}}},
+    "kit_reserva": {"cor_numero": "#151515", "design": {"camisa": "#F2F2F2", "detalhe": "#151515", "calcao": "#F2F2F2", "meiao": "#F2F2F2"}},
+    "kit_goleiro": {"cor_numero": "#151515", "design": {"camisa": "#FFD200", "detalhe": "#151515", "calcao": "#151515", "meiao": "#FFD200"}}
+  },
+  "itabaiana": {
+    "kit": {"cor_numero": "#F2F2F2", "design": {"camisa": "#1F4FA8", "detalhe": "#C8102E", "calcao": "#F2F2F2", "meiao": "#1F4FA8", "faixa_peito": {"cor": "#C8102E", "linhas": [10, 14]}}},
+    "kit_reserva": {"cor_numero": "#1F4FA8", "design": {"camisa": "#F2F2F2", "detalhe": "#C8102E", "calcao": "#1F4FA8", "meiao": "#F2F2F2"}},
+    "kit_goleiro": {"cor_numero": "#151515", "design": {"camisa": "#2E9E4F", "detalhe": "#151515", "calcao": "#151515", "meiao": "#2E9E4F"}}
+  },
+  "ituano": {
+    "kit": {"cor_numero": "#F2F2F2", "design": {"camisa": "#C8102E", "detalhe": "#151515", "calcao": "#151515", "meiao": "#C8102E", "faixa_peito": {"cor": "#151515", "linhas": [10, 15]}}},
+    "kit_reserva": {"cor_numero": "#C8102E", "design": {"camisa": "#F2F2F2", "detalhe": "#C8102E", "calcao": "#F2F2F2", "meiao": "#F2F2F2"}},
+    "kit_goleiro": {"cor_numero": "#151515", "design": {"camisa": "#6CACE4", "detalhe": "#151515", "calcao": "#151515", "meiao": "#6CACE4"}}
+  },
+  "maranhao": {
+    "kit": {"cor_numero": "#F2F2F2", "design": {"camisa": "#C8102E", "detalhe": "#F2F2F2", "calcao": "#151515", "meiao": "#C8102E", "listras_verticais": {"cores": ["#C8102E", "#1F4FA8"], "largura": 4}}},
+    "kit_reserva": {"cor_numero": "#C8102E", "design": {"camisa": "#F2F2F2", "detalhe": "#1F4FA8", "calcao": "#F2F2F2", "meiao": "#F2F2F2"}},
+    "kit_goleiro": {"cor_numero": "#151515", "design": {"camisa": "#FFD200", "detalhe": "#151515", "calcao": "#151515", "meiao": "#FFD200"}}
+  },
+  "maringa": {
+    "kit": {"cor_numero": "#F2F2F2", "design": {"camisa": "#151515", "detalhe": "#00843D", "calcao": "#F2F2F2", "meiao": "#151515", "listras_verticais": {"cores": ["#151515", "#00843D"], "largura": 4}}},
+    "kit_reserva": {"cor_numero": "#151515", "design": {"camisa": "#F2F2F2", "detalhe": "#00843D", "calcao": "#F2F2F2", "meiao": "#F2F2F2", "faixa_peito": {"cor": "#00843D", "linhas": [10, 14]}}},
+    "kit_goleiro": {"cor_numero": "#151515", "design": {"camisa": "#E8559A", "detalhe": "#151515", "calcao": "#151515", "meiao": "#E8559A"}}
+  },
+  "paysandu": {
+    "kit": {"cor_numero": "#0B3D91", "design": {"camisa": "#6CACE4", "detalhe": "#F2F2F2", "calcao": "#6CACE4", "meiao": "#6CACE4", "listras_verticais": {"cores": ["#6CACE4", "#F2F2F2"], "largura": 4}}},
+    "kit_reserva": {"cor_numero": "#6CACE4", "design": {"camisa": "#F2F2F2", "detalhe": "#6CACE4", "calcao": "#F2F2F2", "meiao": "#F2F2F2"}},
+    "kit_goleiro": {"cor_numero": "#F2F2F2", "design": {"camisa": "#151515", "detalhe": "#FFD200", "calcao": "#151515", "meiao": "#151515"}}
+  },
+  "santa-cruz": {
+    "kit": {"cor_numero": "#C8102E", "design": {"camisa": "#F2F2F2", "detalhe": "#151515", "calcao": "#151515", "meiao": "#F2F2F2", "faixas": [{"cor": "#151515", "regiao": "frente", "linhas": [9, 12]}, {"cor": "#C8102E", "regiao": "frente", "linhas": [13, 16]}, {"cor": "#151515", "regiao": "costas", "linhas": [9, 12]}, {"cor": "#C8102E", "regiao": "costas", "linhas": [13, 16]}]}},
+    "kit_reserva": {"cor_numero": "#F2F2F2", "design": {"camisa": "#C8102E", "detalhe": "#151515", "calcao": "#151515", "meiao": "#C8102E"}},
+    "kit_goleiro": {"cor_numero": "#151515", "design": {"camisa": "#2E9E4F", "detalhe": "#151515", "calcao": "#151515", "meiao": "#2E9E4F"}}
+  },
+  "volta-redonda": {
+    "kit": {"cor_numero": "#151515", "design": {"camisa": "#FFD200", "detalhe": "#151515", "calcao": "#151515", "meiao": "#FFD200"}},
+    "kit_reserva": {"cor_numero": "#151515", "design": {"camisa": "#F2F2F2", "detalhe": "#151515", "calcao": "#F2F2F2", "meiao": "#F2F2F2", "faixa_peito": {"cor": "#FFD200", "linhas": [10, 14]}}},
+    "kit_goleiro": {"cor_numero": "#F2F2F2", "design": {"camisa": "#1F4FA8", "detalhe": "#F2F2F2", "calcao": "#1F4FA8", "meiao": "#1F4FA8"}}
+  },
+  "ypiranga-rs": {
+    "kit": {"cor_numero": "#00843D", "design": {"camisa": "#FFD200", "detalhe": "#00843D", "calcao": "#00843D", "meiao": "#FFD200"}},
+    "kit_reserva": {"cor_numero": "#00843D", "design": {"camisa": "#F2F2F2", "detalhe": "#00843D", "calcao": "#F2F2F2", "meiao": "#F2F2F2"}},
+    "kit_goleiro": {"cor_numero": "#F2F2F2", "design": {"camisa": "#151515", "detalhe": "#F28C00", "calcao": "#151515", "meiao": "#151515"}}
+  }
+}

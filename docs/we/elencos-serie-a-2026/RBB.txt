@@ -1,0 +1,29 @@
+# RBB — elenco: redbullbragantino.com/br-pt/jogadores (31 nomes; cortados Gustavo Reis, Cauê, Marcelinho); camisa do site; aparência pelas fotos do Sofascore (o site carrega as fotos dentro de carrosséis); pé/altura/nascimento/nacionalidade: Sofascore
+Tiago Volpi|Volpi|GK||18|1990-12-19|BRA|d|189|1|F|i1|A|C|A|Volpi
+Alix Vinícius|Alix|CB||4|1999-11-06|BRA|d|196|3|G|i1|A|A|A|Alix
+Guzmán Rodríguez|Guzman|CB||2|2000-02-08|URU|d|185|2|F|i1|A|B|A|Guzman
+Juninho Capixaba|Capixaba|SB|SH|29|1997-07-06|BRA|c|176|2|F|i1|A|C|A|Capixaba
+Andrés Hurtado|A. Hurtado|SB||34|2001-12-23|ECU|d|178|4|F|i1|A|A|A|A. Hurtado
+Fabinho|Fabinho|DH||5|2002-04-09|BRA|d|178|1|F|i1|B|A|A|Fabinho
+Eric Ramires|E. Ramires|DH|OH|7|2000-08-10|BRA|d|172|4|E|i1|A|B|A|E. Ramires
+Lucas Barbosa|L. Barbosa|OH|SH|21|2001-02-22|BRA|c|193|3|F|i1|A|A|A|L. Barbosa
+Eduardo Sasha|Sasha|CF||8|1992-02-24|BRA|d|173|1|F|i1|B|C|B|Sasha
+Wallace Yan|W. Yan|WG||47|2005-02-07|BRA|d|182|2|F|i1|H|A|A|W. Yan
+Fernando|Fernando|WG||11|1999-03-01|BRA|d|176|4|F|i1|A|C|A|Fernando
+Cleiton|Cleiton|GK||1|1997-08-19|BRA|d|190|1|F|i1|A|C|A|Cleiton
+Fabrício|Fabricio|GK||37|2000-06-15|BRA|d|190|2|F|i1|A|B|A||-1.0|
+Eduardo Santos|E. Santos|CB||3|1997-11-28|BRA|d|196|4|G|i1|A|A|A||0.0|cab
+Gustavo Marques|G. Marques|CB||16|2001-10-09|BRA|d|189|4|G|k1|A|B|A|G. Marques
+Agustín Sant'Anna|Sant Anna|SB||23|1997-09-27|URU|d|170|2|E|i1|A|B|A||-0.2|
+Vanderlan|Vanderlan|SB|SH|12|2002-09-07|BRA|c|183|3|F|i1|A|A|A||0.0|
+Gabriel Girotto|Girotto|DH||6|1992-07-10|BRA|d|171|1|F|k1|A|C|A||-0.2|vet mar
+Matheus Fernandes|M.Fernand.|DH||35|1998-06-30|BRA|d|183|4|F|i1|A|C|A|M.Fernand.
+Ignacio Sosa|N. Sosa|DH||15|2003-08-31|URU|d|175|1|E|i1|B|A|A||0.0|
+Rodriguinho|Rodriguinh|OH|DH|20|2004-03-16|BRA|d|185|1|F|i1|B|A|A||-0.3|
+Gustavo Neves|G. Neves|OH||22|2004-04-23|BRA|d|176|1|E|i1|A|A|A||-0.3|
+Patrick|Patrick|OH|DH|28|2004-03-19|BRA|c|187|3|F|k1|A|A|A||-0.3|
+Davi Gomes|Davi Gomes|OH||27|2005-06-06|BRA|d|177|2|E|i1|A|A|A||-0.6|
+José Herrera|Herrera|OH|WG|32|2003-04-16|ARG|c|172|2|F|i1|A|A|A||0.0|cri
+Henry Mosquera|Mosquera|WG|CF|30|2001-11-15|COL|d|175|4|E|k1|A|A|A|Mosquera
+Vinicinho|Vinicinho|WG||17|2004-02-20|BRA|d|174|2|E|i1|A|A|A||-0.3|vel
+Isidro Pitta|Pitta|CF||9|1999-08-14|PAR|d|183|1|F|i1|G|C|C|Pitta

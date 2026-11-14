@@ -1,0 +1,104 @@
+{
+  "casa": {
+    "estatisticas": {
+      "amarelos": 0,
+      "chutes": 9,
+      "desconhecido1": 0,
+      "desconhecido2": 0,
+      "escanteios": 1,
+      "faltas": 1,
+      "impedimentos": 1,
+      "laterais": 5
+    },
+    "gols": 1,
+    "id_we": 41,
+    "nome": "Fluminense",
+    "penaltis": null
+  },
+  "fase": "2T",
+  "final": false,
+  "gerado_em": "2026-11-12T02:18:09Z",
+  "gols": [
+    {
+      "assist_nome": null,
+      "assist_vaga": null,
+      "lado": "casa",
+      "minuto": 5,
+      "nome": "Hulk",
+      "periodo": "1T",
+      "vaga": 8
+    },
+    {
+      "assist_nome": "Pedro",
+      "assist_vaga": 8,
+      "lado": "visitante",
+      "minuto": 11,
+      "nome": "Carrascal",
+      "periodo": "1T",
+      "vaga": 10
+    },
+    {
+      "assist_nome": "Arrascaeta",
+      "assist_vaga": 7,
+      "lado": "visitante",
+      "minuto": 20,
+      "nome": "Pedro",
+      "periodo": "1T",
+      "vaga": 8
+    },
+    {
+      "assist_nome": "Pedro",
+      "assist_vaga": 8,
+      "lado": "visitante",
+      "minuto": 44,
+      "nome": "S. Lino",
+      "periodo": "1T",
+      "vaga": 9
+    },
+    {
+      "assist_nome": "Jorginho",
+      "assist_vaga": 6,
+      "lado": "visitante",
+      "minuto": 61,
+      "nome": "Carrascal",
+      "periodo": "2T",
+      "vaga": 10
+    },
+    {
+      "assist_nome": "Carrascal",
+      "assist_vaga": 10,
+      "lado": "visitante",
+      "minuto": 88,
+      "nome": "B.Henrique",
+      "periodo": "2T",
+      "vaga": 20
+    }
+  ],
+  "modo": "pontos_corridos",
+  "motivo": "andamento",
+  "nao_mapeado": [
+    "cartoes_por_jogador",
+    "lesoes",
+    "gol_contra"
+  ],
+  "partida_id": "cmw8g8qw0-r5j1-mwcwm02t",
+  "penaltis": false,
+  "prorrogacao": false,
+  "vencedor": "visitante",
+  "visitante": {
+    "estatisticas": {
+      "amarelos": 1,
+      "chutes": 13,
+      "desconhecido1": 0,
+      "desconhecido2": 0,
+      "escanteios": 1,
+      "faltas": 5,
+      "impedimentos": 0,
+      "laterais": 2
+    },
+    "gols": 5,
+    "id_we": 8,
+    "nome": "Flamengo",
+    "penaltis": null
+  }
+}

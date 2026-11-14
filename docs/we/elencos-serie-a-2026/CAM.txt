@@ -1,0 +1,29 @@
+# CAM — elenco: atletico.com.br/futebol/masculino/elenco (32 nomes; cortados Pedro Cobra, Índio, Vitão, Tomás Pérez); camisa do site; pé/altura/nascimento/nacionalidade: Sofascore
+Everson|Everson|GK||22|1990-07-22|BRA|d|193|1|F|m1|B|C|B|Everson
+Lyanco|Lyanco|CB||13|1997-02-01|BRA|d|187|1|G|i1|H|C|A|Lyanco
+Ruan|Ruan|CB||4|1999-06-07|BRA|d|187|3|F|i1|A|B|A|Ruan
+Kauã Pascini|Pascini|SB||36|2008-03-05|BRA|c|172|2|E|i1|A|A|A|Pascini
+Ángelo Preciado|Preciado|SB||23|1998-02-18|ECU|d|178|4|F|i1|A|A|A|Preciado
+Alexsander|Alexsander|DH||5|2003-10-08|BRA|c|178|2|F|i1|A|C|A|Alexsander
+Gustavo Scarpa|G. Scarpa|SH|OH|10|1994-01-05|BRA|c|177|2|F|i1|A|B|A|G. Scarpa
+Mamady Cissé|Cisse|SH|DH|39|2007-01-01|GUI|d|184|4|F|k1|A|A|A|Cisse
+Igor Gomes|Igor Gomes|OH|SH|17|1999-03-17|BRA|d|182|1|F|i1|A|B|A|Igor Gomes
+Alan Minda|Minda|CF|WG|27|2003-05-14|ECU|d|171|4|E|k1|A|A|A|Minda
+Cauã Soares|C. Soares|CF||29|2008-06-28|BRA|d|183|3|F|i1|A|A|A|C. Soares
+Gabriel Delfim|G. Delfim|GK||1|2002-07-10|BRA|c|192|3|F|i1|A|B|A|G. Delfim
+Robert Alves|R. Alves|GK||31|2005-02-03|BRA|d|191|2|F|i1|A|B|A||-1.0|
+Vitor Hugo|Vitor Hugo|CB||14|1991-05-20|BRA|c|187|2|G|i1|A|C|A|Vitor Hugo
+Léo Duarte|Leo Duarte|CB||3|1996-07-17|BRA|d|183|1|F|i1|B|C|B||0.0|cab
+Natanael|Natanael|SB||2|2002-01-05|BRA|d|172|1|E|i1|B|B|B|Natanael
+Renan Lodi|R. Lodi|SB|SH|6|1998-04-08|BRA|c|173|2|F|i1|A|C|A||0.4|cri
+Fred|Fred|DH|OH|7|1993-03-05|BRA|c|169|4|F|i1|A|B|A|Fred
+Kevin Castaño|Castano|DH||15|2000-09-29|COL|d|177|2|F|i1|A|A|A||0.2|mar
+Alan Franco|A. Franco|DH||21|1998-08-21|ECU|d|174|2|F|i1|A|A|A|SPFC:A. Franco
+Maycon|Maycon|DH|OH|8|1997-07-15|BRA|c|175|2|F|k1|A|C|A||0.2|
+Victor Hugo|V. Hugo|OH|DH|30|2004-05-11|BRA|c|184|2|F|i1|A|A|A||-0.3|
+Bernard|Bernard|OH|WG|11|1992-09-08|BRA|d|164|1|E|i1|B|B|B|Bernard
+Reinier|Reinier|OH|CF|19|2002-01-19|BRA|d|185|2|F|i1|A|A|A|Reinier
+Tomás Cuello|Cuello|WG||28|2000-03-05|ARG|d|176|2|F|i1|A|A|A||0.2|dri vel
+Dudu|Dudu|WG||92|1992-01-07|BRA|d|167|1|E|i1|A|C|A||0.3|dri vel vet baixo
+Mateo Cassierra|Cassierra|CF||9|1997-04-13|COL|d|186|4|G|k1|A|A|A|Cassierra
+Thiago Borbas|T. Borbas|CF||18|2002-04-07|URU|d|186|1|F|i1|B|A|A|T. Borbas

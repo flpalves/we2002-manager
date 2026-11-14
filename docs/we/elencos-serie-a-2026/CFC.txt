@@ -1,0 +1,29 @@
+# CFC — elenco: coritiba.com.br/elenco/masculino-profissional (34 nomes; cortados Benassi, Vitor Tissi, Lucas Taverna, Rodrigo Gelado, Ararat, David); camisa do site; aparência pelas fotos do Sofascore; pé/altura/nascimento/nacionalidade: Sofascore
+Pedro Morisco|P. Morisco|GK||1|2004-01-10|BRA|d|191|2|F|i1|A|A|A|P. Morisco
+Tiago Cóser|T. Coser|CB||23|2004-01-16|BRA|d|189|1|F|i1|A|A|A|T. Coser
+Jacy|Jacy|CB||55|1997-07-11|BRA|d|192|4|G|k1|A|B|A|Jacy
+Bruno Melo|Bruno Melo|SB||26|1992-10-26|BRA|c|183|2|F|i1|A|C|A|Bruno Melo
+Tinga|Tinga|SB||2|1993-09-01|BRA|d|179|4|F|i1|A|C|A|Tinga
+Thiago Santos|T. Santos|DH||21|1989-09-05|BRA|d|181|3|F|k1|A|C|A|T. Santos
+Nicolás Fonseca|N. Fonseca|DH||5|1998-10-19|URU|d|179|1|F|i1|B|A|A|N. Fonseca
+Josué|Josue|OH||10|1990-09-17|POR|c|172|1|E|i1|H|B|A|Josue
+Pedro Rocha|P. Rocha|CF||32|1994-10-01|BRA|d|178|2|F|i1|A|A|A|P. Rocha
+Breno Lopes|B. Lopes|WG||77|1996-01-24|BRA|d|178|2|F|i1|A|A|A|B. Lopes
+Sebastián Gómez|S. Gomez|WG|OH|19|1996-06-03|COL|c|172|2|E|i1|A|A|A|S. Gomez
+Pedro Rangel|P. Rangel|GK||22|2000-06-29|BRA|d|192|2|F|i1|A|A|A|P. Rangel
+Keiller|Keiller|GK||13|1996-10-29|BRA|d|193|2|F|i1|A|B|A||-0.8|
+Maicon|Maicon|CB||3|1988-09-14|BRA|d|191|1|F|k1|B|B|B|Maicon
+Rodrigo Moledo|R. Moledo|CB||4|1987-10-27|BRA|d|188|2|G|m1|A|C|A|R. Moledo
+Felipe Jonatan|F. Jonatan|SB|SH|6|1998-02-15|BRA|c|176|2|F|i1|A|C|A||0.0|
+Fabricio Bustos|Bustos|SB||14|1996-04-28|ARG|d|167|1|E|i1|A|B|A||0.0|
+Vini Paulista|V.Paulista|DH||36|2001-03-22|BRA|d|179|2|F|i1|A|C|A|V.Paulista
+Gustavo|Gustavo|DH||39|2002-09-11|BRA|d|178|1|F|i1|A|C|A||-0.4|
+Richard|Richard|DH||25|1994-02-18|BRA|d|191|2|G|i1|A|B|A||-0.2|mar
+Joaquín Lavega|Lavega|OH|WG|7|2005-02-03|URU|c|172|1|E|i1|B|A|A||0.0|dri
+Lucas Ronier|L. Ronier|WG|OH|11|2004-11-26|BRA|c|165|3|E|o1|A|B|A|L. Ronier
+Brian Ocampo|Brian|WG||17|1999-06-25|URU|d|173|2|E|i1|H|B|A||0.0|dri
+Keno|Keno|WG||20|1989-09-10|BRA|d|174|4|E|o1|A|A|A||0.0|vet vel
+Fabinho|Fabinho|CF|WG|28|1999-11-18|BRA|c|181|3|F|i1|A|B|A||-0.2|
+Rodrigo Rodrigues|R. Rodrig.|CF||99|1996-06-18|BRA|a|190|1|G|i1|A|C|A||0.0|cab
+Renato Marques|R. Marques|CF||78|2003-12-09|BRA|d|180|3|F|i1|A|A|A||-0.4|
+Paulo Roberto|P. Roberto|CF||18|2005-05-21|BRA|d|185|2|F|i1|A|A|A||-0.6|

@@ -1,0 +1,12 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`rng > trava o algoritmo (golden): mudar isso quebra carreiras salvas 1`] = `
+[
+  915744,
+  712335,
+  890530,
+  445269,
+]
+`;
+
+exports[`rng > trava o algoritmo (golden): mudar isso quebra carreiras salvas 2`] = `3961399198`;

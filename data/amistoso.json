@@ -1,0 +1,33 @@
+{
+  "id": "amistoso-mwcxfv9r",
+  "partidaId": "amistoso-mwcxfv9r",
+  "casa": {
+    "id": "palmeiras",
+    "nome": "Palmeiras",
+    "sigla": "PAL",
+    "arquivo": "data/times/palmeiras.json",
+    "cor": "#006437",
+    "cor2": "#fe0606"
+  },
+  "visitante": {
+    "id": "remo",
+    "nome": "Remo",
+    "sigla": "REM",
+    "arquivo": "data/times/remo.json",
+    "cor": "#0B1F4B",
+    "cor2": "#F2F2F2"
+  },
+  "cenario": "p1_cpu",
+  "modo": "pontos_corridos",
+  "emulador": "pcsx",
+  "uniformes": {
+    "casa": "titular",
+    "visitante": "reserva"
+  },
+  "status": "cancelado",
+  "iniciadoEm": "2026-11-12T02:26:46.675Z",
+  "placar": null,
+  "gols": [],
+  "penaltis": null,
+  "encerradoEm": "2026-11-12T02:27:38.658Z"
+}

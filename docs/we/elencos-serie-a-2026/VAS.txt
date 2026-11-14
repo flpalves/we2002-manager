@@ -1,0 +1,29 @@
+# VAS — elenco: vasco.com.br/elenco/profissional-masculino (33 nomes; cortados João Vitor, Walace Fernandes, Mateus Carvalho, Paulinho, Lucas Freitas); camisa do site; pé/altura/nascimento/nacionalidade: Sofascore
+Léo Jardim|Leo Jardim|GK||1|1995-03-20|BRA|d|188|1|F|i1|A|C|A|Leo Jardim
+Gabriel Pereira|Gabriel|CB||55|2000-05-06|BRA|d|188|3|G|i1|A|B|A|Gabriel
+Robert Renan|R. Renan|CB||30|2003-10-11|BRA|c|186|4|F|k1|A|A|A|R. Renan
+Lucas Piton|L. Piton|SB|SH|6|2000-10-09|BRA|c|176|1|F|i1|A|A|A|L. Piton
+Paulo Henrique|P.Henrique|SB||96|1996-07-25|BRA|d|175|3|F|k1|A|B|A|P.Henrique
+Santiago Sosa|Sosa|DH||5|1999-05-03|ARG|d|182|1|F|i1|A|C|A|Sosa
+Thiago Mendes|T. Mendes|DH||23|1992-03-15|BRA|d|176|4|F|k1|A|B|A|T. Mendes
+Alan Lescano|Lescano|OH||22|2001-11-11|ARG|c|182|1|F|i1|A|B|A|Lescano
+Bruno Duarte|B. Duarte|CF||19|1996-03-24|BRA|d|182|1|F|i1|A|A|A|B. Duarte
+Facundo Colidio|Colidio|WG|CF|9|2000-01-04|ARG|d|179|1|F|i1|B|A|A|Colidio
+Andrés Gómez|A. Gomez|WG||11|2002-09-12|COL|d|172|4|E|k1|A|A|A|A. Gomez
+Daniel Fuzato|Fuzato|GK||13|1997-07-04|BRA|d|190|1|F|i1|A|C|A|Fuzato
+Pablo|Pablo|GK||37|2003-02-11|BRA|d|188|2|F|i1|A|A|A||-1.2|
+Alan Saldivia|Saldivia|CB||4|2002-04-06|URU|d|180|1|F|i1|B|B|B|Saldivia
+Carlos Cuesta|Cuesta|CB||46|1999-03-09|COL|d|179|4|F|k1|A|A|A|Cuesta
+Puma Rodríguez|Puma|SB||2|1997-03-14|URU|d|183|1|F|i1|H|A|A|Puma
+Cuiabano|Cuiabano|SB||66|2003-02-16|BRA|c|179|4|E|i1|H|A|A|Cuiabano
+Tchê Tchê|Tche Tche|DH||3|1992-08-30|BRA|d|175|4|E|o1|A|B|A||0.0|vet
+Jair|Jair|DH||8|1994-08-26|BRA|d|178|3|F|i1|A|C|A|Jair
+Cauan Barros|Barros|DH||88|2004-05-06|BRA|d|183|3|F|i1|H|A|A|Barros
+Ramon Rique|R. Rique|OH|DH|83|2007-09-30|BRA|d|180|4|E|i1|A|A|A|R. Rique
+Johan Rojas|Rojas|OH|WG|10|2002-09-20|COL|d|180|2|E|i1|A|A|A||0.2|cri
+Nuno Moreira|N. Moreira|WG||17|1999-06-16|POR|d|173|1|E|i1|B|A|A||0.0|dri
+Adson|Adson|WG||28|2000-10-06|BRA|c|171|2|E|i1|A|B|A|Adson
+Marino Hinestroza|Hinestroza|WG||18|2002-07-08|COL|d|170|4|E|k1|A|A|A|Hinestroza
+David|David|WG|CF|7|1995-10-17|BRA|d|179|3|F|i1|H|A|A||0.0|vel vet
+Brenner|Brenner|CF||20|2000-01-16|BRA|d|176|3|F|i1|A|B|A|Brenner
+Claudio Spinelli|Spinelli|CF||77|1997-01-21|ARG|d|180|1|F|i1|H|A|A||0.0|fin cab

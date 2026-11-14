@@ -1,0 +1,29 @@
+# SPFC — elenco: saopaulofc.net/esporte/futebol-masculino-profissional (38 nomes; cortados Felipe Preis, João Pedro Pantiga, Tetê, Lucca, Pedro Ferreira, Isac, Nicolas, Ryan Francisco, Gustavo Santana, Danielzinho); camisa do site; pé/altura/nascimento/nacionalidade: Sofascore
+Rafael|Rafael|GK||23|1989-06-23|BRA|c|192|1|F|i1|A|C|A|Rafael
+Rafael Tolói|Toloi|CB||2|1990-10-10|ITA|d|185|1|F|i1|B|C|B||0.5|mar cab vet
+Robert Arboleda|Arboleda|CB||5|1991-10-22|ECU|d|187|4|G|k1|A|B|A|Arboleda
+Luis Osorio|Osorio|CB||54|2006-09-06|BRA|c|191|2|F|i1|A|A|A|Osorio
+Damián Bobadilla|Bobadilla|DH||16|2001-07-11|PAR|d|181|1|F|i1|A|B|A|Bobadilla
+Pablo Maia|Pablo Maia|DH||29|2002-01-10|BRA|d|178|1|F|i1|B|B|B||0.3|mar
+Wendell|Wendell|SH|SB|18|1993-07-20|BRA|c|176|4|F|k1|A|A|A||0.2|
+Cédric Soares|Cedric|SH|SB|21|1991-08-31|POR|d|172|1|F|i1|A|C|A||0.2|cri vet
+Luciano|Luciano|OH|CF|10|1993-05-18|BRA|c|181|2|F|i1|A|B|A|Luciano
+Jonathan Calleri|Calleri|CF||9|1993-09-23|ARG|d|181|1|F|i1|B|C|B|Calleri
+Artur|Artur|CF|WG|37|1998-02-15|BRA|c|168|1|E|i1|B|B|B|Artur
+Carlos Coronel|Coronel|GK||31|1996-12-29|PAR|d|190|1|G|i1|A|C|A||-0.3|
+Young|Young|GK||50|2002-03-07|BRA|d|201|1|G|i1|H|A|A||-1.0|
+Newton|Newton|CB|DH|28|2000-03-11|BRA|d|188|4|F|i1|A|A|A|Newton
+Sabino|Sabino|CB||35|1996-10-25|BRA|c|185|4|F|i1|A|C|A|Sabino
+Domingos Duarte|D. Duarte|CB||22|1995-03-09|POR|d|191|1|G|i1|B|C|B||0.1|cab
+Lucas Ramon|L. Ramon|SB||19|1994-03-07|BRA|d|178|2|F|i1|A|B|A|L. Ramon
+Enzo Díaz|Enzo Diaz|SB|SH|13|1995-12-07|ARG|c|175|1|F|i1|A|C|A|Enzo Diaz
+Iago|Iago|SB|SH|12|1997-03-23|BRA|c|181|1|F|i1|A|B|A|Iago
+Aurélio Buta|Buta|SB||20|1997-02-09|POR|d|172|4|F|i1|A|A|A||-0.2|
+Pedro Lima|Pedro Lima|SH|SB|32|2006-07-01|BRA|d|174|3|E|i1|A|A|A|Pedro Lima
+Djhordney|Djhordney|DH||48|2007-06-16|BRA|d|174|3|E|i1|A|A|A|Djhordney
+Marcos Antônio|M. Antonio|DH|OH|8|2000-06-13|BRA|d|166|4|E|i1|A|B|A|M. Antonio
+Cauly|Cauly|OH||80|1995-09-15|BRA|a|175|2|F|i1|A|C|A|BAH:Cauly
+Lucas Moura|L. Moura|OH|WG|7|1992-08-13|BRA|d|172|3|E|k1|A|B|A|L. Moura
+Ferreirinha|Ferreira|WG||11|1997-12-31|BRA|d|176|2|E|i1|H|A|A|Ferreira
+Victor Sá|Victor Sa|WG||27|1994-03-26|BRA|a|178|3|F|k1|A|A|A||-0.2|vel
+André Silva|A. Silva|CF||17|1997-06-03|BRA|c|181|4|F|i1|A|B|A|A. Silva

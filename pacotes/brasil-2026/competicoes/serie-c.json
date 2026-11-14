@@ -1,0 +1,95 @@
+{
+  "id": "serie-c",
+  "nome": "Série C",
+  "tipo": "nacional",
+  "participantes": {
+    "regra": "lista",
+    "times": [
+      "BPB",
+      "BRU",
+      "FER",
+      "MGA",
+      "FLO",
+      "INL",
+      "PAY",
+      "STA",
+      "YPI",
+      "GUA",
+      "FIG",
+      "MAC",
+      "AMZ",
+      "CAX",
+      "ITU",
+      "VRE",
+      "BAR",
+      "ANA",
+      "ITA",
+      "CON"
+    ],
+    "quantidade": 20
+  },
+  "substituicoes": 3,
+  "fases": [
+    {
+      "id": "f1",
+      "nome": "1ª fase",
+      "classificam_para": "quad",
+      "desempate": [
+        "pontos",
+        "vitorias",
+        "saldo",
+        "gols_pro",
+        "confronto_direto",
+        "menos_vermelhos",
+        "menos_amarelos",
+        "sorteio"
+      ],
+      "zonas": [
+        {
+          "de": 1,
+          "ate": 8,
+          "nome": "Quadrangular",
+          "cor": "info"
+        }
+      ],
+      "formato": "pontos_corridos",
+      "pontos_corridos": {
+        "turnos": 1,
+        "classificam": 8
+      }
+    },
+    {
+      "id": "quad",
+      "nome": "Quadrangular",
+      "classificam_para": "final",
+      "zonas": [
+        {
+          "de": 1,
+          "ate": 1,
+          "nome": "Classificação",
+          "cor": "info"
+        }
+      ],
+      "formato": "grupos",
+      "grupos": {
+        "quantidade": 2,
+        "tamanho": 4,
+        "turnos": 2,
+        "sorteio": "potes",
+        "classificam": 1
+      }
+    },
+    {
+      "id": "final",
+      "nome": "Final",
+      "formato": "mata_mata",
+      "mata_mata": {
+        "jogos": 1,
+        "gol_fora": false,
+        "prorrogacao": true,
+        "penaltis": true,
+        "mando": "melhor_campanha"
+      }
+    }
+  ]
+}

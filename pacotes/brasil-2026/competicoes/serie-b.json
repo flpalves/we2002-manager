@@ -1,0 +1,42 @@
+{
+  "id": "serie-b",
+  "nome": "Série B",
+  "tipo": "nacional",
+  "participantes": {
+    "regra": "lista",
+    "times": [
+      "AME",
+      "BFS",
+      "CUI",
+      "GOI",
+      "LON",
+      "OPE",
+      "SPT",
+      "ATH",
+      "AVA",
+      "CEA",
+      "CRB",
+      "CRI",
+      "NAU",
+      "PON",
+      "SBE",
+      "VIL",
+      "ACG",
+      "FOR",
+      "JUV",
+      "NOV"
+    ],
+    "quantidade": 20
+  },
+  "substituicoes": 3,
+  "fases": [
+    {
+      "id": "liga",
+      "nome": "Turno e returno",
+      "formato": "pontos_corridos",
+      "pontos_corridos": {
+        "turnos": 2
+      }
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+# BOT — elenco: botafogo.com.br/elenco/futebol (32 nomes, só 2 goleiros; cortados Lucas Emanuel, Anthony, Kadu, Domingos Andrade); camisa/pé/altura/nascimento/nacionalidade: Sofascore
+Gabriel Batista|G. Batista|GK||12|1998-05-31|BRA|d|191|2|F|i1|A|B|A|G. Batista
+Nahuel Ferraresi|Ferraresi|CB||5|1998-11-19|VEN|d|188|1|F|i1|B|A|A|Ferraresi
+Marçal|Marcal|CB|SB|21|1989-02-18|BRA|c|178|3|F|k1|A|A|A|Marcal
+Alex Telles|A. Telles|SB||13|1992-12-15|BRA|c|181|2|F|i1|A|C|A|A. Telles
+Vitinho|Vitinho|SB||2|1999-07-23|BRA|d|175|3|F|i1|A|B|A|Vitinho
+Huguinho|Huguinho|DH||75|2007-06-03|BRA|d|169|3|E|i1|A|A|A|Huguinho
+Cristian Medina|Medina|DH|OH|6|2002-05-30|ARG|d|178|2|F|i1|A|A|A|Medina
+Álvaro Montoro|Montoro|OH||10|2007-04-16|ARG|d|169|1|E|i1|B|A|A|Montoro
+Arthur Cabral|A. Cabral|CF||19|1998-04-24|BRA|d|186|1|G|k1|A|C|A|A. Cabral
+Matheus Martins|M. Martins|WG||11|2003-07-16|BRA|d|179|2|F|i1|A|A|A|M. Martins
+Hakim Ziyech|Ziyech|WG|OH|22|1993-03-18|MAR|c|181|1|F|i1|A|C|A|Ziyech
+Warleson|Warleson|GK||17|1996-08-29|BRA|d|191|3|F|i1|A|C|A||-0.5|
+Arthur Chaves|A. Chaves|CB||3|2001-01-28|BRA|d|187|1|F|i1|B|A|A||-0.4|
+Gabriel Justino|Justino|CB||34|2006-04-15|BRA|d|184|3|F|i1|A|A|A||-0.6|
+Kaio Pantaleão|Pantaleao|CB||31|1995-09-08|BRA|d|186|4|F|k1|A|A|A|Pantaleao
+Lucas Monzón|Monzon|CB|SB|33|2001-09-28|URU|c|184|3|F|k1|A|C|A|Monzon
+Mateo Ponte|Ponte|SB||4|2003-05-24|URU|d|183|1|E|i1|A|A|A|Ponte
+Paulinho|Paulinho|SB||29|1995-01-02|BRA|c|178|4|E|i1|A|A|A||-0.4|
+Allan|Allan|DH||25|1991-01-08|BRA|d|175|3|F|k1|A|B|A||0.0|mar vet
+Danilo Santos|Danilo|DH|OH|8|2001-04-19|BRA|c|175|4|E|o1|A|A|A|Danilo
+Edenilson|Edenilson|DH|OH|88|1989-12-18|BRA|d|175|4|F|k1|A|B|A||-0.2|vet
+Kauan Toledo|K. Toledo|DH||59|2006-04-14|BRA|d|177|4|E|i1|A|A|A||-0.8|
+Lucas Villalba|Villalba|OH|DH|77|2001-05-11|URU|d|182|1|E|i1|A|A|A||-0.3|
+Jordan Barrera|Barrera|WG|OH|14|2006-04-11|COL|d|175|3|E|i1|H|A|A|Barrera
+Júnior Santos|Jr. Santos|WG|CF|7|1994-10-11|BRA|d|188|4|F|k1|A|A|A||0.2|vel
+Danilo Pereira|D. Pereira|WG||90|1999-04-02|BRA|d|174|4|E|i1|A|A|A||-0.4|
+Kadir Barría|K. Barria|CF|WG|37|2007-07-18|PAN|d|183|4|E|k1|A|A|A|K. Barria
+Tiquinho Soares|Tiquinho|CF||9|1991-01-14|BRA|d|187|2|F|i1|A|A|A||0.3|fin cab vet

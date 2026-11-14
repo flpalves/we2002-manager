@@ -1,0 +1,29 @@
+# COR — elenco: corinthians.com.br/futebol/profissional/elenco (13/11/2026; 35 nomes, cortados os 7 garotos menos usados); altura/naturalidade do site; camisa, pé, nascimento, nacionalidade: Sofascore
+Hugo Souza|Hugo Souza|GK||1|1999-01-31|BRA|d|196|4|G|i1|A|A|A|Hugo Souza
+André Ramalho|A. Ramalho|CB||5|1992-02-16|BRA|d|182|2|F|i1|A|C|A|A. Ramalho
+Gustavo Henrique|G.Henrique|CB||13|1993-03-24|BRA|d|196|1|G|i1|A|C|A|G.Henrique
+Fabrizio Angileri|Angileri|SB|SH|26|1994-03-15|ARG|c|179|2|F|i1|A|B|A|Angileri
+Matheuzinho|Matheuzin|SB|SH|2|2000-09-08|BRA|d|171|2|E|i1|A|B|A|Matheuzin
+Breno Bidon|B. Bidon|DH|OH|7|2005-02-20|BRA|c|178|1|E|i1|B|A|A|B. Bidon
+André|Andre|DH||49|2006-06-20|BRA|d|183|4|F|i1|A|A|A|Andre
+Rodrigo Garro|Garro|OH||8|1998-01-04|ARG|c|174|1|E|i1|B|B|B|Garro
+Yuri Alberto|Yuri A.|CF||9|2001-03-18|BRA|d|182|1|F|i1|B|C|B|Yuri A.
+Memphis Depay|Memphis|WG|CF|10|1994-02-13|NED|d|178|4|G|i1|A|C|A|Memphis
+Kaio César|Kaio Cesar|WG||37|2004-02-15|BRA|c|168|3|E|i1|A|B|A|Kaio Cesar
+Felipe Longo|F. Longo|GK||40|2005-03-05|BRA|d|188|1|F|i1|B|B|B|F. Longo
+Kauê|Kaue|GK||51|2004-02-08|BRA|d|192|2|F|i1|A|B|A||-1.2|
+Gabriel Paulista|G.Paulista|CB||3|1990-11-26|BRA|d|187|1|F|i1|B|C|B|G.Paulista
+João Pedro Tchoca|Tchoca|CB||4|2003-12-31|BRA|d|192|1|F|i1|B|B|B|Tchoca
+Pedro Milans|Milans|SB||20|2002-03-24|URU|d|171|1|E|i1|B|B|B|Milans
+Matheus Bidu|M. Bidu|SB|SH|21|1999-05-04|BRA|c|172|3|F|i1|A|C|A|M. Bidu
+Hugo|Hugo|SB|SH|46|1997-08-29|BRA|c|179|1|F|i1|B|C|B||-0.2|
+Raniele|Raniele|DH||14|1996-12-31|BRA|d|184|2|F|i1|A|C|A|Raniele
+Allan|Allan|DH||29|1997-03-03|BRA|c|172|3|E|i1|A|B|A|Allan
+Charles|Charles|DH|OH|35|1996-06-19|BRA|d|186|1|F|i1|H|A|A||0.0|
+Alex Santana|A. Santana|DH|OH|80|1995-05-13|BRA|d|182|4|F|k1|A|C|A||-0.2|
+Matheus Pereira|M. Pereira|OH|SH|23|1998-02-25|BRA|c|183|2|F|i1|A|C|A||0.0|cri
+Zakaria Labyad|Labyad|OH|WG|52|1993-03-09|MAR|a|175|2|F|i1|A|C|A|Labyad
+Jesse Lingard|Lingard|OH|WG|77|1992-12-15|ENG|d|175|3|F|i1|A|A|A|Lingard
+André Carrillo|Carrillo|SH|WG|19|1991-06-14|PER|d|180|3|F|o1|A|B|A|Carrillo
+Vitinho|Vitinho|WG|CF|11|1993-10-09|BRA|d|180|4|F|i1|A|B|A||0.0|vel
+Pedro Raul|Pedro Raul|CF||18|1996-11-05|BRA|d|193|1|G|i1|B|C|B|Pedro Raul

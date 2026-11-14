@@ -1,0 +1,458 @@
+{
+ "novorizontino": {
+  "kit": {
+   "cor_numero": "#151515",
+   "design": {
+    "camisa": "#FFD200",
+    "detalhe": "#151515",
+    "calcao": "#151515",
+    "meiao": "#FFD200"
+   }
+  },
+  "kit_reserva": {
+   "cor_numero": "#FFD200",
+   "design": {
+    "camisa": "#151515",
+    "detalhe": "#FFD200",
+    "calcao": "#151515",
+    "meiao": "#151515"
+   }
+  }
+ },
+ "juventude": {
+  "kit": {
+   "cor_numero": "#00843D",
+   "design": {
+    "camisa": "#00843D",
+    "detalhe": "#F2F2F2",
+    "calcao": "#F2F2F2",
+    "meiao": "#F2F2F2",
+    "listras_verticais": {
+     "cores": [
+      "#00843D",
+      "#F2F2F2"
+     ],
+     "largura": 4
+    }
+   }
+  },
+  "kit_reserva": {
+   "cor_numero": "#00843D",
+   "design": {
+    "camisa": "#F2F2F2",
+    "detalhe": "#00843D",
+    "calcao": "#00843D",
+    "meiao": "#F2F2F2"
+   }
+  }
+ },
+ "vila-nova": {
+  "kit": {
+   "cor_numero": "#F2F2F2",
+   "design": {
+    "camisa": "#C8102E",
+    "detalhe": "#F2F2F2",
+    "calcao": "#F2F2F2",
+    "meiao": "#C8102E"
+   }
+  },
+  "kit_reserva": {
+   "cor_numero": "#C8102E",
+   "design": {
+    "camisa": "#F2F2F2",
+    "detalhe": "#C8102E",
+    "calcao": "#C8102E",
+    "meiao": "#F2F2F2"
+   }
+  }
+ },
+ "fortaleza": {
+  "kit": {
+   "cor_numero": "#F2F2F2",
+   "design": {
+    "camisa": "#0047AB",
+    "detalhe": "#D2001C",
+    "calcao": "#0047AB",
+    "meiao": "#F2F2F2"
+   }
+  },
+  "kit_reserva": {
+   "cor_numero": "#0047AB",
+   "design": {
+    "camisa": "#F2F2F2",
+    "detalhe": "#0047AB",
+    "calcao": "#F2F2F2",
+    "meiao": "#F2F2F2"
+   }
+  }
+ },
+ "criciuma": {
+  "kit": {
+   "cor_numero": "#151515",
+   "design": {
+    "camisa": "#FFD200",
+    "detalhe": "#151515",
+    "calcao": "#151515",
+    "meiao": "#F2F2F2"
+   }
+  },
+  "kit_reserva": {
+   "cor_numero": "#151515",
+   "design": {
+    "camisa": "#F2F2F2",
+    "detalhe": "#FFD200",
+    "calcao": "#F2F2F2",
+    "meiao": "#F2F2F2"
+   }
+  }
+ },
+ "goias": {
+  "kit": {
+   "cor_numero": "#F2F2F2",
+   "design": {
+    "camisa": "#006437",
+    "detalhe": "#F2F2F2",
+    "calcao": "#F2F2F2",
+    "meiao": "#006437"
+   }
+  },
+  "kit_reserva": {
+   "cor_numero": "#006437",
+   "design": {
+    "camisa": "#F2F2F2",
+    "detalhe": "#006437",
+    "calcao": "#006437",
+    "meiao": "#F2F2F2"
+   }
+  }
+ },
+ "sport": {
+  "kit": {
+   "cor_numero": "#F2F2F2",
+   "design": {
+    "camisa": "#C8102E",
+    "detalhe": "#151515",
+    "calcao": "#151515",
+    "meiao": "#151515",
+    "listras_verticais": {
+     "cores": [
+      "#C8102E",
+      "#151515"
+     ],
+     "largura": 4
+    }
+   }
+  },
+  "kit_reserva": {
+   "cor_numero": "#151515",
+   "design": {
+    "camisa": "#F2F2F2",
+    "detalhe": "#C8102E",
+    "calcao": "#F2F2F2",
+    "meiao": "#F2F2F2"
+   }
+  }
+ },
+ "atletico-go": {
+  "kit": {
+   "cor_numero": "#F2F2F2",
+   "design": {
+    "camisa": "#C8102E",
+    "detalhe": "#151515",
+    "calcao": "#151515",
+    "meiao": "#C8102E",
+    "listras_verticais": {
+     "cores": [
+      "#C8102E",
+      "#151515"
+     ],
+     "largura": 4
+    }
+   }
+  },
+  "kit_reserva": {
+   "cor_numero": "#C8102E",
+   "design": {
+    "camisa": "#F2F2F2",
+    "detalhe": "#C8102E",
+    "calcao": "#F2F2F2",
+    "meiao": "#F2F2F2"
+   }
+  }
+ },
+ "crb": {
+  "kit": {
+   "cor_numero": "#F2F2F2",
+   "design": {
+    "camisa": "#C8102E",
+    "detalhe": "#F2F2F2",
+    "calcao": "#F2F2F2",
+    "meiao": "#C8102E",
+    "listras_verticais": {
+     "cores": [
+      "#C8102E",
+      "#F2F2F2"
+     ],
+     "largura": 4
+    }
+   }
+  },
+  "kit_reserva": {
+   "cor_numero": "#C8102E",
+   "design": {
+    "camisa": "#F2F2F2",
+    "detalhe": "#C8102E",
+    "calcao": "#F2F2F2",
+    "meiao": "#F2F2F2"
+   }
+  }
+ },
+ "sao-bernardo": {
+  "kit": {
+   "cor_numero": "#151515",
+   "design": {
+    "camisa": "#FFD200",
+    "detalhe": "#151515",
+    "calcao": "#151515",
+    "meiao": "#FFD200"
+   }
+  },
+  "kit_reserva": {
+   "cor_numero": "#151515",
+   "design": {
+    "camisa": "#F2F2F2",
+    "detalhe": "#151515",
+    "calcao": "#F2F2F2",
+    "meiao": "#F2F2F2"
+   }
+  }
+ },
+ "operario-pr": {
+  "kit": {
+   "cor_numero": "#F2F2F2",
+   "design": {
+    "camisa": "#151515",
+    "detalhe": "#F2F2F2",
+    "calcao": "#151515",
+    "meiao": "#151515",
+    "listras_verticais": {
+     "cores": [
+      "#151515",
+      "#F2F2F2"
+     ],
+     "largura": 4
+    }
+   }
+  },
+  "kit_reserva": {
+   "cor_numero": "#151515",
+   "design": {
+    "camisa": "#F2F2F2",
+    "detalhe": "#151515",
+    "calcao": "#F2F2F2",
+    "meiao": "#F2F2F2"
+   }
+  }
+ },
+ "cuiaba": {
+  "kit": {
+   "cor_numero": "#007A33",
+   "design": {
+    "camisa": "#F2C500",
+    "detalhe": "#007A33",
+    "calcao": "#007A33",
+    "meiao": "#F2C500"
+   }
+  },
+  "kit_reserva": {
+   "cor_numero": "#F2C500",
+   "design": {
+    "camisa": "#007A33",
+    "detalhe": "#F2C500",
+    "calcao": "#007A33",
+    "meiao": "#007A33"
+   }
+  }
+ },
+ "ceara": {
+  "kit": {
+   "cor_numero": "#F2F2F2",
+   "design": {
+    "camisa": "#151515",
+    "detalhe": "#F2F2F2",
+    "calcao": "#151515",
+    "meiao": "#151515",
+    "listras_verticais": {
+     "cores": [
+      "#151515",
+      "#F2F2F2"
+     ],
+     "largura": 4
+    }
+   }
+  },
+  "kit_reserva": {
+   "cor_numero": "#151515",
+   "design": {
+    "camisa": "#F2F2F2",
+    "detalhe": "#151515",
+    "calcao": "#F2F2F2",
+    "meiao": "#F2F2F2"
+   }
+  }
+ },
+ "america-mg": {
+  "kit": {
+   "cor_numero": "#F2F2F2",
+   "design": {
+    "camisa": "#007A33",
+    "detalhe": "#151515",
+    "calcao": "#151515",
+    "meiao": "#007A33"
+   }
+  },
+  "kit_reserva": {
+   "cor_numero": "#007A33",
+   "design": {
+    "camisa": "#F2F2F2",
+    "detalhe": "#007A33",
+    "calcao": "#F2F2F2",
+    "meiao": "#F2F2F2"
+   }
+  }
+ },
+ "botafogo-sp": {
+  "kit": {
+   "cor_numero": "#F2F2F2",
+   "design": {
+    "camisa": "#C8102E",
+    "detalhe": "#151515",
+    "calcao": "#151515",
+    "meiao": "#C8102E"
+   }
+  },
+  "kit_reserva": {
+   "cor_numero": "#C8102E",
+   "design": {
+    "camisa": "#F2F2F2",
+    "detalhe": "#C8102E",
+    "calcao": "#F2F2F2",
+    "meiao": "#F2F2F2"
+   }
+  }
+ },
+ "athletic": {
+  "kit": {
+   "cor_numero": "#F2F2F2",
+   "design": {
+    "camisa": "#151515",
+    "detalhe": "#F2F2F2",
+    "calcao": "#151515",
+    "meiao": "#151515"
+   }
+  },
+  "kit_reserva": {
+   "cor_numero": "#151515",
+   "design": {
+    "camisa": "#F2F2F2",
+    "detalhe": "#151515",
+    "calcao": "#F2F2F2",
+    "meiao": "#F2F2F2"
+   }
+  }
+ },
+ "nautico": {
+  "kit": {
+   "cor_numero": "#151515",
+   "design": {
+    "camisa": "#C8102E",
+    "detalhe": "#F2F2F2",
+    "calcao": "#F2F2F2",
+    "meiao": "#C8102E",
+    "listras_verticais": {
+     "cores": [
+      "#C8102E",
+      "#F2F2F2"
+     ],
+     "largura": 4
+    }
+   }
+  },
+  "kit_reserva": {
+   "cor_numero": "#F2F2F2",
+   "design": {
+    "camisa": "#151515",
+    "detalhe": "#C8102E",
+    "calcao": "#151515",
+    "meiao": "#151515"
+   }
+  }
+ },
+ "avai": {
+  "kit": {
+   "cor_numero": "#0057A8",
+   "design": {
+    "camisa": "#0057A8",
+    "detalhe": "#F2F2F2",
+    "calcao": "#F2F2F2",
+    "meiao": "#0057A8",
+    "listras_verticais": {
+     "cores": [
+      "#0057A8",
+      "#F2F2F2"
+     ],
+     "largura": 4
+    }
+   }
+  },
+  "kit_reserva": {
+   "cor_numero": "#F2F2F2",
+   "design": {
+    "camisa": "#0B1F4B",
+    "detalhe": "#F2F2F2",
+    "calcao": "#0B1F4B",
+    "meiao": "#0B1F4B"
+   }
+  }
+ },
+ "ponte-preta": {
+  "kit": {
+   "cor_numero": "#151515",
+   "design": {
+    "camisa": "#F2F2F2",
+    "detalhe": "#151515",
+    "calcao": "#151515",
+    "meiao": "#F2F2F2"
+   }
+  },
+  "kit_reserva": {
+   "cor_numero": "#F2F2F2",
+   "design": {
+    "camisa": "#151515",
+    "detalhe": "#F2F2F2",
+    "calcao": "#151515",
+    "meiao": "#151515"
+   }
+  }
+ },
+ "londrina": {
+  "kit": {
+   "cor_numero": "#0B1F4B",
+   "design": {
+    "camisa": "#6CACE4",
+    "detalhe": "#F2F2F2",
+    "calcao": "#F2F2F2",
+    "meiao": "#6CACE4"
+   }
+  },
+  "kit_reserva": {
+   "cor_numero": "#F2F2F2",
+   "design": {
+    "camisa": "#0B1F4B",
+    "detalhe": "#6CACE4",
+    "calcao": "#0B1F4B",
+    "meiao": "#0B1F4B"
+   }
+  }
+ }
+}

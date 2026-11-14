@@ -1,0 +1,29 @@
+# CAP — o site athletico.com.br não tem página de elenco; elenco principal montado pela lista do Sofascore (sem os garotos da base); camisa/pé/altura/nascimento/nacionalidade e fotos: Sofascore
+Mycael|Mycael|GK||1|2004-03-12|BRA|c|191|2|F|i1|A|B|A|Mycael
+Dantas|Dantas|CB||25|2004-07-25|BRA|d|189|4|F|k1|A|A|A|Dantas
+Juan Felipe Aguirre|Aguirre|CB||33|1996-08-29|COL|d|186|1|F|i1|A|A|A|Aguirre
+Arthur Dias|A. Dias|CB||4|2007-04-07|BRA|c|188|1|F|i1|A|A|A|A. Dias
+Luiz Gustavo|L. Gustavo|DH|CB|14|1987-07-23|BRA|c|187|3|F|i1|A|A|A|L. Gustavo
+Juan Portilla|Portilla|DH||27|1998-09-12|COL|d|183|1|F|i1|B|A|A|Portilla
+Lucas Esquivel|Esquivel|SH|SB|37|2001-10-14|ARG|c|183|1|E|i1|A|A|A|Esquivel
+Gastón Benavídez|Benavidez|SH|SB|29|1995-10-23|ARG|d|175|1|F|k1|A|A|A|Benavidez
+Kerwin Vargas|Vargas|OH|WG|18|2002-01-02|COL|d|180|3|F|i1|A|A|A|Vargas
+Kevin Viveros|Viveros|CF||9|2000-04-25|COL|d|180|4|G|k1|A|A|A|Viveros
+Steven Mendoza|Mendoza|CF|WG|7|1992-06-25|COL|c|171|4|F|k1|A|C|A|Mendoza
+Santos|Santos|GK||23|1990-03-17|BRA|d|188|2|G|i1|A|B|A|Santos
+Matheus Soares|M. Soares|GK||42|2005-01-09|BRA|c|193|3|F|i1|A|B|A||-1.2|
+Carlos Terán|Teran|CB||22|2000-09-24|COL|d|188|4|G|k1|A|A|A|Teran
+Léo|Leo|CB||3|1996-03-06|BRA|c|183|4|F|k1|A|A|A||-0.3|
+Gilberto|Gilberto|SB|SH|12|1993-03-07|BRA|d|181|2|F|i1|A|C|A||0.0|vet
+Leonardo Derik|L. Derik|SB||6|2005-07-24|BRA|c|168|3|E|i1|A|A|A||-0.8|
+Claudinho|Claudinho|SB|OH|26|2005-10-24|BRA|c|172|2|E|i1|A|A|A|Claudinho
+Felipinho|Felipinho|DH|SB|5|2001-10-18|BRA|c|183|2|E|i1|A|A|A|Felipinho
+Jádson|Jadson|DH||16|1993-08-30|BRA|d|171|2|F|k1|A|C|A|Jadson
+Bruno Zapelli|Zapelli|OH||10|2002-05-16|ARG|d|181|1|F|i1|A|A|A|Zapelli
+João Cruz|Joao Cruz|OH|WG|8|2006-05-12|BRA|d|172|2|E|i1|A|A|A||-0.5|
+Alejandro García|A. Garcia|OH||17|2001-02-28|COL|c|185|3|F|k1|A|A|A||-0.2|
+Dudu|Dudu|WG|OH|53|2006-01-01|BRA|c|177|1|E|i1|A|A|A|Dudu
+Leozinho|Leozinho|WG||21|1998-12-05|BRA|c|173|3|F|k1|A|B|A|Leozinho
+Isaac|Isaac|WG||7|2004-04-24|BRA|d|177|3|E|i1|A|A|A||-0.4|
+Jorge Rivaldo|J. Rivaldo|CF||19|2003-09-28|COL|d|189|4|F|i1|A|A|A||-0.3|cab
+Renan Viana|R. Viana|CF||50|2003-01-31|BRA|d|189|2|F|i1|A|B|A||-0.6|

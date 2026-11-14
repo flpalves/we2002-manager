@@ -1,0 +1,29 @@
+# CRU — elenco: cruzeiro.com.br (fotos imagens.cruzeiro.com.br/Elenco/2026/Masculino; 34 nomes; cortados Vitor Lamounier, Felipe Morais, Rhuan Gabriel, Kaique Kenji, João Costa, Rayan Lelis); camisa/pé/altura/nascimento/nacionalidade: Sofascore
+Cássio|Cassio|GK||1|1987-06-06|BRA|c|195|1|G|i1|B|B|B|Cassio
+Jonathan Jesus|J. Jesus|CB||34|2004-05-27|BRA|d|187|4|F|i1|A|A|A|J. Jesus
+Lucas Villalba|Villalba|CB|SB|25|1994-08-19|ARG|c|177|1|F|i1|A|B|A|Villalba
+Gabriel Rojas|Rojas|SB||27|1997-06-21|ARG|c|178|2|F|i1|A|A|A|Rojas
+William|William|SB||12|1995-04-03|BRA|d|176|2|F|i1|A|B|A|William
+Lucas Romero|L. Romero|DH||29|1994-04-18|ARG|d|167|2|E|i1|A|A|A|L. Romero
+Bruno Rodrigues|B.Rodrigue|SH|CF|9|1997-03-07|BRA|d|177|2|E|i1|A|A|A|B.Rodrigue
+Gerson|Gerson|SH|DH|8|1997-05-20|BRA|c|185|4|G|k1|A|C|A|Gerson
+Matheus Pereira|M. Pereira|OH||10|1996-05-05|BRA|c|175|2|E|i1|H|B|A|M. Pereira
+Kaio Jorge|Kaio Jorge|CF||19|2002-01-24|BRA|d|182|1|F|i1|A|A|A|Kaio Jorge
+Keny Arroyo|Arroyo|CF|WG|99|2006-02-14|ECU|c|176|3|E|k1|A|A|A|Arroyo
+Otávio|Otavio|GK||81|2005-12-27|BRA|d|192|1|F|i1|B|B|B|Otavio
+Léo Aragão|L. Aragao|GK||41|2002-04-19|BRA|d|192|2|F|i1|A|B|A||-1.0|
+Fabrício Bruno|F. Bruno|CB||15|1996-02-12|BRA|d|192|2|G|k1|A|C|A||0.4|cab mar
+João Marcelo|J. Marcelo|CB||43|2000-06-13|BRA|d|189|2|F|i1|A|C|A|J. Marcelo
+Fagner|Fagner|SB||23|1989-06-11|BRA|d|168|1|F|i1|H|B|A|Fagner
+Kauã Moraes|K. Moraes|SB||2|2006-09-29|BRA|d|178|3|E|i1|A|A|A||-0.8|
+Matías Viña|Vina|SB|SH|6|1997-11-09|URU|c|180|1|F|i1|B|C|B|Vina
+Zé Lucas|Ze Lucas|DH||5|2008-03-22|BRA|d|174|4|E|i1|A|A|A|Ze Lucas
+Lucas Silva|L. Silva|DH||16|1993-02-16|BRA|d|182|1|F|i1|B|B|B||-0.1|vet
+Matheus Henrique|M. Henrique|DH|OH|7|1997-12-19|BRA|d|175|1|F|i1|B|B|B||0.2|
+Wesley|Wesley|WG|SH|20|2005-03-05|BRA|d|180|3|E|i1|A|A|A|Wesley
+Luis Sinisterra|Sinisterra|WG||17|1999-06-17|COL|d|176|4|E|k1|A|A|A|Sinisterra
+Marquinhos|Marquinhos|WG||11|2003-04-07|BRA|c|175|3|E|k1|A|A|A|Marquinhos
+Wanderson|Wanderson|WG||94|1994-10-06|BRA|d|175|3|F|k1|A|B|A|INT:Wanderson
+Gabriel Pec|G. Pec|WG|SH|77|2001-02-10|BRA|c|177|1|F|i1|A|B|A||0.2|vel dri
+Luciano Rodríguez|Lucho|CF||97|2003-07-16|URU|d|179|2|E|i1|A|A|A||0.0|
+Néiser Villarreal|Villarreal|CF||22|2005-04-23|COL|d|186|4|F|k1|A|A|A|Villarreal

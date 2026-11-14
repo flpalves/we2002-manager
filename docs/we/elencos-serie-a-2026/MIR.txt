@@ -1,0 +1,29 @@
+# MIR — elenco: mirassolfc.com.br/blogs/elenco (32 nomes; cortados Georgemy, Rafael Guanaes, Elias, Gustavo Cazonatti); aparência pelas fotos do Sofascore; camisa/pé/altura/nascimento/nacionalidade: Sofascore
+Walter|Walter|GK||22|1987-11-18|BRA|d|188|1|F|m1|A|C|A|Walter
+João Victor|J. Victor|CB||34|1997-09-02|BRA|d|188|2|F|k1|A|C|A|J. Victor
+Willian Machado|W. Machado|CB||3|1996-11-13|BRA|c|185|1|F|i1|B|C|B|W. Machado
+Reinaldo|Reinaldo|SB||6|1989-09-28|BRA|c|178|4|F|k1|A|C|A|Reinaldo
+Igor Formiga|I. Formiga|SB||32|1999-01-08|BRA|d|175|3|F|i1|A|B|A|I. Formiga
+Neto Moura|Neto Moura|DH||25|1996-08-06|BRA|d|176|2|F|i1|A|A|A|Neto Moura
+Denilson|Denilson|DH||27|2001-03-23|BRA|d|180|3|F|k1|A|B|A|Denilson
+Eduardo|Eduardo|OH||33|1989-10-17|BRA|d|184|2|F|i1|A|C|A|Eduardo
+André Luis|Andre Luis|CF||9|1994-03-09|BRA|d|182|1|F|i1|A|B|A|Andre Luis
+Alesson|Alesson|WG||77|1999-02-16|BRA|d|173|2|F|i1|A|C|A|Alesson
+Carlos Eduardo|C. Eduardo|WG||96|1996-10-10|BRA|d|173|4|E|k1|A|A|A|C. Eduardo
+Alex Muralha|A. Muralha|GK||23|1989-11-10|BRA|d|188|2|G|k1|A|C|A|A. Muralha
+Thomazella|Thomazella|GK||90|1990-08-15|BRA|d|191|1|F|i1|A|C|A||-1.0|
+Lucas Oliveira|L. Oliveira|CB||2|1996-02-02|BRA|d|187|2|F|i1|A|B|A||-0.3|cab
+Gabriel Knesowitsch|Gabriel K.|CB||44|2003-10-18|BRA|d|185|1|F|i1|A|C|A||-0.6|
+Victor Luis|V. Luis|SB||12|1993-06-23|BRA|c|180|2|F|i1|A|C|A||-0.3|vet
+Daniel Borges|D. Borges|SB||20|1993-03-23|BRA|d|174|2|F|i1|A|C|A|D. Borges
+José Aldo|Jose Aldo|DH||21|1998-07-25|BRA|a|174|1|F|i1|A|A|A|Jose Aldo
+Japa|Japa|DH|OH|5|2004-01-02|BRA|c|177|1|E|i1|B|B|B||-0.4|
+Wallisson|Wallisson|DH||80|1997-09-23|BRA|d|184|2|F|i1|H|A|A|CFC:Wallisson
+Shaylon|Shaylon|OH||7|1997-04-27|BRA|c|180|1|F|i1|A|B|A||0.0|cri
+Chico Kim|Chico|OH||10|1991-05-16|KOR|d|174|1|E|i1|A|A|A|Chico
+Gustavo Silva|G. Silva|WG||19|1997-09-07|BRA|d|169|1|E|i1|B|B|B||-0.2|
+Fernandinho|Fernandin.|WG||17|1997-07-19|BRA|d|174|3|F|i1|A|C|A||-0.3|vel
+Negueba|Negueba|WG||11|1999-12-03|BRA|d|175|3|E|k1|A|A|A|Negueba
+Bruno Santos|B. Santos|CF||30|1996-11-18|BRA|d|185|2|G|i1|A|C|A|B. Santos
+Zé Roberto|Ze Roberto|CF||99|1993-09-14|BRA|d|184|1|F|i1|A|C|A||0.0|fin cab vet
+Edson Carioca|E. Carioca|CF||95|1998-06-04|BRA|a|180|2|F|i1|A|C|A|E. Carioca

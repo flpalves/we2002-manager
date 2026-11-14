@@ -1,0 +1,90 @@
+/* WE2002 Manager — gerado de docs/design-system/tokens.json por tools/gerar-tokens-css.mjs. Não editar. */
+
+:root,
+[data-tema="escuro"] {
+  color-scheme: dark;
+  --fundo: #151515;
+  --painel: #232323;
+  --painel-alt: #292929;
+  --painel-fundo: #1a1a1a;
+  --cromo: #0c0c0c;
+  --cromo-texto: #f0f0f0;
+  --linha: #333333;
+  --linha-forte: #5c5c5c;
+  --texto: #e6e6e6;
+  --texto-forte: #ffffff;
+  --texto-suave: #a8a8a8;
+  --clube: #C8102E;
+  --sobre-clube: #ffffff;
+  --botao: #2c2c2c;
+  --botao-hover: #383838;
+  --botao-texto: #f0f0f0;
+  --sombra-dura: #000000;
+  --foco: #ffe14d;
+  --positivo: #7fd38a;
+  --atencao: #f2c94c;
+  --negativo: #ff8a8a;
+  --info: #6fb2ff;
+  --diretoria: #c9a0ff;
+  --seta-otima: #ff4d4d;
+  --seta-boa: #ff9f3a;
+  --seta-normal: #ffe14d;
+  --seta-ruim: #5fb8ff;
+  --seta-pessima: #b08cff;
+  --gramado: #2f6b36;
+  --gramado-escuro: #2a6131;
+  --placar: #000000;
+  --placar-texto: #ffe14d;
+  --font-display: "Chakra Petch", "Barlow", Tahoma, sans-serif;
+  --font-sans: "Barlow", Tahoma, sans-serif;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-12: 48px;
+  --gap-painel: 10px;
+  --radius-sm: 2px;
+  --radius-md: 3px;
+  --radius-round: 999px;
+  --sombra-botao: 3px 3px 0 #000000;
+  --sombra-botao-hover: 4px 4px 0 #000000;
+  --sombra-botao-pressionado: 1px 1px 0 #000000;
+  --sombra-painel: 0 2px 0 #000000;
+}
+
+[data-tema="claro"] {
+  color-scheme: light;
+  --fundo: #e9e7e2;
+  --painel: #f7f6f2;
+  --painel-alt: #efede7;
+  --painel-fundo: #dedbd3;
+  --cromo: #1f1f22;
+  --cromo-texto: #f0f0f0;
+  --linha: #c9c5bb;
+  --linha-forte: #3a3a3a;
+  --texto: #1a1a1a;
+  --texto-forte: #000000;
+  --texto-suave: #5c5a55;
+  --clube: #C8102E;
+  --sobre-clube: #ffffff;
+  --botao: #ffffff;
+  --botao-hover: #f0eee8;
+  --botao-texto: #111111;
+  --sombra-dura: #1a1a1a;
+  --foco: #1b5fd1;
+  --positivo: #1e7a33;
+  --atencao: #8a6100;
+  --negativo: #b3261e;
+  --info: #1b5fbf;
+  --diretoria: #6b3fb3;
+  --seta-otima: #ff4d4d;
+  --seta-boa: #ff9f3a;
+  --seta-normal: #ffe14d;
+  --seta-ruim: #5fb8ff;
+  --seta-pessima: #b08cff;
+  --gramado: #2f6b36;
+  --gramado-escuro: #2a6131;
+  --placar: #000000;
+  --placar-texto: #ffe14d;
+}

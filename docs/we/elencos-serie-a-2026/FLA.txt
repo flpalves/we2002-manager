@@ -1,0 +1,29 @@
+# FLA — elenco: flamengo.com.br/futebol/elenco (13/11/2026); camisa/altura/pé do site; nascimento e nacionalidade: Sofascore
+# nome|nome_we|pos|pos2|camisa|nasc|nac|pe|altura|pele|fis|cab|cor|barba|cbarba|old|delta|tags
+Agustín Rossi|Rossi|GK||1|1995-08-19|ARG|d|193|1|F|i1|A|C|A|Rossi
+Léo Ortiz|Leo Ortiz|CB|DH|3|1996-01-03|BRA|d|185|1|F|i1|B|B|B|Leo Ortiz
+Léo Pereira|L. Pereira|CB||4|1996-01-30|BRA|c|189|1|G|i1|B|C|B|L. Pereira
+Alex Sandro|A. Sandro|SB|CB|26|1991-01-24|BRA|c|180|3|F|k1|A|A|A|A. Sandro
+Guillermo Varela|Varela|SB||2|1993-03-23|URU|d|173|1|F|i1|H|B|B|Varela
+Erick Pulgar|Pulgar|DH|CB|5|1994-01-15|CHI|d|187|1|G|i1|A|A|A|Pulgar
+Jorginho|Jorginho|DH|OH|21|1991-12-20|ITA|d|180|1|F|i1|A|C|A|Jorginho
+Giorgian de Arrascaeta|Arrascaeta|OH|WG|10|1994-05-27|URU|d|173|1|E|i1|A|C|A|Arrascaeta
+Pedro|Pedro|CF||9|1997-06-19|BRA|d|185|1|G|i1|A|B|A|Pedro
+Samuel Lino|S. Lino|WG|SH|16|1999-12-22|BRA|d|177|3|F|k1|A|A|A|S. Lino
+Jorge Carrascal|Carrascal|WG|OH|15|1998-05-22|COL|d|180|2|F|i1|B|A|A|Carrascal
+Andrew|Andrew|GK||42|2001-07-01|BRA|d|189|4|F|k1|A|A|A||-0.3|
+Dyogo Alves|Dyogo|GK||49|2004-01-09|BRA|d|188|2|E|i1|A|A|A||-1.2|
+Danilo|Danilo|CB|SB|13|1991-07-13|BRA|d|184|2|F|i1|A|C|A|Danilo
+Vitão|Vitao|CB||44|2000-02-02|BRA|d|186|4|G|i1|A|A|A|INT:Vitao
+João Victor|J. Victor|CB||71|2007-01-02|BRA|d|187|3|F|k1|A|A|A||-1.0|
+Emerson Royal|E. Royal|SB||22|1999-01-14|BRA|d|181|4|F|i1|A|C|A|E. Royal
+Ayrton Lucas|A. Lucas|SB|SH|6|1997-06-19|BRA|c|180|2|F|i1|H|A|A|A. Lucas
+Evertton Araújo|E. Araujo|DH||52|2003-02-28|BRA|d|184|4|F|k1|A|B|A|E. Araujo
+Saúl Ñíguez|Saul|DH|OH|8|1994-11-21|ESP|c|184|1|F|i1|B|B|B|Saul
+Nicolás de la Cruz|De la Cruz|OH|DH|18|1997-05-31|URU|d|167|3|E|k1|A|A|A||1.0|cri baixo
+Lucas Paquetá|Paqueta|OH|DH|20|1997-08-26|BRA|c|183|2|F|i1|A|C|A|Paqueta
+Bruno Henrique|B.Henrique|CF|WG|27|1990-12-26|BRA|d|183|4|G|i1|A|B|A|B.Henrique
+Luiz Araújo|L. Araujo|WG|SH|7|1996-06-01|BRA|c|175|2|E|i1|H|A|A|L. Araujo
+Gonzalo Plata|Plata|WG||19|2000-11-01|ECU|c|178|4|F|i1|A|A|A|Plata
+Anthony Valencia|Valencia|WG||14|2003-07-20|ECU|c|173|3|E|k1|A|A|A||0.0|vel dri
+Joaquín Freitas|J. Freitas|CF||30|2006-12-09|ARG|d|177|1|E|i1|B|A|A||-0.8|

@@ -1,0 +1,20 @@
+{
+  "divisoes": [
+    {
+      "competicao": "serie-a"
+    },
+    {
+      "competicao": "serie-b",
+      "troca": 4
+    },
+    {
+      "competicao": "serie-c",
+      "troca": 4,
+      "sobem": {
+        "criterio": "grupo",
+        "fase": "quad",
+        "por_grupo": 2
+      }
+    }
+  ]
+}

@@ -1,0 +1,331 @@
+{
+  "versao": 1,
+  "nome": "Torneio WE2002",
+  "meuTime": "flamengo",
+  "criadoEm": "2026-11-08T23:14:16.224Z",
+  "idaVolta": true,
+  "times": [
+    {
+      "id": "fluminense",
+      "nome": "Fluminense",
+      "sigla": "FLU",
+      "arquivo": "data/times/fluminense.json",
+      "cor": "#7A1E3A",
+      "cor2": "#F2F2F2"
+    },
+    {
+      "id": "spfc",
+      "nome": "SPFC",
+      "sigla": "SPFC",
+      "arquivo": "data/times/spfc.json",
+      "cor": "#F2F2F2",
+      "cor2": "#151515"
+    },
+    {
+      "id": "flamengo",
+      "nome": "Flamengo",
+      "sigla": "FLA",
+      "arquivo": "data/times/flamengo.json",
+      "cor": "#C8102E",
+      "cor2": "#F2F2F2"
+    }
+  ],
+  "jogos": [
+    {
+      "id": "r1j1",
+      "rodada": 1,
+      "casa": "spfc",
+      "visitante": "flamengo",
+      "status": "encerrado",
+      "placar": {
+        "casa": 1,
+        "visitante": 0
+      },
+      "gols": [
+        {
+          "lado": "casa",
+          "nome": "Aurelio",
+          "vaga": 8,
+          "minuto": 28,
+          "assistencia": "Quintana",
+          "contra": false
+        }
+      ],
+      "penaltis": null,
+      "origem": "jogo",
+      "iniciadoEm": "2026-11-08T23:16:40.723Z",
+      "encerradoEm": "2026-11-08T23:32:22.980Z",
+      "invertido": true,
+      "partidaId": "cmw8g8qw0-r1j1-mw8gbudu"
+    },
+    {
+      "id": "r2j1",
+      "rodada": 2,
+      "casa": "flamengo",
+      "visitante": "fluminense",
+      "status": "encerrado",
+      "placar": {
+        "casa": 1,
+        "visitante": 4
+      },
+      "gols": [
+        {
+          "lado": "visitante",
+          "nome": "Fontoura",
+          "vaga": 10,
+          "minuto": 2,
+          "assistencia": "Tavora",
+          "contra": false
+        },
+        {
+          "lado": "visitante",
+          "nome": "Fontoura",
+          "vaga": 10,
+          "minuto": 4,
+          "assistencia": "Junqueira",
+          "contra": false
+        },
+        {
+          "lado": "visitante",
+          "nome": "Tavora",
+          "vaga": 8,
+          "minuto": 27,
+          "assistencia": "Fontoura",
+          "contra": false
+        },
+        {
+          "lado": "visitante",
+          "nome": "Junqueira",
+          "vaga": 9,
+          "minuto": 44,
+          "assistencia": "Fontoura",
+          "contra": false
+        },
+        {
+          "lado": "casa",
+          "nome": "Damasceno",
+          "vaga": 9,
+          "minuto": 69,
+          "assistencia": "Sampaio",
+          "contra": false
+        }
+      ],
+      "penaltis": null,
+      "origem": "jogo",
+      "iniciadoEm": "2026-11-09T00:19:18.286Z",
+      "encerradoEm": "2026-11-09T00:35:57.207Z",
+      "invertido": false,
+      "partidaId": "cmw8g8qw0-r2j1-mw8ikdql"
+    },
+    {
+      "id": "r3j1",
+      "rodada": 3,
+      "casa": "fluminense",
+      "visitante": "spfc",
+      "status": "encerrado",
+      "placar": {
+        "casa": 3,
+        "visitante": 3
+      },
+      "gols": [
+        {
+          "lado": "casa",
+          "nome": "Tavora",
+          "vaga": 8,
+          "minuto": 17,
+          "assistencia": null,
+          "contra": false
+        },
+        {
+          "lado": "visitante",
+          "nome": "Esteves",
+          "vaga": 10,
+          "minuto": 51,
+          "assistencia": null,
+          "contra": false
+        },
+        {
+          "lado": "casa",
+          "nome": "Junqueira",
+          "vaga": 9,
+          "minuto": 55,
+          "assistencia": "Tavora",
+          "contra": false
+        },
+        {
+          "lado": "casa",
+          "nome": "Fontoura",
+          "vaga": 10,
+          "minuto": 56,
+          "assistencia": "Assuncao",
+          "contra": false
+        },
+        {
+          "lado": "visitante",
+          "nome": "Quintana",
+          "vaga": 7,
+          "minuto": 65,
+          "assistencia": "Cardoso",
+          "contra": false
+        },
+        {
+          "lado": "visitante",
+          "nome": "Cardoso",
+          "vaga": 9,
+          "minuto": 75,
+          "assistencia": "Mattos",
+          "contra": false
+        }
+      ],
+      "penaltis": null,
+      "origem": "simulado",
+      "iniciadoEm": null,
+      "encerradoEm": "2026-11-09T00:41:13.533Z"
+    },
+    {
+      "id": "r4j1",
+      "rodada": 4,
+      "casa": "flamengo",
+      "visitante": "spfc",
+      "status": "encerrado",
+      "placar": {
+        "casa": 4,
+        "visitante": 0
+      },
+      "gols": [
+        {
+          "lado": "casa",
+          "nome": "S. Lino",
+          "vaga": 9,
+          "minuto": 12,
+          "assistencia": null,
+          "contra": false
+        },
+        {
+          "lado": "casa",
+          "nome": "S. Lino",
+          "vaga": 9,
+          "minuto": 35,
+          "assistencia": null,
+          "contra": false
+        },
+        {
+          "lado": "casa",
+          "nome": "S. Lino",
+          "vaga": 9,
+          "minuto": 44,
+          "assistencia": "Pedro",
+          "contra": false
+        },
+        {
+          "lado": "casa",
+          "nome": "S. Lino",
+          "vaga": 9,
+          "minuto": 72,
+          "assistencia": "Carrascal",
+          "contra": false
+        }
+      ],
+      "penaltis": null,
+      "origem": "jogo",
+      "iniciadoEm": "2026-11-12T01:55:00.581Z",
+      "encerradoEm": "2026-11-12T02:03:26.532Z",
+      "invertido": false,
+      "partidaId": "cmw8g8qw0-r4j1-mwcwb0iq",
+      "controle": "p1_cpu",
+      "uniformes": {
+        "casa": "titular",
+        "visitante": "titular"
+      }
+    },
+    {
+      "id": "r5j1",
+      "rodada": 5,
+      "casa": "fluminense",
+      "visitante": "flamengo",
+      "status": "encerrado",
+      "placar": {
+        "casa": 1,
+        "visitante": 5
+      },
+      "gols": [
+        {
+          "lado": "casa",
+          "nome": "Hulk",
+          "vaga": 8,
+          "minuto": 5,
+          "assistencia": null,
+          "contra": false
+        },
+        {
+          "lado": "visitante",
+          "nome": "Carrascal",
+          "vaga": 10,
+          "minuto": 11,
+          "assistencia": "Pedro",
+          "contra": false
+        },
+        {
+          "lado": "visitante",
+          "nome": "Pedro",
+          "vaga": 8,
+          "minuto": 20,
+          "assistencia": "Arrascaeta",
+          "contra": false
+        },
+        {
+          "lado": "visitante",
+          "nome": "S. Lino",
+          "vaga": 9,
+          "minuto": 44,
+          "assistencia": "Pedro",
+          "contra": false
+        },
+        {
+          "lado": "visitante",
+          "nome": "Carrascal",
+          "vaga": 10,
+          "minuto": 61,
+          "assistencia": "Jorginho",
+          "contra": false
+        },
+        {
+          "lado": "visitante",
+          "nome": "B.Henrique",
+          "vaga": 20,
+          "minuto": 88,
+          "assistencia": "Carrascal",
+          "contra": false
+        }
+      ],
+      "penaltis": null,
+      "origem": "jogo",
+      "iniciadoEm": "2026-11-12T02:03:33.224Z",
+      "encerradoEm": "2026-11-12T02:19:16.864Z",
+      "invertido": false,
+      "controle": "cpu_p1",
+      "partidaId": "cmw8g8qw0-r5j1-mwcwm02t",
+      "uniformes": {
+        "casa": "titular",
+        "visitante": "titular"
+      }
+    },
+    {
+      "id": "r6j1",
+      "rodada": 6,
+      "casa": "spfc",
+      "visitante": "fluminense",
+      "status": "encerrado",
+      "placar": {
+        "casa": 0,
+        "visitante": 0
+      },
+      "gols": [],
+      "penaltis": null,
+      "origem": "simulado",
+      "iniciadoEm": null,
+      "encerradoEm": "2026-11-12T02:19:19.527Z"
+    }
+  ],
+  "id": "cmw8g8qw0"
+}

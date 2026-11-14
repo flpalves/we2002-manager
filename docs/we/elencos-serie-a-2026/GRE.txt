@@ -1,0 +1,29 @@
+# GRE — elenco: portal.gremio.net (seção elenco; 34 nomes; cortados Gabriel Menegon, Pedro Gabriel, Athos, Luis Eduardo, Roger, Tiago); camisa do site; pé/altura/nascimento/nacionalidade: Sofascore
+Gabriel Grando|G. Grando|GK||12|2000-03-29|BRA|d|192|1|F|i1|B|B|B|G. Grando
+Gustavo Martins|G. Martins|CB||6|2002-08-11|BRA|d|191|2|F|i1|A|B|A|G. Martins
+Walter Kannemann|Kannemann|CB||4|1991-03-14|ARG|c|183|1|F|i1|B|B|B|Kannemann
+Wallace|Wallace|CB||82|2004-12-06|BRA|d|190|3|F|i1|A|A|A|Wallace
+Mathías Villasanti|Villasanti|DH||20|1997-01-24|PAR|d|178|1|F|i1|A|B|A|Villasanti
+Erick Noriega|Noriega|DH|CB|8|2001-10-22|PER|d|185|2|F|i1|A|A|A|Noriega
+Marlon|Marlon|SH|SB|23|1997-05-20|BRA|c|178|2|F|i1|A|A|A|Marlon
+João Pedro|Joao Pedro|SH|SB|18|1996-11-15|BRA|d|179|2|F|i1|A|B|A|Joao Pedro
+José Enamorado|Enamorado|OH|WG|99|1999-01-13|COL|d|167|3|E|i1|A|A|A|Enamorado
+Martin Braithwaite|Braithwait|CF||22|1991-06-05|DEN|d|180|3|F|k1|A|A|A|Braithwait
+Francis Amuzu|Amuzu|CF|WG|9|1999-08-23|GHA|a|170|4|E|k1|A|A|A|Amuzu
+Weverton|Weverton|GK||1|1987-12-13|BRA|d|189|2|F|k1|A|C|A|Weverton
+Thiago Beltrame|Beltrame|GK||24|2003-07-02|BRA|d|201|1|G|i1|B|B|B||-1.0|
+Fabián Balbuena|Balbuena|CB||2|1991-08-23|PAR|d|188|1|G|i1|A|A|A||0.2|cab mar vet
+Wagner Leonardo|W. Leonardo|CB||3|1999-07-23|BRA|c|186|2|F|i1|A|C|A||-0.1|
+Marcos Rocha|M. Rocha|SB||14|1988-12-11|BRA|d|176|3|F|k1|A|B|A|M. Rocha
+Caio Paulista|C.Paulista|SB|SH|38|1998-05-11|BRA|c|184|3|F|i1|A|B|A|C.Paulista
+Diego Caito|D. Caito|SB||27|2004-06-07|BRA|d|180|3|F|i1|A|C|A||-0.6|
+Dodi|Dodi|DH||17|1996-04-17|BRA|d|169|1|F|i1|A|A|A|Dodi
+Juan Nardoni|Nardoni|DH||5|2002-07-14|ARG|d|179|1|F|i1|A|A|A|Nardoni
+Danilo Barbosa|D. Barbosa|DH||15|1996-02-28|BRA|d|182|2|F|i1|A|B|A||0.0|mar
+Filip Krovinović|Krovinovic|OH|DH|10|1995-08-28|CRO|d|175|1|F|i1|B|C|B||0.2|cri
+Riquelme|Riquelme|OH||65|2006-08-12|BRA|d|181|4|E|i1|A|A|A||-0.8|
+Cristian Pavón|Pavon|WG||7|1996-01-21|ARG|d|169|1|E|i1|A|A|A|Pavon
+Jovane Cabral|Jovane|WG||77|1998-06-14|CPV|d|176|4|F|k1|A|A|A|Jovane
+Tetê|Tete|WG||11|2000-02-15|BRA|c|175|4|E|k1|A|A|A||0.0|dri vel
+Carlos Vinícius|C.Vinicius|CF||95|1995-03-25|BRA|c|190|3|G|k1|A|A|A|C.Vinicius
+Matheus Nascimento|M. Nascim.|CF||30|2004-03-02|BRA|d|185|2|F|i1|A|A|A||-0.3|

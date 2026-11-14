@@ -1,0 +1,78 @@
+{
+  "id": "serie-a",
+  "nome": "Série A",
+  "tipo": "nacional",
+  "participantes": {
+    "regra": "lista",
+    "times": [
+      "CAP",
+      "CAM",
+      "BAH",
+      "BOT",
+      "RBB",
+      "CHA",
+      "COR",
+      "CFC",
+      "CRU",
+      "FLA",
+      "FLU",
+      "GRE",
+      "INT",
+      "MIR",
+      "PAL",
+      "REM",
+      "SAN",
+      "SPFC",
+      "VAS",
+      "VIT"
+    ],
+    "quantidade": 20
+  },
+  "suspensao": {
+    "amarelos": 3,
+    "jogos": 1,
+    "vermelho_jogos": 1,
+    "zera_na_fase": null
+  },
+  "substituicoes": 3,
+  "fases": [
+    {
+      "id": "liga",
+      "nome": "Turno e returno",
+      "formato": "pontos_corridos",
+      "pontos_corridos": {
+        "turnos": 2
+      },
+      "desempate": [
+        "pontos",
+        "vitorias",
+        "saldo",
+        "gols_pro",
+        "confronto_direto",
+        "menos_vermelhos",
+        "menos_amarelos",
+        "sorteio"
+      ],
+      "zonas": [
+        {
+          "de": 1,
+          "ate": 6,
+          "nome": "Libertadores",
+          "cor": "info"
+        },
+        {
+          "de": 7,
+          "ate": 12,
+          "nome": "Sul-Americana",
+          "cor": "atencao"
+        },
+        {
+          "de": 17,
+          "ate": 20,
+          "nome": "Rebaixamento",
+          "cor": "negativo"
+        }
+      ]
+    }
+  ]
+}

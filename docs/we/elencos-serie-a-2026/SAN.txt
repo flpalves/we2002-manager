@@ -1,0 +1,29 @@
+# SAN — elenco: santosfc.com.br/masculino (34 nomes; cortados Rodrigo Falcão, João Pedro, Rafael Gonzaga, Davizinho, Samuel Pierri, Lima); site bloqueou (403) depois da leitura, aparência pelas fotos do Sofascore; camisa/pé/altura/nascimento/nacionalidade: Sofascore (Gustavo Henrique: sem cadastro no Sofascore, dados do pacote)
+Diógenes|Diogenes|GK||1|2001-01-06|BRA|d|190|4|F|i1|A|B|A|Diogenes
+João Alencar|J. Alencar|CB||42|2007-06-25|BRA|d|187|4|F|i1|A|A|A|J. Alencar
+Luan Peres|Luan Peres|CB||14|1994-07-19|BRA|c|190|1|F|i1|B|C|B|Luan Peres
+Gonzalo Escobar|Escobar|SB||31|1997-03-16|ARG|a|171|1|E|i1|A|A|A|Escobar
+Rodinei|Rodinei|SB||23|1992-01-29|BRA|d|175|4|F|i1|A|C|A|Rodinei
+Christian Oliva|Oliva|DH||28|1996-06-01|URU|d|178|1|F|i1|A|B|A|Oliva
+Gabriel Bontempo|Bontempo|SH|OH|8|2005-01-16|BRA|d|181|1|E|i1|A|A|A|Bontempo
+Philippe Coutinho|Coutinho|SH|OH|11|1992-06-11|BRA|d|172|2|E|k1|A|B|A|Coutinho
+Neymar|Neymar|OH|WG|10|1992-02-05|BRA|d|175|2|E|i1|A|B|A|Neymar
+Gabriel Barbosa|Gabigol|CF||9|1996-08-30|BRA|c|178|1|F|i1|H|C|A|Gabigol
+Everton Cebolinha|Cebolinha|CF|WG|7|1996-03-21|BRA|d|174|2|E|k1|A|B|A|Cebolinha
+Gabriel Brazão|G. Brazao|GK||77|2000-10-05|BRA|d|191|1|F|i1|A|A|A|G. Brazao
+João Paulo|Joao Paulo|GK||34|1995-06-29|BRA|d|188|3|F|i1|A|C|A||-0.4|
+Lucas Veríssimo|Verissimo|CB||4|1995-07-02|BRA|d|188|1|G|i1|A|B|A|Verissimo
+João Ananias|J. Ananias|CB||26|2007-02-12|BRA|c|188|3|F|i1|A|A|A||-0.8|
+Vinicius Lira|Vini Lira|SB||3|2007-10-12|BRA|c|187|1|F|i1|H|A|A|Vini Lira
+Igor Vinícius|I. Vinicius|SB||18|1997-04-02|BRA|d|173|2|E|i1|A|B|A||-0.2|
+Willian Arão|W. Arao|DH|CB|15|1992-03-12|BRA|d|181|3|F|i1|A|B|A|W. Arao
+João Schmidt|J. Schmidt|DH||5|1993-05-19|BRA|c|183|1|F|i1|A|B|A|J. Schmidt
+Gustavo Henrique|G.Henrique|DH||17|27|BRA|d|178|2|F|i1|A|A|A|G.Henrique
+Arthur|Arthur|DH|OH|6|1996-08-12|BRA|d|172|1|F|i1|B|B|B|Arthur
+Gabriel Menino|G. Menino|DH|SB|25|2000-09-29|BRA|d|176|2|F|i1|A|B|A||0.0|
+Miguelito|Miguelito|OH|WG|30|2004-04-25|BOL|c|177|2|E|i1|A|A|A||0.0|dri
+Thaciano|Thaciano|OH||16|1995-05-12|BRA|d|182|2|F|k1|A|C|A|Thaciano
+Álvaro Barreal|Barreal|SH|SB|22|2000-08-17|ARG|c|172|1|E|i1|A|A|A|Barreal
+Moisés|Moises|WG||21|1996-09-02|BRA|d|177|2|F|k1|A|C|A||0.0|vel
+Rony|Rony|WG|CF|33|1995-05-11|BRA|d|167|3|E|i1|A|B|A|CAM:Rony
+Gustavo Caballero|Caballero|CF|WG|17|2001-09-21|PAR|d|186|2|F|i1|A|B|A||-0.2|

@@ -1,0 +1,43 @@
+node_modules/
+out/
+dist/
+*.log
+
+# Emulador, imagem e BIOS (nunca no Git)
+emulador/
+*.bin
+*.cue
+*.iso
+*.img
+!kits/**/*.bin
+
+# Estados e dados de execução
+states/
+dumps/
+data/resultado.json
+data/resultados/
+data/*.log
+data/*.anterior
+data/times/*.anterior
+data/campeonato.*.json
+bridge/watches.json
+.sentry-native/
+
+# Carreiras ficam em %APPDATA%, mas por garantia
+*.sqlite
+*.sqlite-wal
+*.sqlite-shm
+
+# Gerados
+*.tsbuildinfo
+kits/convertidos/
+
+# Gerados pela ponte do manager (fase 5)
+data/gerado/
+data/resultado.anterior.json
+
+# Pastas locais de trabalho (fora do repositório)
+Nova pasta/
+backup/
+prévias/
+.export-github.tgz

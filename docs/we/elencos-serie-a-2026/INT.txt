@@ -1,0 +1,26 @@
+# INT — elenco: internacional.com.br/equipes/masculino (27 nomes; cortados os goleiros Anthoni e Diego Esser); camisa do site; pé/altura/nascimento/nacionalidade: Sofascore
+Kauan|Kauan|GK||22|2003-04-27|BRA|d|192|3|F|i1|A|A|A|Kauan
+Guillermo Maripán|Maripan|CB||3|1994-05-06|CHI|d|193|1|G|i1|A|B|A|Maripan
+Juninho|Juninho|CB||18|1995-02-01|BRA|c|186|3|F|i1|A|A|A|Juninho
+Alexandro Bernabei|Bernabei|SB|SH|26|2000-09-24|ARG|c|169|1|E|i1|B|B|B|Bernabei
+Braian Aguirre|Aguirre|SB||35|2000-07-28|ARG|d|174|2|E|i1|A|A|A|Aguirre
+Rodrigo Villagra|Villagra|DH||5|2001-02-14|ARG|d|178|1|F|i1|A|B|A|Villagra
+Ronaldo|Ronaldo|DH||16|1996-10-23|BRA|d|175|1|F|i1|B|A|A|Ronaldo
+Alan Patrick|A. Patrick|OH||10|1991-05-13|BRA|d|177|2|F|i1|A|A|A|A. Patrick
+Alerrandro|Alerrandro|CF||9|2000-01-12|BRA|d|180|3|F|k1|A|B|A|Alerrandro
+Vitinho|Vitinho|WG|OH|28|1999-04-01|BRA|d|181|2|F|i1|A|A|A|Vitinho
+Johan Carbonero|Carbonero|WG||7|1999-07-20|COL|d|170|4|E|i1|A|A|A|Carbonero
+Sergio Rochet|Rochet|GK||1|1993-03-23|URU|d|190|1|F|i1|A|A|A|Rochet
+Matheus Cunha|M. Cunha|GK||23|2001-05-24|BRA|d|193|1|G|i1|B|C|B|FLA:M. Cunha
+Félix Torres|F. Torres|CB||4|1997-01-11|ECU|d|187|4|G|k1|A|A|A||0.3|cab
+Gabriel Mercado|Mercado|CB||25|1987-03-18|ARG|d|180|1|F|k1|A|A|A|Mercado
+Victor Gabriel|V. Gabriel|CB||41|2004-04-28|BRA|c|187|3|F|i1|A|A|A||-0.6|
+Matheus Bahia|M. Bahia|SB||6|1999-08-11|BRA|c|181|2|F|i1|A|C|A|M. Bahia
+Bruno Gomes|B. Gomes|SB|DH|15|2001-04-04|BRA|d|175|1|F|i1|H|A|A|B. Gomes
+Thiago Maia|T. Maia|DH||29|1997-03-23|BRA|c|179|2|F|k1|A|B|A|T. Maia
+Bruno Henrique|B. Henrique|DH||8|1989-10-21|BRA|d|180|1|F|i1|A|C|A||0.0|vet mar
+Paulinho|Paulinho|DH|OH|27|1997-01-08|BRA|d|173|2|F|i1|A|C|A||-0.2|
+Calebe|Calebe|OH||30|2000-04-30|BRA|c|173|3|F|i1|A|C|A||-0.1|cri
+Niclas Eliasson|Eliasson|WG|SH|17|1995-12-07|SWE|c|179|4|F|i1|A|A|A||0.0|cri
+Kayky|Kayky|WG||11|2003-06-10|BRA|c|175|3|E|i1|A|A|A||0.0|dri
+Antonio Sanabria|Sanabria|CF||19|1996-03-04|PAR|d|181|1|F|i1|A|C|A||0.3|fin

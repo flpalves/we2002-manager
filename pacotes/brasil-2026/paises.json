@@ -1,0 +1,52 @@
+[
+  {
+    "codigo": "BRA",
+    "nome": "Brasil",
+    "fator_valor": 1
+  },
+  {
+    "codigo": "ARG",
+    "nome": "Argentina",
+    "fator_valor": 0.8
+  },
+  {
+    "codigo": "URU",
+    "nome": "Uruguai",
+    "fator_valor": 0.6
+  },
+  {
+    "codigo": "COL",
+    "nome": "Colômbia",
+    "fator_valor": 0.6
+  },
+  {
+    "codigo": "CHI",
+    "nome": "Chile",
+    "fator_valor": 0.5
+  },
+  {
+    "codigo": "ECU",
+    "nome": "Equador",
+    "fator_valor": 0.5
+  },
+  {
+    "codigo": "PAR",
+    "nome": "Paraguai",
+    "fator_valor": 0.45
+  },
+  {
+    "codigo": "PER",
+    "nome": "Peru",
+    "fator_valor": 0.4
+  },
+  {
+    "codigo": "BOL",
+    "nome": "Bolívia",
+    "fator_valor": 0.3
+  },
+  {
+    "codigo": "VEN",
+    "nome": "Venezuela",
+    "fator_valor": 0.3
+  }
+]

@@ -1,0 +1,223 @@
+{
+  "semente": 20260101,
+  "temporadas": [
+    {
+      "temporada": 2026,
+      "campeoes": [
+        {
+          "competicao": "Série A",
+          "time": "BBB"
+        },
+        {
+          "competicao": "Série B",
+          "time": "HHH"
+        }
+      ],
+      "movimentos": [
+        {
+          "time": "DDD",
+          "de": "Série A",
+          "para": "Série B",
+          "tipo": "rebaixamento"
+        },
+        {
+          "time": "AAA",
+          "de": "Série A",
+          "para": "Série B",
+          "tipo": "rebaixamento"
+        },
+        {
+          "time": "HHH",
+          "de": "Série B",
+          "para": "Série A",
+          "tipo": "acesso"
+        },
+        {
+          "time": "FFF",
+          "de": "Série B",
+          "para": "Série A",
+          "tipo": "acesso"
+        }
+      ],
+      "artilheiros": [
+        {
+          "competicao": "Série A",
+          "jogador": "Jogador 13",
+          "time": "BBB",
+          "gols": 3
+        },
+        {
+          "competicao": "Série B",
+          "jogador": "Jogador 18",
+          "time": "EEE",
+          "gols": 5
+        }
+      ],
+      "usuario": {
+        "campanhas": [
+          {
+            "competicao": "Série A",
+            "posicao": 4,
+            "campeao": false
+          }
+        ],
+        "metas": [
+          {
+            "descricao": "Terminar a Série A até o 4º lugar",
+            "atingida": true,
+            "critica": true
+          },
+          {
+            "descricao": "Fechar a temporada com saldo positivo",
+            "atingida": true,
+            "critica": false
+          },
+          {
+            "descricao": "Manter a folha dentro do orçamento",
+            "atingida": true,
+            "critica": false
+          }
+        ],
+        "confianca": 96,
+        "demitido": false,
+        "saldo": 573399998,
+        "saidas": 0,
+        "renovadosPelaDiretoria": 0
+      },
+      "depois": {
+        "saldos": {
+          "AAA": 573399998,
+          "BBB": 592399998,
+          "CCC": 581743998,
+          "DDD": 583759998,
+          "EEE": 592399998,
+          "FFF": 585775998,
+          "GGG": 559999998,
+          "HHH": 597583998
+        },
+        "elencos": {
+          "AAA": 25,
+          "BBB": 23,
+          "CCC": 23,
+          "DDD": 23,
+          "EEE": 23,
+          "FFF": 23,
+          "GGG": 23,
+          "HHH": 23
+        },
+        "livres": 0,
+        "transferencias": 0,
+        "gols": 50
+      }
+    },
+    {
+      "temporada": 2027,
+      "campeoes": [
+        {
+          "competicao": "Série A",
+          "time": "FFF"
+        },
+        {
+          "competicao": "Série B",
+          "time": "AAA"
+        }
+      ],
+      "movimentos": [
+        {
+          "time": "HHH",
+          "de": "Série A",
+          "para": "Série B",
+          "tipo": "rebaixamento"
+        },
+        {
+          "time": "CCC",
+          "de": "Série A",
+          "para": "Série B",
+          "tipo": "rebaixamento"
+        },
+        {
+          "time": "AAA",
+          "de": "Série B",
+          "para": "Série A",
+          "tipo": "acesso"
+        },
+        {
+          "time": "DDD",
+          "de": "Série B",
+          "para": "Série A",
+          "tipo": "acesso"
+        }
+      ],
+      "artilheiros": [
+        {
+          "competicao": "Série A",
+          "jogador": "Jogador 17",
+          "time": "BBB",
+          "gols": 4
+        },
+        {
+          "competicao": "Série B",
+          "jogador": "Jogador 19",
+          "time": "GGG",
+          "gols": 4
+        }
+      ],
+      "usuario": {
+        "campanhas": [
+          {
+            "competicao": "Série B",
+            "posicao": 1,
+            "campeao": true
+          }
+        ],
+        "metas": [
+          {
+            "descricao": "Terminar a Série B até o 4º lugar",
+            "atingida": true,
+            "critica": true
+          },
+          {
+            "descricao": "Fechar a temporada com saldo positivo",
+            "atingida": true,
+            "critica": false
+          },
+          {
+            "descricao": "Manter a folha dentro do orçamento",
+            "atingida": true,
+            "critica": false
+          }
+        ],
+        "confianca": 100,
+        "demitido": false,
+        "saldo": 1049959996,
+        "saidas": 2,
+        "renovadosPelaDiretoria": 23
+      },
+      "depois": {
+        "saldos": {
+          "AAA": 1049959996,
+          "BBB": 1082783996,
+          "CCC": 1067663996,
+          "DDD": 1088255996,
+          "EEE": 1060319996,
+          "FFF": 1098335996,
+          "GGG": 1035119996,
+          "HHH": 1079615996
+        },
+        "elencos": {
+          "AAA": 23,
+          "BBB": 23,
+          "CCC": 23,
+          "DDD": 23,
+          "EEE": 23,
+          "FFF": 23,
+          "GGG": 23,
+          "HHH": 23
+        },
+        "livres": 2,
+        "transferencias": 0,
+        "gols": 107
+      }
+    }
+  ]
+}

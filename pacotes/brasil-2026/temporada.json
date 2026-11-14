@@ -1,0 +1,22 @@
+{
+  "blocos": [
+    {
+      "competicao": "serie-a",
+      "datas": "fds",
+      "semana_inicio": 12,
+      "semana_fim": 50
+    },
+    {
+      "competicao": "serie-b",
+      "datas": "fds",
+      "semana_inicio": 12,
+      "semana_fim": 50
+    },
+    {
+      "competicao": "serie-c",
+      "datas": "fds",
+      "semana_inicio": 14,
+      "semana_fim": 44
+    }
+  ]
+}

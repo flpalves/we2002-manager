@@ -1,0 +1,11 @@
+{
+  // Só referências; os paths ficam aqui também para o tsx (scripts em tools/*.ts).
+  "compilerOptions": {
+    "paths": {
+      "@core/*": ["./src/core/*"],
+      "@shared/*": ["./src/shared/*"]
+    }
+  },
+  "files": [],
+  "references": [{ "path": "./tsconfig.node.json" }, { "path": "./tsconfig.web.json" }]
+}

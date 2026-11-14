@@ -1,0 +1,14 @@
+{
+  "name": "we2002-campeonato",
+  "version": "0.1.0",
+  "description": "Campeonato de 4 times do WE2002 Manager: calendário, partidas no emulador, resultados e classificação",
+  "main": "main.js",
+  "private": true,
+  "scripts": {
+    "start": "electron .",
+    "test": "node teste-logica.js"
+  },
+  "devDependencies": {
+    "electron": "^33.0.0"
+  }
+}

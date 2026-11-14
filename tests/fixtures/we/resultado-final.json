@@ -1,0 +1,59 @@
+{
+  "casa": {
+    "estatisticas": {
+      "amarelos": 0,
+      "chutes": 5,
+      "desconhecido1": 0,
+      "desconhecido2": 0,
+      "escanteios": 1,
+      "faltas": 0,
+      "impedimentos": 0,
+      "laterais": 0
+    },
+    "gols": 0,
+    "id_we": 41,
+    "nome": "Flamengo",
+    "penaltis": null
+  },
+  "fase": "2T",
+  "final": true,
+  "gerado_em": "2026-11-08T23:01:46Z",
+  "gols": [
+    {
+      "assist_nome": "Arantes",
+      "assist_vaga": 5,
+      "lado": "visitante",
+      "minuto": 55,
+      "nome": "Toninho",
+      "periodo": "2T",
+      "vaga": 9
+    }
+  ],
+  "modo": "pontos_corridos",
+  "motivo": "fim de jogo",
+  "nao_mapeado": [
+    "cartoes_por_jogador",
+    "lesoes",
+    "gol_contra"
+  ],
+  "partida_id": "cmw84jj8o-r6j2-mw8fi25l",
+  "penaltis": false,
+  "prorrogacao": false,
+  "vencedor": "visitante",
+  "visitante": {
+    "estatisticas": {
+      "amarelos": 0,
+      "chutes": 1,
+      "desconhecido1": 0,
+      "desconhecido2": 0,
+      "escanteios": 0,
+      "faltas": 0,
+      "impedimentos": 0,
+      "laterais": 0
+    },
+    "gols": 1,
+    "id_we": 8,
+    "nome": "Corinthians",
+    "penaltis": null
+  }
+}
