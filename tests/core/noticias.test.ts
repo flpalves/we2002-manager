@@ -163,6 +163,7 @@ describe('notícias informativas', () => {
   it('textos', () => {
     expect(info.resultadoDoUsuario({ casa: 'AAA', visitante: 'BBB', golsCasa: 1, golsVisitante: 2, competicao: 'Série A', penaltis: null }, 'AAA').texto).toBe('Derrota pela Série A: AAA 1 x 2 BBB.')
     expect(info.transferencia({ jogador: 'Zé', jogadorId: '1', de: 'BBB', para: 'CCC', valor: 100_000 }, dinheiro).texto).toBe('CCC contrata Zé, ex-BBB por R$1000.')
+    expect(info.transferencia({ jogador: 'Wendel', jogadorId: '2', de: null, para: 'BAHIA', valor: 100_000, exterior: 'Zenit' }, dinheiro).texto).toBe('Wendel, ex-Zenit, chega ao BAHIA por R$1000.')
     expect(info.lesao({ id: '1', nome: 'Zé' }, 1, 'AAA').texto).toBe('Zé se machuca e desfalca o time por 1 semana.')
     expect(info.contratosAcabando(['A', 'B', 'C', 'D', 'E', 'F'], 2026).texto).toBe('6 contratos terminam em 2026: A, B, C, D e mais 2. Renove em Mercado.')
   })

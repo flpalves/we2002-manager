@@ -111,6 +111,16 @@ describe('negociação', () => {
     expect(iniciarNegociacao('livre', 0, 50).etapa).toBe('jogador')
     expect(iniciarNegociacao('renovacao', 0, 50).etapa).toBe('jogador')
   })
+  it('exterior começa no jogador com a taxa fixa já acordada; 3 recusas do jogador encerram', () => {
+    const n = iniciarNegociacao('exterior', 34_700_000, 100)
+    expect(n).toMatchObject({ etapa: 'jogador', pedida: 34_700_000, valorAcordado: 34_700_000 })
+    expect(() => proporAoClube(n, 34_700_000, PADROES)).toThrow(/etapa do clube/)
+    const fechado = proporAoJogador(n, 100, PADROES)
+    expect(fechado.negociacao).toMatchObject({ etapa: 'concluida', valorAcordado: 34_700_000, salarioAcordado: 100 })
+    let r = n
+    for (let i = 0; i < PADROES.mercado.recusas_maximas; i++) r = proporAoJogador(r, 10, PADROES).negociacao
+    expect(r.etapa).toBe('encerrada')
+  })
   it('jogador: aceita, contraproposta ou recusa', () => {
     const n = { ...iniciarNegociacao('livre', 0, 100) }
     expect(proporAoJogador(n, 100, PADROES).resposta).toBe('aceita')

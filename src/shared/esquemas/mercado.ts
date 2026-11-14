@@ -2,7 +2,7 @@ import { z } from 'zod'
 
 /** DTOs do mercado, das finanças e da diretoria (fase 6). Dinheiro em centavos. */
 
-export const TipoNegocioSchema = z.enum(['compra', 'emprestimo', 'livre', 'renovacao', 'multa'])
+export const TipoNegocioSchema = z.enum(['compra', 'emprestimo', 'livre', 'renovacao', 'multa', 'exterior'])
 
 export const SituacaoMercadoSchema = z.object({
   movimentos: z.number().int(),
@@ -34,6 +34,9 @@ export const JogadorMercadoSchema = z.object({
   doUsuario: z.boolean(),
   /** À venda e por quê (null = não está). */
   aVenda: z.enum(['excedente', 'financeiro', 'emprestimo', 'usuario']).nullable(),
+  /** Disponível do exterior: clube e país de origem (informativos) e a taxa fixa. */
+  origem: z.object({ clube: z.string(), pais: z.string() }).nullable().optional(),
+  taxa: z.number().int().nullable().optional(),
 })
 export type JogadorMercadoDto = z.infer<typeof JogadorMercadoSchema>
 
@@ -43,7 +46,10 @@ export const FiltrosMercadoSchema = z.object({
   geralMin: z.number().int().min(1).max(20).optional(),
   idadeMax: z.number().int().min(14).max(50).optional(),
   valorMax: z.number().int().min(0).optional(),
+  /** Sem clube: livres e disponíveis do exterior. */
   somenteLivres: z.boolean().optional(),
+  /** Só os disponíveis do exterior. */
+  somenteExterior: z.boolean().optional(),
   /** Só quem está na lista de venda (de qualquer clube). */
   somenteAVenda: z.boolean().optional(),
   /** Só os jogadores do time do usuário (renovações). */

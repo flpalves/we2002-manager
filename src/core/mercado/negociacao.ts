@@ -7,7 +7,7 @@ import { ORDEM_PORTE, type Importancia, type Porte } from './valor'
  * negociação e a resposta.
  */
 
-export type TipoNegocio = 'compra' | 'emprestimo' | 'livre' | 'renovacao' | 'multa'
+export type TipoNegocio = 'compra' | 'emprestimo' | 'livre' | 'renovacao' | 'multa' | 'exterior'
 export type Etapa = 'clube' | 'jogador' | 'concluida' | 'encerrada'
 
 export interface Movimento {
@@ -69,16 +69,20 @@ export function salarioMinimoAceito(c: ContextoSalario, regras: Regras): number 
   return Math.round(Math.max(base, regras.mercado.salario_minimo) * mudanca * porte * moral)
 }
 
+/**
+ * Livre e renovação começam no jogador; multa: o clube é obrigado a aceitar o valor da multa.
+ * Exterior (06, "Jogadores sem clube"): não há clube para negociar; a taxa fixa (`pedida`) já
+ * vem acordada e a negociação começa no jogador.
+ */
 export function iniciarNegociacao(tipo: TipoNegocio, pedida: number, salarioMinimo: number): Negociacao {
-  // Livre e renovação começam no jogador; multa: o clube é obrigado a aceitar o valor da multa.
-  const semClube = tipo === 'livre' || tipo === 'renovacao'
+  const semClube = tipo === 'livre' || tipo === 'renovacao' || tipo === 'exterior'
   return {
     tipo,
     etapa: semClube ? 'jogador' : 'clube',
     pedida,
     ultimaContra: null,
     recusasSeguidas: 0,
-    valorAcordado: semClube ? 0 : null,
+    valorAcordado: tipo === 'exterior' ? pedida : semClube ? 0 : null,
     salarioMinimo,
     ultimaContraSalario: null,
     salarioAcordado: null,

@@ -203,6 +203,7 @@ const NOME_TIPO: Record<NegociacaoDto['tipo'], string> = {
   livre: 'Livre',
   renovacao: 'Renovação',
   multa: 'Multa rescisória',
+  exterior: 'Do exterior',
 }
 const NOME_QUEM = { usuario: 'Você', clube: 'Clube', jogador: 'Jogador' } as const
 const NOME_MOV = { proposta: 'propôs', aceita: 'aceitou', contraproposta: 'contrapropôs', recusa: 'recusou', encerrada: 'encerrou' } as const

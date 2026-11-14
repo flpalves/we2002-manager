@@ -27,7 +27,14 @@ export function suspensao(jogador: { id: string; nome: string }, competicao: str
   return { tipo: 'elenco', jogador: jogador.id, time, texto: `${jogador.nome} está suspenso: cumpre ${plural(jogos, 'jogo', 'jogos')} na ${competicao}.` }
 }
 
-export function transferencia(t: { jogador: string; jogadorId: string; de: string | null; para: string; valor: number; emprestimo?: boolean }, dinheiro: FormatarDinheiro): NoticiaInfo {
+export function transferencia(
+  t: { jogador: string; jogadorId: string; de: string | null; para: string; valor: number; emprestimo?: boolean; /** Disponível do exterior: clube de origem. */ exterior?: string },
+  dinheiro: FormatarDinheiro,
+): NoticiaInfo {
+  if (t.exterior) {
+    const valor = t.valor > 0 ? ` por ${dinheiro(t.valor)}` : ''
+    return { tipo: 'mercado', jogador: t.jogadorId, time: t.para, texto: `${t.jogador}, ex-${t.exterior}, chega ao ${t.para}${valor}.` }
+  }
   const como = t.emprestimo ? 'acerta o empréstimo de' : t.de ? 'contrata' : 'contrata o livre'
   const origem = t.de ? `, ex-${t.de}` : ''
   const valor = t.valor > 0 ? ` por ${dinheiro(t.valor)}` : ''

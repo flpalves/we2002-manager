@@ -9,7 +9,7 @@ import { continuar } from '../../src/main/carreira/temporada'
 import type { Sql } from '../../src/main/db/sql'
 import { avancar } from '../helpers/avancar'
 import { abrirNodeSqlite } from '../helpers/sqlite'
-import { pacote as fixture, time } from '../fixtures/pacote'
+import { exterior, pacote as fixture, time } from '../fixtures/pacote'
 import { escreverPacote } from '../helpers/pacote'
 import { ErroApp } from '../../src/main/ipc/registrar'
 import type { Regras } from '@core/config/padroes'
@@ -204,5 +204,124 @@ describe('mercado, finanças e diretoria do usuário (serviço + SQLite)', () =>
     expect(situacao(sql).movimentos).toBe(5)
     expect(sql.get<{ time_usuario: string }>('SELECT time_usuario FROM carreira')?.time_usuario).toBe('CCC')
     expect(continuar(sql).preJogo).not.toBeNull()
+  })
+})
+
+describe('disponíveis do exterior (9.2, usuário)', () => {
+  let carreiras: Carreiras
+  let sql: Sql
+  const TAXA = 50_000_000
+
+  beforeEach(() => {
+    const base = mkdtempSync(join(tmpdir(), 'we-exterior-'))
+    escreverPacote(
+      join(base, 'pacotes', 'teste'),
+      fixture({ times: ['AAA', 'BBB', 'CCC', 'DDD'].map((s) => time(s)), exterior: { temporada: 2026, jogadores: [exterior(1, { taxa: TAXA }), exterior(2, { taxa: 80_000_000 })] } }),
+    )
+    carreiras = new Carreiras({
+      pastaCarreiras: () => join(base, 'carreiras'),
+      pastaPacotes: () => join(base, 'pacotes'),
+      abrirBanco: abrirNodeSqlite,
+      lerResumoArquivo: () => null,
+      sementeNova: () => 7,
+      agora: () => '2026-11-14T00:00:00Z',
+      sufixoId: () => 'ext',
+    })
+    carreiras.criar({ pacote: 'teste', time: 'AAA', tecnico: 'Felipe', nome: 'E', dificuldade: 'normal' })
+    sql = carreiras.sql()
+    sql.run("UPDATE time SET saldo = 5000000000 WHERE sigla = 'AAA'")
+  })
+
+  const idExt = (n: number) => String(sql.get<{ id: number }>('SELECT id FROM jogador WHERE chave = ?', `ext-j${n}`)!.id)
+  const saldo = () => sql.get<{ saldo: number }>("SELECT saldo FROM time WHERE sigla = 'AAA'")!.saldo
+  const mudarRegras = (f: (r: Regras) => void) => {
+    const r = JSON.parse(sql.get<{ dados: string }>('SELECT dados FROM regras WHERE id = 1')!.dados)
+    f(r)
+    sql.run('UPDATE regras SET dados = ? WHERE id = 1', JSON.stringify(r))
+  }
+
+  it('aparece na busca com origem e taxa; filtros "sem clube" e "exterior"', () => {
+    const j = buscar(sql, { somenteExterior: true })
+    expect(j.map((x) => [x.nome, x.time, x.taxa, x.origem])).toEqual([
+      ['Exterior 1', null, TAXA, { clube: 'Zenit', pais: 'RUS' }],
+      ['Exterior 2', null, 80_000_000, { clube: 'Zenit', pais: 'RUS' }],
+    ])
+    expect(buscar(sql, { somenteLivres: true }).map((x) => x.nome)).toEqual(['Exterior 1', 'Exterior 2'])
+    expect(buscar(sql, {}).filter((x) => x.time !== null).every((x) => x.taxa === null && x.origem === null)).toBe(true)
+  })
+
+  it('negociação começa no jogador com a taxa acordada; a taxa cobrada é exatamente a do pacote', () => {
+    const id = idExt(1)
+    const n0 = negociacao(sql, id)
+    expect(n0).toMatchObject({ tipo: 'exterior', etapa: 'jogador', pedida: TAXA, valorAcordado: TAXA, tiposPossiveis: ['exterior'] })
+    const antes = saldo()
+    // Bem abaixo do pedido: recusa (gasta 1 movimento) e não cobra nada.
+    const recusa = propor(sql, { jogadorId: id, tipo: 'exterior', salario: 1 })
+    expect(recusa.historico.at(-1)).toMatchObject({ quem: 'jogador', tipo: 'recusa' })
+    const pedido = recusa.historico.at(-1)!.valor
+    expect(situacao(sql).movimentos).toBe(4)
+    expect(saldo()).toBe(antes)
+
+    const fechada = propor(sql, { jogadorId: id, tipo: 'exterior', salario: pedido, temporadas: 3 })
+    expect(fechada).toMatchObject({ etapa: 'concluida', mensagem: 'Negócio fechado!' })
+    expect(saldo()).toBe(antes - TAXA)
+    const j = sql.get<{ status: string; sigla: string; camisa: number; taxa_fixa: number | null; origem_clube: string | null }>(
+      'SELECT j.status, t.sigla, j.camisa, j.taxa_fixa, j.origem_clube FROM jogador j JOIN time t ON t.id = j.time_id WHERE j.id = ?',
+      Number(id),
+    )!
+    expect(j).toMatchObject({ status: 'ativo', sigla: 'AAA', taxa_fixa: null, origem_clube: null })
+    const camisas = sql.all<{ camisa: number }>("SELECT j.camisa FROM jogador j JOIN time t ON t.id = j.time_id WHERE t.sigla = 'AAA' AND j.id <> ?", Number(id)).map((x) => x.camisa)
+    expect(j.camisa).toBeGreaterThanOrEqual(1)
+    expect(j.camisa).toBeLessThanOrEqual(32)
+    expect(camisas).not.toContain(j.camisa)
+    expect(sql.get('SELECT de, para, tipo, valor FROM transferencia WHERE jogador_id = ?', Number(id))).toEqual({ de: null, para: 'AAA', tipo: 'exterior', valor: TAXA })
+    expect(sql.get<{ categoria: string }>("SELECT categoria FROM lancamento_financeiro WHERE time = 'AAA' AND valor = ?", -TAXA)).toEqual({ categoria: 'transferencia_saida' })
+    expect(sql.get('SELECT ate_temporada, tipo FROM contrato WHERE jogador_id = ?', Number(id))).toEqual({ ate_temporada: 2029, tipo: 'definitivo' })
+    expect(sql.get<{ texto: string }>("SELECT texto FROM noticia WHERE texto LIKE '%ex-Zenit%'")?.texto).toMatch(/^Exterior 1, ex-Zenit, chega ao /)
+    // Não aparece mais como do exterior.
+    expect(buscar(sql, { somenteExterior: true }).map((x) => x.nome)).toEqual(['Exterior 2'])
+  })
+
+  it('salário pedido = referência × exterior.premio_salarial', () => {
+    const id = idExt(1)
+    mudarRegras((r) => (r.exterior.premio_salarial = 1))
+    const sem = propor(sql, { jogadorId: id, tipo: 'exterior', salario: 1 }).historico.at(-1)!.valor
+    sql.run('UPDATE negociacao SET aberta = 0')
+    mudarRegras((r) => (r.exterior.premio_salarial = 1.5))
+    const com = propor(sql, { jogadorId: id, tipo: 'exterior', salario: 1 }).historico.at(-1)!.valor
+    expect(com).toBeGreaterThan(sem)
+  })
+
+  it('3 recusas do jogador encerram e não cobram a taxa', () => {
+    const id = idExt(1)
+    const antes = saldo()
+    let r = propor(sql, { jogadorId: id, tipo: 'exterior', salario: 1 })
+    r = propor(sql, { jogadorId: id, tipo: 'exterior', salario: 1 })
+    r = propor(sql, { jogadorId: id, tipo: 'exterior', salario: 1 })
+    expect(r).toMatchObject({ etapa: 'encerrada', mensagem: 'O jogador encerrou a negociação.' })
+    expect(saldo()).toBe(antes)
+    expect(sql.get<{ n: number }>("SELECT COUNT(*) n FROM transferencia WHERE tipo = 'exterior'")?.n).toBe(0)
+    expect(sql.get<{ status: string }>('SELECT status FROM jogador WHERE id = ?', Number(id))?.status).toBe('exterior')
+  })
+
+  it('fora da janela não negocia', () => {
+    mudarRegras((x) => (x.mercado.janelas = [{ semana_inicio: 50, semana_fim: 51 }]))
+    const id = idExt(1)
+    expect(negociacao(sql, id)).toMatchObject({ etapa: 'encerrada', tiposPossiveis: [], mensagem: 'Do exterior: só na janela de transferências.' })
+    expect(codigo(() => propor(sql, { jogadorId: id, tipo: 'exterior', salario: 999_000_000 }))).toBe('negocio_indisponivel')
+    expect(situacao(sql).movimentos).toBe(5)
+  })
+
+  it('sem caixa para a taxa (ou com saldo negativo) não abre', () => {
+    const id = idExt(2)
+    sql.run("UPDATE time SET saldo = 79999999 WHERE sigla = 'AAA'")
+    expect(negociacao(sql, id)).toMatchObject({ etapa: 'encerrada', mensagem: 'Sem caixa para a taxa.' })
+    expect(codigo(() => propor(sql, { jogadorId: id, tipo: 'exterior', salario: 999_000_000 }))).toBe('sem_caixa')
+    sql.run("UPDATE time SET saldo = -1 WHERE sigla = 'AAA'")
+    expect(codigo(() => propor(sql, { jogadorId: idExt(1), tipo: 'exterior', salario: 999_000_000 }))).toBe('sem_caixa')
+    sql.run("UPDATE time SET saldo = 80000000 WHERE sigla = 'AAA'")
+    expect(propor(sql, { jogadorId: id, tipo: 'exterior', salario: 999_000_000 }).etapa).toBe('concluida')
+    expect(saldo()).toBe(0)
+    expect(situacao(sql).movimentos).toBe(4)
   })
 })
