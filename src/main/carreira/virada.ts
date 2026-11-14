@@ -4,6 +4,7 @@ import { participantesSeguintes } from '@core/competicoes/virada'
 import { fecharMetas, metaAtingida, type Meta } from '@core/diretoria/diretoria'
 import { geral } from '@core/jogadores/conversao'
 import { cpuRenova } from '@core/mercado/contratos'
+import { viradaExterior } from '@core/mercado/exterior'
 import * as info from '@core/noticias/informativas'
 import type { Atributos, Competicao } from '@shared/esquemas/pacote'
 import type { BalancoTemporada, ContratoAcabando, PreviaVirada, RelatorioTemporada } from '@shared/esquemas/temporada'
@@ -159,6 +160,7 @@ export function virarTemporada(sql: Sql): RelatorioTemporada {
     )
     sql.run('INSERT OR REPLACE INTO configuracao (chave, valor) VALUES (?, ?)', chaveClassificados(T + 1), JSON.stringify(classificados))
     if (d.regras.virada.envelhecer) sql.run('UPDATE jogador SET idade = idade + 1')
+    viradaDoExterior(sql, s)
     sql.run('DELETE FROM disciplina WHERE suspenso = 0')
     sql.run('UPDATE disciplina SET amarelos = 0')
     sql.run("UPDATE proposta_recebida SET estado = 'expirada' WHERE estado = 'aberta'")
@@ -185,6 +187,22 @@ export function virarTemporada(sql: Sql): RelatorioTemporada {
     registrarInfo(sql, T + 1, 1, info.novaTemporada(T + 1))
   })
   return relatorio
+}
+
+/**
+ * Disponíveis do exterior que sobraram (06): taxa recalculada pela idade nova e parte do pool
+ * sai (`status = 'fora'`, não aparece em busca nenhuma). Roda depois do envelhecimento.
+ */
+function viradaDoExterior(sql: Sql, s: Sessao): void {
+  const { d } = s
+  const anos = d.regras.virada.envelhecer ? 1 : 0
+  const pool = sql
+    .all<{ id: number; idade: number; taxa_fixa: number }>("SELECT id, idade, taxa_fixa FROM jogador WHERE status = 'exterior' AND taxa_fixa IS NOT NULL")
+    .map((j) => ({ id: String(j.id), idade: j.idade, idadeAnterior: j.idade - anos, taxa: j.taxa_fixa }))
+  for (const r of viradaExterior(pool, d.regras, criarRng(d.semente).derivar('exterior', d.temporada))) {
+    if (r.sai) sql.run("UPDATE jogador SET status = 'fora', a_venda = NULL WHERE id = ?", Number(r.id))
+    else sql.run('UPDATE jogador SET taxa_fixa = ? WHERE id = ?', r.taxa, Number(r.id))
+  }
 }
 
 const nomeTime = (sql: Sql, sigla: string) => sql.get<{ n: string }>('SELECT nome_curto n FROM time WHERE sigla = ?', sigla)?.n ?? sigla

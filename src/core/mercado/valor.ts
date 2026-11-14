@@ -37,7 +37,7 @@ export function geralProjetado(geral: number, potencial: number, idade: number, 
   return geral + realizacaoPotencial(idade, regras) * Math.max(0, potencial - geral)
 }
 
-function fatorIdade(idade: number, regras: Regras): number {
+export function fatorIdade(idade: number, regras: Regras): number {
   return tabela(regras.mercado.fator_idade, (l) => idade <= l.ate_idade)
 }
 
