@@ -36,6 +36,7 @@ const posicao = ref<string | null>(null)
 const geralMin = ref<number | null>(null)
 const idadeMax = ref<number | null>(null)
 const somenteLivres = ref(false)
+const somenteExterior = ref(false)
 const somenteAVenda = ref(false)
 
 // Proposta recebida aberta no painel da direita (contraproposta).
@@ -72,6 +73,7 @@ async function buscar(): Promise<void> {
       ...(geralMin.value && { geralMin: geralMin.value }),
       ...(idadeMax.value && { idadeMax: idadeMax.value }),
       ...(somenteLivres.value && { somenteLivres: true }),
+      ...(somenteExterior.value && { somenteExterior: true }),
       ...(somenteAVenda.value && { somenteAVenda: true }),
     }
     lista.value = await chamar('mercado:buscar', filtros)
@@ -90,7 +92,10 @@ async function carregar(): Promise<void> {
   await buscar()
 }
 watch(() => [carreira.atual?.id, temporada.calendario?.passoAtual], carregar, { immediate: true })
-watch([posicao, somenteLivres, somenteAVenda, aba], buscar)
+watch([posicao, somenteLivres, somenteExterior, somenteAVenda, aba], buscar)
+
+/** Disponível do exterior: "joga no Zenit (RUS)". */
+const origemDe = (j: JogadorMercadoDto) => (j.origem ? `joga no ${j.origem.clube}${j.origem.pais ? ` (${j.origem.pais})` : ''}` : '')
 
 const visiveis = computed(() => (aba.value === 'meus' ? lista.value.filter((j) => j.doUsuario) : lista.value.filter((j) => !j.doUsuario)))
 
@@ -240,7 +245,8 @@ const etapaAberta = computed(() => neg.value && (neg.value.etapa === 'clube' || 
           <div class="posicoes">
             <WeBotao :ativo="posicao === null" @click="posicao = null">Todas</WeBotao>
             <WeBotao v-for="p in ORDEM_POSICAO" :key="p" :ativo="posicao === p" @click="posicao = p">{{ nomePosicao(p) }}</WeBotao>
-            <WeBotao :ativo="somenteLivres" @click="somenteLivres = !somenteLivres">Só livres</WeBotao>
+            <WeBotao :ativo="somenteLivres" @click="somenteLivres = !somenteLivres">Sem clube</WeBotao>
+            <WeBotao :ativo="somenteExterior" @click="somenteExterior = !somenteExterior">Exterior</WeBotao>
             <WeBotao :ativo="somenteAVenda" @click="somenteAVenda = !somenteAVenda">À venda</WeBotao>
           </div>
         </WePainel>
@@ -248,7 +254,7 @@ const etapaAberta = computed(() => neg.value && (neg.value.etapa === 'clube' || 
         <WePainel v-if="aba !== 'propostas'" :titulo="aba === 'meus' ? 'Renovar e pôr à venda' : `Jogadores (${visiveis.length})`" sem-corpo>
           <p v-if="!visiveis.length" class="vazio">Nenhum jogador com esses filtros.</p>
           <WeTabela v-else>
-            <thead><tr><th>Jogador</th><th>Pos.</th><th>Idade</th><th>Geral</th><th>Clube</th><th>Valor</th><th>Salário</th><th>Contrato</th><th v-if="aba === 'meus'"></th></tr></thead>
+            <thead><tr><th>Jogador</th><th>Pos.</th><th>Idade</th><th>Geral</th><th>Clube</th><th>Valor / taxa</th><th>Salário</th><th>Contrato</th><th v-if="aba === 'meus'"></th></tr></thead>
             <tbody>
               <tr v-for="j in visiveis" :key="j.id" :class="{ sel: neg?.jogador.id === j.id }">
                 <td>
@@ -258,8 +264,15 @@ const etapaAberta = computed(() => neg.value && (neg.value.etapa === 'clube' || 
                 <td>{{ nomePosicao(j.posicao) }}</td>
                 <td>{{ j.idade }}</td>
                 <td class="geral">{{ j.geral }}</td>
-                <td><TimeDaCarreira v-if="j.time" :sigla="j.time" /><WeTag v-else tipo="info">Livre</WeTag></td>
-                <td>{{ dinheiro(j.valor) }}</td>
+                <td>
+                  <TimeDaCarreira v-if="j.time" :sigla="j.time" />
+                  <span v-else-if="j.origem" class="exterior"><WeTag tipo="diretoria">Exterior</WeTag><span class="we-lb">{{ origemDe(j) }}</span></span>
+                  <WeTag v-else tipo="info">Livre</WeTag>
+                </td>
+                <td>
+                  <template v-if="j.taxa != null">{{ dinheiro(j.taxa) }} <span class="we-lb">taxa</span></template>
+                  <template v-else>{{ dinheiro(j.valor) }}</template>
+                </td>
                 <td>{{ j.salario ? dinheiro(j.salario) : '—' }}</td>
                 <td :class="{ 'we-vl--atencao': j.contratoAte !== null && j.contratoAte <= carreira.atual.temporada }">{{ j.contratoAte ?? '—' }}</td>
                 <td v-if="aba === 'meus'" class="acoes">
@@ -315,16 +328,22 @@ const etapaAberta = computed(() => neg.value && (neg.value.etapa === 'clube' || 
       </WePainel>
 
       <WePainel v-else :titulo="neg ? `Negociação: ${neg.jogador.nome}` : 'Negociação'" clube>
-        <p v-if="!neg" class="we-lb">Escolha um jogador na lista para negociar. Primeiro com o clube (valor), depois com o jogador (salário e duração). Cada proposta gasta 1 movimento.</p>
+        <p v-if="!neg" class="we-lb">Escolha um jogador na lista para negociar. Primeiro com o clube (valor), depois com o jogador (salário e duração). Do exterior, a taxa é fixa e só vale na janela. Cada proposta gasta 1 movimento.</p>
         <template v-else>
           <div class="ficha">
-            <div class="we-kv"><span class="we-lb">Clube</span><TimeDaCarreira v-if="neg.jogador.time" :sigla="neg.jogador.time" /><WeTag v-else tipo="info">Livre</WeTag></div>
+            <div class="we-kv">
+              <span class="we-lb">Clube</span>
+              <TimeDaCarreira v-if="neg.jogador.time" :sigla="neg.jogador.time" />
+              <span v-else-if="neg.jogador.origem" class="exterior"><WeTag tipo="diretoria">Exterior</WeTag><span class="we-vl">{{ origemDe(neg.jogador) }}</span></span>
+              <WeTag v-else tipo="info">Livre</WeTag>
+            </div>
             <div class="we-kv"><span class="we-lb">Posição / idade</span><span class="we-vl">{{ nomePosicao(neg.jogador.posicao) }} · {{ neg.jogador.idade }} anos</span></div>
             <div class="we-kv"><span class="we-lb">Geral</span><span class="we-vl">{{ neg.jogador.geral }}</span></div>
-            <div class="we-kv"><span class="we-lb">Valor de mercado</span><span class="we-vl">{{ dinheiro(neg.jogador.valor) }}</span></div>
+            <div v-if="neg.jogador.taxa != null" class="we-kv"><span class="we-lb">Taxa (fixa)</span><span class="we-vl">{{ dinheiro(neg.jogador.taxa) }}</span></div>
+            <div v-else class="we-kv"><span class="we-lb">Valor de mercado</span><span class="we-vl">{{ dinheiro(neg.jogador.valor) }}</span></div>
             <div class="we-kv"><span class="we-lb">Salário atual</span><span class="we-vl">{{ neg.jogador.salario ? dinheiro(neg.jogador.salario) : '—' }}</span></div>
             <div class="we-kv"><span class="we-lb">Contrato até</span><span class="we-vl">{{ neg.jogador.contratoAte ?? '—' }}</span></div>
-            <div class="we-kv"><span class="we-lb">Multa rescisória</span><span class="we-vl">{{ dinheiro(neg.jogador.multa) }}</span></div>
+            <div v-if="neg.jogador.taxa == null" class="we-kv"><span class="we-lb">Multa rescisória</span><span class="we-vl">{{ dinheiro(neg.jogador.multa) }}</span></div>
           </div>
 
           <div v-if="neg.tiposPossiveis.length" class="tipos">
@@ -341,7 +360,8 @@ const etapaAberta = computed(() => neg.value && (neg.value.etapa === 'clube' || 
               <CampoDinheiro v-if="neg.tipo !== 'multa'" v-model="valor" rotulo="Sua oferta" />
             </div>
             <div v-else class="proposta">
-              <p class="we-lb">Acordo com o clube: <strong>{{ dinheiro(neg.valorAcordado ?? 0) }}</strong>. Agora o salário mensal{{ neg.tipo === 'emprestimo' ? '' : ' e a duração' }}.</p>
+              <p v-if="neg.tipo === 'exterior'" class="we-lb">Taxa fixa: <strong>{{ dinheiro(neg.valorAcordado ?? 0) }}</strong> (sai do caixa só se o negócio fechar). Agora o salário mensal e a duração.</p>
+              <p v-else class="we-lb">Acordo com o clube: <strong>{{ dinheiro(neg.valorAcordado ?? 0) }}</strong>. Agora o salário mensal{{ neg.tipo === 'emprestimo' ? '' : ' e a duração' }}.</p>
               <p v-if="neg.contraSalario" class="we-lb">O jogador pede <strong>{{ dinheiro(neg.contraSalario) }}</strong> por mês.</p>
               <CampoDinheiro v-model="salario" rotulo="Salário mensal" />
               <div v-if="neg.tipo !== 'emprestimo'" class="duracao">
@@ -353,6 +373,10 @@ const etapaAberta = computed(() => neg.value && (neg.value.etapa === 'clube' || 
               {{ semMovimento ? 'Sem movimentos até o próximo jogo' : `Enviar proposta (1 movimento)` }}
             </WeBotao>
           </template>
+          <!-- Exterior fora da janela (ou sem caixa): o botão fica visível, desabilitado, com o motivo acima. -->
+          <WeBotao v-else-if="neg.jogador.origem && neg.etapa === 'encerrada' && !neg.historico.length" icone="enviar" variante="principal" desabilitado>
+            {{ neg.mensagem ?? 'Do exterior: só na janela de transferências.' }}
+          </WeBotao>
 
           <div v-if="neg.historico.length" class="historico">
             <span class="we-lb">Histórico</span>
@@ -457,6 +481,12 @@ const etapaAberta = computed(() => neg.value && (neg.value.etapa === 'clube' || 
 }
 .tag-venda {
   margin-left: 6px;
+}
+.exterior {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
 }
 .link {
   background: none;
