@@ -140,6 +140,17 @@ export interface Regras {
     delta_min: number
     delta_max: number
   }
+  /** Disponíveis do exterior (06, "Jogadores sem clube"). */
+  exterior: {
+    /** Salário pedido = salário de referência (clube que paga) × isto. */
+    premio_salarial: number
+    /** Fração do pool que sai na virada ("renovou com o clube dele lá fora"). */
+    saida_por_virada: number
+    /** A partir desta idade, a chance de saída dobra. */
+    idade_saida_dobrada: number
+    /** Arredondamento da taxa recalculada na virada (centavos). */
+    arredondar_taxa: number
+  }
   ia: {
     /** Condição abaixo da qual o titular vira candidato a ser poupado, por prioridade da competição. */
     rodizio_limite: Record<'liga' | 'continental' | 'copa' | 'estadual', number>
@@ -560,6 +571,7 @@ export const PADROES: Regras = {
     entrosamento_reforco: -3,
   },
   oscilacao: { ativa: true, fracao_min: 0.01, fracao_max: 0.03, delta_min: 1, delta_max: 2 },
+  exterior: { premio_salarial: 1.15, saida_por_virada: 0.15, idade_saida_dobrada: 35, arredondar_taxa: 5_000_000 },
   evolucao: {
     base: 0.03,
     divisor: 5,

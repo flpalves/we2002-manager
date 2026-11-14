@@ -57,3 +57,15 @@ describe('mesclarRegras com mapas e tipos errados', () => {
     expect(r.temporada.semanas_por_temporada).toBe(52)
   })
 })
+
+describe('padroes / exterior', () => {
+  it('traz os valores da spec 06 (Jogadores sem clube)', () => {
+    expect(PADROES.exterior).toEqual({ premio_salarial: 1.15, saida_por_virada: 0.15, idade_saida_dobrada: 35, arredondar_taxa: 5_000_000 })
+  })
+
+  it('o regras.json sobrescreve só o que veio', () => {
+    const r = mesclarRegras(PADROES, { exterior: { saida_por_virada: 0.3 } })
+    expect(r.exterior.saida_por_virada).toBe(0.3)
+    expect(r.exterior.premio_salarial).toBe(1.15)
+  })
+})
