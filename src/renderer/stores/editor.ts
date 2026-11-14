@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { computed, ref } from 'vue'
 import type { PacoteAberto } from '@shared/esquemas/ipc'
-import type { Competicao, Divisoes, JanelaTransferencia, Temporada, Time } from '@shared/esquemas/pacote'
+import type { Competicao, Divisoes, Exterior, JanelaTransferencia, Livres, Temporada, Time } from '@shared/esquemas/pacote'
 import type { EventoCatalogo } from '@shared/esquemas/noticias'
 import type { BaseKit } from '@core/we/desenharKit'
 import type { DesignKit } from '@core/we/estampas'
@@ -19,17 +19,26 @@ export const useEditor = defineStore('editor', () => {
   const ocupado = ref(false)
 
   /** Seleção do editor (a validação usa para pular até o problema). */
-  type Aba = 'times' | 'uniformes' | 'jogadores' | 'competicoes' | 'divisoes' | 'temporada' | 'janelas' | 'noticias' | 'validacao'
+  type Aba = 'times' | 'uniformes' | 'jogadores' | 'semClube' | 'competicoes' | 'divisoes' | 'temporada' | 'janelas' | 'noticias' | 'validacao'
   const aba = ref<Aba>('times')
   const timeSelecionado = ref<string | null>(null)
   const jogadorSelecionado = ref<string | null>(null)
   const competicaoSelecionada = ref<string | null>(null)
   const noticiaSelecionada = ref<string | null>(null)
+  /** Aba Sem clube: lista mostrada e jogador selecionado (id do pacote). */
+  const listaSemClube = ref<'exterior' | 'livres'>('exterior')
+  const semClubeSelecionado = ref<string | null>(null)
 
   function irPara(alvo: { time?: string | undefined; jogador?: string | undefined; competicao?: string | undefined; arquivo?: string | undefined; codigo?: string | undefined }): void {
     // A duração da temporada mora no regras.json, mas é editada na aba Temporada.
     if (alvo.arquivo === 'temporada.json' || alvo.codigo === 'semanas_invalidas') {
       aba.value = 'temporada'
+      return
+    }
+    if (alvo.arquivo === 'exterior.json' || alvo.arquivo === 'livres.json') {
+      listaSemClube.value = alvo.arquivo === 'exterior.json' ? 'exterior' : 'livres'
+      if (alvo.jogador) semClubeSelecionado.value = alvo.jogador
+      aba.value = 'semClube'
       return
     }
     if (alvo.arquivo === 'noticias.json') {
@@ -97,6 +106,8 @@ export const useEditor = defineStore('editor', () => {
   const salvarDivisoes = (divisoes: Divisoes) => operar((pacote) => chamar('pacote:salvarDivisoes', { pacote, divisoes }), 'Divisões salvas.')
   const salvarNoticias = (catalogo: EventoCatalogo[] | null, regras: { fator_chance: number | null; maximo_por_avaliacao: number | null }) =>
     operar((pacote) => chamar('pacote:salvarNoticias', { pacote, catalogo, regras }), catalogo ? 'Notícias salvas.' : 'Notícias de volta ao catálogo padrão.')
+  const salvarSemClube = (exterior: Exterior | null, livres: Livres | null) =>
+    operar((pacote) => chamar('pacote:salvarSemClube', { pacote, exterior, livres }), 'Jogadores sem clube salvos.')
   const removerCompeticao = (id: string) => operar((pacote) => chamar('pacote:removerCompeticao', { pacote, id }), 'Competição removida.')
   const importarEscudo = (sigla: string) => operar((pacote) => chamar('pacote:importarEscudo', { pacote, sigla }), `Escudo de ${sigla} importado.`)
 
@@ -123,5 +134,5 @@ export const useEditor = defineStore('editor', () => {
     return p && p.escudos.includes(sigla) ? urlEscudoPacote(p.id, sigla, p.versao) : undefined
   }
 
-  return { pacotes, aberto, ocupado, erros, avisos, aba, timeSelecionado, jogadorSelecionado, competicaoSelecionada, noticiaSelecionada, irPara, listar, abrir, baseKit, carregarBaseKit, gerarKit, salvarTime, removerTime, salvarCompeticao, salvarDivisoes, salvarJanelas, salvarTemporada, salvarNoticias, removerCompeticao, importarEscudo, escudo }
+  return { pacotes, aberto, ocupado, erros, avisos, aba, timeSelecionado, jogadorSelecionado, competicaoSelecionada, noticiaSelecionada, listaSemClube, semClubeSelecionado, irPara, salvarSemClube, listar, abrir, baseKit, carregarBaseKit, gerarKit, salvarTime, removerTime, salvarCompeticao, salvarDivisoes, salvarJanelas, salvarTemporada, salvarNoticias, removerCompeticao, importarEscudo, escudo }
 })

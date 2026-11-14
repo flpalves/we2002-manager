@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest'
-import { mkdtempSync } from 'node:fs'
+import { existsSync, mkdtempSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
-import { lerPacote } from '../../src/main/pacote/leitor'
+import { lerPacote, salvarSemClube } from '../../src/main/pacote/leitor'
 import { PADROES } from '@core/config/padroes'
 import { validarPacote } from '@core/pacote/validar'
 import { exterior, livre, pacote } from '../fixtures/pacote'
@@ -36,5 +36,28 @@ describe('pacote: exterior.json e livres.json', () => {
     expect(p.exterior?.jogadores).toHaveLength(200)
     const erros = validarPacote(p, PADROES).filter((x) => x.nivel === 'erro' && x.arquivo === 'exterior.json')
     expect(erros).toEqual([])
+  })
+})
+
+describe('editor: gravar os sem clube', () => {
+  it('grava exterior.json e livres.json e lê de volta igual; null ou lista vazia apaga o arquivo', () => {
+    const raiz = mkdtempSync(join(tmpdir(), 'we-exterior-'))
+    escreverPacote(raiz, pacote())
+    const ext = { temporada: 2026, jogadores: [exterior(1), exterior(2, { taxa: 80_000_000 })] }
+    const liv = { jogadores: [livre(1), livre(2)] }
+    salvarSemClube(raiz, ext, liv)
+    expect(lerPacote(raiz)).toMatchObject({ exterior: ext, livres: liv, invalidos: [] })
+
+    salvarSemClube(raiz, ext, { jogadores: [] })
+    expect(existsSync(join(raiz, 'livres.json'))).toBe(false)
+    salvarSemClube(raiz, null, liv)
+    expect(existsSync(join(raiz, 'exterior.json'))).toBe(false)
+    expect(lerPacote(raiz)).toMatchObject({ exterior: null, livres: liv })
+  })
+
+  it('recusa jogador fora do esquema (país de origem inválido)', () => {
+    const raiz = mkdtempSync(join(tmpdir(), 'we-exterior-'))
+    expect(() => salvarSemClube(raiz, { temporada: 2026, jogadores: [{ ...exterior(1), origem: { clube: 'X', pais: 'rus' } }] }, null)).toThrow()
+    expect(existsSync(join(raiz, 'exterior.json'))).toBe(false)
   })
 })

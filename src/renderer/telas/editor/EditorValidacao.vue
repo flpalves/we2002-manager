@@ -52,6 +52,8 @@ const DESCRICAO: Record<string, string> = {
   bloco_repetido: 'Competição com mais de uma janela',
   sem_bloco: 'Competição sem janela no calendário',
   semanas_invalidas: 'Duração da temporada inválida',
+  nome_we_repetido: 'Nome para o WE repetido (sem clube)',
+  taxa_invalida: 'Taxa do exterior zero ou negativa',
 }
 
 const grupos = computed(() => {
@@ -85,7 +87,7 @@ const grupos = computed(() => {
       <ul v-if="aberto === g.codigo" class="grupo__itens">
         <li v-for="(p, i) in g.itens.slice(0, 200)" :key="i">
           <button
-            v-if="p.time || p.competicao || p.arquivo === 'divisoes.json' || p.arquivo === 'regras.json' || p.arquivo === 'temporada.json'"
+            v-if="p.time || p.competicao || p.arquivo === 'exterior.json' || p.arquivo === 'livres.json' || p.arquivo === 'divisoes.json' || p.arquivo === 'regras.json' || p.arquivo === 'temporada.json'"
             type="button"
             class="link"
             @click="editor.irPara({ time: p.time, jogador: p.jogador, competicao: p.competicao, arquivo: p.arquivo, codigo: p.codigo })"

@@ -1,6 +1,6 @@
 import { z } from 'zod'
 import { ConfigAppParcialSchema, ConfigAppSchema } from './config'
-import { AparenciaSchema, CompeticaoSchema, DivisoesSchema, JanelaTransferenciaSchema, ManifestoSchema, PaisSchema, TemporadaSchema, TimeSchema } from './pacote'
+import { AparenciaSchema, CompeticaoSchema, DivisoesSchema, ExteriorSchema, JanelaTransferenciaSchema, LivresSchema, ManifestoSchema, PaisSchema, TemporadaSchema, TimeSchema } from './pacote'
 import { ElencoSchema, EscalacaoSalvaSchema, EscalacaoSchema, FichaJogadorSchema, FocoSchema, TreinoSchema } from './elenco'
 import { DiretoriaSchema, FiltrosMercadoSchema, FinancasSchema, JogadorMercadoSchema, NegociacaoDtoSchema, PropostaRecebidaSchema, PropostaSchema, ResultadoContrapropostaSchema, SituacaoMercadoSchema, TipoNegocioSchema } from './mercado'
 import { CaixaNoticiasSchema, CatalogoSchema, EventoCatalogoSchema, TipoNoticiaSchema } from './noticias'
@@ -58,6 +58,13 @@ export const PacoteAbertoSchema = z.object({
     /** Janelas e semanas da temporada, para estimar a frequência dos eventos. */
     semanas: z.number().int(),
     janelas: z.number().int(),
+  }),
+  /** Jogadores sem clube: `exterior.json` e `livres.json` (null = arquivo ausente ou inválido). */
+  semClube: z.object({
+    exterior: ExteriorSchema.nullable(),
+    livres: LivresSchema.nullable(),
+    /** Arquivos que existem mas não passaram no esquema (o editor não deixa gravar por cima). */
+    invalidos: z.array(z.string()),
   }),
   escudos: z.array(z.string()),
   problemas: z.array(ProblemaSchema),
@@ -125,6 +132,11 @@ export const contratos = {
       catalogo: CatalogoSchema.nullable(),
       regras: z.object({ fator_chance: z.number().min(0).max(10).nullable(), maximo_por_avaliacao: z.number().int().min(1).max(10).nullable() }),
     }),
+    saida: PacoteAbertoSchema,
+  },
+  /** Grava `exterior.json` e `livres.json` (null ou lista vazia apaga o arquivo). */
+  'pacote:salvarSemClube': {
+    entrada: z.object({ pacote: IdPacote, exterior: ExteriorSchema.nullable(), livres: LivresSchema.nullable() }),
     saida: PacoteAbertoSchema,
   },
   /** Abre o seletor de arquivo e copia o PNG para escudos/<SIGLA>.png; `null` se cancelado. */

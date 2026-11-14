@@ -42,7 +42,7 @@
 | Finanças | resumo (saldo, folha x orçamento), receitas/despesas por categoria, estádio (preço do ingresso → público e bilheteria estimados), extrato |
 | Clube e diretoria | metas, confiança, histórico de temporadas |
 | Notícias | caixa com filtros por tipo |
-| Editor do pacote | abas Times / Uniformes / Jogadores / Competições, formulários, painel de validação. Uniformes: modelo (`src/core/we/modelosUniforme.ts`), cores, prévia ao vivo (jogador e textura) e "Confirmar e gerar", que grava `kits/desenhos/<sigla>[_reserva|_goleiro]_4x.png` e o `design` no time |
+| Editor do pacote | abas Times / Uniformes / Jogadores / Sem clube / Competições, formulários, painel de validação. Sem clube: listas Exterior (`exterior.json`, com clube/país de origem e taxa fixa) e Livres (`livres.json`, sem taxa), com criar, editar, remover e mover entre as duas; lista vazia apaga o arquivo. Uniformes: modelo (`src/core/we/modelosUniforme.ts`), cores, prévia ao vivo (jogador e textura) e "Confirmar e gerar", que grava `kits/desenhos/<sigla>[_reserva|_goleiro]_4x.png` e o `design` no time |
 | Carreiras | nova carreira (pacote, clube de qualquer série, nome do técnico, dificuldade), carregar, apagar |
 | Configurações | tema, caminhos do PCSX-Redux / imagem / estados, intensidade da IA de mercado, autosave |
 

@@ -15,7 +15,7 @@ import { lerResumo } from './db/repositorios/carreira'
 import { Carreiras } from './carreira/servico'
 import { gerarKit, lerBaseKit } from './pacote/kits'
 import { problemasDoDesign, type DesignKit } from '@core/we/estampas'
-import { importarEscudo, lerPacote, listarPacotes, removerCompeticao, removerTime, salvarCompeticao, salvarDivisoes, salvarJanelas, salvarNoticias, salvarTemporada, salvarTime } from './pacote/leitor'
+import { importarEscudo, lerPacote, listarPacotes, removerCompeticao, removerTime, salvarCompeticao, salvarDivisoes, salvarJanelas, salvarNoticias, salvarSemClube, salvarTemporada, salvarTime } from './pacote/leitor'
 import { catalogoPadrao } from '@core/noticias/catalogoPadrao'
 import { ESQUEMA, resolverUrl } from './protocolo'
 import * as temporada from './carreira/temporada'
@@ -119,6 +119,11 @@ function criarHandlers(config: ArquivoConfig, carreiras: Carreiras, janela: () =
         semanas: regras.temporada.semanas_por_temporada,
         janelas: regras.mercado.janelas.length,
       },
+      semClube: {
+        exterior: p.exterior ?? null,
+        livres: p.livres ?? null,
+        invalidos: p.invalidos.map((i) => i.arquivo).filter((a) => a === 'exterior.json' || a === 'livres.json'),
+      },
       escudos: p.escudos,
       problemas: validarPacote(p, regras),
       versao: ++versao,
@@ -179,6 +184,15 @@ function criarHandlers(config: ArquivoConfig, carreiras: Carreiras, janela: () =
     'pacote:salvarNoticias': ({ pacote, catalogo, regras }) => {
       pacoteEditavel()
       salvarNoticias(carreiras.pastaPacote(pacote), catalogo, regras)
+      return abrirPacote(pacote)
+    },
+    'pacote:salvarSemClube': ({ pacote, exterior, livres }) => {
+      pacoteEditavel()
+      const p = lerPacote(carreiras.pastaPacote(pacote))
+      if (p.invalidos.some((i) => i.arquivo === 'exterior.json' || i.arquivo === 'livres.json')) {
+        throw new ErroApp('arquivo_invalido', 'O exterior.json ou o livres.json está fora do formato: corrija o arquivo antes de gravar por cima.')
+      }
+      salvarSemClube(carreiras.pastaPacote(pacote), exterior, livres)
       return abrirPacote(pacote)
     },
     'pacote:removerCompeticao': ({ pacote, id }) => {

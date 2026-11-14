@@ -15,6 +15,8 @@ import {
   type ArquivoInvalido,
   type Competicao,
   type Divisoes,
+  type Exterior,
+  type Livres,
   type JanelaTransferencia,
   JanelaTransferenciaSchema,
   type Manifesto,
@@ -180,6 +182,19 @@ export function salvarTemporada(raiz: string, temporada: Temporada, semanas: num
   if (semanas !== null && (!Number.isInteger(semanas) || semanas < 1)) throw new Error('Duração da temporada inválida.')
   gravarJson(join(raiz, 'temporada.json'), valida)
   alterarRegra(raiz, 'temporada', 'semanas_por_temporada', semanas ?? undefined)
+}
+
+/**
+ * Grava os jogadores sem clube (06, "Jogadores sem clube"): `exterior.json` e `livres.json`.
+ * `null` ou lista vazia apaga o arquivo (o pacote fica sem aquele tipo de jogador).
+ */
+export function salvarSemClube(raiz: string, exterior: Exterior | null, livres: Livres | null): void {
+  const caminhoExterior = join(raiz, 'exterior.json')
+  if (exterior?.jogadores.length) gravarJson(caminhoExterior, ExteriorSchema.parse(exterior))
+  else rmSync(caminhoExterior, { force: true })
+  const caminhoLivres = join(raiz, 'livres.json')
+  if (livres?.jogadores.length) gravarJson(caminhoLivres, LivresSchema.parse(livres))
+  else rmSync(caminhoLivres, { force: true })
 }
 
 /** Grava a escada de divisões; lista vazia apaga o arquivo. */
