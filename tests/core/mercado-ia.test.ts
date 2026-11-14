@@ -11,6 +11,7 @@ import {
   propostasPeloUsuario,
   responderContraproposta,
   rodadaIaMercado,
+  salarioDoExterior,
   type ClubeMercado,
   type JogadorMercado,
   type Transferencia,
@@ -35,6 +36,8 @@ interface OpcoesMundo {
   /** Geral médio do time do usuário (C0). */
   geralUsuario?: number
   livres?: number
+  /** Disponíveis do exterior (sem clube, com taxa fixa). */
+  exterior?: number
 }
 
 function jogadorNovo(id: string, time: string | null, posicao: Posicao, geral: number, idade: number, ateTemporada: number): JogadorMercado {
@@ -72,6 +75,10 @@ function criarMundo(o: OpcoesMundo): { m: MundoMercado; financeiro: Map<string, 
   }
   for (let k = 0; k < (o.livres ?? 80); k++) {
     jogadores.push(jogadorNovo(`L-${k}`, null, POSICOES[rng.escolherPeso(PESO_POSICAO)]!, Math.max(4, Math.round(rng.normal(10, 2))), rng.inteiro(19, 33), 2026))
+  }
+  for (let k = 0; k < (o.exterior ?? 0); k++) {
+    const j = jogadorNovo(`E-${k}`, null, POSICOES[rng.escolherPeso(PESO_POSICAO)]!, Math.max(6, Math.min(19, Math.round(rng.normal(13, 2)))), rng.inteiro(20, 36), 2026)
+    jogadores.push({ ...j, potencial: j.geral, taxa: Math.round((j.valor * 1.2) / 5_000_000) * 5_000_000 || 5_000_000, origem: 'Zenit' })
   }
   return { m: new MundoMercado(clubes, jogadores), financeiro }
 }
@@ -385,5 +392,72 @@ describe('mundo do mercado', () => {
     expect(dentroDaJanela(16, PADROES)).toBe(true) // a 1ª janela cobre o começo do Brasileirão (semana 12)
     expect(dentroDaJanela(17, PADROES)).toBe(false)
     expect(dentroDaJanela(28, PADROES)).toBe(true)
+  })
+})
+
+describe('lote: exterior na janela principal (9.2)', () => {
+  const POOL = 60
+  const lotes = [21, 22, 23, 24, 25].map((s) => {
+    const mundo = criarMundo({ semente: s, exterior: POOL })
+    const saldoTotal = [...mundo.m.clubes.values()].reduce((a, c) => a + c.saldo, 0)
+    const rng = criarRng(s)
+    abrirJanela(mundo.m, { regras: PADROES, rng: rng.derivar('abrir'), temporada: 2026, intensidade: 'media', principal: true, saidas: new Map() })
+    const verbaInicial = new Map([...mundo.m.planos.values()].map((p) => [p.sigla, p.verba]))
+    const transferencias: Transferencia[] = []
+    for (let d = 0; d < 20; d++) transferencias.push(...rodadaIaMercado(mundo.m, { regras: PADROES, rng: rng.derivar('data', d), temporada: 2026, datasRestantes: 20 - d }))
+    return { ...mundo, saldoTotal, verbaInicial, transferencias }
+  })
+  const doExterior = (t: readonly Transferencia[]) => t.filter((x) => x.tipo === 'exterior')
+
+  it('a CPU contrata uma parte do pool, pela taxa fixa e com o salário do prêmio', () => {
+    for (const { m, transferencias } of lotes) {
+      const ext = doExterior(transferencias)
+      expect(ext.length).toBeGreaterThan(0)
+      expect(ext.length).toBeLessThan(POOL)
+      for (const t of ext) {
+        expect(t.de).toBeNull()
+        expect(t.origem).toBe('Zenit')
+        const j = m.jogadores.get(t.jogador)!
+        // Pode ter sido revendido depois, mas nunca volta ao pool.
+        expect(j.time).not.toBeNull()
+        expect(j.taxa).toBeNull()
+        expect(t.salario).toBe(salarioDoExterior(j, m.clubes.get(t.para)!, PADROES))
+      }
+      // Quem ficou continua no pool (sem clube, com taxa).
+      const sobraram = [...m.jogadores.values()].filter((j) => j.id.startsWith('E-') && j.time === null)
+      expect(sobraram.length).toBe(POOL - ext.length)
+      expect(sobraram.every((j) => (j.taxa ?? 0) > 0)).toBe(true)
+    }
+    const total = lotes.reduce((a, l) => a + doExterior(l.transferencias).length, 0)
+    expect(total / (lotes.length * POOL)).toBeLessThan(0.8)
+  })
+
+  it('a taxa sai do sistema: ninguém recebe o dinheiro', () => {
+    for (const { m, saldoTotal, transferencias } of lotes) {
+      const taxas = doExterior(transferencias).reduce((a, t) => a + t.valor, 0)
+      expect(taxas).toBeGreaterThan(0)
+      expect([...m.clubes.values()].reduce((a, c) => a + c.saldo, 0)).toBe(saldoTotal - taxas)
+    }
+  })
+
+  it('não estoura a verba nem o teto da folha', () => {
+    for (const { m, verbaInicial, transferencias } of lotes) {
+      for (const p of m.planos.values()) {
+        // A verba volta a crescer com as vendas (parte do que entra).
+        const gasto = transferencias.filter((t) => t.para === p.sigla).reduce((a, t) => a + t.valor, 0)
+        const entrou = transferencias.filter((t) => t.de === p.sigla).reduce((a, t) => a + t.valor, 0)
+        expect(gasto, p.sigla).toBeLessThanOrEqual(verbaInicial.get(p.sigla)! + entrou)
+        expect(p.verba, p.sigla).toBeGreaterThanOrEqual(0)
+        if (transferencias.some((t) => t.para === p.sigla)) expect(m.folha(p.sigla), p.sigla).toBeLessThanOrEqual(p.tetoFolha)
+      }
+    }
+  })
+
+  it('nenhum clube em crise compra do exterior', () => {
+    for (const { m, transferencias } of lotes) {
+      const crise = [...m.planos.values()].filter((p) => p.perfil === 'crise').map((p) => p.sigla)
+      expect(crise.length).toBeGreaterThan(0)
+      expect(doExterior(transferencias).filter((t) => crise.includes(t.para))).toEqual([])
+    }
   })
 })

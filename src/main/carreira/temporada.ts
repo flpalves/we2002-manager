@@ -337,7 +337,7 @@ export function abrirSessao(sql: Sql) {
     for (const t of [...feitas].sort((a, b) => b.valor - a.valor || a.jogador.localeCompare(b.jogador)).slice(0, d.regras.noticias.transferencias_por_data)) {
       jornal.info(
         info.transferencia(
-          { jogador: jornal.nomeJogador(t.jogador), jogadorId: t.jogador, de: t.de && jornal.nomeTime(t.de), para: jornal.nomeTime(t.para), valor: t.valor, emprestimo: t.tipo === 'emprestimo' },
+          { jogador: jornal.nomeJogador(t.jogador), jogadorId: t.jogador, de: t.de && jornal.nomeTime(t.de), para: jornal.nomeTime(t.para), valor: t.valor, emprestimo: t.tipo === 'emprestimo', ...(t.origem && { exterior: t.origem }) },
           dinheiro,
         ),
         passo.semana,

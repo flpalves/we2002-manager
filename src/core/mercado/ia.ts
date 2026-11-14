@@ -4,7 +4,7 @@ import type { Posicao } from '@shared/esquemas/pacote'
 import { pedidaInicial, salarioMinimoAceito } from './negociacao'
 import { janelaDaSemana } from './janelas'
 import { carencias, chegadasAlvo, grupoDe, perfilFinanceiro, porGrupo, saidasPrevistas, semEspaco, type Carencia } from './plano'
-import { importanciaNoTime, ORDEM_PORTE, type Porte } from './valor'
+import { importanciaNoTime, ORDEM_PORTE, salarioReferencia, type Porte } from './valor'
 
 /**
  * IA de mercado (06, "IA de mercado"): na abertura de cada janela, cada clube da CPU recebe um
@@ -20,6 +20,8 @@ export interface ClubeMercado {
   saldo: number
   orcamentoFolha: number
   usuario: boolean
+  /** Fator de série do salário do clube (ligas que joga): base do salário pedido por quem vem do exterior. Padrão 1. */
+  fatorSalario?: number
 }
 
 /** Por que o jogador está à venda (null = não está). */
@@ -39,16 +41,24 @@ export interface JogadorMercado {
   aVenda: MotivoVenda | null
   /** Está emprestado ao clube atual: não é vendido nem listado por ele. */
   emprestado: boolean
+  /** Disponível do exterior (06): taxa fixa (sem clube no jogo, `time` null). Ausente/null = não é do exterior. */
+  taxa?: number | null
+  /** Clube de origem do exterior (informativo, para a notícia). */
+  origem?: string | null
+  /** Potencial (1-20): entra no salário de referência de quem vem do exterior. */
+  potencial?: number
 }
 
 export interface Transferencia {
   jogador: string
   de: string | null
   para: string
-  tipo: 'compra' | 'livre' | 'emprestimo'
+  tipo: 'compra' | 'livre' | 'emprestimo' | 'exterior'
   valor: number
   salario: number
   ateTemporada: number
+  /** Só no exterior: clube de origem (notícia). */
+  origem?: string
 }
 
 export interface PlanoClube {
@@ -146,6 +156,9 @@ export class MundoMercado {
     j.ateTemporada = t.ateTemporada
     j.aVenda = null
     j.emprestado = t.tipo === 'emprestimo'
+    // Quem chega do exterior deixa de ser do exterior (se sair do clube depois, vira livre).
+    j.taxa = null
+    j.origem = null
   }
 }
 
@@ -253,6 +266,16 @@ function pedidaPara(m: MundoMercado, j: JogadorMercado, comprador: ClubeMercado,
   return Math.round(p * desconto)
 }
 
+/**
+ * Salário pedido por quem vem do exterior para o comprador (como no negócio do usuário):
+ * referência do clube que paga × `exterior.premio_salarial`, nunca abaixo do mínimo que aceita.
+ */
+export function salarioDoExterior(j: JogadorMercado, comprador: ClubeMercado, regras: Regras): number {
+  const ref = salarioReferencia({ geral: j.geral, idade: j.idade, potencial: j.potencial ?? j.geral, fatorSerieSalario: comprador.fatorSalario ?? 1 }, regras)
+  const minimo = salarioMinimoAceito({ salarioAtual: 0, mudaDeClube: true, porteAtual: comprador.porte, porteComprador: comprador.porte, moral: j.moral, salarioReferencia: ref }, regras)
+  return Math.max(minimo, Math.round(ref * regras.exterior.premio_salarial))
+}
+
 interface Candidato {
   j: JogadorMercado
   tipo: Transferencia['tipo']
@@ -272,8 +295,10 @@ function melhorAlvo(m: MundoMercado, comprador: ClubeMercado, plano: PlanoClube,
   for (const j of m.jogadores.values()) {
     if (j.time === comprador.sigla || j.geral <= c.referencia || j.emprestado) continue
     if (grupoDe(j.posicao, regras) !== c.grupo) continue
-    let tipo: Transferencia['tipo'] = 'livre'
+    let tipo: Transferencia['tipo'] = j.taxa != null ? 'exterior' : 'livre'
     let vendedorPorte: Porte = comprador.porte
+    // Exterior: taxa fixa à vista; clube em crise não compra de fora (06).
+    if (tipo === 'exterior' && crise) continue
     if (j.time) {
       const vendedor = m.clubes.get(j.time)
       if (!vendedor || vendedor.usuario) continue // jogador do usuário: só por proposta
@@ -285,9 +310,10 @@ function melhorAlvo(m: MundoMercado, comprador: ClubeMercado, plano: PlanoClube,
       // Em crise: só livres e empréstimos.
       if (crise && tipo === 'compra') continue
     }
-    const preco = tipo === 'livre' ? 0 : tipo === 'emprestimo' ? Math.round(j.valor * mr.taxa_emprestimo) : pedidaPara(m, j, comprador, regras)
+    const preco =
+      tipo === 'livre' ? 0 : tipo === 'exterior' ? (j.taxa ?? 0) : tipo === 'emprestimo' ? Math.round(j.valor * mr.taxa_emprestimo) : pedidaPara(m, j, comprador, regras)
     if (preco > plano.verba) continue
-    const salario = salarioMinimoAceito(
+    const salario = tipo === 'exterior' ? salarioDoExterior(j, comprador, regras) : salarioMinimoAceito(
       { salarioAtual: j.salario, mudaDeClube: true, porteAtual: vendedorPorte, porteComprador: comprador.porte, moral: j.moral, salarioReferencia: j.salario },
       regras,
     )
@@ -349,6 +375,7 @@ export function rodadaIaMercado(m: MundoMercado, ctx: ContextoIa): Transferencia
       salario: alvo.salario,
       // Empréstimo vai até o fim da temporada (a virada devolve).
       ateTemporada: alvo.tipo === 'emprestimo' ? ctx.temporada : ctx.temporada + rngClube.inteiro(1, 4),
+      ...(alvo.tipo === 'exterior' && alvo.j.origem && { origem: alvo.j.origem }),
     }
     const grupo = grupoDe(alvo.j.posicao, regras)
     m.transferir(t)

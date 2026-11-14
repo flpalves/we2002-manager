@@ -111,7 +111,15 @@ export class Economia {
         orcamentoFolha: t.orcamento_folha_mensal,
         ligas: ligas.get(t.sigla) ?? [],
       })
-      clubes.push({ sigla: t.sigla, porte: t.porte, pais: t.pais, saldo: t.saldo, orcamentoFolha: t.orcamento_folha_mensal, usuario: t.sigla === ctx.timeUsuario })
+      clubes.push({
+        sigla: t.sigla,
+        porte: t.porte,
+        pais: t.pais,
+        saldo: t.saldo,
+        orcamentoFolha: t.orcamento_folha_mensal,
+        usuario: t.sigla === ctx.timeUsuario,
+        fatorSalario: fatorSerieSalarioDoTime(ligas.get(t.sigla) ?? [], t.pais, ctx.fatorPais.get(t.pais) ?? 1, ctx.regras),
+      })
     }
     const jogadores: JogadorMercado[] = sql
       .all<{
@@ -126,10 +134,15 @@ export class Economia {
         salario_mensal: number | null
         ate_temporada: number | null
         contrato_tipo: string | null
+        status: string
+        potencial: number
+        taxa_fixa: number | null
+        origem_clube: string | null
       }>(
-        `SELECT j.id, t.sigla, j.posicao, j.idade, j.atributos, j.moral, j.valor, j.a_venda, c.salario_mensal, c.ate_temporada, c.tipo AS contrato_tipo
+        `SELECT j.id, t.sigla, j.posicao, j.idade, j.atributos, j.moral, j.valor, j.a_venda, c.salario_mensal, c.ate_temporada, c.tipo AS contrato_tipo,
+                j.status, j.potencial, j.taxa_fixa, j.origem_clube
            FROM jogador j LEFT JOIN time t ON t.id = j.time_id LEFT JOIN contrato c ON c.jogador_id = j.id
-          WHERE j.status IN ('ativo', 'livre')`,
+          WHERE j.status IN ('ativo', 'livre', 'exterior')`,
       )
       .map((j) => ({
         id: String(j.id),
@@ -143,6 +156,8 @@ export class Economia {
         ateTemporada: j.ate_temporada ?? ctx.temporada,
         aVenda: j.sigla ? j.a_venda : null,
         emprestado: j.contrato_tipo === 'emprestimo',
+        potencial: j.potencial,
+        ...(j.status === 'exterior' && { taxa: j.taxa_fixa ?? 0, origem: j.origem_clube }),
       }))
     for (const j of jogadores) this.aVendaOriginal.set(j.id, j.aVenda)
     this.mundo = new MundoMercado(clubes, jogadores)
@@ -244,7 +259,8 @@ export class Economia {
         const emprestimo = t.tipo === 'emprestimo'
         const saida = emprestimo ? 'emprestimo' : 'transferencia_saida'
         const entrada = emprestimo ? 'emprestimo' : 'transferencia_entrada'
-        this.lancamentos.push({ time: t.para, categoria: saida, valor: -t.valor, descricao: emprestimo ? 'Empréstimo de jogador' : 'Compra de jogador', semana })
+        const descricao = emprestimo ? 'Empréstimo de jogador' : t.tipo === 'exterior' ? 'Contratação do exterior' : 'Compra de jogador'
+        this.lancamentos.push({ time: t.para, categoria: saida, valor: -t.valor, descricao, semana })
         if (t.de) this.lancamentos.push({ time: t.de, categoria: entrada, valor: t.valor, descricao: emprestimo ? 'Empréstimo de jogador' : 'Venda de jogador', semana })
       }
       const j = this.elencos.jogadores.get(t.jogador)
@@ -360,7 +376,7 @@ export class Economia {
     for (const t of this.transferencias.splice(0)) {
       const camisa = sql.get<{ camisa: number }>('SELECT camisa FROM jogador WHERE id = ?', Number(t.jogador))?.camisa ?? 0
       sql.run(
-        "UPDATE jogador SET time_id = (SELECT id FROM time WHERE sigla = ?), status = 'ativo', camisa = ?, a_venda = NULL WHERE id = ?",
+        "UPDATE jogador SET time_id = (SELECT id FROM time WHERE sigla = ?), status = 'ativo', camisa = ?, a_venda = NULL, taxa_fixa = NULL, origem_clube = NULL, origem_pais = NULL WHERE id = ?",
         t.para, camisaLivre(sql, t.para, camisa, Number(t.jogador)), Number(t.jogador),
       )
       sql.run('DELETE FROM contrato WHERE jogador_id = ?', Number(t.jogador))
