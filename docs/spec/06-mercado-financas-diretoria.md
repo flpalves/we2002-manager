@@ -8,11 +8,40 @@ Números são **propostas iniciais**, em `padroes.ts` / `regras.json`, cobertos 
 - Editadas na aba **Janelas** do editor (linha do tempo com as competições do `temporada.json`; "Voltar ao padrão" tira a chave do `regras.json`). Valem para carreiras novas.
 - Validação (`core/mercado/janelas.ts`): erro se o fim vem antes do início, se sai da temporada ou se duas janelas se sobrepõem; aviso se não há janela nenhuma ou se duas estão coladas.
 - As notícias de abertura e fechamento citam o nome da janela.
-- Fora da janela: só **jogadores livres** e **renovações**.
+- Fora da janela: só **jogadores livres** e **renovações** (os **disponíveis do exterior** só na janela).
 
 ## Tipos de negócio (v1)
 
-Compra, venda, **empréstimo** (com duração e divisão de salário), contratação de **livre**, **renovação**, pagamento de **multa rescisória** (o clube vendedor é obrigado a aceitar; o jogador ainda negocia salário). Troca (jogador + dinheiro) fica fora.
+Compra, venda, **empréstimo** (com duração e divisão de salário), contratação de **livre**, contratação de **disponível do exterior**, **renovação**, pagamento de **multa rescisória** (o clube vendedor é obrigado a aceitar; o jogador ainda negocia salário). Troca (jogador + dinheiro) fica fora.
+
+## Jogadores sem clube
+
+Dois tipos de jogador ficam no mercado sem pertencer a nenhum clube do jogo (`jogador.time_id` nulo):
+
+| | **Livre** (`status = 'livre'`) | **Disponível do exterior** (`status = 'exterior'`) |
+|---|---|---|
+| De onde vem | fim de contrato na virada, rescisão; o pacote pode trazer livres iniciais (`livres.json`) | só do pacote (`exterior.json`): jogadores de clubes de fora do jogo que um clube brasileiro consegue contratar |
+| Taxa | nenhuma | **fixa**, por jogador (`jogador.taxa_fixa`); não tem etapa do clube nem contraproposta |
+| Salário | negociado com o jogador | negociado com o jogador |
+| Quando | a qualquer momento | **só na janela** |
+| Saldo negativo | permitido, com salário dentro do orçamento da folha | bloqueado (não há caixa para a taxa) |
+| Conta como estrangeiro | pela nacionalidade | pela nacionalidade |
+
+### Disponível do exterior
+
+- Aparece no Mercado com o **clube e o país de origem** (texto informativo: "joga no Zenit (RUS)"), a **taxa** e a tag **Exterior**. O filtro "Sem clube" mostra livres e exterior; um filtro próprio mostra só o exterior.
+- **Negociação**: pula a etapa do clube. O usuário aceita a taxa (gasta **1 movimento**) e vai direto para a etapa do jogador (salário, duração), como num livre. Se o jogador recusar 3 vezes, a negociação morre e a taxa não é cobrada.
+- **Salário pedido** = salário de referência (clube que paga) × `exterior.premio_salarial` (padrão **1,15**: quem sai de fora quer ganhar mais para vir). O jogador aceita pelas mesmas regras de porte e moral de um livre.
+- **Fechamento**: a taxa sai do caixa (`lancamento_financeiro`, categoria `transferencia`), o jogador recebe contrato definitivo, camisa livre (`camisaLivre`) e `status = 'ativo'`. A `transferencia` grava `de = NULL`, `tipo = 'exterior'`, `valor = taxa`, e a origem no texto. Notícia: "Fulano, ex-Zenit, chega ao Bahia".
+- Sem caixa para a taxa, não dá para começar a negociação.
+- **CPU**: os clubes da CPU também contratam do exterior, na janela, com o custo = taxa + `meses_custo_salario` de salário pedido, como qualquer alvo do plano. Clubes em crise não compram do exterior.
+- **Valor da taxa**: vem pronto do pacote (o gerador usa a fórmula do valor de mercado, com contrato longo e liga de Série A, × fator da liga de origem). Na **virada**, cada disponível que sobrou tem a taxa recalculada pela nova idade: `taxa × f_idade(nova) / f_idade(antiga)`, arredondada para R$ 50 mil, e envelhece como os outros.
+- **Saída do pool** (`exterior.saida_por_virada`, padrão **15%**): na virada, um sorteio tira parte dos que sobraram ("renovou com o clube dele lá fora"). Quem tem 35 anos ou mais sai com o dobro da chance. Saem do banco como `status = 'fora'` (não aparecem em busca nenhuma). Sem reposição na v1 (o pacote de uma temporada nova traz outra lista).
+- Quem é contratado e depois sai do clube vira **livre** normalmente (não volta a ser do exterior).
+
+### Livres
+
+- Já funcionam como estão nesta spec (taxa 0, só salário, a qualquer momento). O pacote pode trazer **livres iniciais** em `livres.json` (mesmo formato do `exterior.json`, sem `origem` e `taxa`), para que a CPU tenha quem contratar quando todo elenco tem 23 (decisão 31).
 
 ## Negociação
 

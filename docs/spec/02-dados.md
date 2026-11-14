@@ -18,6 +18,8 @@ pacotes/<id>/
   times/<SIGLA>.json        # um arquivo por time (formato abaixo)
   competicoes/<id>.json     # definição pelo motor de fases (ver 03-competicoes-calendario.md)
   noticias.json             # catálogo de eventos (ver 09-noticias-eventos.md)
+  exterior.json             # disponíveis do exterior: jogadores sem clube no jogo, com taxa fixa (opcional; ver 06)
+  livres.json               # livres iniciais (opcional; mesmo formato, sem origem e taxa)
   escudos/<SIGLA>.png       # OBRIGATÓRIO para todo time
   kits/desenhos/<sigla>_4x.png, <sigla>_reserva_4x.png, <sigla>_goleiro_4x.png
 ```
@@ -69,6 +71,32 @@ Dinheiro em **centavos** (inteiros).
 - Importação dos arquivos atuais: atributos na escala do WE (12-19) viram 1-20 pela **inversa da tabela de conversão** (valor central da faixa, arredondado para baixo). Com a tabela padrão: 12 → 3 · 13 → 7 · 14 → 9 · 15 → 11 · 16 → 13 · 17 → 15 · 18 → 17 · 19 → 19. Ida e volta preservam o nível do WE (teste).
 - Contrato: `ate_temporada` quer dizer que o contrato **vence na última semana daquela temporada**. As **semanas restantes** (usadas pelo valor de mercado, pela renovação e pela IA) = (`ate_temporada` − temporada atual) × `semanas_por_temporada` + (`semanas_por_temporada` − semana atual). Ver `03-competicoes-calendario.md`.
 
+### `exterior.json` e `livres.json`
+
+Jogadores que começam a carreira **sem clube**. Mesmo formato do jogador do time, **sem** `camisa`, `camisa_real` e `contrato` (ganham na contratação), e com dois campos a mais no `exterior.json`:
+
+```jsonc
+{
+  "temporada": 2026,
+  "jogadores": [
+    {
+      "id": "ext-wendel", "nome": "Wendel", "nome_we": "WENDEL",
+      "posicao": "OH", "posicao_secundaria": "DH", "idade": 29, "nacionalidade": "BRA",
+      "pe": "destro", "altura": 175, "atributos": { /* 16 atributos 1-20 */ }, "outside": true,
+      "potencial": 17, "resistencia": 10,
+      "origem": { "clube": "Zenit", "pais": "RUS" },   // só exterior: texto informativo
+      "taxa": 3470000000                                // só exterior: taxa fixa, em centavos
+    }
+  ]
+}
+```
+
+- `id` começa com `ext-` (exterior) ou `liv-` (livre) e não pode repetir um id de jogador de time.
+- `origem.pais` é só um código de 3 letras (não precisa estar no `paises.json`: o clube de origem não existe no jogo).
+- Importação: `time_id = NULL`, `status = 'exterior'` (com `taxa_fixa`, `origem_clube`, `origem_pais`) ou `status = 'livre'`; camisa provisória 0 (a contratação dá uma camisa livre).
+- Gerador do `exterior.json` do Felipe: `docs/we/mercado-exterior-2026/` (`jogadores.txt` + `montar.py`).
+- **Validação**: erro se um id repetir (entre times, exterior e livres) ou se a taxa do exterior for ≤ 0; aviso se `nome_we` repetir entre os sem clube, se `nome_we` passar de 10 caracteres ou se faltar posição secundária.
+
 ### Validação do pacote (painel "Validação" do editor)
 
 - **Erros** (bloqueiam criar carreira): escudo PNG faltando; time sem 23 jogadores convocáveis com pelo menos 2 GK; competição com número de times diferente do que o formato pede; time referenciado que não existe; camisa repetida no mesmo time; `nome_we` vazio.
@@ -83,7 +111,7 @@ Tabelas principais (chaves e colunas essenciais; detalhar nas migrações):
 | `carreira` | id, nome, pacote_id, pacote_versao, semente, tecnico_nome, time_usuario, dificuldade, temporada_atual, semana_atual, passo_atual, versao_esquema, criada_em |
 | `configuracao` | chave/valor: tema, cor, caminhos do emulador, regras sobrescritas |
 | `pais`, `time` | dados do pacote + estado vivo (saldo, confiança da diretoria, entrosamento, formação, ingresso) |
-| `jogador` | atributos 1-20, ocultos, condição, moral, time_id, posição, aparência, status (ativo, emprestado, livre) |
+| `jogador` | atributos 1-20, ocultos, condição, moral, time_id, posição, aparência, status (ativo, emprestado, livre, exterior, fora); `taxa_fixa`, `origem_clube`, `origem_pais` para o exterior |
 | `contrato` | jogador, time, salário, até, multa, tipo (definitivo, empréstimo com time de origem) |
 | `competicao`, `edicao` | competição do pacote; edição por temporada |
 | `fase`, `grupo`, `participante` | estrutura gerada pelo motor de fases para cada edição |

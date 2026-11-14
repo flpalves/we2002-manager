@@ -58,6 +58,12 @@ Decisão: **a primeira temporada só é jogada com tudo pronto**. As fases abaix
 - Propostas pelos jogadores do usuário por interesse real, com volume pela atratividade do elenco e contraproposta em 1 rodada.
 - **Aceite** (teste em lote): na janela principal, média de 3 a 5 chegadas por clube; nas outras, de 0 a 3; quem perde muitos jogadores repõe um número parecido; ricos contratam geral maior; clubes em crise reduzem a folha; de 1 a 10 propostas por janela pelo usuário, crescendo com a qualidade do elenco.
 
+### 9.2 · Jogadores sem clube: disponíveis do exterior (`06`, "Jogadores sem clube")
+- Pacote: `exterior.json` e `livres.json` (esquema Zod, validação, importação com `time_id` nulo); migração `013_exterior.sql` (a 012 já é a oscilação) (status `exterior` e `fora`, colunas `taxa_fixa`, `origem_clube`, `origem_pais`).
+- Mercado: tipo de negócio `exterior` (só na janela, taxa fixa, direto para a etapa do jogador, salário × `exterior.premio_salarial`); busca e filtros com origem e taxa; CPU contrata do exterior pelo plano de janela.
+- Virada: taxa recalculada pela idade; saída de parte do pool (`exterior.saida_por_virada`).
+- **Aceite** (testes): a taxa cobrada é exatamente a do pacote; fora da janela o exterior não negocia; recusa do jogador não cobra a taxa; CPU em crise não compra do exterior; em lote, a CPU contrata uma parte do pool na janela principal sem estourar verba nem folha; depois da virada, o pool tem menos jogadores e taxas menores para quem envelheceu.
+
 ## Trilha paralela A · Engenharia reversa (antes da fase 9)
 1. Substituições e minutos jogados.
 2. Escrita das setas de condição.

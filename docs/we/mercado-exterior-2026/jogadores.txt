@@ -1,0 +1,201 @@
+# nome | nome_we (vazio = automático) | posição | secundária (vazio = padrão) | nascimento (ano) | nacionalidade | pé (d/c) | altura (vazio = média) | clube de origem | país da liga | geral alvo (1-20) | tags | validar clube (1 = conferir)
+Lucas Perri|PERRI|GK||1997|BRA|d|196|Leeds United|ENG|16.6||0
+Luiz Júnior||GK||2001|BRA|d|190|Villarreal|ESP|16.2||0
+Matheus Magalhães|MATHEUS|GK||1992|BRA|d|185|Braga|POR|16.6||0
+Anthony Lopes|A. LOPES|GK||1990|POR|d||Nantes|FRA|16.6||0
+Franco Armani||GK||1986|ARG|d|189|River Plate|ARG|15.7||0
+Sergio Romero||GK||1987|ARG|d||Boca Juniors|ARG|15.3||0
+Fernando Muslera||GK||1986|URU|d|190|Estudiantes|ARG|15.3||0
+Esteban Andrada||GK||1991|ARG|d||Monterrey|MEX|16.2||1
+Santiago Mele||GK||1997|URU|d||Monterrey|MEX|15.7||0
+Camilo Vargas||GK||1989|COL|d||Atlas|MEX|16.2||0
+Kevin Mier||GK||2000|COL|d||Cruz Azul|MEX|15.7||0
+Álvaro Montero||GK||1995|COL|d||Vélez Sarsfield|ARG|15.3||0
+Brayan Cortés||GK||1995|CHI|d||Peñarol|URU|14.4||1
+Gabriel Arias||GK||1987|CHI|d||Racing|ARG|14.8||0
+Rodrigo Rey||GK||1990|ARG|d||Independiente|ARG|14.8||0
+Moisés Ramírez||GK||2000|ECU|d||Kifisia|GRE|14.4||1
+Hernán Galíndez||GK||1987|ECU|d||Huracán|ARG|13.9||0
+Gatito Fernández|GATITO|GK||1988|PAR|d||Cerro Porteño|PAR|13.9||1
+Pedro Gallese||GK||1990|PER|d||Orlando City|USA|14.8||0
+Nino||CB||1997|BRA|d||Zenit|RUS|17.1||0
+Marlon||CB||1995|BRA|d||Shakhtar Donetsk|UKR|15.7||1
+Matheus Reis||CB||1995|BRA|c||Sporting|POR|16.6||0
+Rodrigo Becão||CB||1996|BRA|d||Fenerbahçe|TUR|16.6||1
+Diego Carlos||CB||1993|BRA|d||Fenerbahçe|TUR|16.6||1
+Igor Julio|IGOR JULIO|CB||1998|BRA|c||Brighton|ENG|16.6||1
+Lucas Martínez Quarta||CB||1996|ARG|d||River Plate|ARG|17.1||0
+Germán Pezzella||CB||1991|ARG|d|187|River Plate|ARG|16.2||0
+Marcos Rojo||CB||1990|ARG|c||Racing|ARG|14.8||1
+Juan Foyth||CB||1998|ARG|d|187|Villarreal|ESP|18.0||0
+Ayrton Costa||CB||1999|ARG|d||Boca Juniors|ARG|15.7||0
+Nehuén Pérez||CB||2000|ARG|d|188|Porto|POR|17.1||0
+Facundo Garcés||CB||1999|ARG|d||Alavés|ESP|15.7||0
+Emanuel Mammana||CB||1996|ARG|d||Vélez Sarsfield|ARG|14.8||0
+Sebastián Cáceres||CB||1999|URU|d||América|MEX|16.2||0
+Nicolás Marichal||CB||2001|URU|d||Dínamo Moscou|RUS|15.7||0
+Sebastián Coates||CB||1990|URU|d|196|Nacional|URU|15.3||0
+Leandro Cabrera||CB||1991|URU|d||Espanyol|ESP|16.2||0
+Yerry Mina||CB||1994|COL|d|195|Cagliari|ITA|16.6||0
+Paulo Díaz||CB||1994|CHI|d||River Plate|ARG|16.6||0
+Johan Vásquez||CB||1998|MEX|c||Genoa|ITA|17.5||0
+César Montes||CB||1997|MEX|d||Lokomotiv Moscou|RUS|16.2||0
+Alexander Callens||CB||1992|PER|d||AEK Atenas|GRE|14.8||1
+Luis Abram||CB||1996|PER|d||Atlanta United|USA|14.4||1
+Jackson Porozo||CB||2000|ECU|d||Tijuana|MEX|14.8||0
+Shogo Taniguchi||CB||1991|JPN|d||Sint-Truiden|BEL|14.8||0
+Walker Zimmerman||CB||1993|USA|d|191|Nashville SC|USA|15.7||0
+Douglas Santos||SB||1994|BRA|c|174|Zenit|RUS|17.5||0
+Abner||SB||2000|BRA|c||Lyon|FRA|16.2||1
+Marcelo Saracchi||SB||1998|URU|c||Boca Juniors|ARG|14.8||1
+Marcos Acuña||SB||1991|ARG|c||River Plate|ARG|16.6||0
+Nicolás Tagliafico||SB||1992|ARG|c||Lyon|FRA|17.5||0
+Lautaro Blanco||SB||1999|ARG|c||Boca Juniors|ARG|15.3||0
+Frank Fabra||SB||1991|COL|c||Atlético Nacional|COL|14.4||1
+Gabriel Suazo||SB||1997|CHI|c||Sevilla|ESP|16.2||1
+Johan Mojica||SB||1992|COL|c||Mallorca|ESP|16.2||0
+Jesús Gallardo||SB||1994|MEX|c||Toluca|MEX|15.3||0
+Lucas Olaza||SB||1994|URU|c||Krasnodar|RUS|15.7||0
+Agustín Sandez||SB||2000|ARG|c||Rosario Central|ARG|14.4||1
+Francisco Ortega||SB||1999|ARG|c||Olympiacos|GRE|15.7||0
+Cristian Borja||SB||1993|COL|c||América|MEX|14.8||1
+Gonzalo Montiel||SB||1997|ARG|d||River Plate|ARG|17.1||0
+Santiago Arias||SB||1992|COL|d||Independiente|ARG|14.8||0
+Luis Advíncula||SB||1990|PER|d||Boca Juniors|ARG|15.3||0
+Marcelo Weigandt||SB||2000|ARG|d||Inter Miami|USA|14.4||0
+Dodô||SB||1998|BRA|d||Cremonese|ITA|16.2||1
+Sergiño Dest||SB||2000|USA|d||PSV|NED|17.1||0
+Byron Castillo||SB||1998|ECU|d||León|MEX|14.4||1
+Juan Cáceres||SB||2000|PAR|d||Dínamo Moscou|RUS|15.3||0
+Yan Couto||SB||2002|BRA|d||Borussia Dortmund|GER|17.5||0
+Jorge Sánchez||SB||1997|MEX|d||Cruz Azul|MEX|15.3||0
+Vinícius Tobias||SB||2004|BRA|d||Shakhtar Donetsk|UKR|14.4||1
+Mauricio Isla||SB||1988|CHI|d||Independiente|ARG|13.0||1
+Facundo Mura||SB||1999|ARG|d||Racing|ARG|14.8||0
+Kevin Álvarez||SB||1999|MEX|d||América|MEX|15.3||0
+Gastón Martirena||SB||2000|URU|d||Racing|ARG|15.3||0
+Guido Rodríguez|GUIDO ROD.|DH||1994|ARG|d||Valencia|ESP|17.1||1
+Federico Redondo||DH||2003|ARG|c||Inter Miami|USA|15.3||0
+Matías Galarza||DH||2002|PAR|d||Atlanta United|USA|15.3||0
+Andrés Cubas||DH||1996|PAR|d||Vancouver Whitecaps|CAN|15.3||0
+Wílmar Barrios||DH||1993|COL|d||Zenit|RUS|16.6||0
+Gustavo Puerta||DH||2003|COL|d||Racing Santander|ESP|14.8||1
+Erick Gutiérrez||DH||1995|MEX|d||Chivas|MEX|14.8||0
+Luis Chávez||DH||1996|MEX|d||Dínamo Moscou|RUS|15.7||0
+Santiago Ascacíbar||DH||1997|ARG|d||Estudiantes|ARG|15.7||0
+Vinicius Souza||DH||1999|BRA|d||Sheffield United|ENG|15.3||1
+Felipe Loyola||DH||2000|CHI|d||Independiente|ARG|14.8||1
+Fernando Gorriarán||DH||1994|URU|d||Tigres|MEX|16.2||0
+Vitor Carvalho||DH||2002|BRA|d||Braga|POR|15.7||0
+Erik Lira||DH||2000|MEX|d||Cruz Azul|MEX|15.3||0
+Wendel||OH|DH|1997|BRA|d|175|Zenit|RUS|17.5||0
+Marlon Gomes||DH|OH|2003|BRA|d||Shakhtar Donetsk|UKR|15.7||0
+Gabriel Sara||OH|DH|1999|BRA|d||Galatasaray|TUR|18.0||0
+Marcelino Núñez||OH|DH|2000|CHI|d||Norwich City|ENG|15.7||1
+César Araújo||DH|OH|2001|URU|d||Orlando City|USA|15.3||0
+Jhon Solís||DH|OH|2004|COL|d||Girona|ESP|15.3||1
+Wilder Cartagena||DH|OH|1994|PER|d||Orlando City|USA|13.9||1
+Agustín Palavecino||DH|OH|1996|ARG|d||Necaxa|MEX|14.8||1
+Matías Zaracho||OH|DH|1998|ARG|d||Racing|ARG|15.7||0
+Agustín Almendra||DH|OH|2000|ARG|d||Racing|ARG|15.3||0
+Mauro Arambarri||DH|OH|1995|URU|d||Getafe|ESP|17.1||0
+Patrik Mercado||OH|DH|2003|ECU|d||Independiente del Valle|ECU|14.8||1
+Vicente Pizarro||DH|OH|2002|CHI|d||Colo-Colo|CHI|13.9||1
+Braian Ojeda||DH|OH|2000|PAR|d||Real Salt Lake|USA|14.8||0
+Telasco Segovia||OH|DH|2003|VEN|d||Inter Miami|USA|15.3||0
+Cristian Cásseres Jr.||OH|DH|2000|VEN|d||Toulouse|FRA|15.7||0
+Carlos Rodríguez|CARLOS ROD|DH|OH|1997|MEX|d||Cruz Azul|MEX|15.7||0
+Luis Romo||DH|OH|1995|MEX|d||Chivas|MEX|15.3||0
+Rodrigo Zalazar||OH||1999|URU|c||Braga|POR|17.5||0
+Matheus Savio||OH||1997|BRA|d||Kashiwa Reysol|JPN|15.3||0
+Marcos Júnior||OH||1993|BRA|d||Sanfrecce Hiroshima|JPN|14.8||1
+Evander||OH||1998|BRA|c|178|FC Cincinnati|USA|17.1||0
+Juan Fernando Quintero|JUANFER|OH||1993|COL|c||River Plate|ARG|16.6||0
+Gonzalo Martínez||OH||1993|ARG|d||River Plate|ARG|15.7||1
+Manuel Lanzini||OH||1993|ARG|d||Vélez Sarsfield|ARG|15.7||0
+Kevin Zenón||OH||2001|ARG|c|176|Boca Juniors|ARG|15.7||0
+Ezequiel Barco||OH||1999|ARG|c||River Plate|ARG|15.7||1
+Diego Valdés||OH||1994|CHI|d||Vélez Sarsfield|ARG|15.7||0
+Piero Quispe||OH||2001|PER|d||Sydney FC|AUS|14.4||1
+Leonardo Fernández||OH||1998|URU|d||Peñarol|URU|15.3||1
+Yáser Asprilla||OH||2003|COL|d||Girona|ESP|16.2||1
+Julio Enciso||OH||2004|PAR|d||Strasbourg|FRA|17.1||1
+Facundo Farías||OH||2002|ARG|d||Estudiantes|ARG|15.3||1
+Miguel Almirón||WG||1994|PAR|c|174|Atlanta United|USA|16.6||0
+Jaminton Campaz||WG||2000|COL|d||Rosario Central|ARG|15.3||0
+Yan Matheus|YAN|WG||1998|BRA|d||Yokohama F. Marinos|JPN|14.8||1
+Gustavo Mantuan||WG||2001|BRA|c||Zenit|RUS|15.3||0
+Eguinaldo||WG||2004|BRA|d||Shakhtar Donetsk|UKR|15.3||0
+Newerton||WG||2005|BRA|d||Shakhtar Donetsk|UKR|14.8||0
+Alisson Santana||WG||2005|BRA|d||Shakhtar Donetsk|UKR|14.4||0
+Douglas Costa||WG||1990|BRA|c|172|Sydney FC|AUS|14.8||1
+Lucas Ribeiro||WG||1998|BRA|d||Mamelodi Sundowns|RSA|15.7||1
+Facundo Pellistri||WG||2001|URU|d||Panathinaikos|GRE|16.2||0
+Brian Rodríguez|BRIAN ROD.|WG||2000|URU|c||América|MEX|16.6||0
+Darío Osorio||WG||2004|CHI|d||Midtjylland|DEN|15.7||0
+Víctor Dávila||WG||1997|CHI|d||CSKA Moscou|RUS|15.7||0
+Jeremy Sarmiento||WG||2002|ECU|d||Cremonese|ITA|14.8||1
+John Yeboah||WG||2000|ECU|d||Venezia|ITA|14.8||1
+Alan Velasco||WG||2002|ARG|c||Boca Juniors|ARG|15.3||0
+Exequiel Zeballos||WG||2002|ARG|c||Boca Juniors|ARG|15.3||0
+Luca Langoni||WG||2002|ARG|d||New England Revolution|USA|14.4||0
+Tomás Chancalay||WG||1999|ARG|d||Minnesota United|USA|14.8||1
+Lucas Ocampos||WG||1994|ARG|c||Monterrey|MEX|17.1||0
+Diego Rossi||WG||1998|URU|c||Columbus Crew|USA|16.2||0
+Uriel Antuna||WG||1997|MEX|d||Tigres|MEX|15.3||1
+Alexis Vega||WG||1997|MEX|c||Toluca|MEX|16.2||0
+Orbelín Pineda||WG||1996|MEX|d||AEK Atenas|GRE|16.2||0
+Yuki Soma||WG||1997|JPN|d||Machida Zelvia|JPN|15.3||0
+Jonathan Rodríguez|CEBOLLA|WG||1993|URU|d||Portland Timbers|USA|14.8||1
+Hirving Lozano||WG||1995|MEX|d||San Diego FC|USA|16.6||0
+Sebastián Villa||WG||1996|COL|d||Independiente Rivadavia|ARG|15.7||1
+Anderson Lopes|AN. LOPES|CF||1993|BRA|d||Yokohama F. Marinos|JPN|15.7||0
+Léo Ceará||CF||1995|BRA|d||Kashima Antlers|JPN|15.3||0
+Erison||CF||1999|BRA|d||Kawasaki Frontale|JPN|14.8||0
+Jhon Córdoba||CF||1993|COL|d|188|Krasnodar|RUS|17.5||0
+Sebastián Driussi||CF||1996|ARG|d||River Plate|ARG|16.6||0
+Miguel Borja||CF||1993|COL|d|183|River Plate|ARG|15.7||1
+Salomón Rondón||CF||1989|VEN|d|189|Pachuca|MEX|15.3||0
+Germán Berterame||CF||1998|MEX|d||Monterrey|MEX|16.6||1
+Agustín Álvarez||CF||2001|URU|d||Monza|ITA|15.3||1
+Federico Viñas||CF||1998|URU|d||Oviedo|ESP|15.7||0
+Rodrigo Aguirre||CF||1994|URU|d||Tigres|MEX|15.7||0
+Milton Giménez||CF||1996|ARG|d||Boca Juniors|ARG|15.3||0
+Adam Bareiro||CF||1996|PAR|d||Boca Juniors|ARG|14.8||1
+Miguel Merentiel||CF||1996|URU|d||Boca Juniors|ARG|15.7||0
+Enner Valencia||CF||1989|ECU|d||Pachuca|MEX|14.8||1
+Kevin Rodríguez|KEVIN ROD.|CF||2000|ECU|d||Union Saint-Gilloise|BEL|15.3||0
+Ben Brereton Díaz||CF||1999|CHI|d||Derby County|ENG|14.8||1
+Lucas Alario||CF||1992|ARG|d|184|Estudiantes|ARG|14.4||1
+Guido Carrillo||CF||1991|ARG|d|189|Estudiantes|ARG|14.8||0
+Cristian Arango||CF||1995|COL|d||San Jose Earthquakes|USA|15.7||1
+Luis Muriel||CF||1991|COL|d||Orlando City|USA|15.3||1
+Alfredo Morelos||CF||1996|COL|d||Atlético Nacional|COL|14.8||1
+Lucas Beltrán||CF||2001|ARG|d||Valencia|ESP|15.7||1
+Henry Martín||CF||1992|MEX|d||América|MEX|15.3||0
+Paulinho||CF||1992|POR|d|188|Toluca|MEX|17.1||0
+Martín Satriano||CF||2001|URU|d||Getafe|ESP|14.8||1
+Walter Benítez|W. BENITEZ|GK||1993|ARG|d|191|Crystal Palace|ENG|16.6||1
+Facundo Cambeses|CAMBESES|GK||1997|ARG|d||Racing|ARG|14.8||1
+Zaid Romero|Z. ROMERO|CB||1999|ARG|d|190|Getafe|ESP|15.7||1
+Bruno Méndez|B. MENDEZ|CB||1999|URU|d||Toluca|MEX|15.3||1
+Kevin Lomónaco|LOMONACO|CB||2002|ARG|d||Independiente|ARG|14.8||1
+Julio Soler|J. SOLER|SB||2005|ARG|c||Bournemouth|ENG|15.7||0
+Leonel Di Plácido|DI PLACIDO|SB||1994|ARG|d||Lanús|ARG|14.4||1
+Óscar Opazo|OPAZO|SB||1990|CHI|d||Colo-Colo|CHI|13.9||1
+Milton Delgado|M. DELGADO|DH||2005|ARG|d||Boca Juniors|ARG|14.8||0
+Carlos Gruezo|GRUEZO|DH||1995|ECU|d||Santos Laguna|MEX|14.8||1
+Dixon Arroyo|D. ARROYO|DH||1992|ECU|d||Barcelona SC|ECU|14.4||1
+Iván Marcone|MARCONE|DH||1990|ARG|d||Independiente|ARG|14.8||1
+Nicolás Domínguez|DOMINGUEZ|DH|OH|1998|ARG|d||Nottingham Forest|ENG|16.2||1
+Martín Payero|PAYERO|DH|OH|1998|ARG|d||Udinese|ITA|16.2||1
+Andrés Perea|PEREA|DH||2000|COL|d||Puebla|MEX|14.4||1
+Matías Rojas|M. ROJAS|OH||1995|PAR|c||Racing|ARG|15.7||1
+Marcelino Moreno|MARCELINO|OH||1994|ARG|c||Lanús|ARG|15.3||1
+Emiliano Rigoni|RIGONI|WG||1993|ARG|d||Austin FC|USA|15.3||1
+Ignacio Pussetto|PUSSETTO|WG||1995|ARG|d||Huracán|ARG|14.4||1
+Darwin Machís|MACHIS|WG||1993|VEN|d||Real Valladolid|ESP|14.4||1
+Ángel Romero|A. ROMERO|WG||1992|PAR|d||Cruz Azul|MEX|14.8||1
+Joaquín Torres|J. TORRES|WG||1997|ARG|c||Philadelphia Union|USA|14.8||1
+Braian Romero|BRAIAN|CF||1991|ARG|d||Vélez Sarsfield|ARG|14.8||1
+Maxi Gómez|MAXI GOMEZ|CF||1996|URU|d|186|Trabzonspor|TUR|15.7||1
