@@ -34,17 +34,18 @@ export function gravarCarreiraNova(sql: Sql, dados: DadosCarreiraNova, versaoEsq
     }
 
     for (const j of dados.jogadores) {
-      // Sem clube: gravados a partir da migração 013 (passo 3 da 9.2).
-      if (j.time === null || !j.contrato) continue
-      const timeId = idTime.get(j.time)
+      // Sem clube (livre, exterior): time_id nulo e sem contrato.
+      const timeId = j.time === null ? null : idTime.get(j.time)
       if (timeId === undefined) throw new Error(`Jogador ${j.chave} de time inexistente (${j.time})`)
       const r = sql.run(
         `INSERT INTO jogador (chave, time_id, nome, nome_we, posicao, posicao_secundaria, camisa, camisa_real, idade,
-           nacionalidade, pe, altura, atributos, outside, potencial, resistencia, moral, aparencia)
-         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+           nacionalidade, pe, altura, atributos, outside, potencial, resistencia, moral, aparencia, status, taxa_fixa, origem_clube, origem_pais)
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
         j.chave, timeId, j.nome, j.nome_we, j.posicao, j.posicao_secundaria, j.camisa, j.camisa_real, j.idade,
         j.nacionalidade, j.pe, j.altura, JSON.stringify(j.atributos), j.outside, j.potencial, j.resistencia, j.moral, json(j.aparencia),
+        j.status, j.taxa_fixa, j.origem_clube, j.origem_pais,
       )
+      if (timeId === null || !j.contrato) continue
       sql.run(
         'INSERT INTO contrato (jogador_id, time_id, salario_mensal, ate_temporada, multa) VALUES (?, ?, ?, ?, ?)',
         Number(r.lastInsertRowid), timeId, j.contrato.salario_mensal, j.contrato.ate_temporada, j.contrato.multa,

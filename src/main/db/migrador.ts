@@ -2,6 +2,10 @@
  * Migrações do SQLite da carreira. Arquivos `migracoes/NNN_nome.sql`, aplicados em ordem,
  * cada um numa transação. A versão do esquema fica em `PRAGMA user_version`.
  *
+ * Uma migração que recria uma tabela referenciada por outras (o SQLite não altera CHECK) começa
+ * com a linha `-- migrador: sem_chaves_estrangeiras`: as chaves estrangeiras são desligadas fora
+ * da transação (o PRAGMA não vale dentro dela) e religadas no fim, como manda o SQLite.
+ *
  * O migrador conversa com o banco por uma interface mínima para poder ser testado sem o
  * binário do better-sqlite3 compilado para o Electron.
  */
@@ -17,6 +21,8 @@ export interface Migracao {
   nome: string
   sql: string
 }
+
+const SEM_CHAVES = /^--\s*migrador:\s*sem_chaves_estrangeiras\s*$/m
 
 const PADRAO_ARQUIVO = /^(\d{3})_([a-z0-9_]+)\.sql$/
 
@@ -53,6 +59,8 @@ export function migrar(banco: BancoMigravel, migracoes: readonly Migracao[]): Re
   const aplicadas: string[] = []
   for (const mig of migracoes) {
     if (mig.versao <= de) continue
+    const semChaves = SEM_CHAVES.test(mig.sql)
+    if (semChaves) banco.exec('PRAGMA foreign_keys = OFF')
     banco.exec('BEGIN')
     try {
       banco.exec(mig.sql)
@@ -61,6 +69,8 @@ export function migrar(banco: BancoMigravel, migracoes: readonly Migracao[]): Re
     } catch (e) {
       banco.exec('ROLLBACK')
       throw new Error(`Falha na migração ${String(mig.versao).padStart(3, '0')}_${mig.nome}: ${(e as Error).message}`, { cause: e })
+    } finally {
+      if (semChaves) banco.exec('PRAGMA foreign_keys = ON')
     }
     aplicadas.push(mig.nome)
   }

@@ -91,3 +91,36 @@ describe('migrar', () => {
     expect(db.prepare('SELECT semana_atual FROM carreira').get()).toEqual({ semana_atual: 1 })
   })
 })
+
+describe('migração 013 (exterior)', () => {
+  it('carreira antiga migra sem perder jogador, contrato nem dados das colunas antigas', () => {
+    const { banco, db } = bancoEmMemoria()
+    const reais = lerMigracoes(arquivosReais)
+    migrar(banco, reais.filter((m) => m.versao <= 12))
+    db.exec("INSERT INTO pais (codigo, nome, fator_valor) VALUES ('BRA', 'Brasil', 1)")
+    db.exec(`INSERT INTO time (id, sigla, nome, nome_curto, pais, cores, porte, formacao, estadio_nome, estadio_capacidade,
+               ingresso, custo_por_jogo, saldo, patrocinio_temporada, orcamento_folha_mensal)
+             VALUES (1, 'AAA', 'Time A', 'AAA', 'BRA', '[]', 'medio', '4-4-2A', 'E', 1000, 0, 0, 0, 0, 0)`)
+    db.exec(`INSERT INTO jogador (id, chave, time_id, nome, nome_we, posicao, camisa, idade, nacionalidade, pe, altura, atributos, outside,
+               potencial, resistencia, lesao_dias, valor, a_venda, status)
+             VALUES (7, 'aaa-j1', 1, 'Jogador', 'JOG', 'CF', 9, 25, 'BRA', 'destro', 180, '{}', 1, 12, 10, 3, 4500, 'usuario', 'ativo'),
+                    (8, 'liv-j1', NULL, 'Livre', 'LIV', 'CB', 0, 30, 'BRA', 'destro', 180, '{}', 1, 12, 10, 0, 100, NULL, 'livre')`)
+    db.exec("INSERT INTO contrato (jogador_id, time_id, salario_mensal, ate_temporada, multa) VALUES (7, 1, 1000, 2027, 0)")
+    db.exec("INSERT INTO evolucao (temporada, semana, jogador_id, atributo, delta, motivo) VALUES (2026, 1, 7, 'OFF', 1, 'evolucao')")
+
+    migrar(banco, reais)
+    expect(db.prepare('SELECT id, chave, time_id, lesao_dias, valor, a_venda, status, taxa_fixa, origem_clube FROM jogador ORDER BY id').all()).toEqual([
+      { id: 7, chave: 'aaa-j1', time_id: 1, lesao_dias: 3, valor: 4500, a_venda: 'usuario', status: 'ativo', taxa_fixa: null, origem_clube: null },
+      { id: 8, chave: 'liv-j1', time_id: null, lesao_dias: 0, valor: 100, a_venda: null, status: 'livre', taxa_fixa: null, origem_clube: null },
+    ])
+    // O DROP da tabela antiga não pode apagar os contratos (ON DELETE CASCADE).
+    expect(db.prepare('SELECT jogador_id FROM contrato').all()).toEqual([{ jogador_id: 7 }])
+    expect(db.prepare('PRAGMA foreign_key_check').all()).toEqual([])
+    expect(db.prepare('PRAGMA foreign_keys').get()).toEqual({ foreign_keys: 1 })
+
+    db.exec(`INSERT INTO jogador (chave, nome, nome_we, posicao, camisa, idade, nacionalidade, pe, altura, atributos, outside, potencial, resistencia, status, taxa_fixa, origem_clube, origem_pais)
+             VALUES ('ext-j1', 'Ext', 'EXT', 'CF', 0, 27, 'BRA', 'destro', 180, '{}', 1, 14, 10, 'exterior', 5000000, 'Zenit', 'RUS')`)
+    expect(() => db.exec("UPDATE jogador SET status = 'fora' WHERE chave = 'ext-j1'")).not.toThrow()
+    expect(() => db.exec("UPDATE jogador SET status = 'sumiu' WHERE chave = 'ext-j1'")).toThrow()
+  })
+})
