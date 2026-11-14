@@ -74,6 +74,7 @@ Todos os números abaixo são **propostas iniciais** e ficam em `padroes.ts` / `
   - Sucesso: +1 no atributo (máximo = potencial).
 - **Declínio** a partir dos 30 anos: chance semanal de −1 em atributos físicos = 0,008 × (idade − 29). (Na v1 a idade não avança; o declínio já existe para quem tem 30+.)
 - **Notícias aleatórias** também podem mexer em atributos (ver `09-noticias-eventos.md`).
+- **Oscilação semanal**: no fechamento de cada semana, 1-3% de **todos** os jogadores da carreira (qualquer idade, qualquer clube, inclusive o do usuário) ganham ou perdem 1-2 pontos num atributo sorteado. Metade sobe, metade desce. Não respeita o potencial, só os limites 1-20. Detalhes em `09-noticias-eventos.md`.
 
 ## Lesões
 

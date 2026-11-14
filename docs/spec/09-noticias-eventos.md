@@ -29,6 +29,18 @@ O **catálogo completo entra na v1** e está especificado em `docs/spec/09b-cata
 - Toda aplicação de efeito é registrada em `noticia.efeitos_aplicados` (auditável e reversível em teste).
 - Sorteios com o `rng` derivado de `('noticias', semana)`.
 
+## Oscilação semanal de atributos
+
+Ruído do futebol, separado do catálogo: não gera notícia, só entra no histórico de evolução (motivo `oscilacao`, exibido como "oscilação").
+
+- **Quando**: no fechamento de cada semana implícita (`Elencos.fecharSemana`), depois do treino.
+- **Quem**: todos os jogadores da carreira, sem filtro de idade, clube ou lesão. Quantidade = total × fração sorteada entre `fracao_min` (1%) e `fracao_max` (3%), arredondada.
+- **Sinal**: metade sobe, metade desce; com quantidade ímpar, o sinal do que sobra é sorteado.
+- **Efeito**: um atributo sorteado entre os que têm espaço na direção (REFLE. só para goleiro), variação de `delta_min` (1) a `delta_max` (2), limitada a 1-20. Não respeita o potencial.
+- **Sorteio**: `rng` da semana derivado com `'oscilacao'`; os jogadores são ordenados por id antes, então é reproduzível.
+- **Calibragem**: `regras.oscilacao` em `padroes.ts` (`ativa`, `fracao_min`, `fracao_max`, `delta_min`, `delta_max`), sobrescrevível pelo `regras.json`.
+- Código: `src/core/jogadores/oscilacao.ts`; teste: `tests/core/oscilacao.test.ts`; migração `012_oscilacao.sql` (novo motivo no CHECK de `evolucao`).
+
 ## Interface
 
 - Caixa de notícias com filtro por tipo e etiqueta colorida (`we-tag`); as mais recentes no painel inicial.

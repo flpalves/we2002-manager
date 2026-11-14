@@ -17,8 +17,8 @@ export interface MudancaAtributo {
   jogador: string
   atributo: Atributo
   delta: number
-  /** Treino, idade ou efeito de notícia (fase 7). */
-  motivo: 'evolucao' | 'declinio' | 'noticia'
+  /** Treino, idade, efeito de notícia (fase 7) ou oscilação semanal aleatória. */
+  motivo: 'evolucao' | 'declinio' | 'noticia' | 'oscilacao'
 }
 
 function porIdade(tabela: readonly { ate_idade: number; fator: number }[], idade: number): number {

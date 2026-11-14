@@ -127,6 +127,19 @@ export interface Regras {
     declinio_por_ano: number
     atributos_fisicos: string[]
   }
+  /**
+   * Oscilação semanal (09): uma fração dos jogadores de todos os clubes, sem olhar idade ou time,
+   * ganha ou perde pontos num atributo sorteado. Metade sobe, metade desce.
+   */
+  oscilacao: {
+    ativa: boolean
+    /** Fração dos jogadores afetados por semana: sorteada entre o mínimo e o máximo (0-1). */
+    fracao_min: number
+    fracao_max: number
+    /** Tamanho da variação (pontos na escala 1-20), sorteado por jogador. */
+    delta_min: number
+    delta_max: number
+  }
   ia: {
     /** Condição abaixo da qual o titular vira candidato a ser poupado, por prioridade da competição. */
     rodizio_limite: Record<'liga' | 'continental' | 'copa' | 'estadual', number>
@@ -546,6 +559,7 @@ export const PADROES: Regras = {
     entrosamento_troca_formacao: 0.5,
     entrosamento_reforco: -3,
   },
+  oscilacao: { ativa: true, fracao_min: 0.01, fracao_max: 0.03, delta_min: 1, delta_max: 2 },
   evolucao: {
     base: 0.03,
     divisor: 5,

@@ -48,9 +48,9 @@
         },
         {
           "competicao": "Série B",
-          "jogador": "Jogador 18",
+          "jogador": "Jogador 19",
           "time": "EEE",
-          "gols": 5
+          "gols": 4
         }
       ],
       "usuario": {
@@ -115,11 +115,11 @@
       "campeoes": [
         {
           "competicao": "Série A",
-          "time": "FFF"
+          "time": "CCC"
         },
         {
           "competicao": "Série B",
-          "time": "AAA"
+          "time": "EEE"
         }
       ],
       "movimentos": [
@@ -130,19 +130,19 @@
           "tipo": "rebaixamento"
         },
         {
-          "time": "CCC",
+          "time": "FFF",
           "de": "Série A",
           "para": "Série B",
           "tipo": "rebaixamento"
         },
         {
-          "time": "AAA",
+          "time": "EEE",
           "de": "Série B",
           "para": "Série A",
           "tipo": "acesso"
         },
         {
-          "time": "DDD",
+          "time": "GGG",
           "de": "Série B",
           "para": "Série A",
           "tipo": "acesso"
@@ -166,8 +166,8 @@
         "campanhas": [
           {
             "competicao": "Série B",
-            "posicao": 1,
-            "campeao": true
+            "posicao": 3,
+            "campeao": false
           }
         ],
         "metas": [
@@ -189,20 +189,20 @@
         ],
         "confianca": 100,
         "demitido": false,
-        "saldo": 1049959996,
+        "saldo": 1039879996,
         "saidas": 2,
         "renovadosPelaDiretoria": 23
       },
       "depois": {
         "saldos": {
-          "AAA": 1049959996,
+          "AAA": 1039879996,
           "BBB": 1082783996,
-          "CCC": 1067663996,
-          "DDD": 1088255996,
-          "EEE": 1060319996,
-          "FFF": 1098335996,
+          "CCC": 1094303996,
+          "DDD": 1051679996,
+          "EEE": 1098623996,
+          "FFF": 1064351996,
           "GGG": 1035119996,
-          "HHH": 1079615996
+          "HHH": 1083503996
         },
         "elencos": {
           "AAA": 23,
@@ -216,7 +216,7 @@
         },
         "livres": 2,
         "transferencias": 0,
-        "gols": 107
+        "gols": 108
       }
     }
   ]

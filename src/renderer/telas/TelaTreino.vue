@@ -53,6 +53,8 @@ function resumo(f: Treino['focos'][number]): string {
 }
 
 const atual = computed(() => t.value?.focos.find((f) => f.id === t.value?.foco) ?? null)
+
+const ROTULO_MOTIVO: Record<string, string> = { evolucao: 'treino', declinio: 'idade', noticia: 'notícia', oscilacao: 'oscilação' }
 </script>
 
 <template>
@@ -88,7 +90,7 @@ const atual = computed(() => t.value?.focos.find((f) => f.id === t.value?.foco) 
                 <td>{{ e.semana }}</td>
                 <td><RouterLink class="link" :to="{ name: 'jogador', params: { id: e.jogadorId } }">{{ e.jogador }}</RouterLink></td>
                 <td>{{ rotulo(e.atributo) }}</td>
-                <td :class="e.delta > 0 ? 'we-vl--positivo' : 'we-vl--negativo'">{{ e.delta > 0 ? '+1' : '−1 (idade)' }}</td>
+                <td :class="e.delta > 0 ? 'we-vl--positivo' : 'we-vl--negativo'">{{ e.delta > 0 ? `+${e.delta}` : `−${-e.delta}` }} <span class="we-lb">({{ ROTULO_MOTIVO[e.motivo] ?? 'treino' }})</span></td>
               </tr>
             </tbody>
           </WeTabela>

@@ -53,6 +53,8 @@ async function salvarAparencia(): Promise<void> {
     ui.avisar((e as Error).message)
   }
 }
+
+const ROTULO_MOTIVO: Record<string, string> = { evolucao: 'treino', declinio: 'idade', noticia: 'notícia', oscilacao: 'oscilação' }
 </script>
 
 <template>
@@ -120,8 +122,8 @@ async function salvarAparencia(): Promise<void> {
             <tr v-for="(e, i) in f.evolucoes" :key="i">
               <td>Semana {{ e.semana }}</td>
               <td>{{ ROTULO_ATRIBUTO[e.atributo as keyof typeof ROTULO_ATRIBUTO] ?? e.atributo }}</td>
-              <td :class="e.delta > 0 ? 'we-vl--positivo' : 'we-vl--negativo'">{{ e.delta > 0 ? '+1' : '−1' }}</td>
-              <td class="we-lb">{{ e.motivo === 'declinio' ? 'idade' : 'treino' }}</td>
+              <td :class="e.delta > 0 ? 'we-vl--positivo' : 'we-vl--negativo'">{{ e.delta > 0 ? `+${e.delta}` : `−${-e.delta}` }}</td>
+              <td class="we-lb">{{ ROTULO_MOTIVO[e.motivo] ?? 'treino' }}</td>
             </tr>
           </tbody>
         </WeTabela>

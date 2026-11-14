@@ -3,6 +3,7 @@ import type { FocoTreino, Regras } from '../config/padroes'
 import { criarRng, type Rng } from '../rng'
 import { moralAposPartida, moralSemanal } from '../jogadores/moral'
 import { entrosamentoSemanal, focoDaIa, semanaDeTreino, type MudancaAtributo } from '../jogadores/treino'
+import { oscilacaoSemanal } from '../jogadores/oscilacao'
 import type { Competicao } from '@shared/esquemas/pacote'
 import { empatado } from '../competicoes/mataMata'
 import { Disciplinas, SUSPENSAO_PADRAO, type EventoCartao } from '../competicoes/suspensoes'
@@ -109,6 +110,11 @@ export class Elencos {
           this.alterados.add(j.id)
         }
       }
+    }
+    // Oscilação aleatória: 1-3% de todos os jogadores, de qualquer clube, ±1-2 num atributo.
+    for (const m of oscilacaoSemanal([...this.jogadores.values()], regras, rng.derivar('oscilacao'))) {
+      this.evolucoes.push({ ...m, semana })
+      this.alterados.add(m.jogador)
     }
     this.minutosSemana.clear()
   }
