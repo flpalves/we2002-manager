@@ -1,5 +1,5 @@
 import type { Regras } from '../config/padroes'
-import type { Competicao, Pacote, Time } from '@shared/esquemas/pacote'
+import type { Competicao, JogadorSemClube, Pacote, Time } from '@shared/esquemas/pacote'
 import { ehAsciiImprimivel } from '../texto'
 import { problemasDoDesign } from '../we/estampas'
 import { validarDivisoes } from '../competicoes/divisoes'
@@ -63,6 +63,34 @@ export function validarPacote(pacote: Pacote, regras: Regras): Problema[] {
     if (siglas.has(t.sigla)) erro('sigla_repetida', `Sigla ${t.sigla} usada por mais de um time.`, { time: t.sigla })
     siglas.add(t.sigla)
     validarTime(t)
+  }
+  validarSemClube()
+
+  /** `exterior.json` e `livres.json` (06, "Jogadores sem clube"). */
+  function validarSemClube(): void {
+    const nomesWe = new Map<string, string>()
+    const lista: [string, JogadorSemClube, number | null][] = [
+      ...(pacote.exterior?.jogadores ?? []).map((j) => ['exterior.json', j, j.taxa] as [string, JogadorSemClube, number | null]),
+      ...(pacote.livres?.jogadores ?? []).map((j) => ['livres.json', j, null] as [string, JogadorSemClube, number | null]),
+    ]
+    for (const [arquivo, j, taxa] of lista) {
+      const ref = { arquivo, jogador: j.id }
+      const anterior = idsJogador.get(j.id)
+      if (anterior) erro('jogador_id_repetido', `Id de jogador ${j.id} repetido (${anterior} e ${arquivo}).`, ref)
+      idsJogador.set(j.id, arquivo)
+      if (taxa !== null && taxa <= 0) erro('taxa_invalida', `${arquivo}: ${j.nome} com taxa ${taxa}; a taxa do exterior precisa ser maior que zero.`, ref)
+
+      if (!j.nome_we.trim()) erro('nome_we_vazio', `${arquivo}: ${j.nome} sem nome para o WE.`, ref)
+      else {
+        if (j.nome_we.length > regras.elenco.tamanho_nome_we || !ehAsciiImprimivel(j.nome_we)) {
+          aviso('nome_longo', `${arquivo}: nome "${j.nome_we}" passa de ${regras.elenco.tamanho_nome_we} caracteres ASCII (será cortado).`, ref)
+        }
+        const dono = nomesWe.get(j.nome_we)
+        if (dono) aviso('nome_we_repetido', `${arquivo}: nome para o WE "${j.nome_we}" de ${dono} e ${j.nome}.`, ref)
+        nomesWe.set(j.nome_we, j.nome)
+      }
+      if (!j.posicao_secundaria) aviso('sem_posicao_secundaria', `${arquivo}: ${j.nome} sem posição secundária.`, ref)
+    }
   }
 
   function validarTime(t: Time): void {

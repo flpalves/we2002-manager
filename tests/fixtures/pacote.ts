@@ -1,4 +1,4 @@
-import { ATRIBUTOS, type Atributos, type Jogador, type Pacote, type Posicao, type Time } from '@shared/esquemas/pacote'
+import { ATRIBUTOS, JogadorSemClubeSchema, type Atributos, type Jogador, type JogadorExterior, type JogadorSemClube, type Pacote, type Posicao, type Time } from '@shared/esquemas/pacote'
 
 /** Pacote mínimo e válido para os testes: times com 23 jogadores (2 GK) e uma liga. */
 
@@ -30,6 +30,23 @@ export function jogador(sigla: string, n: number, extra: Partial<Jogador> = {}):
     contrato: { salario_mensal: 1_000_000, ate_temporada: 2027, multa: 0 },
     ...extra,
   }
+}
+
+/** O jogador de time sem os campos que o sem clube não tem. */
+function semCamisaNemContrato(j: Jogador): JogadorSemClube {
+  return JogadorSemClubeSchema.parse(j)
+}
+
+/** Livre inicial (`livres.json`). */
+export function livre(n: number, extra: Partial<JogadorSemClube> = {}): JogadorSemClube {
+  const base = semCamisaNemContrato(jogador('liv', n, { posicao: 'CB', posicao_secundaria: 'SB' }))
+  return { ...base, nome: `Livre ${n}`, nome_we: `LIVRE ${n}`, ...extra }
+}
+
+/** Disponível do exterior (`exterior.json`). */
+export function exterior(n: number, extra: Partial<JogadorExterior> = {}): JogadorExterior {
+  const base = semCamisaNemContrato(jogador('ext', n, { posicao: 'CF', posicao_secundaria: 'WG', atributos: atributos(14) }))
+  return { ...base, nome: `Exterior ${n}`, nome_we: `EXT ${n}`, origem: { clube: 'Zenit', pais: 'RUS' }, taxa: 50_000_000, ...extra }
 }
 
 export function time(sigla: string, extra: Partial<Time> = {}): Time {

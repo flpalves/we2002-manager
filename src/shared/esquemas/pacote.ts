@@ -92,6 +92,29 @@ export const JogadorSchema = z.object({
 })
 export type Jogador = z.infer<typeof JogadorSchema>
 
+/** Jogador sem clube (`exterior.json`, `livres.json`): sem camisa nem contrato, que ganha na contratação. */
+export const JogadorSemClubeSchema = JogadorSchema.omit({ camisa: true, camisa_real: true, contrato: true })
+export type JogadorSemClube = z.infer<typeof JogadorSemClubeSchema>
+
+/** Disponível do exterior (06, "Jogadores sem clube"): clube de origem informativo e taxa fixa. */
+export const JogadorExteriorSchema = JogadorSemClubeSchema.extend({
+  origem: z.object({ clube: z.string().min(1), pais: CodigoPais }),
+  // Taxa ≤ 0 vira erro do validador (com o id do jogador), não do esquema.
+  taxa: z.number().int(),
+})
+export type JogadorExterior = z.infer<typeof JogadorExteriorSchema>
+
+/** `exterior.json`. */
+export const ExteriorSchema = z.object({
+  temporada: z.number().int().min(2000).max(2200),
+  jogadores: z.array(JogadorExteriorSchema),
+})
+export type Exterior = z.infer<typeof ExteriorSchema>
+
+/** `livres.json`: livres iniciais. */
+export const LivresSchema = z.object({ jogadores: z.array(JogadorSemClubeSchema) })
+export type Livres = z.infer<typeof LivresSchema>
+
 export const PORTES = ['grande', 'medio', 'pequeno'] as const
 export type Porte = (typeof PORTES)[number]
 
@@ -331,6 +354,10 @@ export interface Pacote {
   competicoes: Competicao[]
   /** Catálogo de eventos (`noticias.json`); ausente = catálogo padrão. */
   noticias?: EventoCatalogo[] | null
+  /** Disponíveis do exterior (`exterior.json`); ausente = nenhum. */
+  exterior?: Exterior | null
+  /** Livres iniciais (`livres.json`); ausente = nenhum. */
+  livres?: Livres | null
   /** Siglas com `escudos/<SIGLA>.png`. */
   escudos: string[]
   /** Arquivos de kit presentes (caminhos relativos ao pacote, com `/`). */

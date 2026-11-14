@@ -12,6 +12,8 @@ export function escreverPacote(raiz: string, p: Pacote): void {
   if (p.noticias) gravarJson(join(raiz, 'noticias.json'), p.noticias)
   if (p.temporada) gravarJson(join(raiz, 'temporada.json'), p.temporada)
   if (p.divisoes) gravarJson(join(raiz, 'divisoes.json'), p.divisoes)
+  if (p.exterior) gravarJson(join(raiz, 'exterior.json'), p.exterior)
+  if (p.livres) gravarJson(join(raiz, 'livres.json'), p.livres)
   for (const t of p.times) gravarJson(join(raiz, 'times', `${t.sigla}.json`), t)
   for (const c of p.competicoes) gravarJson(join(raiz, 'competicoes', `${c.id}.json`), c)
   mkdirSync(join(raiz, 'escudos'), { recursive: true })

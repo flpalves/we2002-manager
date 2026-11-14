@@ -2,7 +2,7 @@ import type { EventoCatalogo } from '@shared/esquemas/noticias'
 import { catalogoPadrao } from '../noticias/catalogoPadrao'
 import { mesclarRegras, PADROES, type Parcial, type Regras } from '../config/padroes'
 import { temErros, validarPacote, type Problema } from './validar'
-import type { Pacote, Time } from '@shared/esquemas/pacote'
+import type { JogadorSemClube, Pacote, Time } from '@shared/esquemas/pacote'
 import type { Bloco } from '../competicoes/calendario'
 import { aplicarDivisoes } from '../competicoes/divisoes'
 
@@ -52,7 +52,9 @@ export interface LinhaTime {
 
 export interface LinhaJogador {
   chave: string
-  time: string
+  /** Sigla do clube; `null` = sem clube (livre ou disponível do exterior). */
+  time: string | null
+  status: 'ativo' | 'livre' | 'exterior'
   nome: string
   nome_we: string
   posicao: string
@@ -69,7 +71,12 @@ export interface LinhaJogador {
   resistencia: number
   moral: number
   aparencia: unknown
-  contrato: { salario_mensal: number; ate_temporada: number; multa: number }
+  /** `null` = sem clube (ganha contrato na contratação). */
+  contrato: { salario_mensal: number; ate_temporada: number; multa: number } | null
+  /** Só no exterior: taxa fixa (centavos) e clube/país de origem (informativos). */
+  taxa_fixa: number | null
+  origem_clube: string | null
+  origem_pais: string | null
 }
 
 export interface DadosCarreiraNova {
@@ -171,6 +178,7 @@ export function prepararCarreira(pacote: Pacote, escolha: EscolhaCarreira): Dado
     t.jogadores.map((j) => ({
       chave: j.id,
       time: t.sigla,
+      status: 'ativo' as const,
       nome: j.nome,
       nome_we: j.nome_we,
       posicao: j.posicao,
@@ -188,8 +196,41 @@ export function prepararCarreira(pacote: Pacote, escolha: EscolhaCarreira): Dado
       moral: j.moral_inicial ?? MORAL_INICIAL_PADRAO,
       aparencia: j.aparencia ?? null,
       contrato: { ...j.contrato },
+      taxa_fixa: null,
+      origem_clube: null,
+      origem_pais: null,
     })),
   )
+  // Sem clube (06): camisa provisória 0, sem contrato; a contratação dá camisa e contrato.
+  const semClube = (j: JogadorSemClube): LinhaJogador => ({
+    chave: j.id,
+    time: null,
+    status: 'livre',
+    nome: j.nome,
+    nome_we: j.nome_we,
+    posicao: j.posicao,
+    posicao_secundaria: j.posicao_secundaria ?? null,
+    camisa: 0,
+    camisa_real: null,
+    idade: j.idade,
+    nacionalidade: j.nacionalidade,
+    pe: j.pe,
+    altura: j.altura,
+    atributos: { ...j.atributos },
+    outside: j.outside,
+    potencial: j.potencial,
+    resistencia: j.resistencia,
+    moral: j.moral_inicial ?? MORAL_INICIAL_PADRAO,
+    aparencia: j.aparencia ?? null,
+    contrato: null,
+    taxa_fixa: null,
+    origem_clube: null,
+    origem_pais: null,
+  })
+  for (const j of pacote.exterior?.jogadores ?? []) {
+    jogadores.push({ ...semClube(j), status: 'exterior', taxa_fixa: j.taxa, origem_clube: j.origem.clube, origem_pais: j.origem.pais })
+  }
+  for (const j of pacote.livres?.jogadores ?? []) jogadores.push(semClube(j))
 
   return {
     carreira: {

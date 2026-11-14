@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest'
 import { PADROES } from '@core/config/padroes'
 import { temErros, validarPacote } from '@core/pacote/validar'
 import type { Competicao } from '@shared/esquemas/pacote'
-import { jogador, pacote, time } from '../fixtures/pacote'
+import { exterior, jogador, livre, pacote, time } from '../fixtures/pacote'
 import { catalogoPadrao } from '@core/noticias/catalogoPadrao'
 
 const codigos = (p: ReturnType<typeof validarPacote>, nivel?: 'erro' | 'aviso') =>
@@ -140,5 +140,49 @@ describe('validarPacote', () => {
     expect(codigos(validarPacote({ ...base, competicoes: [comVaga, copa] }, PADROES), 'aviso')).not.toContain('sem_vagas')
     const acessoErrado = { ...liga, saidas: [{ posicoes: '1', destino: 'copa', tipo: 'acesso' }] }
     expect(codigos(validarPacote({ ...base, competicoes: [acessoErrado, copa] }, PADROES), 'aviso')).toContain('saida_invalida')
+  })
+})
+
+describe('validarPacote / jogadores sem clube (exterior.json, livres.json)', () => {
+  it('pacote com exterior e livres válidos não tem erros', () => {
+    const p = validarPacote(pacote({ exterior: { temporada: 2026, jogadores: [exterior(1), exterior(2)] }, livres: { jogadores: [livre(1)] } }), PADROES)
+    expect(codigos(p, 'erro')).toEqual([])
+  })
+
+  it('id repetido entre times, exterior e livres é erro', () => {
+    const p = validarPacote(
+      pacote({
+        exterior: { temporada: 2026, jogadores: [exterior(1, { id: 'aaa-j1' }), exterior(2)] },
+        livres: { jogadores: [livre(1, { id: 'ext-j2' })] },
+      }),
+      PADROES,
+    )
+    const repetidos = p.filter((x) => x.codigo === 'jogador_id_repetido')
+    expect(repetidos.map((x) => [x.jogador, x.nivel])).toEqual([
+      ['aaa-j1', 'erro'],
+      ['ext-j2', 'erro'],
+    ])
+  })
+
+  it('taxa <= 0 no exterior é erro', () => {
+    const p = validarPacote(pacote({ exterior: { temporada: 2026, jogadores: [exterior(1, { taxa: 0 }), exterior(2, { taxa: -5 })] } }), PADROES)
+    expect(p.filter((x) => x.codigo === 'taxa_invalida').map((x) => [x.jogador, x.nivel])).toEqual([
+      ['ext-j1', 'erro'],
+      ['ext-j2', 'erro'],
+    ])
+  })
+
+  it('avisos: nome_we repetido entre os sem clube, nome longo, sem posição secundária', () => {
+    const p = validarPacote(
+      pacote({
+        exterior: { temporada: 2026, jogadores: [exterior(1, { nome_we: 'IGUAL' }), exterior(2, { nome_we: 'NOME COMPRIDO' })] },
+        livres: { jogadores: [livre(1, { nome_we: 'IGUAL', posicao_secundaria: null })] },
+      }),
+      PADROES,
+    )
+    expect(codigos(p, 'erro')).toEqual([])
+    expect(p.find((x) => x.codigo === 'nome_we_repetido')).toMatchObject({ nivel: 'aviso', arquivo: 'livres.json', jogador: 'liv-j1' })
+    expect(p.find((x) => x.codigo === 'nome_longo' && x.jogador === 'ext-j2')).toMatchObject({ nivel: 'aviso', arquivo: 'exterior.json' })
+    expect(p.find((x) => x.codigo === 'sem_posicao_secundaria' && x.jogador === 'liv-j1')).toMatchObject({ nivel: 'aviso' })
   })
 })

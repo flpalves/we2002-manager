@@ -5,6 +5,8 @@ import { CatalogoSchema, type EventoCatalogo } from '@shared/esquemas/noticias'
 import {
   CompeticaoSchema,
   DivisoesSchema,
+  ExteriorSchema,
+  LivresSchema,
   ManifestoSchema,
   PaisesSchema,
   RegrasArquivoSchema,
@@ -71,6 +73,8 @@ export function lerPacote(raiz: string): Pacote {
   const temporada = lerJson(raiz, 'temporada.json', TemporadaSchema, invalidos)
   const noticias = lerJson(raiz, 'noticias.json', CatalogoSchema, invalidos)
   const divisoes = lerJson(raiz, 'divisoes.json', DivisoesSchema, invalidos)
+  const exterior = lerJson(raiz, 'exterior.json', ExteriorSchema, invalidos)
+  const livres = lerJson(raiz, 'livres.json', LivresSchema, invalidos)
 
   const times: Time[] = []
   for (const arq of listar(join(raiz, 'times'), '.json')) {
@@ -93,7 +97,7 @@ export function lerPacote(raiz: string): Pacote {
   const escudos = listar(join(raiz, 'escudos'), '.png').map((f) => f.slice(0, -4))
   const arquivosKit = listarRecursivo(raiz, 'kits')
 
-  return { manifesto, regras, temporada, divisoes, paises, times, competicoes, noticias, escudos, arquivosKit, invalidos }
+  return { manifesto, regras, temporada, divisoes, paises, times, competicoes, noticias, exterior, livres, escudos, arquivosKit, invalidos }
 }
 
 /** Lista os pacotes (subpastas com manifesto.json) da pasta de pacotes. */

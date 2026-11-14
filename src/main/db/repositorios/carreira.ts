@@ -34,6 +34,8 @@ export function gravarCarreiraNova(sql: Sql, dados: DadosCarreiraNova, versaoEsq
     }
 
     for (const j of dados.jogadores) {
+      // Sem clube: gravados a partir da migração 013 (passo 3 da 9.2).
+      if (j.time === null || !j.contrato) continue
       const timeId = idTime.get(j.time)
       if (timeId === undefined) throw new Error(`Jogador ${j.chave} de time inexistente (${j.time})`)
       const r = sql.run(
