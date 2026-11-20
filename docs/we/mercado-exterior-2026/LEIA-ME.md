@@ -1,10 +1,10 @@
 # Disponíveis do exterior 2026: lista e gerador
 
-Gera `pacotes/brasil-2026/exterior.json` (feito em 14/11/2026; lote 2 com mais 100 jogadores em 20/11/2026). Regras do jogo em `docs/spec/06-mercado-financas-diretoria.md`, "Jogadores sem clube"; formato do arquivo em `docs/spec/02-dados.md`.
+Gera `pacotes/brasil-2026/exterior.json` (feito em 14/11/2026; lote 2 com mais 100 e lote 3 com mais 186 jogadores em 20/11/2026). Regras do jogo em `docs/spec/06-mercado-financas-diretoria.md`, "Jogadores sem clube"; formato do arquivo em `docs/spec/02-dados.md`.
 
 | Arquivo | O que é |
 |---|---|
-| `jogadores.txt` | 300 jogadores (200 do lote 1 e 100 do lote 2), uma linha cada: nome, nome_we, posição, secundária, ano de nascimento, nacionalidade, pé, altura, clube e país da liga de origem, geral alvo (1-20), tags, "validar". |
+| `jogadores.txt` | 486 jogadores (200 do lote 1, 100 do lote 2 e 186 do lote 3), uma linha cada: nome, nome_we, posição, secundária, ano de nascimento, nacionalidade, pé, altura, clube e país da liga de origem, geral alvo (1-20), tags, "validar". |
 | `montar.py` | Monta o `exterior.json`: notas, potencial e taxa. Sempre regrava o arquivo inteiro. |
 
 ```bash
@@ -32,6 +32,17 @@ Depois rode `docs/we/aparencia-gerada/gerar.py` (o `montar.py` grava sem aparên
 - Clubes de referência até meados de 2026, como no lote 1. `validar = 1` marca 33 que podem ter mudado na janela ou terminado contrato (Casemiro, Dybala, Suárez, Alexis, Otamendi, James e outros).
 - Conferência feita antes de gerar: já estavam no pacote e ficaram fora Coutinho (SAN), Emerson Royal, Alex Sandro e Danilo (FLA), Renan Lodi, Lyanco e Bernard (CAM), Alex Telles e Arthur Cabral (BOT), Lucas Moura e Wendell (SPFC), Felipe Anderson e Ramón Sosa (PAL), Gabigol (SAN), Sinisterra (CRU), Sanabria (INT), Balbuena e Villasanti (GRE), Bobadilla (SPFC). Já estavam no lote 1: Montiel, Acuña, Walter Benítez, Pellistri, Quintero, Almirón, Enciso, Yeboah, Osorio, Marcelino Núñez, Rondón, Enner Valencia, Asprilla, Mojica, Paulo Díaz, Galarza, Abner.
 - Homônimos: dois Ederson (o goleiro `EDERSON` e o volante da Atalanta `EDERSON J.`, id `ext-ederson`); dois Luis Suárez (o uruguaio `SUAREZ` e o colombiano `LJ SUAREZ`, id `ext-luis-javier-suarez`).
+
+## Lote 3 (20/11/2026): brasileiros que faltavam e estrangeiros de nível médio
+
+- Pedido do Felipe: os 100 melhores brasileiros que ainda estavam fora do jogo e 100 estrangeiros de nível médio de Série A ou B.
+- Referência medida no pacote (geral dos 11 melhores de cada time): Série A com mediana 14,9 (25% a 75%: 14,1 a 16,0); Série B com mediana 12,1.
+- **Brasileiros (86, não 100).** Entram os craques que o lote 2 deixou de fora (Vinícius Júnior, Raphinha, Rodrygo, Estêvão, Endrick) e os brasileiros de clubes médios da Europa, Rússia, Ucrânia, Turquia, Bulgária, Chipre, Arábia, Catar, Emirados, Japão, MLS e México. Parou em 86 porque, depois disso, os nomes já seriam palpite. Geral de 13,4 a 19,0 (mediana 14,8). Taxa de R$ 0,85 mi a R$ 132,25 mi (mediana R$ 8,4 mi).
+- **Estrangeiros (100).** Geral alvo de 12,5 a 16, quase todos de clubes sul-americanos (River, Boca, Racing, Estudiantes, Vélez, Talleres, Lanús, Peñarol, Nacional, Atlético Nacional, Junior, Colo-Colo, Universidad de Chile, LDU, Universitario, Alianza, Bolívar) e alguns jovens argentinos na Europa (Soulé, Santiago Castro, Barco, Echeverri, Panichelli). Geral de 12,3 a 16,0 (mediana 14,0). Taxa de R$ 0,3 mi a R$ 27,2 mi (mediana R$ 3,15 mi). ARG 36 · COL 13 · URU 10 · CHI 8 · PAR 8 · ECU 8 · PER 6 · VEN 5 · MEX 4 · BOL 2.
+- `FATOR_ORIGEM` ganhou `UAE` 0,9 · `CYP` 0,7 · `BUL` 0,7 · `BOL` 0,3 · `VEN` 0,3 (os dois últimos iguais ao `fator_valor` do `paises.json`).
+- `validar = 1` marca 135 dos 186: aqui o clube de referência é menos seguro que nos lotes 1 e 2, sobretudo no Japão, no Oriente Médio, na Bulgária e nos clubes menores de Portugal e da Argentina.
+- Conferência feita antes de gerar: já estavam no pacote e ficaram fora Fred (CAM), Rodinei, Lucas Veríssimo e Gabriel Brazão (SAN), Kaio César e Pedro Raul (COR), Fuzato, Thiago Mendes, Cuiabano e Robert Renan (VAS), Matheus Henrique (CRU), Weverton (GRE), Tetê (GRE), Iago e Pedro Lima (SPFC), Romarinho (CRI), Fábio Lima (JUV), Gustavo Scarpa e Vitor Bueno, e os estrangeiros Fabricio Bustos (CFC), Gabriel Rojas (CRU), Guido Herrera e Alejo Véliz (BAH), Alan Lescano e Hinestroza (VAS), Christian Oliva (SAN), Enamorado (GRE). Soteldo e Miguel Terceros ficaram fora porque o último clube conhecido é brasileiro.
+- Homônimos: `NATAN`, `MARCAO`, `PEDRINHO`, `MARCINHO` e `CAIO VIDAL` também existem entre os livres (outras pessoas). `LUIS H.` (Inter) não é o `L.HENRIQUE` do Zenit.
 
 ## Conferência com os elencos do pacote (14/11/2026)
 

@@ -300,3 +300,190 @@ Jhon Durán|DURAN|CF||2003|COL|d|185|Fenerbahçe|TUR|17.5|for|1
 Cucho Hernández|CUCHO|CF||1999|COL|d|175|Real Betis|ESP|17.5||0
 Luis Javier Suárez|LJ SUAREZ|CF||1997|COL|d|185|Sporting|POR|18.0|fin|0
 Alexis Sánchez|ALEXIS|CF|WG|1988|CHI|d|169|Sevilla|ESP|17.5||1
+# Lote 3 (20/11/2026): os melhores brasileiros que ainda estavam fora do jogo e estrangeiros de nível médio de Série A ou B (geral alvo 12 a 16).
+Vinícius Júnior|VINICIUS|WG|CF|2000|BRA|d|176|Real Madrid|ESP|19.5|vel,dri|0
+Raphinha|RAPHINHA|WG|OH|1996|BRA|c|176|Barcelona|ESP|19.5|bola|0
+Rodrygo|RODRYGO|WG|CF|2001|BRA|d|174|Real Madrid|ESP|19.0|dri|1
+Estêvão|ESTEVAO|WG|OH|2007|BRA|c|176|Chelsea|ENG|18.5|dri|0
+Endrick|ENDRICK|CF||2006|BRA|c|173|Lyon|FRA|18.0|for,fin|1
+Alexsandro Ribeiro|ALEXSANDRO|CB||1999|BRA|c|189|Lille|FRA|17.0||0
+Pepê|PEPE|WG|SB|1997|BRA|d|175|Porto|POR|17.0||0
+Luis Henrique|LUIS H.|WG|SB|2001|BRA|c|182|Inter de Milão|ITA|16.5||0
+Natan|NATAN|CB||2001|BRA|c|187|Real Betis|ESP|16.5||0
+Tuta|TUTA|CB||1999|BRA|d|185|Eintracht Frankfurt|GER|16.5||1
+John Victor|JOHN|GK||1996|BRA|d|193|Nottingham Forest|ENG|16.5||0
+Roger Guedes|R. GUEDES|WG|CF|1996|BRA|c|177|Al-Rayyan|QAT|16.5|fin|0
+Juan Jesus|JUAN JESUS|CB||1991|BRA|c|185|Napoli|ITA|16.0||1
+Marcão|MARCAO|CB||1996|BRA|c|184|Sevilla|ESP|16.0||1
+William Gomes|W. GOMES|WG||2006|BRA|c|175|Porto|POR|16.0|dri|0
+Pedrinho|PEDRINHO|WG|OH|1998|BRA|d|173|Shakhtar Donetsk|UKR|16.0|dri|0
+Mauro Júnior|MAURO JR|SB|SH|1999|BRA|c|173|PSV|NED|16.0||0
+Morato|MORATO|CB|SB|2001|BRA|c|192|Nottingham Forest|ENG|16.0||1
+Jair Cunha|JAIR|CB||2005|BRA|d|190|Nottingham Forest|ENG|15.5||0
+Gustavo Nunes|G. NUNES|WG||2005|BRA|d|170|Brentford|ENG|15.5|dri|0
+Luis Guilherme|GUILHERME|WG||2006|BRA|c|172|Sporting|POR|15.5||1
+Rogério|ROGERIO|SB||1998|BRA|c|179|Wolfsburg|GER|15.5||1
+Kauã Santos|KAUA|GK||2003|BRA|d|190|Eintracht Frankfurt|GER|15.5||0
+Kady|KADY|OH|WG|1996|BRA|d|175|Krasnodar|RUS|15.5||1
+Bitello|BITELLO|OH||2000|BRA|c|173|Dínamo Moscou|RUS|15.5||1
+Gabriel Strefezza|STREFEZZA|WG||1997|BRA|d|168|Olympiacos|GRE|15.5||0
+Douglas Augusto|D. AUGUSTO|DH||1997|BRA|d|182|Nantes|FRA|15.5||1
+Otávio Ataíde|O. ATAIDE|CB||2002|BRA|c|187|Porto|POR|15.5||1
+Gregore|GREGORE|DH||1994|BRA|d|182|Al-Rayyan|QAT|15.5|mar|1
+Rubens|RUBENS|SB||2001|BRA|c|178|Dínamo Moscou|RUS|15.0||0
+Gabriel Moscardo|MOSCARDO|DH||2005|BRA|d|184|Paris Saint-Germain|FRA|15.0||1
+Rômulo Cardoso|ROMULO|CF||2001|BRA|d|184|Göztepe|TUR|15.0||1
+Lucas Fasson|FASSON|CB||2001|BRA|d|189|Lokomotiv Moscou|RUS|15.0||0
+Welington|WELINGTON|SB||2001|BRA|c|175|Southampton|ENG|15.0||1
+Junior Messias|MESSIAS|OH|WG|1991|BRA|d|175|Genoa|ITA|15.0||1
+Rayan|RAYAN|CF|WG|2006|BRA|d|183|Bournemouth|ENG|15.0||1
+Wesley Gassova|GASSOVA|WG||2004|BRA|d|175|Al-Nassr|KSA|15.0|vel|0
+Carlos Júnior|C. JUNIOR|CF||1996|BRA|d|180|Al-Shabab|KSA|15.0||1
+Yuri César|YURI CESAR|WG||1998|BRA|d|172|Shabab Al-Ahli|UAE|15.0||1
+Rafael Navarro|R. NAVARRO|CF||2000|BRA|d|182|Colorado Rapids|USA|15.0|fin|0
+Talles Magno|TALLES|WG||2002|BRA|c|186|New York City FC|USA|15.0||1
+Helinho|HELINHO|WG||2000|BRA|c|170|Toluca|MEX|15.0||0
+Jhon Kennedy|KENNEDY|CF||2002|BRA|d|175|Pachuca|MEX|15.0||1
+Kauã Elias|KAUA ELIAS|CF||2006|BRA|d|184|Shakhtar Donetsk|UKR|14.5||0
+Lucas Ferreira|L.FERREIRA|WG||2006|BRA|d|172|Shakhtar Donetsk|UKR|14.5||0
+Heliton|HELITON|CB||2003|BRA|d|188|Göztepe|TUR|14.5||1
+Gabriel Veron|VERON|WG||2002|BRA|d|172|Porto|POR|14.5||1
+Marcos André|M. ANDRE|CF||1996|BRA|d|184|Real Valladolid|ESP|14.5||1
+David Luiz|DAVID LUIZ|CB||1987|BRA|d|189|Pafos|CYP|14.5||1
+Ruan Tressoldi|RUAN|CB||1999|BRA|d|187|Sassuolo|ITA|14.5||1
+Deivid Washington|DEIVID|CF||2005|BRA|d|188|Chelsea|ENG|14.5||1
+Marcelo Grohe|GROHE|GK||1987|BRA|d|187|Al-Ittihad|KSA|14.5||1
+Rafael Elias|R. ELIAS|CF||1999|BRA|d|183|Kyoto Sanga|JPN|14.5|fin|1
+Matheus Thuler|THULER|CB||1999|BRA|c|187|Vissel Kobe|JPN|14.5||1
+Lucas Fernandes|LUCAS F.|SH|WG|1994|BRA|d|170|Cerezo Osaka|JPN|14.5||1
+João Klauss|KLAUSS|CF||1997|BRA|d|190|St. Louis City|USA|14.5||0
+Artur|ARTUR|DH||1996|BRA|d|175|Houston Dynamo|USA|14.5||0
+Luca Meirelles|MEIRELLES|CF||2007|BRA|d|182|Shakhtar Donetsk|UKR|14.0||1
+Isaque|ISAQUE|WG||2005|BRA|d|170|Shakhtar Donetsk|UKR|14.0||1
+Kaiky Fernandes|KAIKY|CB||2004|BRA|d|187|Almería|ESP|14.0||1
+Rodrigo Ely|R. ELY|CB||1993|BRA|d|188|Almería|ESP|14.0||1
+Gustavo Assunção|ASSUNCAO|DH||2000|BRA|d|185|Famalicão|POR|14.0||1
+Samuel Portugal|PORTUGAL|GK||1994|BRA|d|190|Porto|POR|14.0||1
+Arthur Sales|A. SALES|CF||2002|BRA|d|183|Lommel|BEL|14.0||1
+Clayton|CLAYTON|CF||1998|BRA|d|182|Rio Ave|POR|14.0||1
+Marco Túlio|M. TULIO|CF|WG|1998|BRA|d|180|Kyoto Sanga|JPN|14.0||1
+Thiago Santana|T. SANTANA|CF||1993|BRA|d|188|Urawa Reds|JPN|14.0||1
+Juan Alano|ALANO|WG||1996|BRA|d|170|Gamba Osaka|JPN|14.0||1
+Dawhan|DAWHAN|DH||1998|BRA|d|178|Gamba Osaka|JPN|14.0||1
+Welton|WELTON|WG||1997|BRA|d|175|Gamba Osaka|JPN|14.0||1
+Marcinho|MARCINHO|WG||1995|BRA|d|170|Kawasaki Frontale|JPN|14.0||1
+Jesiel|JESIEL|CB||1993|BRA|d|188|Kawasaki Frontale|JPN|14.0||1
+Élber|ELBER|WG||1992|BRA|d|170|Yokohama F. Marinos|JPN|14.0||1
+Diego Pituca|PITUCA|DH||1992|BRA|d|178|Kashima Antlers|JPN|14.0||1
+Rodrigo Dourado|DOURADO|DH||1994|BRA|d|182|Atlético San Luis|MEX|14.0||1
+Gabriel Pirani|PIRANI|OH||2002|BRA|d|170|DC United|USA|14.0||1
+Léo Chú|LEO CHU|WG||2000|BRA|d|170|Seattle Sounders|USA|14.0||1
+Vinícius Lopes|V. LOPES|CF||1999|BRA|d|180|Santa Clara|POR|13.5||1
+Diego Oliveira|D.OLIVEIRA|CF||1990|BRA|d|180|FC Tokyo|JPN|13.5||1
+Mateus Castro|M. CASTRO|OH||1994|BRA|c|172|Nagoya Grampus|JPN|13.5||1
+Maximiliano Meza|MEZA|SH|OH|1992|ARG|d|180|River Plate|ARG|14.5||1
+Giuliano Galoppo|GALOPPO|OH|DH|1999|ARG|d|177|River Plate|ARG|15.0||0
+Matías Kranevitter|KRANEVITER|DH||1993|ARG|d|183|River Plate|ARG|14.5||1
+Maximiliano Salas|M. SALAS|CF|WG|1997|ARG|d|176|River Plate|ARG|15.0|vel|0
+Leandro Brey|BREY|GK||2002|ARG|d|188|Boca Juniors|ARG|13.5||0
+Lautaro Di Lollo|DI LOLLO|CB||2004|ARG|d|187|Boca Juniors|ARG|14.0||0
+Nicolás Figal|FIGAL|CB||1994|ARG|d|180|Boca Juniors|ARG|14.0||1
+Rodrigo Battaglia|BATTAGLIA|DH||1991|ARG|d|187|Boca Juniors|ARG|14.0|mar|1
+Tomás Belmonte|BELMONTE|DH||1998|ARG|d|180|Boca Juniors|ARG|14.0||1
+Williams Alarcón|ALARCON|DH||2001|ARG|d|180|Boca Juniors|ARG|14.5||0
+Lucas Blondel|BLONDEL|SB||1996|ARG|d|175|Boca Juniors|ARG|14.0||1
+Brian Aguirre|B. AGUIRRE|WG||2003|ARG|d|172|Boca Juniors|ARG|14.0||0
+Adrián Martínez|MARAVILLA|CF||1992|ARG|d|178|Racing|ARG|15.0|fin|0
+Marco Di Césare|DI CESARE|CB||2002|ARG|d|185|Racing|ARG|14.5||0
+Santiago Solari|S. SOLARI|WG||1997|ARG|d|180|Racing|ARG|14.5||0
+Baltasar Rodríguez|BALTASAR|OH||2003|ARG|c|176|Racing|ARG|14.5||0
+Bruno Zuculini|ZUCULINI|DH||1993|ARG|d|178|Racing|ARG|14.0||0
+Santiago Montiel|S. MONTIEL|WG||2000|ARG|d|170|Independiente|ARG|14.0||1
+Tiago Palacios|T.PALACIOS|OH||2001|ARG|d|175|Estudiantes|ARG|14.5||0
+Leandro González Pírez|G. PIREZ|CB||1992|ARG|d|185|Estudiantes|ARG|14.0||1
+Tomás Marchiori|MARCHIORI|GK||1995|ARG|d|190|Vélez Sarsfield|ARG|14.0||0
+Claudio Aquino|C. AQUINO|OH||1991|ARG|c|176|Vélez Sarsfield|ARG|14.0||1
+Rubén Botta|BOTTA|OH||1990|ARG|c|170|Talleres|ARG|13.5|bola|1
+Walter Bou|W. BOU|CF||1993|ARG|d|180|Lanús|ARG|14.0||0
+Eduardo Salvio|SALVIO|WG||1990|ARG|d|169|Lanús|ARG|13.5||1
+Walter Mazzantti|MAZZANTTI|WG||1996|ARG|d|170|Huracán|ARG|13.5||1
+Facundo Buonanotte|BUONANOTTE|OH|WG|2004|ARG|d|173|Leicester City|ENG|15.5||1
+Lucas Passerini|PASSERINI|CF||1994|ARG|d|185|Belgrano|ARG|13.5||1
+Nahitan Nández|NANDEZ|DH|SB|1995|URU|d|173|Al-Qadsiah|KSA|16.0|mar|1
+Franco Israel|F. ISRAEL|GK||2000|URU|d|190|Torino|ITA|15.0||1
+Maximiliano Silvera|M. SILVERA|CF||1997|URU|d|182|Peñarol|URU|14.0||1
+Washington Aguerre|AGUERRE|GK||1993|URU|d|190|Peñarol|URU|13.5||1
+Jaime Báez|J. BAEZ|WG||1995|URU|d|176|Peñarol|URU|13.5||1
+Bruno Damiani|DAMIANI|CF||2002|URU|d|190|Philadelphia Union|USA|14.0||1
+Mathías Laborda|LABORDA|CB||1999|URU|d|188|Vancouver Whitecaps|CAN|14.0||0
+Diego Laxalt|LAXALT|SB|SH|1993|URU|c|178|Krasnodar|RUS|13.5||1
+Nicolás López|N. LOPEZ|CF||1993|URU|d|180|Nacional|URU|13.5||1
+Agustín Rogel|ROGEL|CB||1997|URU|d|188|Hertha Berlin|GER|14.0||1
+David Ospina|OSPINA|GK||1988|COL|d|183|Atlético Nacional|COL|14.0||0
+Edwuin Cetré|CETRE|WG||1998|COL|d|170|Estudiantes|ARG|14.5||0
+Duván Zapata|D. ZAPATA|CF||1991|COL|d|189|Torino|ITA|15.5|for|1
+Edwin Cardona|CARDONA|OH||1992|COL|c|174|Atlético Nacional|COL|14.0|bola|1
+Mateus Uribe|URIBE|DH||1991|COL|d|180|Atlético Nacional|COL|14.0||1
+Stefan Medina|S. MEDINA|SB||1992|COL|d|183|Monterrey|MEX|14.0||1
+Roger Martínez|R.MARTINEZ|CF||1994|COL|d|180|Al-Taawoun|KSA|14.5||1
+Andrés Román|A. ROMAN|SB||1995|COL|d|175|Atlético Nacional|COL|13.5||1
+Leonardo Castro|L. CASTRO|CF||1992|COL|d|180|Millonarios|COL|13.5||1
+Yimmi Chará|CHARA|WG||1991|COL|d|167|Junior|COL|13.0||1
+Óscar Cortés|O. CORTES|WG||2003|COL|d|170|Lens|FRA|14.0||1
+Jorman Campuzano|CAMPUZANO|DH||1996|COL|d|180|Atlético Nacional|COL|13.5||1
+Carlos Palacios|C.PALACIOS|OH|WG|2000|CHI|d|176|Boca Juniors|ARG|15.0||0
+Charles Aránguiz|ARANGUIZ|DH||1989|CHI|d|171|Universidad de Chile|CHI|13.5||0
+Arturo Vidal|VIDAL|DH||1987|CHI|d|180|Colo-Colo|CHI|13.5|for|0
+Lucas Assadi|ASSADI|OH||2004|CHI|c|170|Universidad de Chile|CHI|13.5||0
+Felipe Mora|F. MORA|CF||1993|CHI|d|180|Portland Timbers|USA|13.5||1
+Matías Catalán|CATALAN|SB||1992|CHI|d|176|Talleres|ARG|13.5||1
+Lucas Cepeda|CEPEDA|WG||2002|CHI|d|170|Colo-Colo|CHI|13.5||1
+Gonzalo Tapia|G. TAPIA|CF||2002|CHI|d|180|River Plate|ARG|13.5||1
+Orlando Gill|O. GILL|GK||2000|PAR|d|189|San Lorenzo|ARG|13.5||1
+Gabriel Ávalos|AVALOS|CF||1990|PAR|d|187|Independiente|ARG|14.0||1
+Blas Riveros|B. RIVEROS|SB||1998|PAR|c|180|Talleres|ARG|13.5||1
+Richard Sánchez|R. SANCHEZ|DH||1996|PAR|d|175|América|MEX|14.0||1
+Kaku|KAKU|OH||1995|PAR|d|172|Al-Ain|UAE|14.5|bola|1
+Alexis Duarte|A. DUARTE|CB||2000|PAR|d|188|Spartak Moscou|RUS|14.0||1
+Alex Arce|A. ARCE|CF||1995|PAR|d|182|LDU Quito|ECU|13.5|fin|1
+Robert Morales|R. MORALES|CF||1999|PAR|d|182|Toluca|MEX|13.5||1
+Joel Ordóñez|ORDONEZ|CB||2004|ECU|d|188|Club Brugge|BEL|15.0||0
+Nilson Angulo|N. ANGULO|WG||2003|ECU|d|175|Anderlecht|BEL|14.5|vel|1
+Óscar Zambrano|ZAMBRANO|DH||2004|ECU|d|180|LDU Quito|ECU|14.0||1
+Jhegson Méndez|J. MENDEZ|DH||1997|ECU|d|173|LDU Quito|ECU|14.0||1
+Gonzalo Valle|G. VALLE|GK||1996|ECU|d|190|LDU Quito|ECU|13.5||1
+Michael Estrada|ESTRADA|CF||1996|ECU|d|187|LDU Quito|ECU|13.5||1
+Leonardo Campana|CAMPANA|CF||2000|ECU|d|190|Inter Miami|USA|13.5||1
+Joao Ortiz|J. ORTIZ|DH||1996|ECU|d|176|Independiente del Valle|ECU|13.5||1
+Renato Tapia|R. TAPIA|DH|CB|1995|PER|d|185|Al-Wasl|UAE|14.5||1
+Oliver Sonne|SONNE|SB||2000|PER|d|182|Burnley|ENG|14.0||1
+Edison Flores|E. FLORES|OH|WG|1994|PER|c|172|Universitario|PER|13.5||1
+Alex Valera|VALERA|CF||1996|PER|d|185|Universitario|PER|13.5||1
+Bryan Reyna|B. REYNA|WG||1998|PER|d|170|Belgrano|ARG|13.5||1
+Sergio Peña|S. PENA|DH|OH|1995|PER|d|178|Alianza Lima|PER|13.5||1
+Yordan Osorio|Y. OSORIO|CB||1994|VEN|d|188|Parma|ITA|14.0||1
+Kevin Kelsy|KELSY|CF||2004|VEN|d|188|Portland Timbers|USA|14.0||1
+Wuilker Faríñez|FARINEZ|GK||1998|VEN|d|180|Lens|FRA|13.5||1
+Eduard Bello|E. BELLO|WG||1995|VEN|d|175|Mazatlán|MEX|13.5||1
+Josef Martínez|J.MARTINEZ|CF||1993|VEN|d|170|San Jose Earthquakes|USA|13.5||1
+Ramiro Vaca|R. VACA|OH||1999|BOL|d|170|Bolívar|BOL|12.5||1
+Guillermo Viscarra|VISCARRA|GK||1993|BOL|d|185|Alianza Lima|PER|12.5||1
+Roberto Alvarado|ALVARADO|WG||1998|MEX|d|176|Chivas|MEX|14.5||0
+Diego Lainez|LAINEZ|WG||2000|MEX|c|167|Tigres|MEX|14.0||1
+Luis Malagón|MALAGON|GK||1997|MEX|d|182|América|MEX|15.0||1
+Marcel Ruiz|M. RUIZ|OH|DH|2000|MEX|d|170|Toluca|MEX|14.5||0
+Caio Vidal|CAIO VIDAL|WG||2000|BRA|d|175|Ludogorets|BUL|14.0||1
+Rick|RICK|WG|CF|1999|BRA|d|178|Ludogorets|BUL|14.0||1
+Pedro Naressi|NARESSI|DH||1998|BRA|d|178|Ludogorets|BUL|13.5||1
+Rwan Cruz|RWAN|CF||2001|BRA|d|185|Ludogorets|BUL|13.5||1
+Erick Marcus|E. MARCUS|WG||2004|BRA|d|172|Ludogorets|BUL|13.5||1
+Bruno Felipe|B. FELIPE|WG||1994|BRA|d|175|Pafos|CYP|13.5||1
+Valentín Barco|BARCO|SB|SH|2004|ARG|c|171|Strasbourg|FRA|15.5||1
+Matías Soulé|SOULE|WG|OH|2003|ARG|c|180|Roma|ITA|16.0|dri|0
+Santiago Castro|S. CASTRO|CF||2004|ARG|d|186|Bologna|ITA|16.0||0
+Benjamín Domínguez|BENJAMIN|WG||2003|ARG|c|172|Bologna|ITA|15.0||1
+Claudio Echeverri|ECHEVERRI|OH||2006|ARG|d|171|Girona|ESP|15.5|dri|1
+Joaquín Panichelli|PANICHELLI|CF||2002|ARG|d|190|Strasbourg|FRA|15.0||1
+Federico Girotti|GIROTTI|CF||1999|ARG|d|188|Talleres|ARG|14.0||1
+Elías Gómez|E. GOMEZ|SB||1994|ARG|c|175|Vélez Sarsfield|ARG|13.5||1
+Juan David Cabal|CABAL|CB|SB|2001|COL|c|186|Juventus|ITA|15.0||1
