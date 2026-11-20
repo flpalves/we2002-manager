@@ -9,19 +9,25 @@ import { useCarreira } from '../stores/carreira'
 import { useTemporada } from '../stores/temporada'
 import { useUi } from '../stores/ui'
 import { chamar } from '../api'
-import { NOME_ORDEM_ELENCO, ORDENS_ELENCO, ordenarElenco, type OrdemElenco } from '../formato'
+import { CRESCENTE_ELENCO, NOME_ORDEM_ELENCO, ORDENS_ELENCO, ordenarElenco, type OrdemElenco } from '../formato'
+import { useOrdenacao } from '../composables/useOrdenacao'
 
 const carreira = useCarreira()
 const temporada = useTemporada()
 const ui = useUi()
 const dados = ref<Elenco | null>(null)
 
-const ordem = ref<OrdemElenco>('posicao')
+const { ordem, crescente, ordenar } = useOrdenacao<OrdemElenco>('posicao', (k) => CRESCENTE_ELENCO[k])
 const ORDENS = ORDENS_ELENCO
 const NOME_ORDEM = NOME_ORDEM_ELENCO
+/** Botões (e Y no controle): sempre no sentido natural da coluna. */
+function escolher(o: OrdemElenco): void {
+  ordem.value = o
+  crescente.value = CRESCENTE_ELENCO[o]
+}
 
 useTela([{ comando: 'acaoY', rotulo: 'Ordenar' }], {
-  acaoY: () => (ordem.value = ORDENS[(ORDENS.indexOf(ordem.value) + 1) % ORDENS.length]!),
+  acaoY: () => escolher(ORDENS[(ORDENS.indexOf(ordem.value) + 1) % ORDENS.length]!),
 })
 
 async function carregar(): Promise<void> {
@@ -34,7 +40,7 @@ async function carregar(): Promise<void> {
 }
 watch(() => [carreira.atual?.id, temporada.calendario?.passoAtual, temporada.calendario?.semanaAtual], carregar, { immediate: true })
 
-const jogadores = computed(() => ordenarElenco(dados.value?.jogadores ?? [], ordem.value))
+const jogadores = computed(() => ordenarElenco(dados.value?.jogadores ?? [], ordem.value, crescente.value))
 
 const resumo = computed(() => {
   const js = dados.value?.jogadores ?? []
@@ -62,11 +68,11 @@ const resumo = computed(() => {
       <span class="we-kv"><span class="we-lb">Contratos acabando</span><span class="we-vl" :class="{ 'we-vl--atencao': resumo.contratos }">{{ resumo.contratos }}</span></span>
       <span class="ordem">
         <span class="we-lb">Ordenar</span>
-        <WeBotao v-for="o in ORDENS" :key="o" :ativo="ordem === o" @click="ordem = o">{{ NOME_ORDEM[o] }}</WeBotao>
+        <WeBotao v-for="o in ORDENS" :key="o" :ativo="ordem === o" @click="escolher(o)">{{ NOME_ORDEM[o] }}</WeBotao>
       </span>
     </div>
     <WePainel :titulo="`Elenco do ${carreira.atual.time.nome}`" sem-corpo>
-      <TabelaElenco :jogadores="jogadores" :temporada="carreira.atual.temporada" />
+      <TabelaElenco :jogadores="jogadores" :temporada="carreira.atual.temporada" :ordem="ordem" :crescente="crescente" @ordenar="ordenar" />
     </WePainel>
   </template>
 </template>

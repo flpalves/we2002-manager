@@ -13,7 +13,7 @@ export const JogadorElencoSchema = z.object({
   camisa: z.number().int(),
   idade: z.number().int(),
   nacionalidade: z.string(),
-  geral: z.number().int(),
+  geral: z.number(),
   condicao: z.number(),
   moral: z.number(),
   seta: SetaSchema,

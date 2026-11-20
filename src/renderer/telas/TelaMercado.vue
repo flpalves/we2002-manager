@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { computed, onMounted, ref, watch } from 'vue'
-import { useRoute } from 'vue-router'
-import type { JogadorMercadoDto, NegociacaoDto, PropostaRecebida } from '@shared/esquemas/mercado'
+import { RouterLink, useRoute } from 'vue-router'
+import type { JogadorMercadoDto, NegociacaoDto, OrdemMercado, PropostaRecebida } from '@shared/esquemas/mercado'
+import { ATRIBUTOS, ROTULO_ATRIBUTO } from '@shared/esquemas/pacote'
 import type { Entrada } from '@shared/esquemas/ipc'
 import WePainel from '../componentes/WePainel.vue'
 import WeBotao from '../componentes/WeBotao.vue'
@@ -10,13 +11,18 @@ import WeTag from '../componentes/WeTag.vue'
 import WeAbas from '../componentes/WeAbas.vue'
 import CampoDinheiro from '../componentes/CampoDinheiro.vue'
 import TimeDaCarreira from '../componentes/TimeDaCarreira.vue'
+import WeBandeira from '../componentes/WeBandeira.vue'
+import WeThOrdem from '../componentes/WeThOrdem.vue'
+import WePaginacao from '../componentes/WePaginacao.vue'
+import { useOrdenacao } from '../composables/useOrdenacao'
+import { nomePais } from '../bandeiras'
 import { useTela } from '../composables/useTela'
 import { acoesAbas } from '../composables/useAbas'
 import { useCarreira } from '../stores/carreira'
 import { useTemporada } from '../stores/temporada'
 import { useUi } from '../stores/ui'
 import { chamar } from '../api'
-import { dinheiro, nomePosicao, ORDEM_POSICAO } from '../formato'
+import { dinheiro, geralTexto, nomePosicao, ORDEM_POSICAO } from '../formato'
 
 const carreira = useCarreira()
 const temporada = useTemporada()
@@ -26,6 +32,10 @@ const route = useRoute()
 type Aba = 'buscar' | 'meus' | 'propostas'
 const aba = ref<Aba>('buscar')
 const lista = ref<JogadorMercadoDto[]>([])
+const total = ref(0)
+const pagina = ref(1)
+const porPagina = ref(100)
+const nacionalidades = ref<string[]>([])
 const recebidas = ref<PropostaRecebida[]>([])
 const neg = ref<NegociacaoDto | null>(null)
 const enviando = ref(false)
@@ -34,7 +44,9 @@ const enviando = ref(false)
 const nome = ref('')
 const posicao = ref<string | null>(null)
 const geralMin = ref<number | null>(null)
+const idadeMin = ref<number | null>(null)
 const idadeMax = ref<number | null>(null)
+const nacionalidade = ref('')
 const somenteLivres = ref(false)
 const somenteExterior = ref(false)
 const somenteAVenda = ref(false)
@@ -55,12 +67,38 @@ const abas = computed(() => [
   { id: 'propostas' as const, titulo: 'Propostas recebidas', contagem: recebidas.value.length },
 ])
 
+/** Ordenação pelos títulos das colunas; números começam do maior, textos do A. */
+const CRESCENTE: Record<OrdemMercado, boolean> = { nome: true, posicao: true, nacionalidade: true, idade: true, geral: false, clube: true, valor: false, salario: false, contrato: true }
+const { ordem, crescente, ordenar } = useOrdenacao<OrdemMercado>('geral', (k) => CRESCENTE[k])
+/** Y no controle: geral → idade → valor. */
+const ORDENS_Y: OrdemMercado[] = ['geral', 'idade', 'valor']
+const COLUNAS: { rotulo: string; chave: OrdemMercado }[] = [
+  { rotulo: 'Jogador', chave: 'nome' },
+  { rotulo: 'Pos.', chave: 'posicao' },
+  { rotulo: 'Idade', chave: 'idade' },
+  { rotulo: 'Geral', chave: 'geral' },
+  { rotulo: 'Clube', chave: 'clube' },
+  { rotulo: 'Valor / taxa', chave: 'valor' },
+  { rotulo: 'Salário', chave: 'salario' },
+  { rotulo: 'Contrato', chave: 'contrato' },
+]
+
 useTela(
   [
     { comando: 'abaProxima', rotulo: 'Trocar aba' },
     { comando: 'acaoX', rotulo: 'Enviar proposta' },
+    { comando: 'acaoY', rotulo: 'Ordenar' },
   ],
-  { ...acoesAbas(aba, () => abas.value.map((a) => a.id)), acaoX: () => void propor() },
+  {
+    ...acoesAbas(aba, () => abas.value.map((a) => a.id)),
+    acaoX: () => void propor(),
+    acaoY: () => {
+      const i = ORDENS_Y.indexOf(ordem.value)
+      const k = ORDENS_Y[(i + 1) % ORDENS_Y.length]!
+      ordem.value = k
+      crescente.value = CRESCENTE[k]
+    },
+  },
 )
 
 const m = computed(() => carreira.mercado)
@@ -71,14 +109,21 @@ async function buscar(): Promise<void> {
     const filtros: Entrada<'mercado:buscar'> = aba.value === 'meus' ? { somenteMeus: true } : {
       ...(nome.value.trim() && { nome: nome.value.trim() }),
       ...(posicao.value && { posicao: posicao.value }),
+      ...(nacionalidade.value && { nacionalidade: nacionalidade.value }),
       ...(geralMin.value && { geralMin: geralMin.value }),
+      ...(idadeMin.value && { idadeMin: idadeMin.value }),
       ...(idadeMax.value && { idadeMax: idadeMax.value }),
       ...(somenteLivres.value && { somenteLivres: true }),
       ...(somenteExterior.value && { somenteExterior: true }),
       ...(somenteAVenda.value && { somenteAVenda: true }),
       ...(somenteFimDeContrato.value && { somenteFimDeContrato: true }),
     }
-    lista.value = await chamar('mercado:buscar', filtros)
+    const r = await chamar('mercado:buscar', { ...filtros, ordem: ordem.value, crescente: crescente.value, pagina: pagina.value })
+    lista.value = r.jogadores
+    total.value = r.total
+    pagina.value = r.pagina
+    porPagina.value = r.porPagina
+    nacionalidades.value = r.nacionalidades
   } catch (e) {
     ui.avisar((e as Error).message)
   }
@@ -94,12 +139,21 @@ async function carregar(): Promise<void> {
   await buscar()
 }
 watch(() => [carreira.atual?.id, temporada.calendario?.passoAtual, temporada.calendario?.semanaAtual], carregar, { immediate: true })
-watch([posicao, somenteLivres, somenteExterior, somenteAVenda, somenteFimDeContrato, aba], buscar)
+/** Filtro novo ou outra ordem: volta para a primeira página. */
+function buscarDoInicio(): void {
+  if (pagina.value !== 1) pagina.value = 1 // o watch da página busca
+  else void buscar()
+}
+watch([posicao, nacionalidade, somenteLivres, somenteExterior, somenteAVenda, somenteFimDeContrato, aba, ordem, crescente], buscarDoInicio)
+watch(pagina, (p, antes) => {
+  if (p !== antes) void buscar()
+})
 
 /** Disponível do exterior: "joga no Zenit (RUS)". */
 const origemDe = (j: JogadorMercadoDto) => (j.origem ? `joga no ${j.origem.clube}${j.origem.pais ? ` (${j.origem.pais})` : ''}` : '')
 
 const visiveis = computed(() => (aba.value === 'meus' ? lista.value.filter((j) => j.doUsuario) : lista.value.filter((j) => !j.doUsuario)))
+const nacionalidadesOrdenadas = computed(() => [...nacionalidades.value].sort((a, b) => nomePais(a).localeCompare(nomePais(b), 'pt-BR')))
 
 /** Valores sugeridos na proposta a partir do estado da negociação. */
 function sugerir(n: NegociacaoDto): void {
@@ -247,10 +301,17 @@ const etapaAberta = computed(() => neg.value && (neg.value.etapa === 'clube' || 
 
         <WePainel v-if="aba === 'buscar'" titulo="Filtros">
           <div class="filtros">
-            <label class="campo"><span class="we-lb">Nome</span><input v-model="nome" type="text" maxlength="40" @keydown.enter="buscar" /></label>
-            <label class="campo curto"><span class="we-lb">Geral mín.</span><input v-model.number="geralMin" type="number" min="1" max="20" /></label>
-            <label class="campo curto"><span class="we-lb">Idade máx.</span><input v-model.number="idadeMax" type="number" min="15" max="45" /></label>
-            <WeBotao icone="buscar" @click="buscar">Buscar</WeBotao>
+            <label class="campo"><span class="we-lb">Nome</span><input v-model="nome" type="text" maxlength="40" @keydown.enter="buscarDoInicio" /></label>
+            <label class="campo"><span class="we-lb">Nacionalidade</span>
+              <select v-model="nacionalidade">
+                <option value="">Todas</option>
+                <option v-for="n in nacionalidadesOrdenadas" :key="n" :value="n">{{ nomePais(n) }}</option>
+              </select>
+            </label>
+            <label class="campo curto"><span class="we-lb">Geral mín.</span><input v-model.number="geralMin" type="number" min="1" max="20" @keydown.enter="buscarDoInicio" /></label>
+            <label class="campo curto"><span class="we-lb">Idade mín.</span><input v-model.number="idadeMin" type="number" min="15" max="45" @keydown.enter="buscarDoInicio" /></label>
+            <label class="campo curto"><span class="we-lb">Idade máx.</span><input v-model.number="idadeMax" type="number" min="15" max="45" @keydown.enter="buscarDoInicio" /></label>
+            <WeBotao icone="buscar" @click="buscarDoInicio">Buscar</WeBotao>
           </div>
           <div class="posicoes">
             <WeBotao :ativo="posicao === null" @click="posicao = null">Todas</WeBotao>
@@ -262,20 +323,26 @@ const etapaAberta = computed(() => neg.value && (neg.value.etapa === 'clube' || 
           </div>
         </WePainel>
 
-        <WePainel v-if="aba !== 'propostas'" :titulo="aba === 'meus' ? 'Renovar e pôr à venda' : `Jogadores (${visiveis.length})`" sem-corpo>
+        <WePainel v-if="aba !== 'propostas'" :titulo="aba === 'meus' ? 'Renovar e pôr à venda' : `Jogadores (${total})`" sem-corpo>
           <p v-if="!visiveis.length" class="vazio">Nenhum jogador com esses filtros.</p>
           <WeTabela v-else>
-            <thead><tr><th>Jogador</th><th>Pos.</th><th>Idade</th><th>Geral</th><th>Clube</th><th>Valor / taxa</th><th>Salário</th><th>Contrato</th><th v-if="aba === 'meus'"></th></tr></thead>
+            <thead>
+              <tr>
+                <WeThOrdem v-for="c in COLUNAS" :key="c.chave" :rotulo="c.rotulo" :chave="c.chave" :ordem="ordem" :crescente="crescente" @ordenar="ordenar" />
+                <th v-if="aba === 'meus'"></th>
+              </tr>
+            </thead>
             <tbody>
               <tr v-for="j in visiveis" :key="j.id" :class="{ sel: neg?.jogador.id === j.id }">
                 <td>
+                  <WeBandeira :codigo="j.nacionalidade" class="bandeira" />
                   <button type="button" class="link" @click="abrir(j)">{{ j.nome }}</button>
                   <WeTag v-if="j.aVenda" :tipo="j.aVenda === 'financeiro' ? 'negativo' : 'atencao'" class="tag-venda">{{ NOME_A_VENDA[j.aVenda] }}</WeTag>
                   <WeTag v-if="j.preContrato" :tipo="j.preContrato === carreira.atual.time.sigla ? 'positivo' : 'atencao'" class="tag-venda">Pré-contrato</WeTag>
                 </td>
                 <td>{{ nomePosicao(j.posicao) }}</td>
                 <td>{{ j.idade }}</td>
-                <td class="geral">{{ j.geral }}</td>
+                <td class="geral">{{ geralTexto(j.geral) }}</td>
                 <td>
                   <TimeDaCarreira v-if="j.time" :sigla="j.time" />
                   <span v-else-if="j.origem" class="exterior"><WeTag tipo="diretoria">Exterior</WeTag><span class="we-lb">{{ origemDe(j) }}</span></span>
@@ -293,6 +360,7 @@ const etapaAberta = computed(() => neg.value && (neg.value.etapa === 'clube' || 
               </tr>
             </tbody>
           </WeTabela>
+          <WePaginacao v-model="pagina" :total="total" :por-pagina="porPagina" />
         </WePainel>
 
         <WePainel v-else titulo="Propostas pelos seus jogadores" sem-corpo>
@@ -350,13 +418,23 @@ const etapaAberta = computed(() => neg.value && (neg.value.etapa === 'clube' || 
               <WeTag v-else tipo="info">Livre</WeTag>
             </div>
             <div class="we-kv"><span class="we-lb">Posição / idade</span><span class="we-vl">{{ nomePosicao(neg.jogador.posicao) }} · {{ neg.jogador.idade }} anos</span></div>
-            <div class="we-kv"><span class="we-lb">Geral</span><span class="we-vl">{{ neg.jogador.geral }}</span></div>
+            <div class="we-kv"><span class="we-lb">Nacionalidade</span><span class="we-vl nac"><WeBandeira :codigo="neg.jogador.nacionalidade" /> {{ nomePais(neg.jogador.nacionalidade) }}</span></div>
+            <div class="we-kv"><span class="we-lb">Geral</span><span class="we-vl">{{ geralTexto(neg.jogador.geral) }}</span></div>
             <div v-if="neg.jogador.taxa != null" class="we-kv"><span class="we-lb">Taxa (fixa)</span><span class="we-vl">{{ dinheiro(neg.jogador.taxa) }}</span></div>
             <div v-else class="we-kv"><span class="we-lb">Valor de mercado</span><span class="we-vl">{{ dinheiro(neg.jogador.valor) }}</span></div>
             <div class="we-kv"><span class="we-lb">Salário atual</span><span class="we-vl">{{ neg.jogador.salario ? dinheiro(neg.jogador.salario) : '—' }}</span></div>
             <div class="we-kv"><span class="we-lb">Contrato até</span><span class="we-vl">{{ neg.jogador.contratoAte ?? '—' }}</span></div>
             <div v-if="neg.jogador.taxa == null" class="we-kv"><span class="we-lb">Multa rescisória</span><span class="we-vl">{{ dinheiro(neg.jogador.multa) }}</span></div>
           </div>
+
+          <div class="atributos" aria-label="Atributos (1-20)">
+            <div v-for="a in ATRIBUTOS" :key="a" class="atributo">
+              <span class="we-lb">{{ ROTULO_ATRIBUTO[a] }}</span>
+              <span class="trilho"><span class="cheio" :style="{ width: `${((neg.jogador.atributos[a] ?? 0) / 20) * 100}%` }"></span></span>
+              <span class="valor">{{ neg.jogador.atributos[a] ?? '—' }}</span>
+            </div>
+          </div>
+          <RouterLink class="link ficha-link we-lb" :to="{ name: 'jogador', params: { id: neg.jogador.id } }">Ver ficha completa</RouterLink>
 
           <div v-if="neg.tiposPossiveis.length" class="tipos">
             <WeBotao v-for="t in neg.tiposPossiveis" :key="t" :ativo="neg.tipo === t" @click="abrir(neg.jogador, t)">{{ NOME_TIPO[t] }}</WeBotao>
@@ -517,5 +595,52 @@ const etapaAberta = computed(() => neg.value && (neg.value.etapa === 'clube' || 
 }
 tr.sel td {
   background: var(--painel-alt);
+}
+.bandeira {
+  margin-right: 6px;
+  vertical-align: middle;
+}
+.nac {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.campo select {
+  min-width: 150px;
+}
+.atributos {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3px var(--space-4);
+  margin-top: var(--space-3);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--linha);
+}
+.atributo {
+  display: grid;
+  grid-template-columns: 58px 1fr 20px;
+  gap: 6px;
+  align-items: center;
+}
+.trilho {
+  height: 5px;
+  background: var(--linha);
+  border-radius: 1px;
+  overflow: hidden;
+}
+.cheio {
+  display: block;
+  height: 100%;
+  background: var(--clube);
+}
+.valor {
+  font-family: var(--font-display);
+  font-weight: 700;
+  text-align: right;
+  color: var(--texto-forte);
+}
+.ficha-link {
+  display: inline-block;
+  margin-top: var(--space-2);
 }
 </style>

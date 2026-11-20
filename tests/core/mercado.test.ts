@@ -21,7 +21,11 @@ describe('valor de mercado', () => {
   })
   it('idade, potencial, contrato e série', () => {
     expect(valorMercado({ ...base, idade: 20 }, PADROES)).toBe(215_000_000)
-    expect(valorMercado({ ...base, idade: 34 }, PADROES)).toBe(55_000_000)
+    expect(valorMercado({ ...base, idade: 32 }, PADROES)).toBe(arred(180_000_000 * 0.82))
+    expect(valorMercado({ ...base, idade: 34 }, PADROES)).toBe(arred(180_000_000 * 0.68))
+    // A partir dos 35 a queda acelera.
+    expect(valorMercado({ ...base, idade: 35 }, PADROES)).toBe(arred(180_000_000 * 0.45))
+    expect(valorMercado({ ...base, idade: 38 }, PADROES)).toBe(arred(180_000_000 * 0.12))
     expect(valorMercado({ ...base, potencial: 15 }, PADROES)).toBe(arred(180_000_000 * 1.8 ** 0.3))
     expect(valorMercado({ ...base, idade: 18, potencial: 16 }, PADROES)).toBe(arred(180_000_000 * 1.8 ** 2 * 1.2))
     // Veterano com potencial acima do geral não ganha nada por isso.
@@ -51,7 +55,7 @@ describe('valor de mercado', () => {
   it('prêmio do salário: idade e potencial pesam pouco e ficam entre 0,8 e 1,3', () => {
     expect(premioSalarial(12, 12, 27, PADROES)).toBe(1)
     expect(premioSalarial(14, 19, 18, PADROES)).toBe(1.3)
-    expect(premioSalarial(12, 12, 34, PADROES)).toBe(0.8)
+    expect(premioSalarial(12, 12, 38, PADROES)).toBe(0.8)
     expect(premioSalarial(14, 15, 25, PADROES)).toBeCloseTo((1 * 1.8 ** 0.2) ** 0.2)
     // Joia e titular médio de mesmo geral: valor bem diferente, salário parecido.
     const joia = { geral: 14, idade: 18, potencial: 19, fatorSerieSalario: 1 }

@@ -282,7 +282,7 @@ function criarHandlers(config: ArquivoConfig, carreiras: Carreiras, janela: () =
     'we:manual': (placar) => comAutosave('resultado digitado', () => ponte.resultadoManual(carreiras.sql(), cfgPonte(), placar)),
     'mercado:situacao': () => mercado.situacao(carreiras.sql()),
     'mercado:intensidade': ({ valor }) => (valor ? mercado.definirIntensidade(carreiras.sql(), valor) : mercado.intensidade(carreiras.sql())),
-    'mercado:buscar': (filtros) => mercado.buscar(carreiras.sql(), filtros),
+    'mercado:buscar': (filtros) => mercado.buscarPagina(carreiras.sql(), filtros),
     'mercado:negociacao': ({ jogadorId, tipo }) => mercado.negociacao(carreiras.sql(), jogadorId, tipo),
     'mercado:propor': (p) => mercado.propor(carreiras.sql(), p),
     'mercado:propostas': () => mercado.propostas(carreiras.sql()),

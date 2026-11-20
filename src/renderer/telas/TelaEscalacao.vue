@@ -14,7 +14,7 @@ import { useCarreira } from '../stores/carreira'
 import { useTemporada } from '../stores/temporada'
 import { useUi } from '../stores/ui'
 import { chamar } from '../api'
-import { nomePosicao, ORDEM_POSICAO } from '../formato'
+import { geralTexto, nomePosicao, ORDEM_POSICAO } from '../formato'
 
 const carreira = useCarreira()
 const temporada = useTemporada()
@@ -261,7 +261,7 @@ const substituidosNoJogo = computed(() => (esc.value?.noProximoJogo?.substituido
               <td>{{ j.camisa }}</td>
               <td>{{ nomePosicao(j.posicao) }}</td>
               <td><button type="button" class="link" @click="clicarJogador(j.id)">{{ j.nome }}</button></td>
-              <td class="geral">{{ j.geral }}</td>
+              <td class="geral">{{ geralTexto(j.geral) }}</td>
               <td><BarraCondicao :valor="j.condicao" /></td>
               <td><WeSeta :nivel="j.seta" /></td>
               <td>

@@ -272,7 +272,7 @@ describe('virada: disponíveis do exterior (9.2)', () => {
 
   it('o pool diminui, as taxas de quem passou de faixa de idade caem e quem sai não aparece na busca', () => {
     const base = mkdtempSync(join(tmpdir(), 'we-virada-ext-'))
-    const jogadores = Array.from({ length: 40 }, (_, i) => exterior(i + 1, { idade: i < 20 ? 27 : 35, taxa: TAXA }))
+    const jogadores = Array.from({ length: 40 }, (_, i) => exterior(i + 1, { idade: i < 20 ? 28 : 38, taxa: TAXA }))
     escreverPacote(join(base, 'pacotes', 'teste'), { ...pacoteDuasDivisoes(), exterior: { temporada: 2026, jogadores } })
     const sql = novaCarreira(base).sql()
     jogarTemporada(sql)
@@ -284,9 +284,9 @@ describe('virada: disponíveis do exterior (9.2)', () => {
     const fora = sql.all<{ id: number }>("SELECT id FROM jogador WHERE status = 'fora'").map((j) => String(j.id))
     expect(pool.length).toBeLessThan(antes)
     expect(pool.length + fora.length).toBe(antes)
-    // 27 → 28: f_idade 1 → 0,85; 35 → 36 fica na mesma faixa (0,3).
-    for (const j of pool) expect(j.taxa_fixa).toBe(j.idade === 28 ? 8_500_000_000 : TAXA)
-    expect(pool.some((j) => j.idade === 28)).toBe(true)
+    // 28 → 29: f_idade 1 → 0,92; 38 → 39 fica na mesma faixa (0,12).
+    for (const j of pool) expect(j.taxa_fixa).toBe(j.idade === 29 ? 9_200_000_000 : TAXA)
+    expect(pool.some((j) => j.idade === 29)).toBe(true)
     const ids = new Set(buscar(sql, {}).map((j) => j.id))
     expect(fora.some((id) => ids.has(id))).toBe(false)
     expect(buscar(sql, { somenteExterior: true })).toHaveLength(pool.length)

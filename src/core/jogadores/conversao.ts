@@ -29,8 +29,8 @@ export function deExibicaoWe(exibido: number, tabela: TabelaConversao): number {
   return Math.floor((de + ate) / 2)
 }
 
-/** "Geral" exibido: média ponderada pelos pesos da posição (média simples sem pesos), arredondada. */
-export function geral(atributos: Atributos, posicao: string, regras: Regras): number {
+/** Média ponderada pelos pesos da posição (média simples sem pesos), sem arredondar. */
+export function geralExato(atributos: Atributos, posicao: string, regras: Regras): number {
   const pesos = regras.jogadores.pesos_geral[posicao]
   let soma = 0
   let total = 0
@@ -39,5 +39,15 @@ export function geral(atributos: Atributos, posicao: string, regras: Regras): nu
     soma += atributos[a] * p
     total += p
   }
-  return total > 0 ? Math.round(soma / total) : 0
+  return total > 0 ? soma / total : 0
+}
+
+/** "Geral" das contas do núcleo (valor, salário, IA): a média ponderada arredondada. */
+export function geral(atributos: Atributos, posicao: string, regras: Regras): number {
+  return Math.round(geralExato(atributos, posicao, regras))
+}
+
+/** "Geral" exibido na interface: a média ponderada com uma casa decimal (11,3). */
+export function geralExibido(atributos: Atributos, posicao: string, regras: Regras): number {
+  return Math.round(geralExato(atributos, posicao, regras) * 10) / 10
 }

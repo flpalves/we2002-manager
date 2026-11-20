@@ -5,6 +5,7 @@ import type { CaixaNoticias, Noticia, TipoNoticia } from '@shared/esquemas/notic
 import WePainel from '../componentes/WePainel.vue'
 import WeBotao from '../componentes/WeBotao.vue'
 import WeTag from '../componentes/WeTag.vue'
+import WePaginacao from '../componentes/WePaginacao.vue'
 import { useTela } from '../composables/useTela'
 import { useCarreira } from '../stores/carreira'
 import { useTemporada } from '../stores/temporada'
@@ -44,6 +45,16 @@ watch(() => [carreira.atual?.id, temporada.calendario?.passoAtual, temporada.cal
 
 const pendentes = computed(() => (dados.value?.noticias ?? []).filter((n) => n.pendente))
 const demais = computed(() => (dados.value?.noticias ?? []).filter((n) => !n.pendente))
+
+const POR_PAGINA = 30
+const pagina = ref(1)
+const visiveis = computed(() => demais.value.slice((pagina.value - 1) * POR_PAGINA, pagina.value * POR_PAGINA))
+watch(filtro, () => (pagina.value = 1))
+// Se a lista encolher (resposta, filtro), não fica numa página vazia.
+watch(demais, (l) => {
+  const ultima = Math.max(1, Math.ceil(l.length / POR_PAGINA))
+  if (pagina.value > ultima) pagina.value = ultima
+})
 
 async function responder(n: Noticia, escolha: string): Promise<void> {
   if (respondendo.value) return
@@ -85,7 +96,7 @@ async function responder(n: Noticia, escolha: string): Promise<void> {
     <WePainel :titulo="`Caixa de notícias (${demais.length})`" sem-corpo>
       <p v-if="!demais.length" class="vazio">Nenhuma notícia{{ filtro ? ' deste tipo' : '' }}.</p>
       <ul v-else class="lista">
-        <li v-for="n in demais" :key="n.id" :class="{ nova: !n.lida }">
+        <li v-for="n in visiveis" :key="n.id" :class="{ nova: !n.lida }">
           <div class="cabeca">
             <WeTag :tipo="TAG_TIPO[n.tipo]">{{ ROTULO_TIPO[n.tipo] }}</WeTag>
             <span class="we-lb">{{ n.temporada }} · semana {{ n.semana }}</span>
@@ -99,6 +110,7 @@ async function responder(n: Noticia, escolha: string): Promise<void> {
           <RouterLink v-else-if="n.tipo === 'mercado'" class="link we-lb" :to="{ name: 'mercado' }">Ir ao mercado</RouterLink>
         </li>
       </ul>
+      <WePaginacao v-if="demais.length" v-model="pagina" :total="demais.length" :por-pagina="POR_PAGINA" />
     </WePainel>
   </template>
 </template>

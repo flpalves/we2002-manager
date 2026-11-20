@@ -1,5 +1,5 @@
 import type { Regras } from '@core/config/padroes'
-import { geral } from '@core/jogadores/conversao'
+import { geral, geralExibido } from '@core/jogadores/conversao'
 import { dentroDaJanela, responderContraproposta } from '@core/mercado/ia'
 import {
   iniciarNegociacao,
@@ -15,7 +15,7 @@ import { paraAscii } from '@core/texto'
 import type { Atributos, Competicao } from '@shared/esquemas/pacote'
 import type { JogadorMercadoDto, NegociacaoDto, PropostaRecebida, ResultadoContraproposta, SituacaoMercado } from '@shared/esquemas/mercado'
 import type { z } from 'zod'
-import type { FiltrosMercadoSchema, PropostaSchema } from '@shared/esquemas/mercado'
+import { POR_PAGINA_MERCADO, type FiltrosMercadoSchema, type OrdemMercado, type PaginaMercado, type PropostaSchema } from '@shared/esquemas/mercado'
 import { ErroApp } from '../ipc/registrar'
 import { registrarInfo } from './noticias'
 import { preContrato as noticiaPreContrato, transferencia as noticiaTransferencia } from '@core/noticias/informativas'
@@ -119,6 +119,7 @@ interface LinhaMercado {
   porte: Porte | null
   posicao: string
   idade: number
+  nacionalidade: string
   potencial: number
   atributos: string
   moral: number
@@ -139,19 +140,22 @@ interface LinhaMercado {
 }
 
 const SELECT_MERCADO = `
-  SELECT j.id, j.nome, t.sigla, t.porte, j.posicao, j.idade, j.potencial, j.atributos, j.moral, j.valor, j.status, j.a_venda, t.saldo AS saldo_time,
+  SELECT j.id, j.nome, t.sigla, t.porte, j.posicao, j.idade, j.nacionalidade, j.potencial, j.atributos, j.moral, j.valor, j.status, j.a_venda, t.saldo AS saldo_time,
          j.taxa_fixa, j.origem_clube, j.origem_pais, c.salario_mensal, c.ate_temporada, c.multa, c.tipo AS contrato_tipo, pc.para AS pre_contrato
     FROM jogador j LEFT JOIN time t ON t.id = j.time_id LEFT JOIN contrato c ON c.jogador_id = j.id
     LEFT JOIN pre_contrato pc ON pc.jogador_id = j.id AND pc.temporada = (SELECT temporada_atual FROM carreira)`
 
 function paraDto(l: LinhaMercado, regras: Regras, usuario: string): JogadorMercadoDto {
+  const atributos = JSON.parse(l.atributos) as Atributos
   return {
     id: String(l.id),
     nome: l.nome,
     time: l.sigla,
     posicao: l.posicao,
     idade: l.idade,
-    geral: geral(JSON.parse(l.atributos) as Atributos, l.posicao, regras),
+    nacionalidade: l.nacionalidade,
+    geral: geralExibido(atributos, l.posicao, regras),
+    atributos: { ...atributos },
     valor: l.valor,
     salario: l.salario_mensal ?? 0,
     contratoAte: l.ate_temporada,
@@ -199,30 +203,78 @@ function linha(sql: Sql, id: string): LinhaMercado {
   return l
 }
 
-/** Busca no mercado (todos os clubes, os livres e os do exterior), do maior geral para o menor; até 200. */
+/** Busca no mercado (todos os clubes, os livres e os do exterior), do maior geral para o menor. */
 export function buscar(sql: Sql, f: Filtros): JogadorMercadoDto[] {
+  return filtrar(todos(sql), f, carreiraDe(sql).temporada_atual).sort(comparador('geral', false))
+}
+
+/** Todos os jogadores que o mercado enxerga ('fora' saiu do pool do exterior e não aparece em busca nenhuma). */
+function todos(sql: Sql): JogadorMercadoDto[] {
   const r = regrasDe(sql)
   const c = carreiraDe(sql)
+  return sql.all<LinhaMercado>(`${SELECT_MERCADO} WHERE j.status IN ('ativo', 'livre', 'exterior')`).map((l) => paraDto(l, r, c.time_usuario))
+}
+
+function filtrar(lista: JogadorMercadoDto[], f: Filtros, temporada: number): JogadorMercadoDto[] {
   const nome = f.nome ? paraAscii(f.nome).toLowerCase() : null
-  return sql
-    // 'fora' (saiu do pool do exterior) não aparece em busca nenhuma.
-    .all<LinhaMercado>(`${SELECT_MERCADO} WHERE j.status IN ('ativo', 'livre', 'exterior')`)
-    .map((l) => paraDto(l, r, c.time_usuario))
-    .filter(
-      (j) =>
-        (!nome || paraAscii(j.nome).toLowerCase().includes(nome)) &&
-        (!f.posicao || j.posicao === f.posicao) &&
-        (f.geralMin === undefined || j.geral >= f.geralMin) &&
-        (f.idadeMax === undefined || j.idade <= f.idadeMax) &&
-        (f.valorMax === undefined || j.valor <= f.valorMax) &&
-        (!f.somenteLivres || j.time === null) &&
-        (!f.somenteExterior || j.taxa != null) &&
-        (!f.somenteAVenda || j.aVenda !== null) &&
-        (!f.somenteMeus || j.doUsuario) &&
-        (!f.somenteFimDeContrato || (j.time !== null && !j.preContrato && j.contratoAte !== null && j.contratoAte <= c.temporada_atual)),
-    )
-    .sort((a, b) => b.geral - a.geral || a.valor - b.valor || a.nome.localeCompare(b.nome))
-    .slice(0, 200)
+  return lista.filter(
+    (j) =>
+      (!nome || paraAscii(j.nome).toLowerCase().includes(nome)) &&
+      (!f.posicao || j.posicao === f.posicao) &&
+      (!f.nacionalidade || j.nacionalidade === f.nacionalidade) &&
+      (f.geralMin === undefined || j.geral >= f.geralMin) &&
+      (f.idadeMin === undefined || j.idade >= f.idadeMin) &&
+      (f.idadeMax === undefined || j.idade <= f.idadeMax) &&
+      (f.valorMax === undefined || j.valor <= f.valorMax) &&
+      (!f.somenteLivres || j.time === null) &&
+      (!f.somenteExterior || j.taxa != null) &&
+      (!f.somenteAVenda || j.aVenda !== null) &&
+      (!f.somenteMeus || j.doUsuario) &&
+      (!f.somenteFimDeContrato || (j.time !== null && !j.preContrato && j.contratoAte !== null && j.contratoAte <= temporada)),
+  )
+}
+
+const ORDEM_POSICAO = ['GK', 'CB', 'SB', 'DH', 'SH', 'OH', 'CF', 'WG']
+
+/** Valor de ordenação de cada coluna; o custo é a taxa (exterior) ou o valor de mercado. */
+const CHAVE: Record<OrdemMercado, (j: JogadorMercadoDto) => number | string> = {
+  nome: (j) => paraAscii(j.nome).toLowerCase(),
+  posicao: (j) => ORDEM_POSICAO.indexOf(j.posicao),
+  nacionalidade: (j) => j.nacionalidade,
+  idade: (j) => j.idade,
+  geral: (j) => j.geral,
+  clube: (j) => j.time ?? (j.origem ? `~${j.origem.clube}` : '~~'),
+  valor: (j) => j.taxa ?? j.valor,
+  salario: (j) => j.salario,
+  contrato: (j) => j.contratoAte ?? 9999,
+}
+
+/** Ordena pela coluna; empates pelo maior geral, menor valor e nome (ordem estável e reproduzível). */
+export function comparador(ordem: OrdemMercado, crescente: boolean): (a: JogadorMercadoDto, b: JogadorMercadoDto) => number {
+  const chave = CHAVE[ordem]
+  const sinal = crescente ? 1 : -1
+  return (a, b) => {
+    const x = chave(a)
+    const y = chave(b)
+    const c = typeof x === 'string' ? x.localeCompare(y as string) : x - (y as number)
+    return sinal * c || b.geral - a.geral || a.valor - b.valor || a.nome.localeCompare(b.nome)
+  }
+}
+
+/** Busca da tela do mercado: filtra, ordena pela coluna escolhida e devolve uma página. */
+export function buscarPagina(sql: Sql, f: Filtros): PaginaMercado {
+  const base = todos(sql)
+  const lista = filtrar(base, f, carreiraDe(sql).temporada_atual).sort(comparador(f.ordem ?? 'geral', f.crescente ?? false))
+  const porPagina = POR_PAGINA_MERCADO
+  const paginas = Math.max(1, Math.ceil(lista.length / porPagina))
+  const pagina = Math.min(Math.max(1, f.pagina ?? 1), paginas)
+  return {
+    jogadores: lista.slice((pagina - 1) * porPagina, pagina * porPagina),
+    total: lista.length,
+    pagina,
+    porPagina,
+    nacionalidades: [...new Set(base.map((j) => j.nacionalidade))].sort(),
+  }
 }
 
 /** O momento do mercado para o usuário: janela, prazo de renovação e se o clube pode assinar pré-contrato. */

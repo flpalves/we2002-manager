@@ -653,11 +653,15 @@ export const PADROES: Regras = {
     fator_idade: [
       { ate_idade: 21, fator: 1.2 },
       { ate_idade: 24, fator: 1.1 },
-      { ate_idade: 27, fator: 1 },
-      { ate_idade: 29, fator: 0.85 },
-      { ate_idade: 31, fator: 0.65 },
-      { ate_idade: 33, fator: 0.45 },
-      { ate_idade: 999, fator: 0.3 },
+      { ate_idade: 28, fator: 1 },
+      // Queda suave enquanto ainda há anos de carreira; forte a partir dos 35.
+      { ate_idade: 30, fator: 0.94 },
+      { ate_idade: 32, fator: 0.90 },
+      { ate_idade: 34, fator: 0.75 },
+      { ate_idade: 35, fator: 0.6 },
+      { ate_idade: 36, fator: 0.4 },
+      { ate_idade: 37, fator: 0.2 },
+      { ate_idade: 999, fator: 0.12 },
     ],
     realizacao_potencial: [
       { ate_idade: 19, fator: 0.5 },
@@ -672,7 +676,7 @@ export const PADROES: Regras = {
       { ate_semanas: 52, fator: 0.75 },
       { ate_semanas: 99999, fator: 1 },
     ],
-    fator_serie: { 'serie-a': 1, 'serie-b': 0.85, 'serie-c': 0.7, 'serie-d': 0.55 },
+    fator_serie: { 'serie-a': 1.25, 'serie-b': 0.85, 'serie-c': 0.7, 'serie-d': 0.55 },
     fator_sem_liga: 0.55,
     arredondar: 5_000_000, // R$ 50 mil
     salario_base: 6_000_000, // R$ 60 mil
@@ -717,7 +721,7 @@ export const PADROES: Regras = {
       exterior: 5,
       salario_por_nivel: 0.3,
       queda_recusa: 2,
-      idade_aceita_cair: 31,
+      idade_aceita_cair: 33,
       agio_rotacao: 1.3,
       margem_alvo: 2,
     },

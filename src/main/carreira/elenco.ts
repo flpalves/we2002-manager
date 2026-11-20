@@ -1,5 +1,5 @@
 import { FOCOS_TREINO, type FocoTreino, type Regras } from '@core/config/padroes'
-import { geral, BASE_EXIBICAO_WE } from '@core/jogadores/conversao'
+import { geralExibido, BASE_EXIBICAO_WE } from '@core/jogadores/conversao'
 import { nivelWeNaPartida, seta } from '@core/jogadores/setas'
 import { faixaPotencial } from '@core/jogadores/potencial'
 import { ATRIBUTOS, AparenciaSchema, type Aparencia, type Atributos } from '@shared/esquemas/pacote'
@@ -66,7 +66,7 @@ function paraElenco(l: LinhaJogador, regras: Regras, disciplina: Disciplina[], n
     camisa: l.camisa,
     idade: l.idade,
     nacionalidade: l.nacionalidade,
-    geral: geral(atributos, l.posicao, regras),
+    geral: geralExibido(atributos, l.posicao, regras),
     condicao: Math.round(l.condicao),
     moral: Math.round(l.moral),
     seta: seta(l.condicao, l.moral, regras),

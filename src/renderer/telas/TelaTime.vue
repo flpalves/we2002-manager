@@ -20,7 +20,8 @@ import { useTemporada } from '../stores/temporada'
 import { useUi } from '../stores/ui'
 import { chamar } from '../api'
 import { corSobreClube } from '../cores'
-import { NOME_ORDEM_ELENCO, ORDENS_ELENCO, dinheiro, nomePosicao, ordenarElenco, type OrdemElenco } from '../formato'
+import { CRESCENTE_ELENCO, NOME_ORDEM_ELENCO, ORDENS_ELENCO, dinheiro, geralTexto, nomePosicao, ordenarElenco, type OrdemElenco } from '../formato'
+import { useOrdenacao } from '../composables/useOrdenacao'
 
 /** Página de um clube qualquer: elenco e escalação provável (o do usuário também abre aqui). */
 const rota = useRoute()
@@ -33,7 +34,11 @@ const d = ref<DetalheTime | null>(null)
 type Aba = 'elenco' | 'escalacao'
 const aba = ref<Aba>('elenco')
 const ABAS: Aba[] = ['elenco', 'escalacao']
-const ordem = ref<OrdemElenco>('posicao')
+const { ordem, crescente, ordenar } = useOrdenacao<OrdemElenco>('posicao', (k) => CRESCENTE_ELENCO[k])
+function escolher(o: OrdemElenco): void {
+  ordem.value = o
+  crescente.value = CRESCENTE_ELENCO[o]
+}
 
 useTela(
   [
@@ -43,7 +48,7 @@ useTela(
   ],
   {
     ...acoesAbas(aba, () => ABAS),
-    acaoY: () => (ordem.value = ORDENS_ELENCO[(ORDENS_ELENCO.indexOf(ordem.value) + 1) % ORDENS_ELENCO.length]!),
+    acaoY: () => escolher(ORDENS_ELENCO[(ORDENS_ELENCO.indexOf(ordem.value) + 1) % ORDENS_ELENCO.length]!),
     acaoX: () => verTransferencias(),
   },
 )
@@ -64,7 +69,7 @@ function verTransferencias(): void {
 }
 
 const PORTE: Record<string, string> = { grande: 'Grande', medio: 'Médio', pequeno: 'Pequeno' }
-const jogadores = computed(() => ordenarElenco(d.value?.elenco.jogadores ?? [], ordem.value))
+const jogadores = computed(() => ordenarElenco(d.value?.elenco.jogadores ?? [], ordem.value, crescente.value))
 const porId = computed(() => new Map<string, JogadorElenco>((d.value?.elenco.jogadores ?? []).map((j) => [j.id, j])))
 const titulares = computed(() => new Set(d.value?.escalacao?.titulares ?? []))
 const reservas = computed(() => (d.value?.escalacao?.reservas ?? []).map((id) => porId.value.get(id)).filter((j): j is JogadorElenco => !!j))
@@ -126,12 +131,12 @@ function abrirJogador(i: number): void {
       <WeAbas v-model="aba" :abas="[{ id: 'elenco', titulo: 'Elenco', contagem: d.elenco.jogadores.length }, { id: 'escalacao', titulo: 'Escalação' }]" rotulo="Seções do clube" />
       <span v-if="aba === 'elenco'" class="ordem">
         <span class="we-lb">Ordenar</span>
-        <WeBotao v-for="o in ORDENS_ELENCO" :key="o" :ativo="ordem === o" @click="ordem = o">{{ NOME_ORDEM_ELENCO[o] }}</WeBotao>
+        <WeBotao v-for="o in ORDENS_ELENCO" :key="o" :ativo="ordem === o" @click="escolher(o)">{{ NOME_ORDEM_ELENCO[o] }}</WeBotao>
       </span>
     </div>
 
     <WePainel v-if="aba === 'elenco'" :titulo="`Elenco do ${d.nomeCurto}`" sem-corpo>
-      <TabelaElenco :jogadores="jogadores" :temporada="carreira.atual.temporada" :titulares="titulares" />
+      <TabelaElenco :jogadores="jogadores" :temporada="carreira.atual.temporada" :titulares="titulares" :ordem="ordem" :crescente="crescente" @ordenar="ordenar" />
     </WePainel>
 
     <template v-else>
@@ -151,7 +156,7 @@ function abrirJogador(i: number): void {
                 <td>{{ j.camisa }}</td>
                 <td>{{ nomePosicao(j.posicao) }}</td>
                 <td><span class="jogador"><WeBandeira :codigo="j.nacionalidade" /><RouterLink class="link" :to="{ name: 'jogador', params: { id: j.id } }">{{ j.nome }}</RouterLink></span></td>
-                <td class="geral">{{ j.geral }}</td>
+                <td class="geral">{{ geralTexto(j.geral) }}</td>
                 <td><WeSeta :nivel="j.seta" /></td>
                 <td class="we-lb">Reserva</td>
               </tr>
@@ -159,7 +164,7 @@ function abrirJogador(i: number): void {
                 <td>{{ j.camisa }}</td>
                 <td>{{ nomePosicao(j.posicao) }}</td>
                 <td><span class="jogador"><WeBandeira :codigo="j.nacionalidade" /><RouterLink class="link" :to="{ name: 'jogador', params: { id: j.id } }">{{ j.nome }}</RouterLink></span></td>
-                <td class="geral">{{ j.geral }}</td>
+                <td class="geral">{{ geralTexto(j.geral) }}</td>
                 <td><WeSeta :nivel="j.seta" /></td>
                 <td class="we-lb">{{ j.lesaoSemanas ? `Lesão ${j.lesaoSemanas} sem.` : j.suspenso.length ? 'Suspenso' : 'Fora' }}</td>
               </tr>

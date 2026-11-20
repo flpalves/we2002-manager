@@ -3,7 +3,7 @@ import { mkdtempSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { Carreiras } from '../../src/main/carreira/servico'
-import { buscar, contrapropor, definirAVenda, negociacao, propor, propostas, responderProposta, situacao } from '../../src/main/carreira/mercado'
+import { buscar, buscarPagina, contrapropor, definirAVenda, negociacao, propor, propostas, responderProposta, situacao } from '../../src/main/carreira/mercado'
 import { assumirClube, definirIngresso, diretoria, financas } from '../../src/main/carreira/clube'
 import { continuar } from '../../src/main/carreira/temporada'
 import type { Sql } from '../../src/main/db/sql'
@@ -59,6 +59,23 @@ describe('mercado, finanças e diretoria do usuário (serviço + SQLite)', () =>
     expect(lista.length).toBe(8)
     expect(lista.every((j) => j.valor > 0 && j.multa === j.valor * 3 && j.salario >= 1_000_000)).toBe(true)
     expect(lista.filter((j) => j.doUsuario)).toHaveLength(2)
+  })
+
+  it('busca paginada: ordena pela coluna, filtra por nacionalidade e idade, geral com uma casa', () => {
+    const tudo = buscar(sql, {})
+    const p1 = buscarPagina(sql, { ordem: 'idade', crescente: true })
+    expect(p1.total).toBe(tudo.length)
+    expect(p1.porPagina).toBe(100)
+    const idades = p1.jogadores.map((j) => j.idade)
+    expect(idades).toEqual([...idades].sort((a, b) => a - b))
+    const desc = buscarPagina(sql, { ordem: 'idade', crescente: false }).jogadores.map((j) => j.idade)
+    expect(desc[0]).toBe(Math.max(...tudo.map((j) => j.idade)))
+    // página além da última volta para a última
+    expect(buscarPagina(sql, { pagina: 999 }).pagina).toBe(Math.max(1, Math.ceil(tudo.length / 100)))
+    const nac = p1.nacionalidades[0]!
+    expect(buscarPagina(sql, { nacionalidade: nac }).jogadores.every((j) => j.nacionalidade === nac)).toBe(true)
+    expect(buscarPagina(sql, { idadeMin: 25, idadeMax: 28 }).jogadores.every((j) => j.idade >= 25 && j.idade <= 28)).toBe(true)
+    expect(tudo.every((j) => Math.abs(j.geral * 10 - Math.round(j.geral * 10)) < 1e-9 && Object.keys(j.atributos).length === 16)).toBe(true)
   })
 
   it('compra em duas etapas: clube e depois jogador; cada proposta gasta 1 movimento', () => {

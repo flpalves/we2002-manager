@@ -5,8 +5,8 @@ import { chanceDeSaida, taxaNaVirada, viradaExterior } from '@core/mercado/exter
 
 describe('exterior na virada (06, "Jogadores sem clube")', () => {
   it('taxa recalculada pela idade nova e arredondada para R$ 50 mil', () => {
-    // 27 → 28: f_idade 1 → 0,85.
-    expect(taxaNaVirada(3_470_000_000, 27, 28, PADROES)).toBe(2_950_000_000)
+    // 28 → 29: f_idade 1 → 0,92.
+    expect(taxaNaVirada(3_470_000_000, 28, 29, PADROES)).toBe(3_190_000_000)
     // Mesma faixa: não muda.
     expect(taxaNaVirada(3_470_000_000, 25, 26, PADROES)).toBe(3_470_000_000)
     // Nunca abaixo do passo de arredondamento.

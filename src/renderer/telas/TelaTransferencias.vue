@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue'
 import { RouterLink, useRoute, useRouter } from 'vue-router'
-import type { ListaTransferencias } from '@shared/esquemas/time'
+import type { ListaTransferencias, Transferencia } from '@shared/esquemas/time'
 import WePainel from '../componentes/WePainel.vue'
 import WeBotao from '../componentes/WeBotao.vue'
 import WeTabela from '../componentes/WeTabela.vue'
@@ -9,12 +9,15 @@ import WeTag from '../componentes/WeTag.vue'
 import WeBandeira from '../componentes/WeBandeira.vue'
 import WeSeletorTime from '../componentes/WeSeletorTime.vue'
 import TimeDaCarreira from '../componentes/TimeDaCarreira.vue'
+import WeThOrdem from '../componentes/WeThOrdem.vue'
+import WePaginacao from '../componentes/WePaginacao.vue'
+import { useOrdenacao } from '../composables/useOrdenacao'
 import { useTela } from '../composables/useTela'
 import { useCarreira, urlArquivoCarreira } from '../stores/carreira'
 import { useTemporada } from '../stores/temporada'
 import { useUi } from '../stores/ui'
 import { chamar } from '../api'
-import { dinheiro, nomePosicao, nomeTipoTransferencia } from '../formato'
+import { dinheiro, nomePosicao, nomeTipoTransferencia, ORDEM_POSICAO, ordenarPor } from '../formato'
 
 /** Todas as transferências da temporada, de todos os clubes ou de um só (?time=SIG). */
 const rota = useRoute()
@@ -55,6 +58,40 @@ const escudo = (sigla: string) => urlArquivoCarreira(temporada.times.get(sigla)?
 const nomeTime = computed(() => (time.value ? (temporada.times.get(time.value)?.nome ?? time.value) : null))
 const titulo = computed(() => `Transferências ${dados.value?.temporada ?? ''}${nomeTime.value ? ` · ${nomeTime.value}` : ' · todos os clubes'}`)
 const totalMovimentado = computed(() => (dados.value?.lista ?? []).reduce((a, t) => a + t.valor, 0))
+
+// Ordenação pelos títulos e páginas de 100 (a lista de todos os clubes passa de mil negócios).
+type Coluna = 'semana' | 'jogador' | 'posicao' | 'idade' | 'de' | 'para' | 'tipo' | 'valor' | 'salario'
+const POR_PAGINA = 100
+const nomeDe = (sigla: string | null) => (sigla ? (temporada.times.get(sigla)?.nome ?? sigla) : null)
+const CHAVE: Record<Coluna, (t: Transferencia) => number | string | null> = {
+  semana: (t) => t.semana,
+  jogador: (t) => t.jogador,
+  posicao: (t) => ORDEM_POSICAO.indexOf(t.posicao),
+  idade: (t) => t.idade,
+  de: (t) => nomeDe(t.de),
+  para: (t) => nomeDe(t.para),
+  tipo: (t) => nomeTipoTransferencia(t.tipo),
+  valor: (t) => t.valor,
+  salario: (t) => t.salario,
+}
+const CRESCENTE: Record<Coluna, boolean> = { semana: false, jogador: true, posicao: true, idade: true, de: true, para: true, tipo: true, valor: false, salario: false }
+const COLUNAS: { rotulo: string; chave: Coluna }[] = [
+  { rotulo: 'Sem.', chave: 'semana' },
+  { rotulo: 'Jogador', chave: 'jogador' },
+  { rotulo: 'Pos.', chave: 'posicao' },
+  { rotulo: 'Idade', chave: 'idade' },
+  { rotulo: 'De', chave: 'de' },
+  { rotulo: 'Para', chave: 'para' },
+  { rotulo: 'Tipo', chave: 'tipo' },
+  { rotulo: 'Valor', chave: 'valor' },
+  { rotulo: 'Salário', chave: 'salario' },
+]
+const { ordem, crescente, ordenar } = useOrdenacao<Coluna>('semana', (k) => CRESCENTE[k])
+const pagina = ref(1)
+// A lista do servidor já vem da semana mais recente para a mais antiga: é o desempate.
+const ordenada = computed(() => ordenarPor(dados.value?.lista ?? [], CHAVE[ordem.value], crescente.value))
+const linhasPagina = computed(() => ordenada.value.slice((pagina.value - 1) * POR_PAGINA, pagina.value * POR_PAGINA))
+watch([time, ano, ordem, crescente], () => (pagina.value = 1))
 </script>
 
 <template>
@@ -94,11 +131,11 @@ const totalMovimentado = computed(() => (dados.value?.lista ?? []).reduce((a, t)
       <WeTabela v-else>
         <thead>
           <tr>
-            <th>Sem.</th><th>Jogador</th><th>Pos.</th><th>Idade</th><th>De</th><th>Para</th><th>Tipo</th><th>Valor</th><th>Salário</th>
+            <WeThOrdem v-for="c in COLUNAS" :key="c.chave" :rotulo="c.rotulo" :chave="c.chave" :ordem="ordem" :crescente="crescente" @ordenar="ordenar" />
           </tr>
         </thead>
         <tbody>
-          <tr v-for="t in dados.lista" :key="t.id" :class="{ 'we-destaque': t.de === carreira.atual.time.sigla || t.para === carreira.atual.time.sigla }">
+          <tr v-for="t in linhasPagina" :key="t.id" :class="{ 'we-destaque': t.de === carreira.atual.time.sigla || t.para === carreira.atual.time.sigla }">
             <td>{{ t.semana }}</td>
             <td>
               <span class="jogador">
@@ -120,6 +157,7 @@ const totalMovimentado = computed(() => (dados.value?.lista ?? []).reduce((a, t)
           </tr>
         </tbody>
       </WeTabela>
+      <WePaginacao v-if="dados.lista.length" v-model="pagina" :total="dados.lista.length" :por-pagina="POR_PAGINA" />
     </WePainel>
   </template>
 </template>

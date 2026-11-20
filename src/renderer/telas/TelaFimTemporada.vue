@@ -8,7 +8,7 @@ import WeBotao from '../componentes/WeBotao.vue'
 import WeTabela from '../componentes/WeTabela.vue'
 import WeTag from '../componentes/WeTag.vue'
 import { useTela } from '../composables/useTela'
-import { dinheiro, nomePosicao } from '../formato'
+import { dinheiro, geralTexto, nomePosicao } from '../formato'
 import { useCarreira } from '../stores/carreira'
 import { useTemporada } from '../stores/temporada'
 import { useUi } from '../stores/ui'
@@ -136,7 +136,7 @@ async function virar(): Promise<void> {
                 <td>{{ j.nome }}</td>
                 <td class="we-lb">{{ nomePosicao(j.posicao) }}</td>
                 <td class="we-lb">{{ j.idade }} anos</td>
-                <td>{{ j.geral.toFixed(1) }}</td>
+                <td>{{ geralTexto(j.geral) }}</td>
                 <td v-if="j.preContrato"><WeTag tipo="atencao">Pré-contrato com o {{ j.preContrato }}</WeTag></td>
                 <td v-else-if="previa.renovacaoAberta === false"><WeTag tipo="negativo">Sai livre</WeTag></td>
                 <td v-else><WeBotao icone="contrato" @click="router.push({ name: 'mercado', query: { renovar: j.id } })">Renovar</WeBotao></td>

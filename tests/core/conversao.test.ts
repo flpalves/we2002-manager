@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { PADROES, mesclarRegras } from '@core/config/padroes'
-import { deExibicaoWe, geral, paraExibicaoWe, paraNivelWe } from '@core/jogadores/conversao'
+import { deExibicaoWe, geral, geralExibido, paraExibicaoWe, paraNivelWe } from '@core/jogadores/conversao'
 import { atributos } from '../fixtures/pacote'
 
 const tabela = PADROES.jogadores.conversao_we
@@ -51,5 +51,12 @@ describe('geral', () => {
     const regras = mesclarRegras(PADROES, { jogadores: { pesos_geral: { GK: { DEF: 1, RES: 1 } } } })
     expect(geral({ ...atributos(5), DEF: 18, RES: 16 }, 'GK', regras)).toBe(17)
     expect(geral({ ...atributos(5), DEF: 18, RES: 16 }, 'CF', regras)).toBe(5) // CF fica com os pesos padrão
+  })
+
+  it('exibido com uma casa decimal; as contas seguem com o arredondado', () => {
+    const semPesos = { ...PADROES, jogadores: { ...PADROES.jogadores, pesos_geral: {} } }
+    expect(geralExibido({ ...atributos(10), OFF: 18 }, 'CF', semPesos)).toBe(10.5)
+    expect(geralExibido({ ...atributos(10), OFF: 15 }, 'CF', semPesos)).toBe(10.3) // 165/16 = 10.3125
+    expect(geral({ ...atributos(10), OFF: 15 }, 'CF', semPesos)).toBe(10)
   })
 })

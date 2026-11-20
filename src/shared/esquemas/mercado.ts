@@ -28,7 +28,12 @@ export const JogadorMercadoSchema = z.object({
   time: z.string().nullable(),
   posicao: z.string(),
   idade: z.number().int(),
-  geral: z.number().int(),
+  /** Código do país (bandeira). */
+  nacionalidade: z.string(),
+  /** Geral com uma casa decimal. */
+  geral: z.number(),
+  /** Atributos 1-20 (painel da negociação). */
+  atributos: z.record(z.string(), z.number()),
   valor: z.number().int(),
   salario: z.number().int(),
   contratoAte: z.number().int().nullable(),
@@ -44,10 +49,20 @@ export const JogadorMercadoSchema = z.object({
 })
 export type JogadorMercadoDto = z.infer<typeof JogadorMercadoSchema>
 
+/** Colunas pelas quais a busca do mercado ordena. */
+export const OrdemMercadoSchema = z.enum(['nome', 'posicao', 'nacionalidade', 'idade', 'geral', 'clube', 'valor', 'salario', 'contrato'])
+export type OrdemMercado = z.infer<typeof OrdemMercadoSchema>
+
+/** Jogadores por página na busca do mercado. */
+export const POR_PAGINA_MERCADO = 100
+
 export const FiltrosMercadoSchema = z.object({
   nome: z.string().max(40).optional(),
   posicao: z.string().optional(),
-  geralMin: z.number().int().min(1).max(20).optional(),
+  /** Código do país (ex.: BRA). */
+  nacionalidade: z.string().max(3).optional(),
+  geralMin: z.number().min(1).max(20).optional(),
+  idadeMin: z.number().int().min(14).max(50).optional(),
   idadeMax: z.number().int().min(14).max(50).optional(),
   valorMax: z.number().int().min(0).optional(),
   /** Sem clube: livres e disponíveis do exterior. */
@@ -60,7 +75,23 @@ export const FiltrosMercadoSchema = z.object({
   somenteMeus: z.boolean().optional(),
   /** Só quem está em fim de contrato (termina nesta temporada, sem pré-contrato). */
   somenteFimDeContrato: z.boolean().optional(),
+  /** Coluna e sentido da ordenação (padrão: maior geral primeiro). */
+  ordem: OrdemMercadoSchema.optional(),
+  crescente: z.boolean().optional(),
+  /** Página (1 em diante) de POR_PAGINA_MERCADO jogadores. */
+  pagina: z.number().int().min(1).optional(),
 })
+
+export const PaginaMercadoSchema = z.object({
+  jogadores: z.array(JogadorMercadoSchema),
+  /** Quantos passam nos filtros (todas as páginas). */
+  total: z.number().int(),
+  pagina: z.number().int(),
+  porPagina: z.number().int(),
+  /** Nacionalidades presentes no mercado (para o filtro). */
+  nacionalidades: z.array(z.string()),
+})
+export type PaginaMercado = z.infer<typeof PaginaMercadoSchema>
 
 export const MovimentoSchema = z.object({
   quem: z.enum(['usuario', 'clube', 'jogador']),

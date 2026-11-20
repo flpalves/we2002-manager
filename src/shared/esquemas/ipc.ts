@@ -2,7 +2,7 @@ import { z } from 'zod'
 import { ConfigAppParcialSchema, ConfigAppSchema } from './config'
 import { AparenciaSchema, CompeticaoSchema, DivisoesSchema, ExteriorSchema, JanelaTransferenciaSchema, LivresSchema, ManifestoSchema, PaisSchema, TemporadaSchema, TimeSchema } from './pacote'
 import { ElencoSchema, EscalacaoSalvaSchema, EscalacaoSchema, FichaJogadorSchema, FocoSchema, TreinoSchema } from './elenco'
-import { DiretoriaSchema, FiltrosMercadoSchema, FinancasSchema, JogadorMercadoSchema, NegociacaoDtoSchema, PropostaRecebidaSchema, PropostaSchema, ResultadoContrapropostaSchema, SituacaoMercadoSchema, TipoNegocioSchema } from './mercado'
+import { DiretoriaSchema, FiltrosMercadoSchema, FinancasSchema, JogadorMercadoSchema, NegociacaoDtoSchema, PaginaMercadoSchema, PropostaRecebidaSchema, PropostaSchema, ResultadoContrapropostaSchema, SituacaoMercadoSchema, TipoNegocioSchema } from './mercado'
 import { CaixaNoticiasSchema, CatalogoSchema, DestaquesSchema, EventoCatalogoSchema, TipoNoticiaSchema } from './noticias'
 import { DetalheTimeSchema, FiltroTransferenciasSchema, ListaTransferenciasSchema } from './time'
 import { PlacarManualSchema, PreJogoSchema, StatusWeSchema } from './we'
@@ -205,7 +205,7 @@ export const contratos = {
   // ------------------------------------------------------------ mercado, finanças, diretoria
   'mercado:situacao': { entrada: z.undefined(), saida: SituacaoMercadoSchema },
   'mercado:intensidade': { entrada: z.object({ valor: z.enum(['baixa', 'media', 'alta']).optional() }), saida: z.enum(['baixa', 'media', 'alta']) },
-  'mercado:buscar': { entrada: FiltrosMercadoSchema, saida: z.array(JogadorMercadoSchema) },
+  'mercado:buscar': { entrada: FiltrosMercadoSchema, saida: PaginaMercadoSchema },
   'mercado:negociacao': { entrada: z.object({ jogadorId: z.string(), tipo: TipoNegocioSchema.optional() }), saida: NegociacaoDtoSchema },
   'mercado:propor': { entrada: PropostaSchema, saida: NegociacaoDtoSchema },
   'mercado:propostas': { entrada: z.undefined(), saida: z.array(PropostaRecebidaSchema) },

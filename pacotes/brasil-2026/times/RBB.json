@@ -490,8 +490,8 @@
         "DEF": 3,
         "BAL": 7,
         "STA": 11,
-        "SPD": 19,
-        "ACC": 19,
+        "SPD": 14,
+        "ACC": 14,
         "RES": 11,
         "DRI": 19,
         "PAS": 9,
@@ -512,7 +512,7 @@
         "multa": 0
       },
       "aparencia": {
-        "pele": 2,
+        "pele": 3,
         "fisico": "F",
         "cabelo": "i1",
         "cor_cabelo": "H",

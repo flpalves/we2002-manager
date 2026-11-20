@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { centavosParaReais, dinheiro, nomeTipoTransferencia, ordenarElenco, reaisParaCentavos } from '@renderer/formato'
+import { centavosParaReais, dinheiro, geralTexto, nomeTipoTransferencia, ordenarElenco, ordenarPor, reaisParaCentavos } from '@renderer/formato'
 
 describe('formato de dinheiro', () => {
   it('formata como na spec ("R$ 48,2 mi", "R$ 850 mil")', () => {
@@ -32,6 +32,22 @@ describe('ordenarElenco', () => {
     expect(ordenarElenco(lista, 'condicao').map((x) => x.condicao)).toEqual([60, 70, 90, 100])
     expect(ordenarElenco(lista, 'idade').map((x) => x.idade)).toEqual([19, 22, 30, 35])
     expect(lista[0]!.posicao).toBe('CF')
+  })
+  it('sentido invertido pelo clique no título e colunas extras', () => {
+    expect(ordenarElenco(lista, 'geral', true).map((x) => x.geral)).toEqual([10, 12, 15, 16])
+    expect(ordenarElenco(lista, 'idade', false).map((x) => x.idade)).toEqual([35, 30, 22, 19])
+    expect(ordenarElenco(lista, 'posicao', false).map((x) => `${x.posicao}${x.geral}`)).toEqual(['CF16', 'CF15', 'CB12', 'GK10'])
+    const comSalario = lista.map((x, i) => ({ ...x, salario: [5, 1, 9, 3][i]! }))
+    expect(ordenarElenco(comSalario, 'salario').map((x) => x.salario)).toEqual([9, 5, 3, 1])
+  })
+  it('ordenarPor manda os vazios para o fim nos dois sentidos', () => {
+    const v = [{ a: 2 }, { a: null }, { a: 1 }, { a: 3 }]
+    expect(ordenarPor(v, (x) => x.a, true).map((x) => x.a)).toEqual([1, 2, 3, null])
+    expect(ordenarPor(v, (x) => x.a, false).map((x) => x.a)).toEqual([3, 2, 1, null])
+  })
+  it('geral com uma casa decimal', () => {
+    expect(geralTexto(11.3)).toBe('11,3')
+    expect(geralTexto(18)).toBe('18,0')
   })
   it('nome do tipo de transferência', () => {
     expect(nomeTipoTransferencia('emprestimo')).toBe('Empréstimo')

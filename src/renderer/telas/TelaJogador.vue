@@ -15,7 +15,7 @@ import { nomePais } from '../bandeiras'
 import { useTela } from '../composables/useTela'
 import { useUi } from '../stores/ui'
 import { chamar } from '../api'
-import { dinheiro, nomePosicao } from '../formato'
+import { dinheiro, geralTexto, nomePosicao } from '../formato'
 
 const rota = useRoute()
 const router = useRouter()
@@ -76,7 +76,7 @@ const ROTULO_MOTIVO: Record<string, string> = { evolucao: 'treino', declinio: 'i
       </WePainel>
 
       <WePainel titulo="Situação">
-        <div class="we-kv"><span class="we-lb">Geral</span><span class="we-vl grande">{{ f.geral }}</span></div>
+        <div class="we-kv"><span class="we-lb">Geral</span><span class="we-vl grande">{{ geralTexto(f.geral) }}</span></div>
         <div class="we-kv"><span class="we-lb">Potencial (estimado)</span><span class="we-vl">{{ potencial }}</span></div>
         <div class="we-kv"><span class="we-lb">Condição</span><BarraCondicao :valor="f.condicao" /></div>
         <div class="we-kv"><span class="we-lb">Moral</span><BarraCondicao :valor="f.moral" rotulo="Moral" /></div>

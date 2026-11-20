@@ -91,7 +91,7 @@ Recalculado a cada janela (e mostrado sempre):
 
 valor = 2 mi × 1,85^(geral − 12) × f_idade × f_potencial × f_contrato × f_serie
 
-- f_idade: até 21 → 1,4 · 22-25 → 1,2 · 26-28 → 1,0 · 29-30 → 0,8 · 31-32 → 0,55 · 33+ → 0,3.
+- f_idade: até 21 → 1,2 · 22-24 → 1,1 · 25-28 → 1,0 · 29-30 → 0,92 · 31-32 → 0,82 · 33-34 → 0,68 · 35 → 0,45 · 36 → 0,3 · 37 → 0,2 · 38+ → 0,12. A queda é suave enquanto o jogador ainda tem anos de carreira e acelera a partir dos 35.
 - f_potencial: 1 + 0,10 × max(0, potencial − geral).
 - f_contrato, pelas **semanas restantes** de contrato (cálculo em `02-dados.md`): ≤ 26 → 0,5 · ≤ 52 → 0,75 · mais → 1,0.
 - f_serie: A 1,0 · B 0,6 · C 0,35 · D 0,2 · estrangeiro: fator do país em `paises.json`.

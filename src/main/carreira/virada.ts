@@ -2,7 +2,7 @@ import { criarRng } from '@core/rng'
 import { temporadaEncerrada } from '@core/competicoes/temporada'
 import { ehSegundaDivisao, nomeSegundaDivisao, participantesSeguintes, type OpcoesVirada } from '@core/competicoes/virada'
 import { fecharMetas, metaAtingida, type Meta } from '@core/diretoria/diretoria'
-import { geral } from '@core/jogadores/conversao'
+import { geral, geralExibido } from '@core/jogadores/conversao'
 import { viradaExterior } from '@core/mercado/exterior'
 import { ajustarPelaDivisao, ligasDosTimes } from '@core/mercado/nivel'
 import type { Regras } from '@core/config/padroes'
@@ -121,7 +121,7 @@ export function previaVirada(sql: Sql): PreviaVirada {
     .filter((l) => l.sigla === s.d.timeUsuario)
     .map((l) => {
       const para = destino.get(l.id)
-      return { id: String(l.id), nome: l.nome, posicao: l.posicao, idade: l.idade, geral: geralDe(l, s), preContrato: para ? nomeTime(sql, para) : null }
+      return { id: String(l.id), nome: l.nome, posicao: l.posicao, idade: l.idade, geral: geralExibido(JSON.parse(l.atributos) as Atributos, l.posicao, s.d.regras), preContrato: para ? nomeTime(sql, para) : null }
     })
   const limite = s.d.regras.mercado.pre_contrato.semana_limite_renovacao
   const chegam = sql
