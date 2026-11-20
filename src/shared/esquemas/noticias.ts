@@ -1,4 +1,5 @@
 import { z } from 'zod'
+import { PropostaRecebidaSchema } from './mercado'
 
 /**
  * Notícias e eventos (09). Catálogo de eventos aleatórios (`noticias.json` do pacote) e os
@@ -128,3 +129,10 @@ export const CaixaNoticiasSchema = z.object({
   pendentes: z.number().int(),
 })
 export type CaixaNoticias = z.infer<typeof CaixaNoticiasSchema>
+
+/** Volta do jogo: notícias importantes para o clube e as propostas abertas pelos jogadores dele. */
+export const DestaquesSchema = z.object({
+  noticias: z.array(NoticiaSchema),
+  propostas: z.array(PropostaRecebidaSchema),
+})
+export type Destaques = z.infer<typeof DestaquesSchema>

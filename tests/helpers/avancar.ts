@@ -9,31 +9,31 @@ export function responderPendentes(sql: Sql): number {
   return pend.length
 }
 
-/** Um "clique" completo: Continuar até o pré-jogo e simular o jogo do usuário (como no fluxo antigo). */
-export function avancar(sql: Sql): ResultadoContinuar {
-  responderPendentes(sql)
-  let r = continuar(sql)
-  // Parou por um evento com escolha: responde e segue até o pré-jogo, como faria o usuário.
-  while (!r.preJogo && r.eventoPendente && !r.encerrada) {
-    responderPendentes(sql)
-    const mais = continuar(sql)
-    r = { ...mais, passosJogados: r.passosJogados + mais.passosJogados, campeoes: [...r.campeoes, ...mais.campeoes], jogoDoUsuario: mais.jogoDoUsuario ?? r.jogoDoUsuario }
-  }
-  if (!r.preJogo) return r
-  responderPendentes(sql)
-  const j = jogarDataDoUsuario(sql)
-  return { ...j, passosJogados: r.passosJogados + j.passosJogados, campeoes: [...r.campeoes, ...j.campeoes] }
+/** Junta dois avanços seguidos num resumo só. */
+function somar(a: ResultadoContinuar, b: ResultadoContinuar): ResultadoContinuar {
+  return { ...b, passosJogados: a.passosJogados + b.passosJogados, campeoes: [...a.campeoes, ...b.campeoes], jogoDoUsuario: b.jogoDoUsuario ?? a.jogoDoUsuario }
 }
 
-/** Continuar até o pré-jogo (respondendo eventos no caminho). */
+/**
+ * Continuar semana a semana (respondendo os eventos no caminho, como faria o usuário) até o
+ * pré-jogo ou o fim da temporada.
+ */
 export function continuarAtePreJogo(sql: Sql): ResultadoContinuar {
   responderPendentes(sql)
   let r = continuar(sql)
-  while (!r.preJogo && r.eventoPendente && !r.encerrada) {
+  while (!r.preJogo && !r.encerrada) {
     responderPendentes(sql)
-    r = continuar(sql)
+    r = somar(r, continuar(sql))
   }
   return r
+}
+
+/** Um "clique" completo do fluxo antigo: Continuar até o pré-jogo e simular o jogo do usuário. */
+export function avancar(sql: Sql): ResultadoContinuar {
+  const r = continuarAtePreJogo(sql)
+  if (!r.preJogo) return r
+  responderPendentes(sql)
+  return somar(r, jogarDataDoUsuario(sql))
 }
 
 /** Simula o jogo do usuário na data atual (respondendo antes um evento pendente). */

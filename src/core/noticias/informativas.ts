@@ -76,13 +76,52 @@ export function metasDaTemporada(metas: readonly string[], temporada: number): N
   return { tipo: 'diretoria', texto: `Metas da diretoria para ${temporada}: ${metas.join('; ')}.` }
 }
 
-export function contratosAcabando(nomes: readonly string[], temporada: number): NoticiaInfo {
+export function contratosAcabando(nomes: readonly string[], temporada: number, semanaLimite?: number): NoticiaInfo {
   const lista = nomes.length > 4 ? `${nomes.slice(0, 4).join(', ')} e mais ${nomes.length - 4}` : nomes.join(', ')
-  return { tipo: 'elenco', texto: `${plural(nomes.length, 'contrato termina', 'contratos terminam')} em ${temporada}: ${lista}. Renove em Mercado.` }
+  const prazo = semanaLimite ? ` até a semana ${semanaLimite}` : ''
+  return { tipo: 'elenco', texto: `${plural(nomes.length, 'contrato termina', 'contratos terminam')} em ${temporada}: ${lista}. Renove em Mercado${prazo}.` }
+}
+
+/** Fim do prazo de renovação: quem não renovou pode assinar pré-contrato com outro clube. */
+export function prazoRenovacaoEncerrado(nomes: readonly string[]): NoticiaInfo {
+  const lista = nomes.length > 4 ? `${nomes.slice(0, 4).join(', ')} e mais ${nomes.length - 4}` : nomes.join(', ')
+  return {
+    tipo: 'elenco',
+    texto: nomes.length
+      ? `Acabou o prazo de renovações. Em fim de contrato: ${lista}. Outros clubes já podem oferecer pré-contrato; você também pode assinar com jogadores em fim de contrato de outros clubes.`
+      : 'Acabou o prazo de renovações. Agora você pode assinar pré-contrato com jogadores em fim de contrato de outros clubes.',
+  }
+}
+
+/** Pré-contrato assinado: o jogador muda de clube na virada. */
+export function preContrato(p: { jogador: string; jogadorId: string; de: string; para: string; doUsuario: 'sai' | 'chega' | null }): NoticiaInfo {
+  const texto =
+    p.doUsuario === 'sai'
+      ? `${p.jogador} assina pré-contrato com o ${p.para} e deixa o ${p.de} no fim da temporada.`
+      : `${p.jogador}, do ${p.de}, assina pré-contrato com o ${p.para} e chega na próxima temporada.`
+  return { tipo: 'mercado', jogador: p.jogadorId, time: p.para, texto }
+}
+
+/** Semana 1: o elenco do usuário estava abaixo do mínimo e a diretoria contratou livres. */
+export function diretoriaCompletaElenco(nomes: readonly string[]): NoticiaInfo {
+  const lista = nomes.length > 4 ? `${nomes.slice(0, 4).join(', ')} e mais ${nomes.length - 4}` : nomes.join(', ')
+  return { tipo: 'diretoria', texto: `O elenco estava abaixo do mínimo: a diretoria contratou ${plural(nomes.length, 'jogador livre', 'jogadores livres')} (${lista}).` }
+}
+
+/** Semana 1: clubes que completaram o elenco com jogadores livres. */
+export function elencosCompletados(clubes: number, jogadores: number): NoticiaInfo {
+  return { tipo: 'mercado', texto: `Começo de temporada: ${plural(clubes, 'clube completa', 'clubes completam')} o elenco com ${plural(jogadores, 'jogador livre', 'jogadores livres')}.` }
 }
 
 export function campeao(time: string, competicao: string, doUsuario: boolean): NoticiaInfo {
   return { tipo: 'competicao', time, texto: doUsuario ? `É campeão! ${time} conquista a ${competicao}!` : `${time} é campeão da ${competicao}.` }
+}
+
+/** Competição por vagas (ex.: Série D): participantes definidos quando as origens acabaram. */
+export function vagasDefinidas(competicao: string, quantidade: number, cancelada: boolean, timeDoUsuario: string | null): NoticiaInfo {
+  if (cancelada) return { tipo: 'competicao', texto: `A ${competicao} não será disputada nesta temporada: as vagas não fecharam os times necessários.` }
+  if (timeDoUsuario) return { tipo: 'competicao', time: timeDoUsuario, texto: `Vaga garantida! ${timeDoUsuario} está na ${competicao} desta temporada.` }
+  return { tipo: 'competicao', texto: `Definidos os ${quantidade} participantes da ${competicao}.` }
 }
 
 export function demissao(time: string): NoticiaInfo {

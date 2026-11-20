@@ -294,6 +294,7 @@ function criarHandlers(config: ArquivoConfig, carreiras: Carreiras, janela: () =
     'diretoria:obter': () => clube.diretoria(carreiras.sql()),
     'diretoria:assumir': ({ sigla }) => clube.assumirClube(carreiras.sql(), sigla),
     'noticias:caixa': ({ tipo }) => noticias.caixa(carreiras.sql(), tipo ? { tipo } : {}),
+    'noticias:destaques': ({ desdeSemana }) => noticias.destaquesDoJogo(carreiras.sql(), desdeSemana),
     'noticias:lidas': ({ ids }) => {
       noticias.marcarLidas(carreiras.sql(), ids)
       return null

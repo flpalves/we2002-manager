@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { prepararCarreira } from '@core/pacote/importar'
-import { exterior, livre, pacote } from '../fixtures/pacote'
+import { exterior, livre, pacote, time } from '../fixtures/pacote'
 
 const escolha = { id: 'c', nome: 'C', tecnico: 'Felipe', time: 'AAA', semente: 1, criadaEm: 'x' }
 
@@ -11,6 +11,17 @@ describe('importação da carreira', () => {
     expect(saldo('facil', 'AAA').saldo).toBe(125_000_000)
     expect(saldo('dificil', 'AAA')).toMatchObject({ saldo: 75_000_000, orcamento_folha_mensal: 37_500_000 })
     expect(saldo('dificil', 'BBB').saldo).toBe(100_000_000)
+  })
+
+  it('escudo faltando e time sem jogadores não bloqueiam a carreira', () => {
+    const vazio = { ...time('BBB'), jogadores: [] }
+    const dados = prepararCarreira(pacote({ times: [time('AAA'), vazio], escudos: ['AAA'] }), { ...escolha, dificuldade: 'normal' })
+    expect(dados.times.map((t) => t.sigla)).toEqual(['AAA', 'BBB'])
+  })
+
+  it('o time do usuário precisa de 11 jogadores', () => {
+    const curto = { ...time('AAA'), jogadores: time('AAA').jogadores.slice(0, 10) }
+    expect(() => prepararCarreira(pacote({ times: [curto, time('BBB')] }), { ...escolha, dificuldade: 'normal' })).toThrow(/pelo menos 11/)
   })
 
   it('moral inicial padrão 60', () => {

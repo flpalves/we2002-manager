@@ -29,7 +29,7 @@ async function carregar(): Promise<void> {
     ui.avisar((e as Error).message)
   }
 }
-watch(() => [carreira.atual?.id, temporada.calendario?.passoAtual], carregar, { immediate: true })
+watch(() => [carreira.atual?.id, temporada.calendario?.passoAtual, temporada.calendario?.semanaAtual], carregar, { immediate: true })
 
 async function escolher(foco: Treino['foco']): Promise<void> {
   try {

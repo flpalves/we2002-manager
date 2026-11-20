@@ -3,7 +3,7 @@ import { ConfigAppParcialSchema, ConfigAppSchema } from './config'
 import { AparenciaSchema, CompeticaoSchema, DivisoesSchema, ExteriorSchema, JanelaTransferenciaSchema, LivresSchema, ManifestoSchema, PaisSchema, TemporadaSchema, TimeSchema } from './pacote'
 import { ElencoSchema, EscalacaoSalvaSchema, EscalacaoSchema, FichaJogadorSchema, FocoSchema, TreinoSchema } from './elenco'
 import { DiretoriaSchema, FiltrosMercadoSchema, FinancasSchema, JogadorMercadoSchema, NegociacaoDtoSchema, PropostaRecebidaSchema, PropostaSchema, ResultadoContrapropostaSchema, SituacaoMercadoSchema, TipoNegocioSchema } from './mercado'
-import { CaixaNoticiasSchema, CatalogoSchema, EventoCatalogoSchema, TipoNoticiaSchema } from './noticias'
+import { CaixaNoticiasSchema, CatalogoSchema, DestaquesSchema, EventoCatalogoSchema, TipoNoticiaSchema } from './noticias'
 import { DetalheTimeSchema, FiltroTransferenciasSchema, ListaTransferenciasSchema } from './time'
 import { PlacarManualSchema, PreJogoSchema, StatusWeSchema } from './we'
 import { AutosaveSchema, EntradaCarreiraNovaSchema, ResumoCarreiraSchema } from './carreira'
@@ -219,6 +219,8 @@ export const contratos = {
 
   // ------------------------------------------------------------ notícias
   'noticias:caixa': { entrada: z.object({ tipo: TipoNoticiaSchema.optional() }), saida: CaixaNoticiasSchema },
+  /** Destaques da volta do jogo (notícias desde a semana do jogo e propostas abertas). */
+  'noticias:destaques': { entrada: z.object({ desdeSemana: z.number().int() }), saida: DestaquesSchema },
   'noticias:lidas': { entrada: z.object({ ids: z.array(z.number().int()).nullable() }), saida: z.null() },
   'noticias:responder': { entrada: z.object({ id: z.number().int(), escolha: z.string() }), saida: CaixaNoticiasSchema },
 } as const

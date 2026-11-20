@@ -35,6 +35,13 @@ function definirFase(s: SaidaCompeticao, fase: string): void {
 function definirN(s: SaidaCompeticao, campo: 'primeiros' | 'ultimos', v: string): void {
   s[campo] = Math.max(1, Number(v) || 1)
 }
+/** Vaga pulando: quem joga estas competições na próxima temporada (ou já está no destino) é pulado. */
+function alternarPula(s: SaidaCompeticao, id: string): void {
+  const l = s.exceto_de ?? []
+  const nova = l.includes(id) ? l.filter((x) => x !== id) : [...l, id]
+  if (nova.length) s.exceto_de = nova
+  else delete s.exceto_de
+}
 function acrescentar(): void {
   saidas.value.push({ campeao: true, destino: props.destinos[0]?.id ?? '' })
 }
@@ -86,6 +93,13 @@ function tirar(i: number): void {
               <option v-for="f in fases" :key="f.id" :value="f.id">{{ f.nome }}</option>
             </select>
           </label>
+          <fieldset v-if="modoDaSaida(s) === 'primeiros' && (s.tipo ?? 'vaga') !== 'acesso' && s.tipo !== 'rebaixamento'" class="pula">
+            <legend class="we-lb">Pular quem joga na próxima temporada (ex.: Série D pulando A, B e C)</legend>
+            <label v-for="d in destinos.filter((x) => x.id !== s.destino)" :key="d.id" class="campo campo--check">
+              <input type="checkbox" :checked="s.exceto_de?.includes(d.id) ?? false" @change="alternarPula(s, d.id)" />
+              {{ d.nome }}
+            </label>
+          </fieldset>
         </template>
         <template v-if="s.por_grupo">
           <label class="campo">
@@ -153,6 +167,18 @@ function tirar(i: number): void {
 }
 .saida--apagada {
   opacity: 0.65;
+}
+.pula {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-3);
+  margin: 0;
+  padding: 0;
+  border: 0;
+  flex-basis: 100%;
+}
+.pula legend {
+  margin-bottom: var(--space-1);
 }
 .saida__tirar {
   margin-left: auto;

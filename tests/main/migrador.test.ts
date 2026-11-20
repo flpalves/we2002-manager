@@ -92,6 +92,39 @@ describe('migrar', () => {
   })
 })
 
+describe('migração 016 (nível do clube)', () => {
+  it('quem tem o orçamento padrão do porte passa a ter o padrão × fator da divisão; usuário e valores do pacote ficam', () => {
+    const { banco, db } = bancoEmMemoria()
+    const reais = lerMigracoes(arquivosReais)
+    migrar(banco, reais.filter((m) => m.versao <= 15))
+    const padrao = { pequeno: { orcamento_folha_mensal: 100_000_000, patrocinio_temporada: 600_000_000 } }
+    db.exec("INSERT INTO pais (codigo, nome, fator_valor) VALUES ('BRA', 'Brasil', 1)")
+    db.prepare('INSERT INTO regras (id, dados) VALUES (1, ?)').run(JSON.stringify({ mercado: {}, financas: {}, padrao_por_porte: padrao }))
+    db.exec(`INSERT INTO carreira (id, nome, pacote_id, pacote_versao, semente, tecnico_nome, time_usuario, temporada_atual, versao_esquema, criada_em)
+             VALUES ('c1', 'T', 'p', '1', 1, 'F', 'USU', 2026, 15, '2026-01-01')`)
+    db.exec(`INSERT INTO competicao (id, nome, tipo, definicao) VALUES
+             ('serie-c', 'Série C', 'nacional', '{"participantes":{"regra":"lista","times":["SC1"]}}'),
+             ('paulistao', 'Paulistão', 'estadual', '{"participantes":{"regra":"lista","times":["SC1","SEM","USU"]}}')`)
+    const inserir = db.prepare(`INSERT INTO time (sigla, nome, nome_curto, pais, cores, porte, formacao, estadio_nome, estadio_capacidade,
+               ingresso, custo_por_jogo, saldo, patrocinio_temporada, orcamento_folha_mensal) VALUES (?, ?, ?, ?, '[]', 'pequeno', '4-4-2A', 'E', 1, 0, 0, 77, ?, ?)`)
+    inserir.run('SC1', 'C', 'C', 'BRA', 600_000_000, 100_000_000)
+    inserir.run('SEM', 'S', 'S', 'BRA', 600_000_000, 100_000_000)
+    inserir.run('USU', 'U', 'U', 'BRA', 600_000_000, 100_000_000)
+    inserir.run('PAC', 'P', 'P', 'BRA', 400_000_000, 60_000_000) // finanças do pacote
+    migrar(banco, reais)
+    const linhas = db.prepare('SELECT sigla, saldo, patrocinio_temporada p, orcamento_folha_mensal o FROM time ORDER BY sigla').all()
+    expect(linhas).toEqual([
+      { sigla: 'PAC', saldo: 77, p: 400_000_000, o: 60_000_000 },
+      { sigla: 'SC1', saldo: 77, p: 600_000_000, o: 60_000_000 }, // Série C: folha × 0,6
+      { sigla: 'SEM', saldo: 77, p: 600_000_000, o: 40_000_000 }, // sem liga nacional: folha × 0,4
+      { sigla: 'USU', saldo: 77, p: 600_000_000, o: 100_000_000 },
+    ])
+    const regras = JSON.parse((db.prepare('SELECT dados FROM regras').get() as { dados: string }).dados)
+    expect(regras.mercado.nivel.liga['serie-a']).toBe(5)
+    expect(regras.mercado.limites_nivel['1'].geral_maximo).toBe(12)
+  })
+})
+
 describe('migração 013 (exterior)', () => {
   it('carreira antiga migra sem perder jogador, contrato nem dados das colunas antigas', () => {
     const { banco, db } = bancoEmMemoria()

@@ -2,7 +2,8 @@ import type { Regras } from '../config/padroes'
 import type { Rng } from '../rng'
 import type { Competicao, Fase } from '@shared/esquemas/pacote'
 import { montarCalendario, type Bloco } from './calendario'
-import { avancarEdicao, iniciarEdicao, regraMataMata, type EstadoEdicao, type EventoCompeticao, type UnidadeRodada } from './fases'
+import { avancarEdicao, comecarFase, iniciarEdicao, ordenarPorRanking, regraMataMata, reservarEdicao, type EstadoEdicao, type EventoCompeticao, type UnidadeRodada } from './fases'
+import { ehPorVagas, origensDasVagas, participantesPorVagas, possiveisPorVagas, tamanhoDaCompeticao } from './vagas'
 import { decidirConfronto, type RegraMataMata } from './mataMata'
 import type { Partida, Passo, Resultado, Sigla } from './tipos'
 
@@ -77,7 +78,22 @@ export function gerarTemporada(e: EntradaTemporada): EstadoTemporada {
   const edicoes: EstadoEdicao[] = []
   const planos: { competicao: string; unidades: UnidadeRodada[] }[] = []
   for (const c of e.competicoes) {
-    const participantes = e.participantes[c.id]
+    let participantes = e.participantes[c.id]
+    if (ehPorVagas(c)) {
+      // Por vagas: reserva as rodadas; os participantes saem das origens desta temporada.
+      const n = tamanhoDaCompeticao(c) ?? 0
+      const garantidos = (participantes ?? []).slice(0, n)
+      const deOrigens = possiveisPorVagas(c, e.competicoes, (id) => e.participantes[id] ?? [])
+      if (deOrigens.length && n >= 2) {
+        const possiveis = [...new Set([...garantidos, ...deOrigens])]
+        const r = reservarEdicao(c, n, garantidos, possiveis, opcoesDe(e))
+        edicoes.push(r.edicao)
+        planos.push({ competicao: c.id, unidades: r.unidades })
+        continue
+      }
+      // Nenhuma origem disputada: só os garantidos, e só se fecharem a quantidade.
+      participantes = garantidos.length === n ? garantidos : undefined
+    }
     if (!participantes || participantes.length < 2) continue
     const { edicao, unidades } = iniciarEdicao(c, participantes, opcoesDe(e), e.rng.derivar('edicao', c.id, e.temporada))
     edicoes.push(edicao)
@@ -177,7 +193,53 @@ export function concluirPasso(estado: EstadoTemporada, ctx: ContextoTemporada): 
     }
     eventos.push(...r.eventos)
   }
+  const v = definirVagas(estado, ctx, passo.indice)
+  criadas.push(...v.criadas)
+  eventos.push(...v.eventos)
   estado.passoAtual++
+  return { criadas, eventos }
+}
+
+/**
+ * Competições por vagas cujas origens já acabaram: define os participantes, sorteia a 1ª fase
+ * nas rodadas reservadas (que precisam ser depois deste passo) ou cancela a edição se as
+ * vagas não fecharem a quantidade.
+ */
+function definirVagas(estado: EstadoTemporada, ctx: ContextoTemporada, passoAtual: number): { criadas: Partida[]; eventos: EventoCompeticao[] } {
+  const criadas: Partida[] = []
+  const eventos: EventoCompeticao[] = []
+  const todas = [...ctx.competicoes.values()]
+  const edicaoDe = (competicao: string) => estado.edicoes.find((x) => x.competicao === competicao && !x.cancelada)
+  for (const edicao of estado.edicoes) {
+    if (!edicao.aguardandoVagas) continue
+    const c = ctx.competicoes.get(edicao.competicao)!
+    const origens = origensDasVagas(c, todas)
+      .map((o) => ({ competicao: o, edicao: edicaoDe(o.id) }))
+      .filter((o): o is { competicao: Competicao; edicao: EstadoEdicao } => !!o.edicao)
+    if (origens.some((o) => !o.edicao.classificacaoFinal || o.edicao.aguardandoVagas)) continue
+    const times = participantesPorVagas(c, edicao.participantes, origens, (id) => edicaoDe(id)?.participantes ?? [])
+    edicao.aguardandoVagas = false
+    edicao.participantes = times
+    if (times.length < (tamanhoDaCompeticao(c) ?? 0)) {
+      edicao.cancelada = true
+      estado.reservadas = estado.reservadas.filter((u) => u.edicao !== edicao.id)
+      eventos.push({ tipo: 'vagas_definidas', edicao: edicao.id, times, cancelada: true })
+      continue
+    }
+    const op = opcoesDe({ temporada: estado.temporada, regras: ctx.regras, ...(ctx.ranking && { ranking: ctx.ranking }), ...(ctx.paisDe && { paisDe: ctx.paisDe }) })
+    for (const u of comecarFase(edicao, c, 0, ordenarPorRanking(times, ctx.ranking), op, ctx.rng.derivar('vagas', edicao.id))) {
+      const reserva = estado.reservadas.find((x) => x.edicao === u.edicao && x.fase === u.fase && x.rodada === u.rodada && x.jogo === u.jogo)
+      if (!reserva) throw new Error(`${edicao.id}: sem rodada reservada para ${u.fase}/${u.rodada}/${u.jogo}`)
+      if (reserva.passo <= passoAtual) {
+        throw new Error(`${edicao.id}: as vagas saíram depois da 1ª rodada reservada (a janela da competição precisa começar depois das origens)`)
+      }
+      estado.reservadas = estado.reservadas.filter((x) => x !== reserva)
+      const novas = partidasDaUnidade(u, reserva.passo)
+      estado.partidas.push(...novas)
+      criadas.push(...novas)
+    }
+    eventos.push({ tipo: 'vagas_definidas', edicao: edicao.id, times, cancelada: false })
+  }
   return { criadas, eventos }
 }
 

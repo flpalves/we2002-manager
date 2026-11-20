@@ -60,7 +60,7 @@ async function carregar(): Promise<void> {
     ui.avisar((err as Error).message)
   }
 }
-watch(() => [carreira.atual?.id, temporada.calendario?.passoAtual], carregar, { immediate: true })
+watch(() => [carreira.atual?.id, temporada.calendario?.passoAtual, temporada.calendario?.semanaAtual], carregar, { immediate: true })
 
 const papeis = computed(() => esc.value?.formacoes.find((f) => f.id === formacao.value)?.papeis ?? [])
 

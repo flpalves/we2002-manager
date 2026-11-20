@@ -96,7 +96,17 @@
         "salario_mensal": 6500000,
         "ate_temporada": 2027,
         "multa": 0
-      }
+      },
+      "aparencia": {
+        "pele": 1,
+        "fisico": "G",
+        "cabelo": "m1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ava-allyson",
@@ -135,7 +145,17 @@
         "salario_mensal": 4100000,
         "ate_temporada": 2028,
         "multa": 0
-      }
+      },
+      "aparencia": {
+        "pele": 2,
+        "fisico": "G",
+        "cabelo": "m1",
+        "cor_cabelo": "A",
+        "barba": "C",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ava-reynaldo",
@@ -174,7 +194,17 @@
         "salario_mensal": 3400000,
         "ate_temporada": 2026,
         "multa": 0
-      }
+      },
+      "aparencia": {
+        "pele": 1,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "B",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ava-quaresma",
@@ -213,7 +243,17 @@
         "salario_mensal": 1700000,
         "ate_temporada": 2030,
         "multa": 0
-      }
+      },
+      "aparencia": {
+        "pele": 4,
+        "fisico": "E",
+        "cabelo": "k1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ava-joao-vitor",
@@ -252,7 +292,17 @@
         "salario_mensal": 1700000,
         "ate_temporada": 2026,
         "multa": 0
-      }
+      },
+      "aparencia": {
+        "pele": 2,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ava-ze-ricardo",
@@ -291,7 +341,17 @@
         "salario_mensal": 2800000,
         "ate_temporada": 2026,
         "multa": 0
-      }
+      },
+      "aparencia": {
+        "pele": 3,
+        "fisico": "F",
+        "cabelo": "k1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ava-l-henrique",
@@ -330,7 +390,17 @@
         "salario_mensal": 1700000,
         "ate_temporada": 2028,
         "multa": 0
-      }
+      },
+      "aparencia": {
+        "pele": 4,
+        "fisico": "F",
+        "cabelo": "k1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ava-jean-lucas",
@@ -369,7 +439,17 @@
         "salario_mensal": 7000000,
         "ate_temporada": 2028,
         "multa": 0
-      }
+      },
+      "aparencia": {
+        "pele": 1,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "B",
+        "barba": "C",
+        "cor_barba": "B",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ava-gamalho",
@@ -408,7 +488,17 @@
         "salario_mensal": 5400000,
         "ate_temporada": 2030,
         "multa": 0
-      }
+      },
+      "aparencia": {
+        "pele": 3,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ava-hyan",
@@ -447,7 +537,17 @@
         "salario_mensal": 4600000,
         "ate_temporada": 2027,
         "multa": 0
-      }
+      },
+      "aparencia": {
+        "pele": 1,
+        "fisico": "F",
+        "cabelo": "k1",
+        "cor_cabelo": "B",
+        "barba": "C",
+        "cor_barba": "B",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ava-wenderson",
@@ -486,7 +586,17 @@
         "salario_mensal": 4600000,
         "ate_temporada": 2028,
         "multa": 0
-      }
+      },
+      "aparencia": {
+        "pele": 1,
+        "fisico": "E",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "C",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ava-bruno",
@@ -525,7 +635,17 @@
         "salario_mensal": 2900000,
         "ate_temporada": 2028,
         "multa": 0
-      }
+      },
+      "aparencia": {
+        "pele": 1,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "B",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ava-g-aquino",
@@ -564,7 +684,17 @@
         "salario_mensal": 1700000,
         "ate_temporada": 2030,
         "multa": 0
-      }
+      },
+      "aparencia": {
+        "pele": 1,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "H",
+        "barba": "C",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ava-wallison",
@@ -603,7 +733,17 @@
         "salario_mensal": 1500000,
         "ate_temporada": 2029,
         "multa": 0
-      }
+      },
+      "aparencia": {
+        "pele": 3,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ava-jefferson",
@@ -642,7 +782,17 @@
         "salario_mensal": 1500000,
         "ate_temporada": 2028,
         "multa": 0
-      }
+      },
+      "aparencia": {
+        "pele": 1,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "H",
+        "barba": "C",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ava-douglas",
@@ -681,7 +831,17 @@
         "salario_mensal": 1500000,
         "ate_temporada": 2026,
         "multa": 0
-      }
+      },
+      "aparencia": {
+        "pele": 1,
+        "fisico": "E",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "C",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ava-paulovitor",
@@ -720,7 +880,17 @@
         "salario_mensal": 1500000,
         "ate_temporada": 2030,
         "multa": 0
-      }
+      },
+      "aparencia": {
+        "pele": 1,
+        "fisico": "F",
+        "cabelo": "k1",
+        "cor_cabelo": "B",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ava-d-penha",
@@ -759,7 +929,17 @@
         "salario_mensal": 2700000,
         "ate_temporada": 2029,
         "multa": 0
-      }
+      },
+      "aparencia": {
+        "pele": 2,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "B",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ava-suassuna",
@@ -798,7 +978,17 @@
         "salario_mensal": 2700000,
         "ate_temporada": 2030,
         "multa": 0
-      }
+      },
+      "aparencia": {
+        "pele": 3,
+        "fisico": "E",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ava-l-eduardo",
@@ -837,7 +1027,17 @@
         "salario_mensal": 3100000,
         "ate_temporada": 2027,
         "multa": 0
-      }
+      },
+      "aparencia": {
+        "pele": 2,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ava-marcio-v",
@@ -876,7 +1076,17 @@
         "salario_mensal": 1800000,
         "ate_temporada": 2029,
         "multa": 0
-      }
+      },
+      "aparencia": {
+        "pele": 4,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "B",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ava-cipriano",
@@ -915,7 +1125,17 @@
         "salario_mensal": 1800000,
         "ate_temporada": 2029,
         "multa": 0
-      }
+      },
+      "aparencia": {
+        "pele": 1,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "B",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ava-f-vizeu",
@@ -954,7 +1174,17 @@
         "salario_mensal": 2500000,
         "ate_temporada": 2027,
         "multa": 0
-      }
+      },
+      "aparencia": {
+        "pele": 2,
+        "fisico": "G",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ava-isaias",
@@ -993,7 +1223,17 @@
         "salario_mensal": 1500000,
         "ate_temporada": 2027,
         "multa": 0
-      }
+      },
+      "aparencia": {
+        "pele": 2,
+        "fisico": "E",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "B",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ava-rildo",
@@ -1032,7 +1272,17 @@
         "salario_mensal": 1500000,
         "ate_temporada": 2030,
         "multa": 0
-      }
+      },
+      "aparencia": {
+        "pele": 1,
+        "fisico": "E",
+        "cabelo": "i1",
+        "cor_cabelo": "B",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     }
   ]
 }

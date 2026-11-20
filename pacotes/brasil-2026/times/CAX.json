@@ -86,7 +86,17 @@
         "salario_mensal": 3900000,
         "ate_temporada": 2030,
         "multa": 0
-      }
+      },
+      "aparencia": {
+        "pele": 1,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "cax-ianson",
@@ -125,7 +135,17 @@
         "salario_mensal": 3900000,
         "ate_temporada": 2026,
         "multa": 0
-      }
+      },
+      "aparencia": {
+        "pele": 3,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "cax-mancha",
@@ -164,7 +184,17 @@
         "salario_mensal": 2900000,
         "ate_temporada": 2028,
         "multa": 0
-      }
+      },
+      "aparencia": {
+        "pele": 2,
+        "fisico": "G",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "cax-felipe-albuquerque",
@@ -203,7 +233,17 @@
         "salario_mensal": 3700000,
         "ate_temporada": 2030,
         "multa": 0
-      }
+      },
+      "aparencia": {
+        "pele": 2,
+        "fisico": "E",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "cax-roberto",
@@ -242,7 +282,17 @@
         "salario_mensal": 3600000,
         "ate_temporada": 2029,
         "multa": 0
-      }
+      },
+      "aparencia": {
+        "pele": 2,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "B",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "cax-matheus-nunes",
@@ -281,7 +331,17 @@
         "salario_mensal": 3200000,
         "ate_temporada": 2030,
         "multa": 0
-      }
+      },
+      "aparencia": {
+        "pele": 1,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "H",
+        "barba": "C",
+        "cor_barba": "C",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "cax-breno-santos",
@@ -320,7 +380,17 @@
         "salario_mensal": 3200000,
         "ate_temporada": 2030,
         "multa": 0
-      }
+      },
+      "aparencia": {
+        "pele": 1,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "cax-ravanelli",
@@ -359,7 +429,17 @@
         "salario_mensal": 2600000,
         "ate_temporada": 2029,
         "multa": 0
-      }
+      },
+      "aparencia": {
+        "pele": 1,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "B",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "cax-salatiel",
@@ -398,7 +478,17 @@
         "salario_mensal": 3300000,
         "ate_temporada": 2026,
         "multa": 0
-      }
+      },
+      "aparencia": {
+        "pele": 3,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "cax-calyson",
@@ -437,7 +527,17 @@
         "salario_mensal": 3400000,
         "ate_temporada": 2028,
         "multa": 0
-      }
+      },
+      "aparencia": {
+        "pele": 2,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "cax-gaspar",
@@ -476,7 +576,17 @@
         "salario_mensal": 3000000,
         "ate_temporada": 2028,
         "multa": 0
-      }
+      },
+      "aparencia": {
+        "pele": 4,
+        "fisico": "F",
+        "cabelo": "k1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "cax-marcelo",
@@ -515,7 +625,17 @@
         "salario_mensal": 900000,
         "ate_temporada": 2028,
         "multa": 0
-      }
+      },
+      "aparencia": {
+        "pele": 1,
+        "fisico": "G",
+        "cabelo": "i1",
+        "cor_cabelo": "B",
+        "barba": "B",
+        "cor_barba": "B",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "cax-marcelo-freitas",
@@ -554,7 +674,17 @@
         "salario_mensal": 1300000,
         "ate_temporada": 2029,
         "multa": 0
-      }
+      },
+      "aparencia": {
+        "pele": 1,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "B",
+        "barba": "B",
+        "cor_barba": "B",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "cax-jhonatan-ribeiro",
@@ -593,7 +723,17 @@
         "salario_mensal": 1300000,
         "ate_temporada": 2027,
         "multa": 0
-      }
+      },
+      "aparencia": {
+        "pele": 1,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "C",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "cax-joao-lucas",
@@ -632,7 +772,17 @@
         "salario_mensal": 1200000,
         "ate_temporada": 2030,
         "multa": 0
-      }
+      },
+      "aparencia": {
+        "pele": 3,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "cax-grigor",
@@ -671,7 +821,17 @@
         "salario_mensal": 1200000,
         "ate_temporada": 2029,
         "multa": 0
-      }
+      },
+      "aparencia": {
+        "pele": 4,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "B",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "cax-quirino",
@@ -710,7 +870,17 @@
         "salario_mensal": 1100000,
         "ate_temporada": 2030,
         "multa": 0
-      }
+      },
+      "aparencia": {
+        "pele": 2,
+        "fisico": "E",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "cax-vitor-feijao",
@@ -749,7 +919,17 @@
         "salario_mensal": 1100000,
         "ate_temporada": 2029,
         "multa": 0
-      }
+      },
+      "aparencia": {
+        "pele": 1,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "cax-vitinho",
@@ -788,7 +968,17 @@
         "salario_mensal": 1100000,
         "ate_temporada": 2030,
         "multa": 0
-      }
+      },
+      "aparencia": {
+        "pele": 3,
+        "fisico": "E",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "B",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "cax-dentinho",
@@ -827,7 +1017,17 @@
         "salario_mensal": 1000000,
         "ate_temporada": 2026,
         "multa": 0
-      }
+      },
+      "aparencia": {
+        "pele": 1,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "B",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "cax-vitor-gabriel",
@@ -866,7 +1066,17 @@
         "salario_mensal": 1000000,
         "ate_temporada": 2030,
         "multa": 0
-      }
+      },
+      "aparencia": {
+        "pele": 2,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "B",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "cax-matheus-anjos",
@@ -905,7 +1115,17 @@
         "salario_mensal": 1000000,
         "ate_temporada": 2028,
         "multa": 0
-      }
+      },
+      "aparencia": {
+        "pele": 1,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "B",
+        "barba": "C",
+        "cor_barba": "B",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "cax-felipe-rangel",
@@ -944,7 +1164,17 @@
         "salario_mensal": 1000000,
         "ate_temporada": 2029,
         "multa": 0
-      }
+      },
+      "aparencia": {
+        "pele": 1,
+        "fisico": "E",
+        "cabelo": "i1",
+        "cor_cabelo": "H",
+        "barba": "C",
+        "cor_barba": "C",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "cax-andre-dantas",
@@ -983,7 +1213,17 @@
         "salario_mensal": 900000,
         "ate_temporada": 2028,
         "multa": 0
-      }
+      },
+      "aparencia": {
+        "pele": 1,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "B",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "cax-windson",
@@ -1022,7 +1262,17 @@
         "salario_mensal": 900000,
         "ate_temporada": 2027,
         "multa": 0
-      }
+      },
+      "aparencia": {
+        "pele": 1,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "B",
+        "barba": "C",
+        "cor_barba": "B",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "cax-gabriel-toebe",
@@ -1061,7 +1311,17 @@
         "salario_mensal": 900000,
         "ate_temporada": 2026,
         "multa": 0
-      }
+      },
+      "aparencia": {
+        "pele": 1,
+        "fisico": "G",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     }
   ]
 }

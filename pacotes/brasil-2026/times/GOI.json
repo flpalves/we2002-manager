@@ -79,7 +79,17 @@
         "salario_mensal": 5700000,
         "ate_temporada": 2030,
         "multa": 0
-      }
+      },
+      "aparencia": {
+        "pele": 4,
+        "fisico": "F",
+        "cabelo": "k1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "goi-l-felipe",
@@ -118,7 +128,17 @@
         "salario_mensal": 4100000,
         "ate_temporada": 2030,
         "multa": 0
-      }
+      },
+      "aparencia": {
+        "pele": 2,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "goi-machado",
@@ -157,7 +177,17 @@
         "salario_mensal": 4500000,
         "ate_temporada": 2030,
         "multa": 0
-      }
+      },
+      "aparencia": {
+        "pele": 2,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "H",
+        "barba": "C",
+        "cor_barba": "C",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "goi-nicolas",
@@ -196,7 +226,17 @@
         "salario_mensal": 1700000,
         "ate_temporada": 2030,
         "multa": 0
-      }
+      },
+      "aparencia": {
+        "pele": 2,
+        "fisico": "F",
+        "cabelo": "k1",
+        "cor_cabelo": "H",
+        "barba": "B",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "goi-silva",
@@ -235,7 +275,17 @@
         "salario_mensal": 3000000,
         "ate_temporada": 2027,
         "multa": 0
-      }
+      },
+      "aparencia": {
+        "pele": 4,
+        "fisico": "F",
+        "cabelo": "k1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "goi-lourenco",
@@ -274,7 +324,17 @@
         "salario_mensal": 4800000,
         "ate_temporada": 2028,
         "multa": 0
-      }
+      },
+      "aparencia": {
+        "pele": 2,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "B",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "goi-l-ribeiro",
@@ -313,7 +373,17 @@
         "salario_mensal": 2500000,
         "ate_temporada": 2028,
         "multa": 0
-      }
+      },
+      "aparencia": {
+        "pele": 1,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "goi-l-lima",
@@ -352,7 +422,17 @@
         "salario_mensal": 6500000,
         "ate_temporada": 2030,
         "multa": 0
-      }
+      },
+      "aparencia": {
+        "pele": 2,
+        "fisico": "F",
+        "cabelo": "k1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "goi-kadu",
@@ -391,7 +471,17 @@
         "salario_mensal": 4700000,
         "ate_temporada": 2029,
         "multa": 0
-      }
+      },
+      "aparencia": {
+        "pele": 3,
+        "fisico": "F",
+        "cabelo": "k1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "goi-luquinhas",
@@ -430,7 +520,17 @@
         "salario_mensal": 6500000,
         "ate_temporada": 2027,
         "multa": 0
-      }
+      },
+      "aparencia": {
+        "pele": 2,
+        "fisico": "E",
+        "cabelo": "k1",
+        "cor_cabelo": "A",
+        "barba": "C",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "goi-f-clemente",
@@ -469,7 +569,17 @@
         "salario_mensal": 8500000,
         "ate_temporada": 2028,
         "multa": 0
-      }
+      },
+      "aparencia": {
+        "pele": 2,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "B",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "goi-t-rodrigue",
@@ -508,7 +618,17 @@
         "salario_mensal": 2500000,
         "ate_temporada": 2029,
         "multa": 0
-      }
+      },
+      "aparencia": {
+        "pele": 3,
+        "fisico": "F",
+        "cabelo": "k1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "goi-r-menezes",
@@ -547,7 +667,17 @@
         "salario_mensal": 2800000,
         "ate_temporada": 2027,
         "multa": 0
-      }
+      },
+      "aparencia": {
+        "pele": 4,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "goi-l-fellipe",
@@ -586,7 +716,17 @@
         "salario_mensal": 1800000,
         "ate_temporada": 2027,
         "multa": 0
-      }
+      },
+      "aparencia": {
+        "pele": 1,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "B",
+        "barba": "B",
+        "cor_barba": "B",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "goi-r-alves",
@@ -625,7 +765,17 @@
         "salario_mensal": 1500000,
         "ate_temporada": 2028,
         "multa": 0
-      }
+      },
+      "aparencia": {
+        "pele": 2,
+        "fisico": "E",
+        "cabelo": "i1",
+        "cor_cabelo": "H",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "goi-juninho",
@@ -664,7 +814,17 @@
         "salario_mensal": 1500000,
         "ate_temporada": 2029,
         "multa": 0
-      }
+      },
+      "aparencia": {
+        "pele": 1,
+        "fisico": "E",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "goi-j-alves",
@@ -703,7 +863,17 @@
         "salario_mensal": 1500000,
         "ate_temporada": 2028,
         "multa": 0
-      }
+      },
+      "aparencia": {
+        "pele": 3,
+        "fisico": "F",
+        "cabelo": "k1",
+        "cor_cabelo": "A",
+        "barba": "B",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "goi-d-cunha",
@@ -742,7 +912,17 @@
         "salario_mensal": 1500000,
         "ate_temporada": 2028,
         "multa": 0
-      }
+      },
+      "aparencia": {
+        "pele": 3,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "H",
+        "barba": "B",
+        "cor_barba": "C",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "goi-w-rato",
@@ -781,7 +961,17 @@
         "salario_mensal": 3400000,
         "ate_temporada": 2030,
         "multa": 0
-      }
+      },
+      "aparencia": {
+        "pele": 2,
+        "fisico": "E",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "B",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "goi-pedrinho",
@@ -820,7 +1010,17 @@
         "salario_mensal": 4100000,
         "ate_temporada": 2030,
         "multa": 0
-      }
+      },
+      "aparencia": {
+        "pele": 4,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "goi-halerrandr",
@@ -859,7 +1059,17 @@
         "salario_mensal": 2700000,
         "ate_temporada": 2028,
         "multa": 0
-      }
+      },
+      "aparencia": {
+        "pele": 4,
+        "fisico": "F",
+        "cabelo": "k1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "goi-cadu",
@@ -898,7 +1108,17 @@
         "salario_mensal": 1800000,
         "ate_temporada": 2027,
         "multa": 0
-      }
+      },
+      "aparencia": {
+        "pele": 4,
+        "fisico": "F",
+        "cabelo": "k1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "goi-ezequiel",
@@ -937,7 +1157,17 @@
         "salario_mensal": 2900000,
         "ate_temporada": 2028,
         "multa": 0
-      }
+      },
+      "aparencia": {
+        "pele": 4,
+        "fisico": "G",
+        "cabelo": "k1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "goi-a-ramon",
@@ -976,7 +1206,17 @@
         "salario_mensal": 2100000,
         "ate_temporada": 2026,
         "multa": 0
-      }
+      },
+      "aparencia": {
+        "pele": 2,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "C",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "goi-gege",
@@ -1015,7 +1255,17 @@
         "salario_mensal": 1500000,
         "ate_temporada": 2029,
         "multa": 0
-      }
+      },
+      "aparencia": {
+        "pele": 3,
+        "fisico": "F",
+        "cabelo": "k1",
+        "cor_cabelo": "A",
+        "barba": "B",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "goi-baldoria",
@@ -1054,7 +1304,17 @@
         "salario_mensal": 2100000,
         "ate_temporada": 2029,
         "multa": 0
-      }
+      },
+      "aparencia": {
+        "pele": 1,
+        "fisico": "G",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     }
   ]
 }

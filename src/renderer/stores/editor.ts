@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { computed, ref } from 'vue'
 import type { PacoteAberto } from '@shared/esquemas/ipc'
-import type { Competicao, Divisoes, Exterior, JanelaTransferencia, Livres, Temporada, Time } from '@shared/esquemas/pacote'
+import type { Competicao, Divisoes, Exterior, JanelaTransferencia, Livres, Posicao, Temporada, Time } from '@shared/esquemas/pacote'
 import type { EventoCatalogo } from '@shared/esquemas/noticias'
 import type { BaseKit } from '@core/we/desenharKit'
 import type { DesignKit } from '@core/we/estampas'
@@ -19,14 +19,17 @@ export const useEditor = defineStore('editor', () => {
   const ocupado = ref(false)
 
   /** Seleção do editor (a validação usa para pular até o problema). */
-  type Aba = 'times' | 'uniformes' | 'jogadores' | 'semClube' | 'competicoes' | 'divisoes' | 'temporada' | 'janelas' | 'noticias' | 'validacao'
+  type Aba = 'times' | 'uniformes' | 'jogadores' | 'competicoes' | 'divisoes' | 'temporada' | 'janelas' | 'noticias' | 'validacao'
   const aba = ref<Aba>('times')
   const timeSelecionado = ref<string | null>(null)
   const jogadorSelecionado = ref<string | null>(null)
   const competicaoSelecionada = ref<string | null>(null)
   const noticiaSelecionada = ref<string | null>(null)
-  /** Aba Sem clube: lista mostrada e jogador selecionado (id do pacote). */
-  const listaSemClube = ref<'exterior' | 'livres'>('exterior')
+  /** Aba Jogadores: de onde vêm os jogadores listados (elenco de um time, exterior ou livres). */
+  const origemJogadores = ref<'times' | 'exterior' | 'livres'>('times')
+  /** Aba Jogadores: filtro por posição principal (null = todas). */
+  const filtroPosicao = ref<Posicao | null>(null)
+  /** Jogador sem clube selecionado (id do pacote), separado do jogador do elenco. */
   const semClubeSelecionado = ref<string | null>(null)
 
   function irPara(alvo: { time?: string | undefined; jogador?: string | undefined; competicao?: string | undefined; arquivo?: string | undefined; codigo?: string | undefined }): void {
@@ -36,9 +39,10 @@ export const useEditor = defineStore('editor', () => {
       return
     }
     if (alvo.arquivo === 'exterior.json' || alvo.arquivo === 'livres.json') {
-      listaSemClube.value = alvo.arquivo === 'exterior.json' ? 'exterior' : 'livres'
+      origemJogadores.value = alvo.arquivo === 'exterior.json' ? 'exterior' : 'livres'
       if (alvo.jogador) semClubeSelecionado.value = alvo.jogador
-      aba.value = 'semClube'
+      filtroPosicao.value = null
+      aba.value = 'jogadores'
       return
     }
     if (alvo.arquivo === 'noticias.json') {
@@ -57,6 +61,8 @@ export const useEditor = defineStore('editor', () => {
     if (alvo.time) timeSelecionado.value = alvo.time
     if (alvo.jogador) {
       jogadorSelecionado.value = alvo.jogador
+      origemJogadores.value = 'times'
+      filtroPosicao.value = null
       aba.value = 'jogadores'
     } else if (alvo.time) aba.value = 'times'
   }
@@ -134,5 +140,5 @@ export const useEditor = defineStore('editor', () => {
     return p && p.escudos.includes(sigla) ? urlEscudoPacote(p.id, sigla, p.versao) : undefined
   }
 
-  return { pacotes, aberto, ocupado, erros, avisos, aba, timeSelecionado, jogadorSelecionado, competicaoSelecionada, noticiaSelecionada, listaSemClube, semClubeSelecionado, irPara, salvarSemClube, listar, abrir, baseKit, carregarBaseKit, gerarKit, salvarTime, removerTime, salvarCompeticao, salvarDivisoes, salvarJanelas, salvarTemporada, salvarNoticias, removerCompeticao, importarEscudo, escudo }
+  return { pacotes, aberto, ocupado, erros, avisos, aba, timeSelecionado, jogadorSelecionado, competicaoSelecionada, noticiaSelecionada, origemJogadores, filtroPosicao, semClubeSelecionado, irPara, salvarSemClube, listar, abrir, baseKit, carregarBaseKit, gerarKit, salvarTime, removerTime, salvarCompeticao, salvarDivisoes, salvarJanelas, salvarTemporada, salvarNoticias, removerCompeticao, importarEscudo, escudo }
 })

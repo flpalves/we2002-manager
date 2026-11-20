@@ -4,7 +4,9 @@ import type { Posicao } from '@shared/esquemas/pacote'
 import { pedidaInicial, salarioMinimoAceito } from './negociacao'
 import { janelaDaSemana } from './janelas'
 import { carencias, chegadasAlvo, grupoDe, perfilFinanceiro, porGrupo, saidasPrevistas, semEspaco, type Carencia } from './plano'
-import { importanciaNoTime, ORDEM_PORTE, salarioReferencia, type Porte } from './valor'
+import { importanciaNoTime, salarioReferencia, type Importancia, type Porte } from './valor'
+import { dentroDoLimitePorte } from './limites'
+import { aceitaDescer, agioParaDescer, compararClubes, dentroDoLimiteNivel, geralMaximoAlvo, quedaDeNivel } from './nivel'
 
 /**
  * IA de mercado (06, "IA de mercado"): na abertura de cada janela, cada clube da CPU recebe um
@@ -22,6 +24,8 @@ export interface ClubeMercado {
   usuario: boolean
   /** Fator de série do salário do clube (ligas que joga): base do salário pedido por quem vem do exterior. Padrão 1. */
   fatorSalario?: number
+  /** Nível do clube na temporada (06, "Nível do clube"); ausente: a hierarquia usa só o porte. */
+  nivel?: number
 }
 
 /** Por que o jogador está à venda (null = não está). */
@@ -47,6 +51,12 @@ export interface JogadorMercado {
   origem?: string | null
   /** Potencial (1-20): entra no salário de referência de quem vem do exterior. */
   potencial?: number
+  /** Já mudou de clube nesta temporada: a CPU não o compra de novo até a virada (evita o "pingue-pongue"). */
+  chegouNaTemporada?: boolean
+  /** Assinou pré-contrato com este clube (sigla): muda na virada. */
+  preContrato?: string | null
+  /** Emprestado: o clube de origem (volta para ele na virada). */
+  origemEmprestimo?: string | null
 }
 
 export interface Transferencia {
@@ -156,6 +166,7 @@ export class MundoMercado {
     j.ateTemporada = t.ateTemporada
     j.aVenda = null
     j.emprestado = t.tipo === 'emprestimo'
+    j.chegouNaTemporada = true
     // Quem chega do exterior deixa de ser do exterior (se sair do clube depois, vira livre).
     j.taxa = null
     j.origem = null
@@ -171,6 +182,8 @@ export interface ContextoJanela {
   principal: boolean
   /** Saídas por fim de contrato na virada, por clube (janela principal). */
   saidas: ReadonlyMap<string, number>
+  /** Clubes que jogam alguma competição na temporada (ausente: todos). Os outros não vão ao mercado. */
+  ativos?: ReadonlySet<string>
 }
 
 /** Lista de venda de um clube da CPU: quem ficou sem espaço (jovens vão para empréstimo). */
@@ -216,7 +229,7 @@ export function abrirJanela(m: MundoMercado, ctx: ContextoJanela): void {
   const ia = regras.mercado.ia
   m.planos.clear()
   m.janelaPrincipal = ctx.principal
-  const clubes = [...m.clubes.values()].filter((c) => !c.usuario).sort((a, b) => a.sigla.localeCompare(b.sigla))
+  const clubes = [...m.clubes.values()].filter((c) => !c.usuario && (!ctx.ativos || ctx.ativos.has(c.sigla))).sort((a, b) => a.sigla.localeCompare(b.sigla))
   for (const c of clubes) {
     const elenco = m.elenco(c.sigla)
     // A lista da CPU é refeita a cada janela (a do usuário fica como ele deixou).
@@ -255,12 +268,14 @@ export interface ContextoIa {
   datasRestantes: number
 }
 
-/** Pedida do vendedor da CPU: importância e porte; à venda tem desconto (maior se ele está em crise). */
-function pedidaPara(m: MundoMercado, j: JogadorMercado, comprador: ClubeMercado, regras: Regras): number {
+/** Pedida do vendedor da CPU: importância e patamar; à venda tem desconto (maior se ele está em crise). */
+function pedidaPara(m: MundoMercado, j: JogadorMercado, comprador: ClubeMercado, importancia: Importancia, regras: Regras): number {
   if (!j.time) return 0
   const vendedor = m.clubes.get(j.time)!
-  const gerais = m.elenco(j.time).map((x) => x.geral)
-  const p = pedidaInicial({ valor: j.valor, importancia: importanciaNoTime(j.geral, gerais, regras), porteVendedor: vendedor.porte, porteComprador: comprador.porte }, regras)
+  const p = pedidaInicial(
+    { valor: j.valor, importancia, porteVendedor: vendedor.porte, porteComprador: comprador.porte, nivelVendedor: vendedor.nivel, nivelComprador: comprador.nivel },
+    regras,
+  )
   const crise = m.planos.get(vendedor.sigla)?.perfil === 'crise' || vendedor.saldo < 0
   const desconto = j.aVenda ? (crise ? regras.mercado.ia.desconto_crise : regras.mercado.ia.desconto_a_venda) : crise ? 0.85 : 1
   return Math.round(p * desconto)
@@ -291,12 +306,26 @@ function melhorAlvo(m: MundoMercado, comprador: ClubeMercado, plano: PlanoClube,
   const folha = m.folha(comprador.sigla)
   const crise = plano.perfil === 'crise'
   const verbaReferencia = Math.max(plano.verba, comprador.orcamentoFolha)
+  // Mira realista: até a média dos titulares do comprador + margem (time de baixo não vai atrás de craque).
+  const meus = m.elenco(comprador.sigla).sort((a, b) => b.geral - a.geral).slice(0, mr.titulares)
+  const teto = geralMaximoAlvo(meus.reduce((a, x) => a + x.geral, 0) / Math.max(1, meus.length), regras)
+  const gerais = new Map<string, number[]>()
+  const geraisDe = (sigla: string): number[] => {
+    let g = gerais.get(sigla)
+    if (!g) gerais.set(sigla, (g = m.elenco(sigla).map((x) => x.geral)))
+    return g
+  }
   let melhor: Candidato | null = null
   for (const j of m.jogadores.values()) {
-    if (j.time === comprador.sigla || j.geral <= c.referencia || j.emprestado) continue
+    // Quem já mudou de clube na temporada não é revendido pela CPU (livre ou não).
+    if (j.time === comprador.sigla || j.geral <= c.referencia || j.emprestado || j.chegouNaTemporada || j.preContrato) continue
+    if (j.geral > teto) continue
     if (grupoDe(j.posicao, regras) !== c.grupo) continue
     let tipo: Transferencia['tipo'] = j.taxa != null ? 'exterior' : 'livre'
     let vendedorPorte: Porte = comprador.porte
+    let vendedorNivel: number | undefined = comprador.nivel
+    let importancia: Importancia = 'encostado'
+    let agio = 1
     // Exterior: taxa fixa à vista; clube em crise não compra de fora (06).
     if (tipo === 'exterior' && crise) continue
     if (j.time) {
@@ -304,20 +333,49 @@ function melhorAlvo(m: MundoMercado, comprador: ClubeMercado, plano: PlanoClube,
       if (!vendedor || vendedor.usuario) continue // jogador do usuário: só por proposta
       if (m.elenco(j.time).length <= mr.elenco_minimo) continue
       vendedorPorte = vendedor.porte
-      // Fora da lista de venda: de porte igual ou menor, com pequena chance para cima.
-      if (!j.aVenda && ORDEM_PORTE[vendedor.porte] > ORDEM_PORTE[comprador.porte] && !podeSubir) continue
+      vendedorNivel = vendedor.nivel
+      // Fora da lista de venda: de patamar (nível, depois porte) igual ou menor, com pequena chance para cima.
+      if (!j.aVenda && compararClubes(vendedor, comprador) > 0 && !podeSubir) continue
       tipo = j.aVenda === 'emprestimo' ? 'emprestimo' : 'compra'
       // Em crise: só livres e empréstimos.
       if (crise && tipo === 'compra') continue
+      importancia = importanciaNoTime(j.geral, geraisDe(j.time), regras)
+      const queda = quedaDeNivel(vendedor.nivel, comprador.nivel)
+      // Vendedor: titular fora da lista não sai para clube de nível menor; reserva sai com ágio.
+      const a = agioParaDescer(importancia, !!j.aVenda, queda, regras)
+      if (a === null) continue
+      agio = a
+      // Jogador: titular/reserva jovem não aceita cair muitos níveis (empréstimo é outra conversa).
+      if (tipo === 'compra' && !aceitaDescer({ idade: j.idade, importancia }, queda, regras)) continue
     }
     const preco =
-      tipo === 'livre' ? 0 : tipo === 'exterior' ? (j.taxa ?? 0) : tipo === 'emprestimo' ? Math.round(j.valor * mr.taxa_emprestimo) : pedidaPara(m, j, comprador, regras)
+      tipo === 'livre'
+        ? 0
+        : tipo === 'exterior'
+          ? (j.taxa ?? 0)
+          : tipo === 'emprestimo'
+            ? Math.round(j.valor * mr.taxa_emprestimo)
+            : Math.round(pedidaPara(m, j, comprador, importancia, regras) * agio)
     if (preco > plano.verba) continue
-    const salario = tipo === 'exterior' ? salarioDoExterior(j, comprador, regras) : salarioMinimoAceito(
-      { salarioAtual: j.salario, mudaDeClube: true, porteAtual: vendedorPorte, porteComprador: comprador.porte, moral: j.moral, salarioReferencia: j.salario },
-      regras,
-    )
+    const salario =
+      tipo === 'exterior'
+        ? salarioDoExterior(j, comprador, regras)
+        : salarioMinimoAceito(
+            {
+              salarioAtual: j.salario,
+              mudaDeClube: true,
+              porteAtual: vendedorPorte,
+              porteComprador: comprador.porte,
+              moral: j.moral,
+              salarioReferencia: j.salario,
+              nivelAtual: vendedorNivel,
+              nivelComprador: comprador.nivel,
+            },
+            regras,
+          )
     if (folha + salario > plano.tetoFolha) continue
+    if (!dentroDoLimitePorte(comprador.porte, salario, j.geral, regras)) continue
+    if (!dentroDoLimiteNivel(comprador.nivel, salario, j.geral, regras)) continue
     const custo = preco + salario * ia.meses_custo_salario
     const ganho = j.geral - c.referencia
     const pontos =
@@ -426,6 +484,7 @@ function interesses(m: MundoMercado, regras: Regras, temporada: number): Interes
   if (!usuario) return []
   const meus = m.elenco(usuario.sigla).filter((j) => !j.emprestado)
   if (meus.length <= regras.mercado.elenco_minimo) return []
+  const geraisUsuario = m.elenco(usuario.sigla).map((j) => j.geral)
   const p = regras.mercado.ia.propostas
   const lista: Interesse[] = []
   const clubes = [...m.clubes.values()].filter((c) => !c.usuario).sort((a, b) => a.sigla.localeCompare(b.sigla))
@@ -438,7 +497,10 @@ function interesses(m: MundoMercado, regras: Regras, temporada: number): Interes
     const grupos = porGrupo(elenco, regras)
     const titulares = [...elenco].sort((a, b) => b.geral - a.geral).slice(0, regras.mercado.titulares)
     const mediaTitulares = titulares.reduce((a, j) => a + j.geral, 0) / Math.max(1, titulares.length)
+    const queda = quedaDeNivel(usuario.nivel, clube.nivel)
     for (const j of meus) {
+      // O jogador do usuário não aceita cair muitos níveis (titular/reserva jovem): o clube nem tenta.
+      if (queda && !aceitaDescer({ idade: j.idade, importancia: importanciaNoTime(j.geral, geraisUsuario, regras) }, queda, regras)) continue
       const grupo = grupoDe(j.posicao, regras)
       const referencia = faltas.get(grupo)
       const melhorDoGrupo = grupos.get(grupo)![0]?.geral ?? 0
@@ -451,7 +513,7 @@ function interesses(m: MundoMercado, regras: Regras, temporada: number): Interes
       if (j.aVenda) peso *= p.peso_a_venda
       if (j.ateTemporada <= temporada) peso *= p.peso_contrato_acabando
       if (j.idade <= p.idade_jovem) peso *= p.peso_jovem
-      if (ORDEM_PORTE[clube.porte] < ORDEM_PORTE[usuario.porte]) peso *= regras.mercado.chance_porte_maior * 3
+      if (compararClubes(clube, usuario) < 0) peso *= regras.mercado.chance_porte_maior * 3
       lista.push({ clube, plano, jogador: j, peso })
     }
   }

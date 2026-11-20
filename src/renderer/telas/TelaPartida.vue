@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import TimeDaCarreira from '../componentes/TimeDaCarreira.vue'
+import PainelDestaques from '../componentes/PainelDestaques.vue'
 import { computed, ref, watch } from 'vue'
 import { RouterLink, useRoute, useRouter } from 'vue-router'
 import type { Sumula } from '@shared/esquemas/temporada'
@@ -20,6 +21,9 @@ const router = useRouter()
 const temporada = useTemporada()
 const ui = useUi()
 const s = ref<Sumula | null>(null)
+/** Veio direto do jogo do usuário: mostra os destaques e o Voltar leva ao Início. */
+const doJogo = computed(() => rota.query['destaques'] === '1')
+const voltar = () => (doJogo.value ? void router.push({ name: 'inicio' }) : router.back())
 
 useTela()
 
@@ -87,8 +91,12 @@ const penaltis = computed(() => {
           <RouterLink class="nome nome--link" :to="{ name: 'time', params: { sigla: s.jogo.visitante } }">{{ temporada.nome(s.jogo.visitante) }}</RouterLink>
         </div>
       </div>
-      <div class="acoes"><WeBotao icone="voltar" @click="router.back()">Voltar</WeBotao></div>
+      <div class="acoes">
+        <WeBotao :icone="doJogo ? 'inicio' : 'voltar'" @click="voltar">{{ doJogo ? 'Ir para o Início' : 'Voltar' }}</WeBotao>
+      </div>
     </WePainel>
+
+    <PainelDestaques v-if="doJogo" :desde-semana="s.jogo.semana" />
 
     <div class="grade">
       <WePainel titulo="Lances" sem-corpo>

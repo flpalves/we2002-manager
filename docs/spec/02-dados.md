@@ -16,7 +16,10 @@ pacotes/<id>/
   temporada.json            # ordem da temporada: blocos por competição (estaduais, séries, copas, continentais)
   divisoes.json             # escada de acesso e rebaixamento entre as séries (opcional; ver 03-competicoes-calendario.md)
   times/<SIGLA>.json        # um arquivo por time (formato abaixo)
-  competicoes/<id>.json     # definição pelo motor de fases (ver 03-competicoes-calendario.md)
+  competicoes/<id>.json     # definição pelo motor de fases (ver 03-competicoes-calendario.md); estaduais podem ter
+                            # "segunda_divisao" (fantasma, sorteio de quem sobe) e saídas com "exceto_de" (vaga pulando,
+                            # ex.: Série D); "participantes.por_vagas" monta a lista no ano pelas vagas (Série D);
+                            # "pula_quem_joga" (no destino) pula, nas vagas, quem joga outras competições
   noticias.json             # catálogo de eventos (ver 09-noticias-eventos.md)
   exterior.json             # disponíveis do exterior: jogadores sem clube no jogo, com taxa fixa (opcional; ver 06)
   livres.json               # livres iniciais (opcional; mesmo formato, sem origem e taxa)
@@ -99,7 +102,10 @@ Jogadores que começam a carreira **sem clube**. Mesmo formato do jogador do tim
 
 ### Validação do pacote (painel "Validação" do editor)
 
-- **Erros** (bloqueiam criar carreira): escudo PNG faltando; time sem 23 jogadores convocáveis com pelo menos 2 GK; competição com número de times diferente do que o formato pede; time referenciado que não existe; camisa repetida no mesmo time; `nome_we` vazio.
+- **Erros** (bloqueiam criar carreira): competição com número de times diferente do que o formato pede; time referenciado que não existe; camisa repetida no mesmo time; `nome_we` vazio.
+- **Avisos que não bloqueiam** (decisão de 14/11/2026, para começar a carreira com o pacote ainda em obra): escudo PNG faltando (a interface usa o escudo provisório, sigla nas cores do clube); time sem 23 convocáveis ou sem 2 GK. Time com menos de 11 jogadores perde por **W.O. (3 × 0)** nos jogos simulados, sem minutos, cartões nem lesões; se o jogo fecha um mata-mata empatado no agregado, o time presente (ou o mandante, se os dois faltarem) passa nos pênaltis. O time do usuário precisa de pelo menos 11 jogadores para a carreira ser criada, e um jogo contra time sem 11 não vai ao WE (simule).
+- **Competições** (03, "Segunda divisão fantasma" e "Competições por vagas"): erro se `segunda_divisao` estiver fora de estadual/regional por lista, com troca do tamanho do estadual ou maior, fase/grupo do critério inválido ou time citado inexistente; erro se `exceto_de` vier em últimos/por grupo ou citar competição inexistente; `pula_quem_joga` citando competição inexistente ou a própria; competição `por_vagas` sem `quantidade`, com garantidos demais ou com janela que não começa depois das origens. Avisos: menos clubes que podem subir do que a troca; vaga para lista que não é por vagas (sem efeito); competição por vagas sem origem, com origens pequenas demais ou com vagas que não fecham (o resto vai para os próximos colocados).
+- **Ensaio da 1ª temporada** (erro): o validador monta o calendário da 1ª temporada como a criação da carreira (`src/core/pacote/ensaio.ts`, semente fixa) e aponta no editor o que antes só aparecia ao criar a carreira: rodada que não cabe na janela do `temporada.json` (`calendario_invalido`) ou fase que não dá para montar (`temporada_invalida`). Só roda se não houver erro de competição, `temporada.json` ou `divisoes.json` (senão repetiria o mesmo problema). As rodadas reservadas de uma competição por vagas não desviam de quem não pode entrar (quem joga uma competição pulada).
 - **Avisos**: nome com mais de 10 caracteres (será cortado); kit de goleiro faltando; finanças vazias (usa padrão por porte); jogador sem posição secundária.
 
 ## Banco da carreira (`carreira.sqlite`)

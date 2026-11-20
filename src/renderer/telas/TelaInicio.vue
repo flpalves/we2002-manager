@@ -62,7 +62,7 @@ async function carregarTabela(): Promise<void> {
 }
 
 watch(
-  () => [carreira.atual?.id, temporada.calendario?.passoAtual, carreira.noticias?.pendentes],
+  () => [carreira.atual?.id, temporada.calendario?.passoAtual, temporada.calendario?.semanaAtual, carreira.noticias?.pendentes],
   async () => {
     if (!carreira.atual) return
     try {

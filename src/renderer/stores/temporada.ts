@@ -17,11 +17,15 @@ export const useTemporada = defineStore('temporada', () => {
     return c.passos.find((p) => p.indice >= c.passoAtual && p.jogo && !p.jogo.placar)?.jogo ?? null
   })
 
-  /** O jogo do usuário é a data atual (ainda sem resultado): o CONTINUAR abre o pré-jogo. */
+  /**
+   * O jogo do usuário é a data atual e o tempo já chegou à semana dele (ainda sem resultado):
+   * o CONTINUAR abre o pré-jogo.
+   */
   const jogoNaDataAtual = computed<Jogo | null>(() => {
     const c = calendario.value
     if (!c || c.encerrada) return null
-    const j = c.passos.find((p) => p.indice === c.passoAtual)?.jogo
+    const p = c.passos.find((x) => x.indice === c.passoAtual)
+    const j = p && p.semana <= c.semanaAtual ? p.jogo : null
     return j && !j.placar ? j : null
   })
 

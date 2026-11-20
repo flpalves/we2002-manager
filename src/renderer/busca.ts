@@ -38,3 +38,23 @@ export function filtrarTimes<T extends TimeBuscavel>(times: readonly T[], termo:
   })
   return pontuados.sort((a, b) => a.nota - b.nota || a.ordem - b.ordem).map((p) => p.time)
 }
+
+export interface JogadorBuscavel {
+  nome: string
+  nome_we: string
+  posicao: string
+}
+
+/**
+ * Lista de jogadores do editor: filtra pela posição principal (null = todas) e pelo termo
+ * (todas as palavras, sem acento, no nome ou no nome do WE). Mantém a ordem da lista.
+ */
+export function filtrarJogadores<T extends JogadorBuscavel>(jogadores: readonly T[], termo: string, posicao: string | null): T[] {
+  const palavras = normalizarBusca(termo).split(' ').filter(Boolean)
+  return jogadores.filter((j) => {
+    if (posicao && j.posicao !== posicao) return false
+    if (!palavras.length) return true
+    const texto = `${normalizarBusca(j.nome)} ${normalizarBusca(j.nome_we)}`
+    return palavras.every((p) => texto.includes(p))
+  })
+}

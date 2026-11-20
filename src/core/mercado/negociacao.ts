@@ -1,5 +1,6 @@
 import type { Regras } from '../config/padroes'
-import { ORDEM_PORTE, type Importancia, type Porte } from './valor'
+import { compararClubes, fatorQueda, quedaDeNivel } from './nivel'
+import type { Importancia, Porte } from './valor'
 
 /**
  * Negociação em duas etapas (06-mercado): primeiro o clube (valor), depois o jogador
@@ -7,7 +8,7 @@ import { ORDEM_PORTE, type Importancia, type Porte } from './valor'
  * negociação e a resposta.
  */
 
-export type TipoNegocio = 'compra' | 'emprestimo' | 'livre' | 'renovacao' | 'multa' | 'exterior'
+export type TipoNegocio = 'compra' | 'emprestimo' | 'livre' | 'renovacao' | 'multa' | 'exterior' | 'pre_contrato'
 export type Etapa = 'clube' | 'jogador' | 'concluida' | 'encerrada'
 
 export interface Movimento {
@@ -38,12 +39,16 @@ export interface ContextoPedida {
   importancia: Importancia
   porteVendedor: Porte
   porteComprador: Porte
+  /** Nível dos clubes (06, "Nível do clube"); ausente: compara só o porte. */
+  nivelVendedor?: number
+  nivelComprador?: number
 }
 
-/** Pedida inicial do clube vendedor: valor × importância × porte (pequeno vendendo para grande +10%). */
+/** Pedida inicial do clube vendedor: valor × importância × patamar (clube de baixo vendendo para o de cima +10%). */
 export function pedidaInicial(c: ContextoPedida, regras: Regras): number {
   const m = regras.mercado
-  const porte = ORDEM_PORTE[c.porteVendedor] < ORDEM_PORTE[c.porteComprador] ? m.porte_vendedor_menor : 1
+  const abaixo = compararClubes({ porte: c.porteVendedor, nivel: c.nivelVendedor }, { porte: c.porteComprador, nivel: c.nivelComprador }) < 0
+  const porte = abaixo ? m.porte_vendedor_menor : 1
   return Math.round(c.valor * m.importancia[c.importancia] * porte)
 }
 
@@ -56,17 +61,23 @@ export interface ContextoSalario {
   /** 0-100: moral alta aceita um pouco menos. */
   moral: number
   salarioReferencia: number
+  /** Nível do clube atual e do comprador (06, "Nível do clube"); ausente: compara só o porte. */
+  nivelAtual?: number
+  nivelComprador?: number
 }
 
-/** Salário mínimo que o jogador aceita. */
+/** Salário mínimo que o jogador aceita (descer de nível pede mais, por nível). */
 export function salarioMinimoAceito(c: ContextoSalario, regras: Regras): number {
   const m = regras.mercado
   const base = Math.max(c.salarioAtual, c.mudaDeClube ? 0 : c.salarioReferencia * 0.8)
   const mudanca = c.mudaDeClube ? m.jogador_mudanca : 1
-  const dif = ORDEM_PORTE[c.porteComprador] - ORDEM_PORTE[c.porteAtual]
-  const porte = dif > 0 ? m.jogador_porte_maior : dif < 0 ? m.jogador_porte_menor : 1
+  const dif = compararClubes({ porte: c.porteComprador, nivel: c.nivelComprador }, { porte: c.porteAtual, nivel: c.nivelAtual })
+  // Descer de nível substitui o fator de porte menor (não acumula): × (1 + salario_por_nivel) por nível.
+  const niveis = c.mudaDeClube ? quedaDeNivel(c.nivelAtual, c.nivelComprador) : 0
+  const porte = dif > 0 ? m.jogador_porte_maior : dif < 0 && !niveis ? m.jogador_porte_menor : 1
+  const queda = fatorQueda(niveis, regras)
   const moral = 1 + 0.1 * ((50 - c.moral) / 50)
-  return Math.round(Math.max(base, regras.mercado.salario_minimo) * mudanca * porte * moral)
+  return Math.round(Math.max(base, regras.mercado.salario_minimo) * mudanca * porte * queda * moral)
 }
 
 /**
@@ -75,7 +86,8 @@ export function salarioMinimoAceito(c: ContextoSalario, regras: Regras): number 
  * vem acordada e a negociação começa no jogador.
  */
 export function iniciarNegociacao(tipo: TipoNegocio, pedida: number, salarioMinimo: number): Negociacao {
-  const semClube = tipo === 'livre' || tipo === 'renovacao' || tipo === 'exterior'
+  // Pré-contrato: o contrato atual termina, o clube não entra na conversa.
+  const semClube = tipo === 'livre' || tipo === 'renovacao' || tipo === 'exterior' || tipo === 'pre_contrato'
   return {
     tipo,
     etapa: semClube ? 'jogador' : 'clube',

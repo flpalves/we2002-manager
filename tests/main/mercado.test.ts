@@ -7,7 +7,7 @@ import { buscar, contrapropor, definirAVenda, negociacao, propor, propostas, res
 import { assumirClube, definirIngresso, diretoria, financas } from '../../src/main/carreira/clube'
 import { continuar } from '../../src/main/carreira/temporada'
 import type { Sql } from '../../src/main/db/sql'
-import { avancar } from '../helpers/avancar'
+import { avancar, continuarAtePreJogo } from '../helpers/avancar'
 import { abrirNodeSqlite } from '../helpers/sqlite'
 import { exterior, pacote as fixture, time } from '../fixtures/pacote'
 import { escreverPacote } from '../helpers/pacote'
@@ -203,7 +203,7 @@ describe('mercado, finanças e diretoria do usuário (serviço + SQLite)', () =>
     expect(nova).toMatchObject({ demitido: false, confianca: 60 })
     expect(situacao(sql).movimentos).toBe(5)
     expect(sql.get<{ time_usuario: string }>('SELECT time_usuario FROM carreira')?.time_usuario).toBe('CCC')
-    expect(continuar(sql).preJogo).not.toBeNull()
+    expect(continuarAtePreJogo(sql).preJogo).not.toBeNull()
   })
 })
 

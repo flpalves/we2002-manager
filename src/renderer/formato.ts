@@ -42,5 +42,5 @@ export function ordenarElenco<T extends { posicao: string; geral: number; condic
   return lista.sort((a, b) => a.idade - b.idade)
 }
 
-const TIPO_TRANSFERENCIA: Record<string, string> = { compra: 'Compra', venda: 'Venda', emprestimo: 'Empréstimo', livre: 'Sem clube', multa: 'Multa rescisória', renovacao: 'Renovação', exterior: 'Do exterior' }
+const TIPO_TRANSFERENCIA: Record<string, string> = { compra: 'Compra', venda: 'Venda', emprestimo: 'Empréstimo', livre: 'Sem clube', multa: 'Multa rescisória', renovacao: 'Renovação', exterior: 'Do exterior', pre_contrato: 'Pré-contrato' }
 export const nomeTipoTransferencia = (t: string) => TIPO_TRANSFERENCIA[t] ?? t

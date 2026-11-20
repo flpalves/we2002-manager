@@ -11,8 +11,14 @@ import {
   resumirFases,
   trocarFormato,
   trocarModoSaida,
+  vagasDaOrigem,
+  definirVagasDaOrigem,
+  excetoPadrao,
+  puloDaOrigem,
+  tirarPuloDaOrigem,
 } from '@core/pacote/editorFases'
 import { problemaDasFases } from '@core/pacote/validar'
+import { tamanhoDaCompeticao } from '@core/competicoes/vagas'
 import { CompeticaoSchema, type Competicao, type Fase } from '@shared/esquemas/pacote'
 
 const serieC = (): Competicao => ({
@@ -144,6 +150,14 @@ describe('saídas', () => {
     expect(trocarModoSaida(s, 'posicoes', c)).toEqual({ posicoes: '1-4', destino: 'copa', tipo: 'vaga' })
   })
 
+  it('vaga pulando: frase e o modo "primeiros" guarda as competições puladas', () => {
+    const nome = (id: string) => ({ 'serie-c': 'Série C', 'serie-d': 'Série D' })[id] ?? id
+    const s = { primeiros: 2, destino: 'serie-d', exceto_de: ['serie-c'] }
+    expect(descreverSaida(s, c, nome)).toBe('Os 2 melhores na classificação final, pulando quem joga Série C na próxima temporada ou já está em Série D, vão para Série D (vaga).')
+    expect(trocarModoSaida({ ...s, primeiros: 3 }, 'primeiros', c)).toEqual({ primeiros: 3, exceto_de: ['serie-c'], destino: 'serie-d' })
+    expect(trocarModoSaida(s, 'ultimos', c)).toEqual({ ultimos: 2, destino: 'serie-d' })
+  })
+
   it('lê posições', () => {
     expect(lerPosicoes('1-4')).toEqual([1, 4])
     expect(lerPosicoes(' 3 ')).toEqual([3, 3])
@@ -162,9 +176,54 @@ describe('pacote brasil-2026', () => {
     const pasta = 'pacotes/brasil-2026/competicoes'
     for (const arq of readdirSync(pasta)) {
       const c = CompeticaoSchema.parse(JSON.parse(readFileSync(`${pasta}/${arq}`, 'utf-8')))
-      const n = c.participantes.regra === 'lista' ? c.participantes.times.length : (c.participantes.quantidade ?? null)
+      const n = tamanhoDaCompeticao(c)
       expect(encadear(c.fases, n), arq).toEqual(c.fases)
       expect(resumirFases(c, n).every((r) => !r.problema), arq).toBe(true)
     }
+  })
+})
+
+describe('vagas de uma competição por vagas', () => {
+  const est: Competicao = {
+    id: 'carioca',
+    nome: 'Cariocão',
+    tipo: 'estadual',
+    participantes: { regra: 'lista', times: [] },
+    fases: [{ id: 'liga', nome: 'Liga', formato: 'pontos_corridos', pontos_corridos: { turnos: 1 } }],
+    saidas: [
+      { campeao: true, destino: 'copa' },
+      { posicoes: '1-2', destino: 'serie-d' },
+    ],
+  }
+
+  it('conta as vagas e troca pelas "primeiros N pulando", sem mexer nas outras saídas', () => {
+    expect(vagasDaOrigem(est, 'serie-d')).toBe(2)
+    const r = definirVagasDaOrigem(est, 'serie-d', 3)
+    expect(r.saidas).toEqual([{ campeao: true, destino: 'copa' }, { primeiros: 3, destino: 'serie-d' }])
+    expect(vagasDaOrigem(r, 'serie-d')).toBe(3)
+    // Mantém o exceto_de de uma vaga "primeiros" que já existia; 0 tira a vaga.
+    const comPulo = { ...est, saidas: [{ primeiros: 2, destino: 'serie-d', exceto_de: ['serie-a'] }] }
+    expect(definirVagasDaOrigem(comPulo, 'serie-d', 4).saidas).toEqual([{ primeiros: 4, destino: 'serie-d', exceto_de: ['serie-a'] }])
+    expect(definirVagasDaOrigem(r, 'serie-d', 0).saidas).toEqual([{ campeao: true, destino: 'copa' }])
+    expect(definirVagasDaOrigem({ ...est, saidas: [{ primeiros: 1, destino: 'serie-d' }] }, 'serie-d', 0).saidas).toBeUndefined()
+  })
+
+  it('o pulo da origem pode passar para o destino', () => {
+    const o = { ...est, saidas: [{ campeao: true, destino: 'copa', exceto_de: ['x'] }, { primeiros: 2, destino: 'serie-d', exceto_de: ['serie-a', 'serie-b'] }] }
+    expect(puloDaOrigem(o, 'serie-d')).toEqual(['serie-a', 'serie-b'])
+    expect(tirarPuloDaOrigem(o, 'serie-d').saidas).toEqual([{ campeao: true, destino: 'copa', exceto_de: ['x'] }, { primeiros: 2, destino: 'serie-d' }])
+  })
+
+  it('descreve o pulo em campeão e posições', () => {
+    const s = { posicoes: '7-12', destino: 'sula', exceto_de: ['liberta'] }
+    expect(descreverSaida(s, est, (id) => ({ sula: 'Sul-Americana', liberta: 'Libertadores' })[id] ?? id)).toBe(
+      'Do 7º ao 12º vão para Sul-Americana (vaga) (pulando quem joga Libertadores; a vaga desce).',
+    )
+    expect(trocarModoSaida(s, 'campeao', est)).toEqual({ campeao: true, exceto_de: ['liberta'], destino: 'sula' })
+  })
+
+  it('pula por padrão as nacionais por lista que não são por vagas', () => {
+    const nac = (id: string, por_vagas = false): Competicao => ({ ...est, id, tipo: 'nacional', participantes: { regra: 'lista', times: [], ...(por_vagas && { por_vagas }) } })
+    expect(excetoPadrao([nac('serie-a'), nac('serie-c'), nac('serie-d', true), est], 'serie-d')).toEqual(['serie-a', 'serie-c'])
   })
 })

@@ -1,5 +1,5 @@
 import type { Rng } from '../rng'
-import type { Competicao, Fase } from '@shared/esquemas/pacote'
+import type { Competicao, Fase, SaidaCompeticao } from '@shared/esquemas/pacote'
 import { quantidadeRodadas, todosContraTodos, type Confronto } from './rodadas'
 import { decidirConfronto, definirMando, emparelhar, type RegraMataMata } from './mataMata'
 import { sortearGrupos } from './sorteio'
@@ -39,6 +39,13 @@ export interface EstadoEdicao {
   campeao: Sigla | null
   /** Classificação final da competição (campeão primeiro), quando encerrada. */
   classificacaoFinal: Sigla[] | null
+  /**
+   * Competição por vagas (`participantes.por_vagas`) esperando as origens acabarem: as rodadas
+   * estão reservadas e `participantes` tem só os garantidos.
+   */
+  aguardandoVagas?: boolean
+  /** Não foi disputada: as vagas não fecharam a quantidade (as reservas foram liberadas). */
+  cancelada?: boolean
 }
 
 /** Uma unidade do calendário: uma rodada (ou um jogo de ida/volta) de uma fase. */
@@ -130,7 +137,30 @@ export function iniciarEdicao(c: Competicao, participantes: readonly Sigla[], op
   return { edicao, unidades }
 }
 
-function ordenarPorRanking(times: readonly Sigla[], ranking?: readonly Sigla[]): Sigla[] {
+/**
+ * Edição de uma competição por vagas, ainda sem os participantes: reserva no calendário todas
+ * as rodadas para `n` times (com `possiveis` = quem pode entrar) e guarda os garantidos.
+ */
+export function reservarEdicao(c: Competicao, n: number, garantidos: readonly Sigla[], possiveis: readonly Sigla[], op: OpcoesEdicao): { edicao: EstadoEdicao; unidades: UnidadeRodada[] } {
+  const id = idEdicao(c.id, op.temporada)
+  const tamanhos = tamanhosDasFases(c, n)
+  const edicao: EstadoEdicao = {
+    id,
+    competicao: c.id,
+    temporada: op.temporada,
+    participantes: [...garantidos],
+    fases: c.fases.map((f) => ({ id: f.id, participantes: null, grupos: null, classificados: null, eliminados: [], encerrada: false })),
+    campeao: null,
+    classificacaoFinal: null,
+    aguardandoVagas: true,
+  }
+  const unidades: UnidadeRodada[] = c.fases.flatMap((f, i) =>
+    planoReservado(f, tamanhos[i] as number, i === c.fases.length - 1).map((u) => ({ ...u, edicao: id, possiveis: [...possiveis] })),
+  )
+  return { edicao, unidades }
+}
+
+export function ordenarPorRanking(times: readonly Sigla[], ranking?: readonly Sigla[]): Sigla[] {
   if (!ranking) return [...times]
   const pos = (t: Sigla) => {
     const i = ranking.indexOf(t)
@@ -215,6 +245,8 @@ export interface ContextoAvanco {
 
 export type EventoCompeticao =
   | { tipo: 'fase_encerrada'; edicao: string; fase: string; classificados: Sigla[] }
+  /** Competição por vagas: participantes definidos (ou cancelada, se não fechou a quantidade). */
+  | { tipo: 'vagas_definidas'; edicao: string; times: Sigla[]; cancelada: boolean }
   | { tipo: 'campeao'; edicao: string; time: Sigla }
 
 /**
@@ -224,7 +256,7 @@ export type EventoCompeticao =
 export function avancarEdicao(edicao: EstadoEdicao, ctx: ContextoAvanco): { preenchidas: UnidadeRodada[]; eventos: EventoCompeticao[] } {
   const preenchidas: UnidadeRodada[] = []
   const eventos: EventoCompeticao[] = []
-  if (edicao.campeao) return { preenchidas, eventos }
+  if (edicao.campeao || edicao.aguardandoVagas || edicao.cancelada) return { preenchidas, eventos }
   const c = ctx.competicao
   let reservadas = [...ctx.reservadas]
   const preencher = (novas: UnidadeRodada[]) => {
@@ -395,6 +427,8 @@ export function resolverSaidas(edicao: EstadoEdicao, c: Competicao): Saida[] {
   if (!final) return []
   const saidas: Saida[] = []
   for (const s of c.saidas ?? []) {
+    // Vaga pulando depende da próxima temporada: resolvida na virada (competicoes/virada.ts).
+    if (s.exceto_de?.length) continue
     const tipo = s.tipo ?? 'vaga'
     const add = (times: readonly Sigla[]) => {
       for (const time of times) saidas.push({ time, destino: s.destino, tipo })
@@ -405,8 +439,7 @@ export function resolverSaidas(edicao: EstadoEdicao, c: Competicao): Saida[] {
       add(final.slice(de - 1, ate ?? de))
     }
     if (s.primeiros || s.ultimos) {
-      const jogaram = s.fase ? participantesDaFase(edicao, c, s.fase) : null
-      const base = jogaram ? final.filter((t) => jogaram.has(t)) : final
+      const base = ordemDaSaida(edicao, c, s.fase)
       if (s.primeiros) add(base.slice(0, s.primeiros))
       if (s.ultimos) add(base.slice(Math.max(0, base.length - s.ultimos)))
     }
@@ -416,6 +449,42 @@ export function resolverSaidas(edicao: EstadoEdicao, c: Competicao): Saida[] {
     }
   }
   return saidas
+}
+
+/**
+ * Vaga com pulo (`exceto_de` da saída e `pula_quem_joga` do destino): os times da saída, mas
+ * quem está em `fora` ou `ja` é pulado e a vaga desce para o próximo colocado. Campeão começa
+ * no 1º, posições "a-b" no a-ésimo (b-a+1 vagas), primeiros no 1º (só entre quem jogou `fase`).
+ * Últimos e por grupo não pulam (são de rebaixamento).
+ */
+export function escolherComPulo(edicao: EstadoEdicao, c: Competicao, s: SaidaCompeticao, fora: ReadonlySet<Sigla>, ja: ReadonlySet<Sigla> = new Set()): Sigla[] {
+  const final = edicao.classificacaoFinal
+  if (!final) return []
+  const trechos: { base: Sigla[]; de: number; n: number }[] = []
+  if (s.campeao) trechos.push({ base: final, de: 0, n: 1 })
+  if (s.posicoes) {
+    const [de, ate] = s.posicoes.split('-').map((x) => Number(x.trim())) as [number, number | undefined]
+    if (de >= 1) trechos.push({ base: final, de: de - 1, n: (ate ?? de) - de + 1 })
+  }
+  if (s.primeiros) trechos.push({ base: ordemDaSaida(edicao, c, s.fase), de: 0, n: s.primeiros })
+  const escolhidos: Sigla[] = []
+  for (const t of trechos) {
+    let pegou = 0
+    for (let i = t.de; i < t.base.length && pegou < t.n; i++) {
+      const time = t.base[i]!
+      if (fora.has(time) || ja.has(time) || escolhidos.includes(time)) continue
+      escolhidos.push(time)
+      pegou++
+    }
+  }
+  return escolhidos
+}
+
+/** Classificação final (só entre quem jogou `fase`, se houver): a ordem de `primeiros`/`ultimos`. */
+export function ordemDaSaida(edicao: EstadoEdicao, c: Competicao, fase?: string): Sigla[] {
+  const final = edicao.classificacaoFinal ?? []
+  const jogaram = fase ? participantesDaFase(edicao, c, fase) : null
+  return jogaram ? final.filter((t) => jogaram.has(t)) : [...final]
 }
 
 function estadoDaFase(edicao: EstadoEdicao, c: Competicao, fase: string): EstadoFase | null {

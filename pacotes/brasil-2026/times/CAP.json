@@ -9,6 +9,12 @@
     "#151515"
   ],
   "porte": "medio",
+  "estadio": {
+    "nome": "Arena da Baixada",
+    "capacidade": 35000,
+    "ingresso_padrao": 4000,
+    "custo_por_jogo": 20000000
+  },
   "formacao": "5-3-2",
   "kit": {
     "arte": "kits/desenhos/cap_4x.png",

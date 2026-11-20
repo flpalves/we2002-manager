@@ -19,8 +19,11 @@ import {
   type Transferencia,
 } from '@core/mercado/ia'
 import { janelaDaSemana, ordenarJanelas } from '@core/mercado/janelas'
+import { ligasDosTimes, nivelClube } from '@core/mercado/nivel'
+import { renovacoesCpu, rodadaPreContratos, type PreContrato, type Renovacao } from '@core/mercado/precontrato'
 import { fatorSerieDoTime, fatorSerieSalarioDoTime, multaPadrao, salarioReferencia, semanasRestantes, valorMercado, type Porte } from '@core/mercado/valor'
 import { cotaTv, ehSemanaDeCiclo, lancamentosDoCiclo, lancamentosDoJogo, publico, type Lancamento, type TipoCompeticaoPublico } from '@core/financas/financas'
+import { lancamentosDaPremiacao } from '@core/financas/premiacao'
 import { avaliar, confiancaAposJogo, pontosEsperados, type Dificuldade } from '@core/diretoria/diretoria'
 import { prioridadeDe, type Elencos } from '@core/partida/sessao'
 import type { Sql } from '../db/sql'
@@ -54,15 +57,11 @@ export interface ContextoEconomia {
   fatorPais: ReadonlyMap<string, number>
 }
 
-/** Ligas (pontos corridos nacionais) em que cada time está. */
-export function ligasDosTimes(competicoes: ReadonlyMap<string, Competicao>): Map<string, string[]> {
-  const mapa = new Map<string, string[]>()
-  for (const c of competicoes.values()) {
-    if (c.tipo !== 'nacional' || c.fases[0]?.formato !== 'pontos_corridos' || c.participantes.regra !== 'lista') continue
-    for (const s of c.participantes.times) mapa.set(s, [...(mapa.get(s) ?? []), c.id])
-  }
-  return mapa
-}
+/** Ligas (pontos corridos nacionais) em que cada time está (no núcleo: `core/mercado/nivel`). */
+export { ligasDosTimes }
+
+/** Chave em `configuracao`: a CPU já decidiu as renovações desta temporada. */
+export const chaveRenovacaoCpu = (temporada: number) => `renovacao_cpu_${temporada}`
 
 export class Economia {
   readonly mundo: MundoMercado
@@ -80,6 +79,11 @@ export class Economia {
   demitido = false
   /** Partidas com público calculado neste avanço. */
   private readonly publicos = new Map<string, number>()
+  private readonly ativos: Set<string>
+  /** A CPU já decidiu as renovações da temporada (semana limite). */
+  private renovouCpu: boolean
+  private readonly renovacoes: Renovacao[] = []
+  private readonly preContratosNovos: (PreContrato & { semana: number })[] = []
 
   constructor(
     private readonly sql: Sql,
@@ -118,9 +122,12 @@ export class Economia {
         saldo: t.saldo,
         orcamentoFolha: t.orcamento_folha_mensal,
         usuario: t.sigla === ctx.timeUsuario,
+        nivel: nivelClube(ligas.get(t.sigla) ?? [], t.pais, ctx.regras),
         fatorSalario: fatorSerieSalarioDoTime(ligas.get(t.sigla) ?? [], t.pais, ctx.fatorPais.get(t.pais) ?? 1, ctx.regras),
       })
     }
+    // Quem já mudou de clube nesta temporada (CPU ou usuário): a CPU não revende até a virada.
+    const chegaram = new Set(sql.all<{ id: number }>('SELECT DISTINCT jogador_id id FROM transferencia WHERE temporada = ?', ctx.temporada).map((t) => t.id))
     const jogadores: JogadorMercado[] = sql
       .all<{
         id: number
@@ -138,13 +145,19 @@ export class Economia {
         potencial: number
         taxa_fixa: number | null
         origem_clube: string | null
+        origem_emprestimo: string | null
+        pre_contrato: string | null
       }>(
         `SELECT j.id, t.sigla, j.posicao, j.idade, j.atributos, j.moral, j.valor, j.a_venda, c.salario_mensal, c.ate_temporada, c.tipo AS contrato_tipo,
-                j.status, j.potencial, j.taxa_fixa, j.origem_clube
+                j.status, j.potencial, j.taxa_fixa, j.origem_clube, o.sigla AS origem_emprestimo, pc.para AS pre_contrato
            FROM jogador j LEFT JOIN time t ON t.id = j.time_id LEFT JOIN contrato c ON c.jogador_id = j.id
+           LEFT JOIN time o ON o.id = c.time_origem_id
+           LEFT JOIN pre_contrato pc ON pc.jogador_id = j.id AND pc.temporada = ?
           WHERE j.status IN ('ativo', 'livre', 'exterior')`,
+        ctx.temporada,
       )
       .map((j) => ({
+        chegouNaTemporada: chegaram.has(j.id),
         id: String(j.id),
         time: j.sigla,
         posicao: j.posicao as JogadorMercado['posicao'],
@@ -157,10 +170,17 @@ export class Economia {
         aVenda: j.sigla ? j.a_venda : null,
         emprestado: j.contrato_tipo === 'emprestimo',
         potencial: j.potencial,
+        preContrato: j.pre_contrato,
+        origemEmprestimo: j.origem_emprestimo,
         ...(j.status === 'exterior' && { taxa: j.taxa_fixa ?? 0, origem: j.origem_clube }),
       }))
     for (const j of jogadores) this.aVendaOriginal.set(j.id, j.aVenda)
     this.mundo = new MundoMercado(clubes, jogadores)
+    // Clubes que jogam alguma competição na temporada: só eles vão ao mercado.
+    this.ativos = new Set(
+      sql.all<{ s: string }>('SELECT casa s FROM partida WHERE temporada = ? UNION SELECT visitante FROM partida WHERE temporada = ?', ctx.temporada, ctx.temporada).map((x) => x.s),
+    )
+    this.renovouCpu = !!sql.get('SELECT 1 FROM configuracao WHERE chave = ?', chaveRenovacaoCpu(ctx.temporada))
     const usuario = times.find((t) => t.sigla === ctx.timeUsuario)
     this.confianca = usuario?.confianca_diretoria ?? ctx.regras.diretoria.confianca_inicial
     const c = sql.get<{ avaliacoes_ruins: number; demitido: number }>('SELECT avaliacoes_ruins, demitido FROM carreira')
@@ -238,7 +258,7 @@ export class Economia {
     const saidas = new Map(
       this.sql.all<{ time: string; n: number }>('SELECT time, COUNT(*) n FROM saida_elenco WHERE temporada = ? GROUP BY time', T).map((x) => [x.time, x.n]),
     )
-    abrirJanela(m, { regras: r, rng: rng.derivar('janela', janela.semana_inicio), temporada: T, intensidade: this.ctx.intensidade, principal, saidas })
+    abrirJanela(m, { regras: r, rng: rng.derivar('janela', janela.semana_inicio), temporada: T, intensidade: this.ctx.intensidade, principal, saidas, ativos: this.ativos })
     for (const e of m.eventos.splice(0)) this.eventos.push({ ...e, semana })
   }
 
@@ -269,6 +289,38 @@ export class Economia {
     const prazo = Math.min(janela.semana_fim, semana + this.ctx.regras.mercado.ia.propostas.prazo_semanas)
     for (const p of propostasPeloUsuario(this.mundo, { ...ctxIa, rng: rng.derivar('proposta') })) this.propostas.push({ ...p, semana, prazo })
     return feitas
+  }
+
+  /**
+   * Fim do prazo de renovações (semana limite): a CPU decide quem renova entre os contratos que
+   * acabam. Uma vez por temporada; devolve se decidiu agora (a virada chama de novo, sem efeito).
+   */
+  renovarCpu(rng: Rng): boolean {
+    if (this.renovouCpu) return false
+    this.renovouCpu = true
+    this.renovacoes.push(...renovacoesCpu(this.mundo, this.ctx.temporada, this.ctx.regras, rng))
+    return true
+  }
+
+  /** Clubes que podem assinar pré-contrato: os das ligas nacionais da temporada (A, B, C). */
+  elegiveisPreContrato(): Set<string> {
+    return new Set([...this.info].filter(([, i]) => i.ligas.length > 0).map(([s]) => s))
+  }
+
+  /**
+   * Data depois da semana limite: a CPU assina pré-contratos com quem está em fim de contrato.
+   * `datasRestantes` conta a de hoje e a virada (1 na virada: tudo o que falta).
+   */
+  preContratos(semana: number, rng: Rng, datasRestantes: number): PreContrato[] {
+    const feitos = rodadaPreContratos(this.mundo, {
+      regras: this.ctx.regras,
+      rng,
+      temporada: this.ctx.temporada,
+      datasRestantes,
+      elegiveis: this.elegiveisPreContrato(),
+    })
+    for (const p of feitos) this.preContratosNovos.push({ ...p, semana })
+    return feitos
   }
 
   /** Público de cada jogo do passo (também vira a ocupação usada pelo mando no motor). */
@@ -310,12 +362,10 @@ export class Economia {
     }
   }
 
-  /** Premiação da competição (premiacao.por_fase: "campeao" e "vice"). */
+  /** Premiação da competição: participação de todos e prêmio de cada colocação final. */
   premiar(competicao: Competicao | undefined, classificacao: readonly string[] | null, semana: number): void {
-    const premios = competicao?.premiacao?.por_fase ?? {}
-    const [campeao, vice] = classificacao ?? []
-    if (campeao && premios['campeao']) this.lancar({ time: campeao, categoria: 'premiacao', valor: premios['campeao'], descricao: `Título: ${competicao!.nome}` }, semana)
-    if (vice && premios['vice']) this.lancar({ time: vice, categoria: 'premiacao', valor: premios['vice'], descricao: `Vice: ${competicao!.nome}` }, semana)
+    if (!competicao || !classificacao) return
+    for (const l of lancamentosDaPremiacao(competicao, classificacao)) this.lancar(l, semana)
   }
 
   /** Jogo do usuário: confiança da diretoria pelos pontos contra a expectativa. */
@@ -364,6 +414,19 @@ export class Economia {
     const valor = Math.max(this.ctx.regras.mercado.arredondar, this.mundo.jogadores.get(jogador)?.valor ?? 0)
     this.propostas.push({ jogador, clube, valor, teto: valor, semana, prazo: semana + this.ctx.regras.mercado.ia.propostas.prazo_semanas })
     return valor
+  }
+
+  /** Grava só as renovações da CPU e os pré-contratos (a virada usa isto: o resto já foi gravado). */
+  gravarContratos(): void {
+    const sql = this.sql
+    for (const r of this.renovacoes.splice(0)) sql.run('UPDATE contrato SET ate_temporada = ? WHERE jogador_id = ?', r.ateTemporada, Number(r.jogador))
+    if (this.renovouCpu) sql.run('INSERT OR IGNORE INTO configuracao (chave, valor) VALUES (?, ?)', chaveRenovacaoCpu(this.ctx.temporada), '1')
+    for (const p of this.preContratosNovos.splice(0)) {
+      sql.run(
+        'INSERT OR REPLACE INTO pre_contrato (jogador_id, de, para, salario_mensal, ate_temporada, temporada, semana) VALUES (?, ?, ?, ?, ?, ?, ?)',
+        Number(p.jogador), p.de, p.para, p.salario, p.ateTemporada, this.ctx.temporada, p.semana,
+      )
+    }
   }
 
   /** Grava saldos, lançamentos, transferências (jogador e contrato), propostas e a diretoria. */
@@ -418,6 +481,7 @@ export class Economia {
         Number(p.jogador), p.clube, p.valor, p.teto, this.ctx.temporada, p.semana, p.prazo,
       )
     }
+    this.gravarContratos()
     sql.run('UPDATE time SET confianca_diretoria = ? WHERE sigla = ?', Math.round(this.confianca), this.ctx.timeUsuario)
     sql.run('UPDATE carreira SET avaliacoes_ruins = ?, demitido = ?', this.avaliacoesRuins, this.demitido)
   }

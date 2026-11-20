@@ -9,6 +9,11 @@
     "#151515"
   ],
   "porte": "grande",
+  "financas": {
+    "saldo_inicial": 1500000000,
+    "patrocinio_temporada": 2000000000,
+    "orcamento_folha_mensal": 0
+  },
   "formacao": "4-3-3B",
   "kit": {
     "arte": "kits/desenhos/cor_4x.png",

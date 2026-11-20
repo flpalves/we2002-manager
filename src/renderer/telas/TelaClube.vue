@@ -30,7 +30,7 @@ async function carregar(): Promise<void> {
     ui.avisar((e as Error).message)
   }
 }
-watch(() => [carreira.atual?.id, temporada.calendario?.passoAtual], carregar, { immediate: true })
+watch(() => [carreira.atual?.id, temporada.calendario?.passoAtual, temporada.calendario?.semanaAtual], carregar, { immediate: true })
 
 async function assumir(sigla: string, nome: string): Promise<void> {
   if (!(await ui.confirmar('Novo clube', `Assumir o ${nome}? A carreira continua no clube novo.`, 'Assumir'))) return

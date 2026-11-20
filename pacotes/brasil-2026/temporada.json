@@ -3,20 +3,74 @@
     {
       "competicao": "serie-a",
       "datas": "fds",
-      "semana_inicio": 12,
+      "semana_inicio": 13,
       "semana_fim": 50
     },
     {
       "competicao": "serie-b",
       "datas": "fds",
-      "semana_inicio": 12,
+      "semana_inicio": 13,
       "semana_fim": 50
     },
     {
       "competicao": "serie-c",
       "datas": "fds",
       "semana_inicio": 14,
-      "semana_fim": 44
+      "semana_fim": 43
+    },
+    {
+      "competicao": "carioca",
+      "datas": "ambos",
+      "semana_inicio": 4,
+      "semana_fim": 11
+    },
+    {
+      "competicao": "centro-oeste",
+      "datas": "ambos",
+      "semana_inicio": 4,
+      "semana_fim": 11
+    },
+    {
+      "competicao": "copa-1liga",
+      "datas": "ambos",
+      "semana_inicio": 4,
+      "semana_fim": 11
+    },
+    {
+      "competicao": "mineiro",
+      "datas": "ambos",
+      "semana_inicio": 4,
+      "semana_fim": 11
+    },
+    {
+      "competicao": "gaucho",
+      "datas": "ambos",
+      "semana_inicio": 4,
+      "semana_fim": 11
+    },
+    {
+      "competicao": "norte",
+      "datas": "ambos",
+      "semana_inicio": 4,
+      "semana_fim": 11
+    },
+    {
+      "competicao": "paulistao",
+      "datas": "ambos",
+      "semana_inicio": 4,
+      "semana_fim": 11
+    },
+    {
+      "competicao": "nordeste",
+      "datas": "ambos",
+      "semana_inicio": 4,
+      "semana_fim": 11
+    },
+    {
+      "competicao": "serie-d",
+      "datas": "fds",
+      "semana_inicio": 16,
+      "semana_fim": 42
     }
   ]
 }

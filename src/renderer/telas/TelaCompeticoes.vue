@@ -53,7 +53,7 @@ async function carregar(): Promise<void> {
 }
 watch(edicaoId, carregar, { immediate: true })
 // Depois de cada Continuar, recarrega a competição aberta.
-watch(() => temporada.calendario?.passoAtual, carregar)
+watch(() => [temporada.calendario?.passoAtual, temporada.calendario?.semanaAtual], carregar)
 
 const fase = computed(() => detalhe.value?.fases.find((f) => f.id === faseId.value) ?? null)
 

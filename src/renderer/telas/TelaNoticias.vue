@@ -40,7 +40,7 @@ async function carregar(): Promise<void> {
     ui.avisar((e as Error).message)
   }
 }
-watch(() => [carreira.atual?.id, temporada.calendario?.passoAtual, filtro.value], carregar, { immediate: true })
+watch(() => [carreira.atual?.id, temporada.calendario?.passoAtual, temporada.calendario?.semanaAtual, filtro.value], carregar, { immediate: true })
 
 const pendentes = computed(() => (dados.value?.noticias ?? []).filter((n) => n.pendente))
 const demais = computed(() => (dados.value?.noticias ?? []).filter((n) => !n.pendente))

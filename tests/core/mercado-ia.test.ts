@@ -379,6 +379,20 @@ describe('mundo do mercado', () => {
     m.jogadores.get('C2-1')!.aVenda = 'emprestimo'
     m.transferir({ jogador: 'C2-1', de: 'C2', para: 'C3', tipo: 'emprestimo', valor: 10, salario: 5, ateTemporada: 2026 })
     expect(m.jogadores.get('C2-1')).toMatchObject({ time: 'C3', emprestado: true, aVenda: null })
+    expect(m.jogadores.get('C2-0')!.chegouNaTemporada).toBe(true)
+  })
+
+  it('a CPU não compra quem já mudou de clube na temporada, mesmo à venda e barato', () => {
+    const { m } = criarMundo({ semente: 4, clubes: 6, livres: 0 })
+    abrirJanela(m, { regras: PADROES, rng: criarRng(4).derivar('abrir'), temporada: 2026, intensidade: 'alta', principal: true, saidas: new Map() })
+    // Um craque recém-chegado ao C2, posto à venda: sem a trava, todo mundo o quer.
+    const craque = m.jogadores.get('C2-0')!
+    Object.assign(craque, { geral: 19, valor: 1, aVenda: 'excedente', chegouNaTemporada: true })
+    const rng = criarRng(4)
+    const t = Array.from({ length: 20 }, (_, d) => rodadaIaMercado(m, { regras: PADROES, rng: rng.derivar('data', d), temporada: 2026, datasRestantes: 20 - d })).flat()
+    expect(t.length).toBeGreaterThan(0)
+    expect(t.some((x) => x.jogador === 'C2-0')).toBe(false)
+    expect(craque.time).toBe('C2')
   })
 
   it('a mesma semente dá o mesmo mercado', () => {
@@ -450,6 +464,13 @@ describe('lote: exterior na janela principal (9.2)', () => {
         expect(p.verba, p.sigla).toBeGreaterThanOrEqual(0)
         if (transferencias.some((t) => t.para === p.sigla)) expect(m.folha(p.sigla), p.sigla).toBeLessThanOrEqual(p.tetoFolha)
       }
+    }
+  })
+
+  it('quem chega (do exterior ou não) não é revendido pela CPU na mesma temporada', () => {
+    for (const { transferencias } of lotes) {
+      const ids = transferencias.map((t) => t.jogador)
+      expect(new Set(ids).size).toBe(ids.length)
     }
   })
 

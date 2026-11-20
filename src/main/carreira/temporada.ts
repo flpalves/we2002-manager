@@ -20,6 +20,7 @@ import { ErroApp } from '../ipc/registrar'
 import { carregarElencos, gravarElencos } from '../db/repositorios/elencos'
 import { aproveitamento, Economia, recalcularValores, type ContextoEconomia } from './economia'
 import { Jornal, pendentes, registrarInfo } from './noticias'
+import { completarElencosSemana1 } from './semana1'
 import * as info from '@core/noticias/informativas'
 import { janelaDaSemana } from '@core/mercado/janelas'
 import type { EventoMercado } from '@core/mercado/ia'
@@ -40,6 +41,10 @@ interface DadosCarreira {
   semente: number
   temporada: number
   passoAtual: number
+  /** Última semana cujos efeitos semanais já correram (0 = nenhuma). */
+  semanaProcessada: number
+  /** Dia implícito em que os elencos estão gravados. */
+  diaAtual: number
   timeUsuario: string
   regras: Regras
   competicoes: Map<string, Competicao>
@@ -55,9 +60,16 @@ interface DadosCarreira {
 export const ORIGEM_MOTOR = { modo: 'simulada', origem: 'motor' }
 
 export function lerDados(sql: Sql): DadosCarreira {
-  const c = sql.get<{ semente: number; temporada_atual: number; passo_atual: number; time_usuario: string; dificuldade: Dificuldade; intensidade_mercado: 'baixa' | 'media' | 'alta' }>(
-    'SELECT semente, temporada_atual, passo_atual, time_usuario, dificuldade, intensidade_mercado FROM carreira',
-  )
+  const c = sql.get<{
+    semente: number
+    temporada_atual: number
+    passo_atual: number
+    semana_processada: number
+    dia_atual: number
+    time_usuario: string
+    dificuldade: Dificuldade
+    intensidade_mercado: 'baixa' | 'media' | 'alta'
+  }>('SELECT semente, temporada_atual, passo_atual, semana_processada, dia_atual, time_usuario, dificuldade, intensidade_mercado FROM carreira')
   if (!c) throw new Error('Carreira sem dados')
   const regras = JSON.parse(sql.get<{ dados: string }>('SELECT dados FROM regras WHERE id = 1')!.dados) as Regras
   const competicoes = new Map(
@@ -75,6 +87,8 @@ export function lerDados(sql: Sql): DadosCarreira {
     semente: c.semente,
     temporada: c.temporada_atual,
     passoAtual: c.passo_atual,
+    semanaProcessada: c.semana_processada,
+    diaAtual: c.dia_atual,
     timeUsuario: c.time_usuario,
     regras,
     competicoes,
@@ -124,7 +138,9 @@ export function garantirTemporada(sql: Sql): void {
   const competicaoDe = new Map(estado.edicoes.map((e) => [e.id, e.competicao]))
   sql.transacao(() => {
     gravarTemporadaNova(sql, estado, (id) => competicaoDe.get(id)!)
-    sql.run('UPDATE carreira SET passo_atual = 0, semana_atual = 1')
+    sql.run('UPDATE carreira SET passo_atual = 0, semana_atual = 1, semana_processada = 0, dia_atual = 0')
+    // Semana 1: quem joga alguma competição e tem elenco curto completa com livres.
+    completarElencosSemana1(sql, d, new Set(estado.edicoes.flatMap((e) => e.participantes)))
     // Valores de mercado (e salário/multa de quem veio do pacote com 0) e metas da diretoria.
     recalcularValores(sql, { regras: d.regras, temporada: d.temporada, competicoes: d.competicoes, fatorPais: d.fatorPais }, 1)
     criarMetas(sql, d)
@@ -197,7 +213,8 @@ export interface ResultadoExterno {
 export function abrirSessao(sql: Sql) {
   const { d, estado } = carregar(sql)
   const ctx = contexto(d)
-  const elencos = carregarElencos(sql, estado.passos[estado.passoAtual - 1]?.dia ?? 0)
+  const elencos = carregarElencos(sql, d.diaAtual)
+  let semanaProcessada = d.semanaProcessada
   const ctxEconomia: ContextoEconomia = {
     regras: d.regras,
     temporada: d.temporada,
@@ -259,7 +276,7 @@ export function abrirSessao(sql: Sql) {
             d.timeUsuario, d.temporada,
           )
           .map((x) => x.nome)
-        if (nomes.length) jornal.info(info.contratosAcabando(nomes, d.temporada), w)
+        if (nomes.length) jornal.info(info.contratosAcabando(nomes, d.temporada, r.mercado.pre_contrato.semana_limite_renovacao), w)
       }
       jornal.avaliar('semana', w)
     }
@@ -309,18 +326,55 @@ export function abrirSessao(sql: Sql) {
     }
   }
 
-  /** Joga o passo atual; o jogo do usuário pode vir de fora (WE ou digitado). */
-  const jogar = (externo?: { partida: string } & ResultadoExterno) => {
-    const passo = estado.passos[estado.passoAtual]!
-    const semanaAnterior = estado.passos[estado.passoAtual - 1]?.semana ?? 0
-    chegarNaData()
+  /**
+   * Depois da semana limite de renovação: na primeira data, a CPU decide as renovações (aviso ao
+   * usuário de quem ficou em fim de contrato); em cada data, os pré-contratos da CPU (a virada
+   * conta como a última data). Notícia só do que envolve o usuário.
+   */
+  const fimDeContrato = (e: Economia, passo: EstadoTemporada['passos'][number]) => {
+    const limite = d.regras.mercado.pre_contrato.semana_limite_renovacao
+    if (passo.semana <= limite) return
+    const rng = criarRng(d.semente).derivar('pre_contrato', d.temporada, passo.indice)
+    // Uma vez por temporada (o aviso ao usuário vai junto).
+    if (e.renovarCpu(rng.derivar('renovacao'))) {
+      const nomes = [...e.mundo.jogadores.values()]
+        .filter((j) => j.time === d.timeUsuario && j.ateTemporada <= d.temporada && !j.emprestado && !j.preContrato)
+        .map((j) => jornal.nomeJogador(j.id))
+        .sort((a, b) => a.localeCompare(b))
+      jornal.info(info.prazoRenovacaoEncerrado(nomes), passo.semana)
+    }
+    const restantes = estado.passos.filter((x) => x.indice >= passo.indice).length + 1
+    for (const p of e.preContratos(passo.semana, rng.derivar('rodada'), restantes)) {
+      if (p.de !== d.timeUsuario) continue
+      jornal.info(info.preContrato({ jogador: jornal.nomeJogador(p.jogador), jogadorId: p.jogador, de: jornal.nomeTime(p.de), para: jornal.nomeTime(p.para), doUsuario: 'sai' }), passo.semana)
+    }
+  }
+
+  /**
+   * O tempo chega à semana `ate`: os elencos vão até o começo dela (fecha o treino das
+   * anteriores) e correm os efeitos semanais que faltam (salários, avaliação da diretoria,
+   * janelas, notícias da semana). Cada semana corre uma vez só, com ou sem jogo.
+   */
+  const passarSemanas = (ate: number) => {
+    if (ate <= semanaProcessada) return
+    const de = semanaProcessada
+    elencos.avancarAte(Math.max(elencos.dia, (ate - 1) * 7), d.regras, rngSemana)
     const e = eco()
     const demitidoAntes = e.demitido
     const ruinsAntes = e.avaliacoesRuinsAtuais()
-    e.semanasPassadas(semanaAnterior, passo.semana)
-    noticiasDasSemanas(semanaAnterior, passo.semana)
-    if (e.demitido && !demitidoAntes) jornal.info(info.demissao(jornal.nomeTime(d.timeUsuario)), passo.semana)
-    else if (e.avaliacoesRuinsAtuais() > ruinsAntes) jornal.info(info.cargoAmeacado(), passo.semana)
+    e.semanasPassadas(de, ate)
+    noticiasDasSemanas(de, ate)
+    if (e.demitido && !demitidoAntes) jornal.info(info.demissao(jornal.nomeTime(d.timeUsuario)), ate)
+    else if (e.avaliacoesRuinsAtuais() > ruinsAntes) jornal.info(info.cargoAmeacado(), ate)
+    semanaProcessada = ate
+  }
+
+  /** Joga o passo atual; o jogo do usuário pode vir de fora (WE ou digitado). */
+  const jogar = (externo?: { partida: string } & ResultadoExterno) => {
+    const passo = estado.passos[estado.passoAtual]!
+    passarSemanas(passo.semana)
+    chegarNaData()
+    const e = eco()
     const propostasAntes = e.propostasNovas().length
     const eventosAntes = e.eventosNovos().length
     const janela = janelaDaSemana(d.regras.mercado.janelas, passo.semana)
@@ -332,6 +386,7 @@ export function abrirSessao(sql: Sql) {
       d.temporada, passo.semana, janela ? 0 : 1,
     )
     const feitas = e.mercado(passo.semana, criarRng(d.semente).derivar('mercado', d.temporada, passo.indice), datasRestantes)
+    fimDeContrato(e, passo)
     noticiasDoMercado(e.eventosNovos().slice(eventosAntes))
     // No jornal, só as 3 transferências mais caras da data (a lista completa fica em Transferências).
     for (const t of [...feitas].sort((a, b) => b.valor - a.valor || a.jogador.localeCompare(b.jogador)).slice(0, d.regras.noticias.transferencias_por_data)) {
@@ -370,6 +425,10 @@ export function abrirSessao(sql: Sql) {
         jornal.info(info.campeao(jornal.nomeTime(ev.time), c?.nome ?? ev.edicao, ev.time === d.timeUsuario), passo.semana)
         e.premiar(c, edicao.classificacaoFinal, passo.semana)
       }
+      if (ev.tipo === 'vagas_definidas') {
+        const doUsuario = ev.times.includes(d.timeUsuario) && !ev.cancelada
+        jornal.info(info.vagasDefinidas(c?.nome ?? ev.edicao, ev.times.length, ev.cancelada, doUsuario ? jornal.nomeTime(d.timeUsuario) : null), passo.semana)
+      }
       // Começo de fase: zera os amarelos se a competição pedir.
       if (ev.tipo === 'fase_encerrada' && c?.suspensao) {
         const i = c.fases.findIndex((f) => f.id === ev.fase)
@@ -390,14 +449,19 @@ export function abrirSessao(sql: Sql) {
   const jogoPendente = (): Partida | null =>
     estado.partidas.find((p) => p.passo === estado.passoAtual && !p.resultado && (p.casa === d.timeUsuario || p.visitante === d.timeUsuario)) ?? null
 
+  /** Semana da próxima data do calendário (null = temporada encerrada). */
+  const semanaDoProximoPasso = (): number | null => estado.passos[estado.passoAtual]?.semana ?? null
+
   const resumo = (): ResultadoContinuar => {
+    // O pré-jogo só abre quando o tempo já chegou à semana do jogo.
     const pendente = temporadaEncerrada(estado) ? null : jogoPendente()
+    const preJogo = pendente && estado.passos[pendente.passo]!.semana <= semanaProcessada ? pendente : null
     return {
       passosJogados,
-      semana: estado.passos[estado.passoAtual - 1]?.semana ?? 1,
+      semana: Math.max(1, semanaProcessada),
       encerrada: temporadaEncerrada(estado),
       jogoDoUsuario,
-      preJogo: pendente ? paraJogo(pendente, estado, d) : null,
+      preJogo: preJogo ? paraJogo(preJogo, estado, d) : null,
       campeoes,
       eventoPendente: jornal.temPendente(),
     }
@@ -407,18 +471,17 @@ export function abrirSessao(sql: Sql) {
     gravarElencos(sql, elencos, d.temporada)
     economia?.gravar()
     jornal.gravar()
+    sql.run('UPDATE carreira SET semana_atual = ?, semana_processada = ?, dia_atual = ?', Math.max(1, semanaProcessada), semanaProcessada, elencos.dia)
   }
   /** Valores de mercado atualizados (antes do mercado da CPU usar). */
   const recalcular = () =>
     recalcularValores(sql, { regras: d.regras, temporada: d.temporada, competicoes: d.competicoes, fatorPais: d.fatorPais }, estado.passos[estado.passoAtual]?.semana ?? 1)
-  return { d, estado, ctx, elencos, jornal, economia: eco, rngSemana, jogar, chegarNaData, jogoPendente, resumo, gravar, recalcularValores: recalcular }
+  return {
+    d, estado, ctx, elencos, jornal, economia: eco, rngSemana, jogar, passarSemanas, chegarNaData, jogoPendente, semanaDoProximoPasso,
+    semanaProcessada: () => semanaProcessada, resumo, gravar, recalcularValores: recalcular,
+  }
 }
 
-/**
- * Continuar: joga as datas até a do próximo jogo do usuário e PARA antes dele (o pré-jogo
- * decide: WE, CPU x CPU no WE ou simular). Sem jogo do usuário marcado, segue até aparecer
- * um ou até o fim da temporada. Tudo numa transação.
- */
 /** Demitido: o calendário só anda depois de escolher o novo clube. */
 export function exigirEmpregado(sql: Sql): void {
   if (sql.get<{ demitido: number }>('SELECT demitido FROM carreira')?.demitido) {
@@ -427,13 +490,31 @@ export function exigirEmpregado(sql: Sql): void {
   if (pendentes(sql) > 0) throw new ErroApp('evento_pendente', 'Há uma notícia esperando a sua decisão. Responda em Notícias.')
 }
 
+/**
+ * Continuar: o tempo anda UMA semana, com ou sem jogo. Joga as datas da semana seguinte e
+ * PARA antes do jogo do usuário que cair nela (o pré-jogo decide: WE, CPU x CPU no WE ou
+ * simular), ou logo depois de um evento que pede decisão. Tudo numa transação.
+ */
 export function continuar(sql: Sql): ResultadoContinuar {
   exigirEmpregado(sql)
   const s = abrirSessao(sql)
   sql.transacao(() => {
     s.recalcularValores()
-    // Para antes do jogo do usuário, ou logo depois de um evento que pede decisão.
-    while (!temporadaEncerrada(s.estado) && !s.jogoPendente() && !s.jornal.temPendente()) s.jogar()
+    const alvo = s.semanaProcessada() + 1
+    let noPreJogo = false
+    while (!temporadaEncerrada(s.estado) && !s.jornal.temPendente()) {
+      const semana = s.semanaDoProximoPasso()!
+      if (semana > alvo) break
+      if (s.jogoPendente()) {
+        // O tempo chega à semana do jogo; o jogo fica para o pré-jogo.
+        s.passarSemanas(semana)
+        noPreJogo = true
+        break
+      }
+      s.jogar()
+    }
+    // Semana sem jogo do usuário (ou sem jogo nenhum): o tempo anda até ela.
+    if (!noPreJogo && !temporadaEncerrada(s.estado) && !s.jornal.temPendente()) s.passarSemanas(alvo)
     s.gravar()
   })
   return s.resumo()
@@ -483,6 +564,7 @@ export function calendario(sql: Sql): Calendario {
   return {
     temporada: d.temporada,
     passoAtual: estado.passoAtual,
+    semanaAtual: d.semanaProcessada,
     encerrada: temporadaEncerrada(estado),
     passos: estado.passos.map((p) => {
       const jogo = doUsuario.get(p.indice)
@@ -634,7 +716,7 @@ export { idEdicao }
 /** Resposta a um evento com escolha: aplica os efeitos da opção na sessão e grava. */
 export function responderEvento(sql: Sql, noticia: number, escolha: string): void {
   const s = abrirSessao(sql)
-  const semana = s.estado.passos[s.estado.passoAtual - 1]?.semana ?? 1
+  const semana = Math.max(1, s.semanaProcessada())
   sql.transacao(() => {
     s.jornal.responder(noticia, escolha, semana)
     s.gravar()

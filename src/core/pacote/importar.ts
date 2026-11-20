@@ -2,9 +2,11 @@ import type { EventoCatalogo } from '@shared/esquemas/noticias'
 import { catalogoPadrao } from '../noticias/catalogoPadrao'
 import { mesclarRegras, PADROES, type Parcial, type Regras } from '../config/padroes'
 import { temErros, validarPacote, type Problema } from './validar'
+import { JOGADORES_EM_CAMPO } from '../partida/sessao'
 import type { JogadorSemClube, Pacote, Time } from '@shared/esquemas/pacote'
 import type { Bloco } from '../competicoes/calendario'
 import { aplicarDivisoes } from '../competicoes/divisoes'
+import { fatorOrcamentoDivisao, ligasDosTimes } from '../mercado/nivel'
 
 /**
  * Transforma o pacote validado nas linhas da carreira nova. Puro: a gravação no SQLite
@@ -132,6 +134,9 @@ export function prepararCarreira(pacote: Pacote, escolha: EscolhaCarreira): Dado
   if (!manifesto) throw new ErroImportacao('Pacote sem manifesto.')
   const doUsuario = pacote.times.find((t) => t.sigla === escolha.time)
   if (!doUsuario) throw new ErroImportacao(`O time ${escolha.time} não existe no pacote.`)
+  if (doUsuario.jogadores.length < JOGADORES_EM_CAMPO) {
+    throw new ErroImportacao(`${doUsuario.nome} tem ${doUsuario.jogadores.length} jogador(es); para dirigir um time ele precisa de pelo menos ${JOGADORES_EM_CAMPO}.`)
+  }
   if (!escolha.tecnico.trim()) throw new ErroImportacao('Informe o nome do técnico.')
 
   const arquivos: [string, string][] = []
@@ -143,8 +148,14 @@ export function prepararCarreira(pacote: Pacote, escolha: EscolhaCarreira): Dado
   }
 
   const fatorOrcamento = regras.financas.orcamento_dificuldade[escolha.dificuldade]
+  const competicoes = aplicarDivisoes(pacote.competicoes, pacote.divisoes)
+  const ligas = ligasDosTimes(competicoes)
   const times: LinhaTime[] = pacote.times.map((t) => {
     const padrao = regras.padrao_por_porte[t.porte]
+    // Sem finanças no pacote: saldo e folha do padrão do porte × o fator da divisão inicial (06, "Orçamento pela
+    // divisão"). O patrocínio fica o do porte: a folha mínima de um elenco não cai com a divisão.
+    const divisao = t.pais === 'BRA' ? fatorOrcamentoDivisao(ligas.get(t.sigla) ?? [], regras) : 1
+    const padraoDivisao = (v: number) => Math.round((v * divisao) / 100_000) * 100_000
     const escudo = `pacote/escudos/${t.sigla}.png`
     arquivos.push([`escudos/${t.sigla}.png`, escudo])
     const bandeira = t.bandeira?.['arquivo']
@@ -163,9 +174,9 @@ export function prepararCarreira(pacote: Pacote, escolha: EscolhaCarreira): Dado
       ingresso: t.estadio?.ingresso_padrao ?? padrao.ingresso_padrao,
       custo_por_jogo: t.estadio?.custo_por_jogo ?? padrao.custo_por_jogo,
       // Dificuldade ajusta o orçamento inicial do time do usuário (±25%).
-      saldo: Math.round((t.financas?.saldo_inicial ?? padrao.saldo_inicial) * (t.sigla === escolha.time ? fatorOrcamento : 1)),
+      saldo: Math.round((t.financas?.saldo_inicial ?? padraoDivisao(padrao.saldo_inicial)) * (t.sigla === escolha.time ? fatorOrcamento : 1)),
       patrocinio_temporada: t.financas?.patrocinio_temporada ?? padrao.patrocinio_temporada,
-      orcamento_folha_mensal: Math.round((t.financas?.orcamento_folha_mensal ?? padrao.orcamento_folha_mensal) * (t.sigla === escolha.time ? fatorOrcamento : 1)),
+      orcamento_folha_mensal: Math.round((t.financas?.orcamento_folha_mensal ?? padraoDivisao(padrao.orcamento_folha_mensal)) * (t.sigla === escolha.time ? fatorOrcamento : 1)),
       kit: copiarKit(t.kit),
       kit_reserva: copiarKit(t.kit_reserva),
       kit_goleiro: copiarKit(t.kit_goleiro),

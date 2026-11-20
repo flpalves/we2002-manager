@@ -4,7 +4,7 @@ import { criarRng } from '@core/rng'
 import type { Competicao } from '@shared/esquemas/pacote'
 import { gerarTemporada, jogarPasso, temporadaEncerrada } from '@core/competicoes/temporada'
 import { Disciplinas } from '@core/competicoes/suspensoes'
-import { criarSimuladorMotor, Elencos, prioridadeDe, type JogadorCarreira } from '@core/partida/sessao'
+import { criarSimuladorMotor, Elencos, prioridadeDe, resultadoWo, type JogadorCarreira } from '@core/partida/sessao'
 import { elencoSintetico } from '../helpers/elencos'
 
 const siglas = Array.from({ length: 16 }, (_, i) => `T${String(i + 1).padStart(2, '0')}`)
@@ -28,9 +28,9 @@ const competicoes = new Map([
   [copa.id, copa],
 ])
 
-function montar(semente: number) {
+function montar(semente: number, semElenco: readonly string[] = []) {
   const rng = criarRng(semente)
-  const jogadores: JogadorCarreira[] = siglas.flatMap((s, i) => elencoSintetico(`${s}-`, rng.derivar(s), 9 + (i % 5)).map((j) => ({ ...j, time: s, lesaoDias: 0, potencial: 16 })))
+  const jogadores: JogadorCarreira[] = siglas.flatMap((s, i) => elencoSintetico(`${s}-`, rng.derivar(s), 9 + (i % 5)).map((j) => ({ ...j, time: s, lesaoDias: 0, potencial: 16 }))).filter((j) => !semElenco.includes(j.time))
   const elencos = new Elencos(jogadores, new Map(siglas.map((s) => [s, { formacao: '4-4-2A', entrosamento: 50, ocupacao: 0.6, foco: null }])), new Disciplinas())
   const estado = gerarTemporada({
     temporada: 2026,
@@ -133,5 +133,29 @@ describe('temporada com o motor e a IA (sessão)', () => {
     expect(prioridadeDe(copa)).toBe('copa')
     expect(prioridadeDe({ ...liga, tipo: 'estadual' })).toBe('estadual')
     expect(prioridadeDe({ ...liga, tipo: 'continental' })).toBe('continental')
+  })
+})
+
+describe('W.O. de time sem elenco', () => {
+  it('quem não tem 11 jogadores perde por 3 × 0 e a temporada fecha', () => {
+    const { elencos, estado } = montar(5, ['T16'])
+    const simular = criarSimuladorMotor({ elencos, competicoes, regras: PADROES, semente: 5 })
+    const ctx = { competicoes, regras: PADROES, rng: criarRng(5) }
+    while (!temporadaEncerrada(estado)) jogarPasso(estado, simular, ctx)
+    const doT16 = estado.partidas.filter((p) => p.casa === 'T16' || p.visitante === 'T16')
+    expect(doT16.length).toBeGreaterThan(0)
+    for (const p of doT16) {
+      const r = p.resultado!
+      expect(p.casa === 'T16' ? [r.golsCasa, r.golsVisitante] : [r.golsVisitante, r.golsCasa]).toEqual([0, 3])
+      expect(r.detalhe).toBeUndefined()
+    }
+  })
+
+  it('os dois sem elenco: 0 × 0; no jogo que fecha o mata-mata, o mandante passa nos pênaltis', () => {
+    const p = { id: 'x', edicao: 'e', fase: 'f', grupo: null, rodada: 0, confronto: 'c', jogo: 1, casa: 'A', visitante: 'B', passo: 0 } as never
+    expect(resultadoWo(p, false, false, { mataMata: null })).toEqual({ golsCasa: 0, golsVisitante: 0 })
+    const regra = { jogos: 1, gol_fora: false, prorrogacao: true, penaltis: true } as never
+    expect(resultadoWo(p, false, false, { mataMata: { regra, anteriores: [] } })).toMatchObject({ penaltisCasa: 1, penaltisVisitante: 0 })
+    expect(resultadoWo(p, false, true, { mataMata: { regra, anteriores: [] } })).toEqual({ golsCasa: 0, golsVisitante: 3 })
   })
 })

@@ -39,6 +39,8 @@ export type TimeResumo = z.infer<typeof TimeResumoSchema>
 export const CalendarioSchema = z.object({
   temporada: z.number().int(),
   passoAtual: z.number().int(),
+  /** Última semana que já passou (0 = nenhuma): o Continuar anda uma por vez. */
+  semanaAtual: z.number().int(),
   encerrada: z.boolean(),
   passos: z.array(
     z.object({
@@ -163,6 +165,8 @@ export const ContratoAcabandoSchema = z.object({
   posicao: z.string(),
   idade: z.number().int(),
   geral: z.number(),
+  /** Assinou pré-contrato com este clube (nome): sai na virada. */
+  preContrato: z.string().nullable().optional(),
 })
 export type ContratoAcabando = z.infer<typeof ContratoAcabandoSchema>
 
@@ -184,6 +188,11 @@ export const PreviaViradaSchema = BalancoTemporadaSchema.extend({
   /** Quantos dos que acabam a diretoria renova por 1 temporada para o elenco não ficar abaixo do mínimo. */
   minimoElenco: z.number().int(),
   elencoAtual: z.number().int(),
+  /** Ainda dá para renovar (antes da semana limite de renovação). */
+  renovacaoAberta: z.boolean().optional(),
+  semanaLimiteRenovacao: z.number().int().optional(),
+  /** Quem chega por pré-contrato na virada. */
+  chegam: z.array(z.object({ id: z.string(), nome: z.string(), posicao: z.string(), de: z.string() })).optional(),
 })
 export type PreviaVirada = z.infer<typeof PreviaViradaSchema>
 
@@ -197,6 +206,8 @@ export const RelatorioTemporadaSchema = BalancoTemporadaSchema.extend({
   saidas: z.array(z.string()),
   renovadosPelaDiretoria: z.array(z.string()),
   voltaramDeEmprestimo: z.array(z.string()),
+  /** Chegaram ao clube do usuário por pré-contrato. */
+  chegaramPorPreContrato: z.array(z.string()).optional(),
   proximaTemporada: z.number().int(),
 })
 export type RelatorioTemporada = z.infer<typeof RelatorioTemporadaSchema>

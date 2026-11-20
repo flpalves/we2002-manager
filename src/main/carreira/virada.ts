@@ -1,16 +1,17 @@
 import { criarRng } from '@core/rng'
 import { temporadaEncerrada } from '@core/competicoes/temporada'
-import { participantesSeguintes } from '@core/competicoes/virada'
+import { ehSegundaDivisao, nomeSegundaDivisao, participantesSeguintes, type OpcoesVirada } from '@core/competicoes/virada'
 import { fecharMetas, metaAtingida, type Meta } from '@core/diretoria/diretoria'
 import { geral } from '@core/jogadores/conversao'
-import { cpuRenova } from '@core/mercado/contratos'
 import { viradaExterior } from '@core/mercado/exterior'
+import { ajustarPelaDivisao, ligasDosTimes } from '@core/mercado/nivel'
+import type { Regras } from '@core/config/padroes'
 import * as info from '@core/noticias/informativas'
 import type { Atributos, Competicao } from '@shared/esquemas/pacote'
 import type { BalancoTemporada, ContratoAcabando, PreviaVirada, RelatorioTemporada } from '@shared/esquemas/temporada'
 import { ErroApp } from '../ipc/registrar'
 import type { Sql } from '../db/sql'
-import { camisaLivre } from './mercado'
+import { camisaLivre, semanaAgora } from './mercado'
 import { registrarInfo } from './noticias'
 import { abrirSessao, artilharia, chaveClassificados, exigirEmpregado, garantirTemporada } from './temporada'
 
@@ -22,8 +23,9 @@ import { abrirSessao, artilharia, chaveClassificados, exigirEmpregado, garantirT
  *  1. recesso (recuperação, treino e salários das semanas que sobram);
  *  2. balanço (campeões, acesso/rebaixamento, artilheiros, campanha do usuário);
  *  3. metas da diretoria fechadas (confiança; meta crítica perdida = demissão);
- *  4. contratos: empréstimos voltam; a CPU renova ou libera; os do usuário que não
- *     renovou ficam livres (o elenco nunca cai abaixo do mínimo: a diretoria renova 1 ano);
+ *  4. contratos: os pré-contratos mudam de clube; empréstimos voltam; quem a CPU não renovou
+ *     na semana limite sai livre; os do usuário que não renovou ficam livres (o elenco dele
+ *     nunca cai abaixo do mínimo: a diretoria renova 1 ano; a CPU completa na semana 1);
  *  5. participantes da próxima temporada, idade +1, cartões zerados;
  *  6. temporada nova: calendário e sorteios, valores de mercado, metas.
  */
@@ -61,9 +63,14 @@ const geralDe = (l: { atributos: string; posicao: string }, s: Sessao) => geral(
 
 function balanco(sql: Sql, s: Sessao): BalancoTemporada {
   const { d, estado } = s
-  const nomeComp = (id: string) => d.competicoes.get(id)?.nome ?? id
+  const nomeComp = (id: string) => {
+    const c = d.competicoes.get(ehSegundaDivisao(id) ? id.slice(0, -2) : id)
+    if (!c) return id
+    return ehSegundaDivisao(id) ? nomeSegundaDivisao(c) : c.nome
+  }
   const atuais = participantesAtuais(s)
-  const { movimentos } = participantesSeguintes([...d.competicoes.values()], atuais, estado.edicoes)
+  const seguintes = participantesSeguintes([...d.competicoes.values()], atuais, estado.edicoes, opcoesVirada(sql, s))
+  const movimentos = [...seguintes.movimentos, ...seguintes.segundaDivisao]
   const campeoes: BalancoTemporada['campeoes'] = []
   const artilheiros: BalancoTemporada['artilheiros'] = []
   const campanhas: BalancoTemporada['campanhas'] = []
@@ -86,6 +93,15 @@ function balanco(sql: Sql, s: Sessao): BalancoTemporada {
   }
 }
 
+/**
+ * Clubes do pacote e sorteio das segundas divisões fantasmas (o mesmo na prévia e na virada:
+ * a prévia mostra quem vai subir).
+ */
+function opcoesVirada(sql: Sql, s: Sessao): OpcoesVirada {
+  const clubes = sql.all<{ sigla: string; estado: string | null }>('SELECT sigla, estado FROM time ORDER BY sigla')
+  return { clubes, rng: criarRng(s.d.semente).derivar('virada', s.d.temporada) }
+}
+
 /** Participantes desta temporada: as edições geradas (lista e classificados). */
 function participantesAtuais(s: Sessao): Record<string, string[]> {
   const r: Record<string, string[]> = {}
@@ -99,14 +115,29 @@ const elencoDe = (sql: Sql, sigla: string) =>
 export function previaVirada(sql: Sql): PreviaVirada {
   const s = abrirSessao(sql)
   exigirEncerrada(s)
-  const doUsuario: ContratoAcabando[] = contratosAcabando(sql, s.d.temporada)
+  const T = s.d.temporada
+  const destino = new Map(sql.all<{ id: number; para: string }>('SELECT jogador_id id, para FROM pre_contrato WHERE temporada = ?', T).map((x) => [x.id, x.para]))
+  const doUsuario: ContratoAcabando[] = contratosAcabando(sql, T)
     .filter((l) => l.sigla === s.d.timeUsuario)
-    .map((l) => ({ id: String(l.id), nome: l.nome, posicao: l.posicao, idade: l.idade, geral: geralDe(l, s) }))
+    .map((l) => {
+      const para = destino.get(l.id)
+      return { id: String(l.id), nome: l.nome, posicao: l.posicao, idade: l.idade, geral: geralDe(l, s), preContrato: para ? nomeTime(sql, para) : null }
+    })
+  const limite = s.d.regras.mercado.pre_contrato.semana_limite_renovacao
+  const chegam = sql
+    .all<{ id: number; nome: string; posicao: string; de: string }>(
+      'SELECT j.id, j.nome, j.posicao, pc.de FROM pre_contrato pc JOIN jogador j ON j.id = pc.jogador_id WHERE pc.temporada = ? AND pc.para = ? ORDER BY j.nome',
+      T, s.d.timeUsuario,
+    )
+    .map((x) => ({ id: String(x.id), nome: x.nome, posicao: x.posicao, de: nomeTime(sql, x.de) }))
   return {
     ...balanco(sql, s),
     contratosAcabando: doUsuario,
     minimoElenco: s.d.regras.mercado.elenco_minimo,
     elencoAtual: elencoDe(sql, s.d.timeUsuario),
+    renovacaoAberta: semanaAgora(sql) <= limite,
+    semanaLimiteRenovacao: limite,
+    chegam,
   }
 }
 
@@ -122,7 +153,8 @@ export function virarTemporada(sql: Sql): RelatorioTemporada {
   const { d } = s
   const T = d.temporada
   const semanas = d.regras.temporada.semanas_por_temporada
-  const ultimaSemana = s.estado.passos.at(-1)?.semana ?? 0
+  // Última semana que já correu (passos e semanas sem jogo avançadas pelo Continuar).
+  const ultimaSemana = Math.max(s.semanaProcessada(), s.estado.passos.at(-1)?.semana ?? 0)
   let relatorio!: RelatorioTemporada
 
   sql.transacao(() => {
@@ -148,13 +180,21 @@ export function virarTemporada(sql: Sql): RelatorioTemporada {
     const c = resolverContratos(sql, s)
 
     // 5. Participantes, idade e cartões.
-    const seguintes = participantesSeguintes([...d.competicoes.values()], participantesAtuais(s), s.estado.edicoes)
+    const seguintes = participantesSeguintes([...d.competicoes.values()], participantesAtuais(s), s.estado.edicoes, opcoesVirada(sql, s))
+    const novas = new Map(d.competicoes)
     for (const comp of d.competicoes.values()) {
       const lista = seguintes.participantes[comp.id]
       if (comp.participantes.regra !== 'lista' || !lista) continue
-      const nova: Competicao = { ...comp, participantes: { ...comp.participantes, times: lista } }
+      const aptos = seguintes.aptos[comp.id]
+      const nova: Competicao = {
+        ...comp,
+        participantes: { ...comp.participantes, times: lista },
+        ...(aptos && comp.segunda_divisao && { segunda_divisao: { ...comp.segunda_divisao, times: aptos } }),
+      }
       sql.run('UPDATE competicao SET definicao = ? WHERE id = ?', JSON.stringify(nova), comp.id)
+      novas.set(comp.id, nova)
     }
+    orcamentoPelaDivisao(sql, d.regras, ligasDosTimes(d.competicoes), ligasDosTimes(novas))
     const classificados = Object.fromEntries(
       [...d.competicoes.values()].filter((x) => x.participantes.regra === 'classificados_de').map((x) => [x.id, seguintes.participantes[x.id] ?? []]),
     )
@@ -177,16 +217,29 @@ export function virarTemporada(sql: Sql): RelatorioTemporada {
       saidas: c.saidas,
       renovadosPelaDiretoria: c.renovadosPelaDiretoria,
       voltaramDeEmprestimo: c.voltaram,
+      chegaramPorPreContrato: c.chegaram,
       proximaTemporada: T + 1,
     }
     sql.run('INSERT OR REPLACE INTO relatorio_temporada (temporada, dados) VALUES (?, ?)', T, JSON.stringify(relatorio))
 
     // 6. Temporada nova.
-    sql.run('UPDATE carreira SET temporada_atual = ?, passo_atual = 0, semana_atual = 1, movimentos = ?', T + 1, d.regras.mercado.movimentos_por_jogo)
+    sql.run('UPDATE carreira SET temporada_atual = ?, passo_atual = 0, semana_atual = 1, semana_processada = 0, dia_atual = 0, movimentos = ?', T + 1, d.regras.mercado.movimentos_por_jogo)
     garantirTemporada(sql)
     registrarInfo(sql, T + 1, 1, info.novaTemporada(T + 1))
   })
   return relatorio
+}
+
+/**
+ * Orçamento pela divisão (06): quem sobe ou desce tem o orçamento da folha ajustado pelo fator da
+ * divisão nova (o clube do usuário também). Saldo e patrocínio não mudam (a cota de TV já muda).
+ */
+function orcamentoPelaDivisao(sql: Sql, regras: Regras, antes: ReadonlyMap<string, string[]>, depois: ReadonlyMap<string, string[]>): void {
+  const times = sql.all<{ sigla: string; orcamento_folha_mensal: number }>("SELECT sigla, orcamento_folha_mensal FROM time WHERE pais = 'BRA'")
+  for (const t of times) {
+    const folha = ajustarPelaDivisao(t.orcamento_folha_mensal, antes.get(t.sigla) ?? [], depois.get(t.sigla) ?? [], regras)
+    if (folha !== t.orcamento_folha_mensal) sql.run('UPDATE time SET orcamento_folha_mensal = ? WHERE sigla = ?', folha, t.sigla)
+  }
 }
 
 /**
@@ -246,10 +299,19 @@ function resolverContratos(sql: Sql, s: Sessao) {
   const T = d.temporada
   const semanas = d.regras.temporada.semanas_por_temporada
   const v = d.regras.virada
-  const rng = criarRng(d.semente).derivar('virada', T)
   const saidas: string[] = []
   const renovadosPelaDiretoria: string[] = []
   const voltaram: string[] = []
+
+  // Fim de contrato: se a temporada acabou antes da semana limite, a CPU decide as renovações
+  // agora; a virada é a última data dos pré-contratos (a CPU fecha os que faltam).
+  const eco = s.economia()
+  const rngFim = criarRng(d.semente).derivar('pre_contrato', T, 'virada')
+  eco.renovarCpu(rngFim.derivar('renovacao'))
+  eco.preContratos(semanas, rngFim.derivar('rodada'), 1)
+  // Só os contratos: saldos e confiança já foram gravados (e as metas mexeram na confiança).
+  eco.gravarContratos()
+  const { chegaram, sairam } = aplicarPreContratos(sql, s)
 
   const acabando = contratosAcabando(sql, T)
   // Empréstimos: volta ao clube de origem com contrato novo (mesmo salário).
@@ -270,20 +332,20 @@ function resolverContratos(sql: Sql, s: Sessao) {
   for (const l of acabando.filter((x) => x.tipo === 'definitivo' || !x.origem)) porTime.set(l.sigla, [...(porTime.get(l.sigla) ?? []), l])
   const saidosDoUsuario: string[] = []
   for (const [sigla, lista] of porTime) {
-    const elenco = sql.all<{ posicao: string; atributos: string }>(
-      "SELECT j.posicao, j.atributos FROM jogador j JOIN time t ON t.id = j.time_id WHERE t.sigla = ? AND j.status = 'ativo'",
+    const elenco = sql.all<{ posicao: string }>(
+      "SELECT j.posicao FROM jogador j JOIN time t ON t.id = j.time_id WHERE t.sigla = ? AND j.status = 'ativo'",
       sigla,
     )
-    const gerais = elenco.map((j) => geralDe(j, s))
     let tamanho = elenco.length
     let goleiros = elenco.filter((j) => j.posicao === 'GK').length
     const usuario = sigla === d.timeUsuario
-    // Quem a CPU quer manter (sorteio); o usuário só fica com quem renovou antes da virada.
-    const decisao = lista.map((l) => ({ l, geral: geralDe(l, s), fica: !usuario && cpuRenova({ id: String(l.id), idade: l.idade, geral: geralDe(l, s) }, gerais, d.regras, rng) }))
+    // A CPU já decidiu quem renova na semana limite: quem sobrou sai (a semana 1 completa o
+    // elenco com livres). O usuário só fica com quem renovou, e a diretoria garante o mínimo.
+    const decisao = lista.map((l) => ({ l, geral: geralDe(l, s), fica: false }))
     // Os piores saem primeiro; os demais só saem se o elenco continuar completo.
     for (const x of decisao.sort((a, b) => a.geral - b.geral || a.l.id - b.l.id)) {
       const gk = x.l.posicao === 'GK'
-      const podeSair = tamanho - 1 >= d.regras.mercado.elenco_minimo && (!gk || goleiros - 1 >= 2)
+      const podeSair = !usuario || (tamanho - 1 >= d.regras.mercado.elenco_minimo && (!gk || goleiros - 1 >= 2))
       if (!x.fica && podeSair) {
         sql.run("UPDATE jogador SET time_id = NULL, status = 'livre', a_venda = NULL WHERE id = ?", x.l.id)
         sql.run('DELETE FROM contrato WHERE jogador_id = ?', x.l.id)
@@ -300,7 +362,47 @@ function resolverContratos(sql: Sql, s: Sessao) {
     }
   }
   if (saidosDoUsuario.length) registrarInfo(sql, T, semanas, info.contratosEncerrados(saidosDoUsuario))
-  saidas.push(...saidosDoUsuario)
+  saidas.push(...sairam, ...saidosDoUsuario)
   // Escalação salva do usuário: quem saiu é trocado pela IA na mesma vaga (aplicarEscalacaoSalva).
-  return { saidas, renovadosPelaDiretoria, voltaram }
+  return { saidas, renovadosPelaDiretoria, voltaram, chegaram }
+}
+
+/**
+ * Pré-contratos da temporada: o jogador muda para o clube novo com o contrato combinado (sem
+ * taxa). Registra a transferência, a saída para a IA de mercado repor e a notícia do usuário.
+ */
+function aplicarPreContratos(sql: Sql, s: Sessao): { chegaram: string[]; sairam: string[] } {
+  const { d } = s
+  const T = d.temporada
+  const semanas = d.regras.temporada.semanas_por_temporada
+  const chegaram: string[] = []
+  const sairam: string[] = []
+  const linhas = sql.all<{ id: number; nome: string; camisa: number; de: string; para: string; salario_mensal: number; ate_temporada: number; semana: number }>(
+    `SELECT j.id, j.nome, j.camisa, pc.de, pc.para, pc.salario_mensal, pc.ate_temporada, pc.semana
+       FROM pre_contrato pc JOIN jogador j ON j.id = pc.jogador_id JOIN time t ON t.id = j.time_id
+      WHERE pc.temporada = ? AND t.sigla = pc.de AND j.status = 'ativo'
+      ORDER BY j.id`,
+    T,
+  )
+  for (const l of linhas) {
+    sql.run('UPDATE jogador SET time_id = (SELECT id FROM time WHERE sigla = ?), camisa = ?, a_venda = NULL WHERE id = ?', l.para, camisaLivre(sql, l.para, l.camisa, l.id), l.id)
+    sql.run('DELETE FROM contrato WHERE jogador_id = ?', l.id)
+    // Multa 0: a temporada nova recalcula pelo valor (recalcularValores).
+    sql.run(
+      "INSERT INTO contrato (jogador_id, time_id, salario_mensal, ate_temporada, multa, tipo) VALUES (?, (SELECT id FROM time WHERE sigla = ?), ?, ?, 0, 'definitivo')",
+      l.id, l.para, l.salario_mensal, l.ate_temporada,
+    )
+    sql.run("INSERT INTO transferencia (temporada, semana, jogador_id, de, para, tipo, valor, salario) VALUES (?, ?, ?, ?, ?, 'pre_contrato', 0, ?)", T, semanas, l.id, l.de, l.para, l.salario_mensal)
+    sql.run("INSERT INTO saida_elenco (temporada, time, jogador_id, motivo) VALUES (?, ?, ?, 'pre_contrato')", T + 1, l.de, l.id)
+    if (l.para === d.timeUsuario) {
+      chegaram.push(l.nome)
+      registrarInfo(sql, T, semanas, info.preContrato({ jogador: l.nome, jogadorId: String(l.id), de: nomeTime(sql, l.de), para: nomeTime(sql, l.para), doUsuario: 'chega' }))
+    }
+    if (l.de === d.timeUsuario) {
+      sairam.push(l.nome)
+      // Os assinados antes já viraram notícia na data; os da virada (última rodada), agora.
+      if (l.semana >= semanas) registrarInfo(sql, T, semanas, info.preContrato({ jogador: l.nome, jogadorId: String(l.id), de: nomeTime(sql, l.de), para: nomeTime(sql, l.para), doUsuario: 'sai' }))
+    }
+  }
+  return { chegaram, sairam }
 }

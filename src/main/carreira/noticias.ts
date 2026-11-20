@@ -6,9 +6,11 @@ import { catalogoPadrao } from '@core/noticias/catalogoPadrao'
 import { aplicarEfeito, sortearEventos, type AlvoEfeitos, type ContextoNoticias, type EfeitoAplicado, type EfeitoConcreto, type Ocorrencia, type PartidaNoticia } from '@core/noticias/motor'
 import type { NoticiaInfo } from '@core/noticias/informativas'
 import { dinheiro } from '@shared/dinheiro'
-import { CatalogoSchema, type CaixaNoticias, type EventoCatalogo, type Momento, type Noticia, type TipoNoticia } from '@shared/esquemas/noticias'
+import { CatalogoSchema, type CaixaNoticias, type Destaques, type EventoCatalogo, type Momento, type Noticia, type TipoNoticia } from '@shared/esquemas/noticias'
 import { ROTULO_ATRIBUTO, type Atributo } from '@shared/esquemas/pacote'
 import type { Economia } from './economia'
+import { propostas as propostasAbertas } from './mercado'
+import { destaques } from '@core/noticias/destaques'
 import { ErroApp } from '../ipc/registrar'
 import type { Sql } from '../db/sql'
 
@@ -286,6 +288,27 @@ export function caixa(sql: Sql, filtro: { tipo?: TipoNoticia; limite?: number } 
     naoLidas: sql.get<{ n: number }>('SELECT COUNT(*) n FROM noticia WHERE lida = 0')?.n ?? 0,
     pendentes: pendentes(sql),
   }
+}
+
+/**
+ * Volta do jogo: as notícias que mexem com o clube desde a semana `desdeSemana` (ver
+ * core/noticias/destaques.ts) e as propostas abertas pelos jogadores do usuário.
+ */
+export function destaquesDoJogo(sql: Sql, desdeSemana: number): Destaques {
+  const c = sql.get<{ temporada_atual: number; time_usuario: string }>('SELECT temporada_atual, time_usuario FROM carreira')!
+  const nome = sql.get<{ nome_curto: string }>('SELECT nome_curto FROM time WHERE sigla = ?', c.time_usuario)?.nome_curto ?? c.time_usuario
+  const jogadores = new Set(
+    sql.all<{ id: number }>("SELECT j.id FROM jogador j JOIN time t ON t.id = j.time_id WHERE t.sigla = ? AND j.status = 'ativo'", c.time_usuario).map((j) => String(j.id)),
+  )
+  const abertas = propostasAbertas(sql)
+  const lista = destaques(caixa(sql, { limite: 300 }).noticias, {
+    temporada: c.temporada_atual,
+    desdeSemana,
+    timeUsuario: { sigla: c.time_usuario, nome },
+    jogadoresDoUsuario: jogadores,
+    jogadoresComProposta: new Set(abertas.map((p) => p.jogadorId)),
+  })
+  return { noticias: lista, propostas: abertas }
 }
 
 /** Marca como lidas (as pendentes só saem com a resposta). */

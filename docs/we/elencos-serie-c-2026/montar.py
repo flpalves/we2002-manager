@@ -35,7 +35,7 @@ CLUBES = {
  "barra-sc": ("BAR", "Barra-SC", "BARRA", "SC", "pequeno", ["#1F4FA8", "#F2F2F2"], ("Arena Barra FC", 5500), 21, 0.0),
  "anapolis": ("ANA", "Anápolis", "ANAPOLIS", "GO", "pequeno", ["#C8102E", "#151515", "#F2F2F2"], ("Jonas Duarte", 17800), 19, 0.0),
  "itabaiana": ("ITA", "Itabaiana", "ITABAIANA", "SE", "pequeno", ["#1F4FA8", "#C8102E", "#F2F2F2"], ("Mendonção", 12000), 17, 0.0),
- "confianca": ("CON", "Confiança", "CONFIANCA", "SE", "pequeno", ["#1F5FBF", "#F2F2F2"], ("Batistão", 15500), 13, 0.0),
+ "confianca": ("ADC", "Confiança", "CONFIANCA", "SE", "pequeno", ["#1F5FBF", "#F2F2F2"], ("Batistão", 15500), 13, 0.0),
 }
 # Valores em centavos. (saldo, patrocínio/temporada, orçamento da folha mensal, ingresso, custo por jogo, salário titular, salário reserva)
 # Série C abaixo da Série B (B: médio 12 mi / 20 mi / 3,5 mi; pequeno 3 mi / 6 mi / 1,1 mi).

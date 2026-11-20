@@ -45,3 +45,4 @@ Ruído do futebol, separado do catálogo: não gera notícia, só entra no hist�
 
 - Caixa de notícias com filtro por tipo e etiqueta colorida (`we-tag`); as mais recentes no painel inicial.
 - Notícias com escolha aparecem em destaque e bloqueiam o Continuar até a resposta.
+- **Volta do jogo**: a súmula aberta logo depois do jogo do usuário mostra **Destaques da rodada**: as propostas abertas pelos jogadores dele (com valor, valor de mercado e prazo, e atalho para Mercado > Propostas) e as notícias importantes desde a semana do jogo (decisões pendentes primeiro; elenco, diretoria, finanças, eventos do catálogo, e mercado/competição que citem o clube ou um jogador dele; o resultado do jogo fica de fora). A regra está em `src/core/noticias/destaques.ts`.

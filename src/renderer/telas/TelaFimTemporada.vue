@@ -123,7 +123,9 @@ async function virar(): Promise<void> {
         <p v-if="!previa.contratosAcabando.length" class="vazio">Nenhum contrato do seu elenco termina agora.</p>
         <template v-else>
           <p class="aviso">
-            Quem não for renovado em Mercado sai livre na virada.
+            {{ previa.renovacaoAberta === false
+              ? `O prazo de renovação (semana ${previa.semanaLimiteRenovacao}) acabou: quem não renovou sai na virada (livre ou pelo pré-contrato).`
+              : 'Quem não for renovado em Mercado sai livre na virada.' }}
             {{ sairiam < previa.contratosAcabando.length
               ? `O elenco não pode ficar com menos de ${previa.minimoElenco}: a diretoria renova por 1 temporada os melhores que faltarem (sairiam ${sairiam}).`
               : '' }}
@@ -135,11 +137,24 @@ async function virar(): Promise<void> {
                 <td class="we-lb">{{ nomePosicao(j.posicao) }}</td>
                 <td class="we-lb">{{ j.idade }} anos</td>
                 <td>{{ j.geral.toFixed(1) }}</td>
-                <td><WeBotao icone="contrato" @click="router.push({ name: 'mercado', query: { renovar: j.id } })">Renovar</WeBotao></td>
+                <td v-if="j.preContrato"><WeTag tipo="atencao">Pré-contrato com o {{ j.preContrato }}</WeTag></td>
+                <td v-else-if="previa.renovacaoAberta === false"><WeTag tipo="negativo">Sai livre</WeTag></td>
+                <td v-else><WeBotao icone="contrato" @click="router.push({ name: 'mercado', query: { renovar: j.id } })">Renovar</WeBotao></td>
               </tr>
             </tbody>
           </WeTabela>
         </template>
+      </WePainel>
+      <WePainel v-if="previa.chegam?.length" titulo="Chegam por pré-contrato" sem-corpo>
+        <WeTabela>
+          <tbody>
+            <tr v-for="j in previa.chegam" :key="j.id">
+              <td>{{ j.nome }}</td>
+              <td class="we-lb">{{ nomePosicao(j.posicao) }}</td>
+              <td class="we-lb">do {{ j.de }}</td>
+            </tr>
+          </tbody>
+        </WeTabela>
       </WePainel>
       <div class="acoes">
         <WeBotao icone="continuar" variante="principal" :desabilitado="ocupado" data-foco-inicial @click="virar">Iniciar a temporada {{ previa.temporada + 1 }}</WeBotao>
@@ -160,7 +175,8 @@ async function virar(): Promise<void> {
         <p>Confiança: {{ relatorio.confianca }}% · Saldo: {{ dinheiro(relatorio.saldo) }}</p>
         <p v-if="relatorio.demitido" class="aviso">Você foi demitido. Escolha um novo clube em Clube e diretoria.</p>
       </WePainel>
-      <WePainel v-if="relatorio.saidas.length || relatorio.renovadosPelaDiretoria.length || relatorio.voltaramDeEmprestimo.length" titulo="Contratos">
+      <WePainel v-if="relatorio.saidas.length || relatorio.renovadosPelaDiretoria.length || relatorio.voltaramDeEmprestimo.length || relatorio.chegaramPorPreContrato?.length" titulo="Contratos">
+        <p v-if="relatorio.chegaramPorPreContrato?.length">Chegaram por pré-contrato: {{ relatorio.chegaramPorPreContrato.join(', ') }}.</p>
         <p v-if="relatorio.saidas.length">Saíram: {{ relatorio.saidas.join(', ') }}.</p>
         <p v-if="relatorio.renovadosPelaDiretoria.length">Renovados por 1 temporada pela diretoria: {{ relatorio.renovadosPelaDiretoria.join(', ') }}.</p>
         <p v-if="relatorio.voltaramDeEmprestimo.length">Voltaram de empréstimo: {{ relatorio.voltaramDeEmprestimo.join(', ') }}.</p>

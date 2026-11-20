@@ -6,6 +6,8 @@ import WeBotao from '../../componentes/WeBotao.vue'
 import WeTag from '../../componentes/WeTag.vue'
 import CampoDinheiro from '../../componentes/CampoDinheiro.vue'
 import CamposJogador from './CamposJogador.vue'
+import FiltroJogadores from './FiltroJogadores.vue'
+import { filtrarJogadores } from '../../busca'
 import { useEditor } from '../../stores/editor'
 import { useUi } from '../../stores/ui'
 import { dinheiro } from '../../formato'
@@ -14,6 +16,7 @@ import { copiar, igual } from './rascunho'
 /**
  * Jogadores sem clube do pacote (06, "Jogadores sem clube"): os disponíveis do exterior
  * (`exterior.json`, com clube de origem e taxa fixa) e os livres iniciais (`livres.json`, sem taxa).
+ * Na aba Jogadores, são as origens "Exterior" e "Livres".
  */
 
 const editor = useEditor()
@@ -34,21 +37,24 @@ const invalidos = computed(() => semClube.value?.invalidos ?? [])
 const temporadaInicial = computed(() => editor.aberto?.manifesto?.temporada_inicial ?? 2026)
 
 const busca = ref('')
-const lista = computed<JogadorSemClube[]>(() => (editor.listaSemClube === 'exterior' ? rascunho.value.exterior : rascunho.value.livres))
-const visiveis = computed(() => {
-  const q = busca.value.trim().toLowerCase()
-  return q ? lista.value.filter((j) => j.nome.toLowerCase().includes(q) || j.nome_we.toLowerCase().includes(q)) : lista.value
-})
+const exterior = computed(() => editor.origemJogadores === 'exterior')
+const lista = computed<JogadorSemClube[]>(() => (exterior.value ? rascunho.value.exterior : rascunho.value.livres))
+const visiveis = computed(() => filtrarJogadores(lista.value, busca.value, editor.filtroPosicao))
+const contagens = computed(() => ({ exterior: rascunho.value.exterior.length, livres: rascunho.value.livres.length }))
 
 const jogador = computed(() => lista.value.find((j) => j.id === editor.semClubeSelecionado) ?? null)
-const doExterior = computed(() => (jogador.value && editor.listaSemClube === 'exterior' ? (jogador.value as JogadorExterior) : null))
+const doExterior = computed(() => (jogador.value && exterior.value ? (jogador.value as JogadorExterior) : null))
 watch(
-  [lista, () => editor.listaSemClube],
+  [lista, () => editor.origemJogadores],
   () => {
-    if (!lista.value.some((j) => j.id === editor.semClubeSelecionado)) editor.semClubeSelecionado = lista.value[0]?.id ?? null
+    if (!lista.value.some((j) => j.id === editor.semClubeSelecionado)) editor.semClubeSelecionado = (visiveis.value[0] ?? lista.value[0])?.id ?? null
   },
   { immediate: true },
 )
+// Ao mudar o filtro, se o selecionado sumiu da lista, pega o primeiro visível.
+watch([busca, () => editor.filtroPosicao], () => {
+  if (!visiveis.value.some((j) => j.id === editor.semClubeSelecionado) && visiveis.value[0]) editor.semClubeSelecionado = visiveis.value[0].id
+})
 
 const problemasDe = (id: string) => editor.aberto?.problemas.filter((p) => p.jogador === id) ?? []
 const temErro = (id: string) => problemasDe(id).some((p) => p.nivel === 'erro')
@@ -69,14 +75,13 @@ const ORIGEM_PADRAO = { clube: 'A definir', pais: 'XXX' }
 const TAXA_PADRAO = 100_000_000
 
 function novoJogador(): void {
-  const exterior = editor.listaSemClube === 'exterior'
-  const id = idNovo(exterior ? 'ext' : 'liv')
+  const id = idNovo(exterior.value ? 'ext' : 'liv')
   const n = id.split('-').at(-1)
   const base: JogadorSemClube = {
     id,
     nome: `Novo jogador ${n}`,
     nome_we: `NOVO ${n}`,
-    posicao: 'CF',
+    posicao: editor.filtroPosicao ?? 'CF',
     posicao_secundaria: null,
     idade: 25,
     nacionalidade: 'BRA',
@@ -87,7 +92,7 @@ function novoJogador(): void {
     potencial: 12,
     resistencia: 10,
   }
-  if (exterior) rascunho.value.exterior.push({ ...base, origem: { ...ORIGEM_PADRAO }, taxa: TAXA_PADRAO })
+  if (exterior.value) rascunho.value.exterior.push({ ...base, origem: { ...ORIGEM_PADRAO }, taxa: TAXA_PADRAO })
   else rascunho.value.livres.push(base)
   busca.value = ''
   editor.semClubeSelecionado = id
@@ -95,7 +100,7 @@ function novoJogador(): void {
 
 function tirarDaLista(id: string): void {
   const r = rascunho.value
-  if (editor.listaSemClube === 'exterior') r.exterior = r.exterior.filter((j) => j.id !== id)
+  if (exterior.value) r.exterior = r.exterior.filter((j) => j.id !== id)
   else r.livres = r.livres.filter((j) => j.id !== id)
 }
 
@@ -105,7 +110,7 @@ async function removerJogador(): Promise<void> {
   if (!(await ui.confirmar('Remover jogador', `Remover ${j.nome} dos sem clube? (Só vale depois de salvar.)`, 'Remover', true))) return
   const i = visiveis.value.indexOf(j)
   tirarDaLista(j.id)
-  editor.semClubeSelecionado = visiveis.value[Math.min(i, visiveis.value.length - 1)]?.id ?? null
+  editor.semClubeSelecionado = visiveis.value[Math.min(Math.max(i, 0), visiveis.value.length - 1)]?.id ?? lista.value[0]?.id ?? null
 }
 
 /** Exterior → livre perde origem e taxa; livre → exterior ganha origem e taxa a preencher. */
@@ -113,15 +118,15 @@ function mover(): void {
   const j = jogador.value
   if (!j) return
   tirarDaLista(j.id)
-  if (editor.listaSemClube === 'exterior') {
+  if (exterior.value) {
     const { origem: _origem, taxa: _taxa, ...livre } = j as JogadorExterior
     void _origem
     void _taxa
     rascunho.value.livres.push(livre)
-    editor.listaSemClube = 'livres'
+    editor.origemJogadores = 'livres'
   } else {
     rascunho.value.exterior.push({ ...j, origem: { ...ORIGEM_PADRAO }, taxa: TAXA_PADRAO })
-    editor.listaSemClube = 'exterior'
+    editor.origemJogadores = 'exterior'
   }
   busca.value = ''
   editor.semClubeSelecionado = j.id
@@ -143,16 +148,12 @@ function definirPais(valor: string): void {
     <p class="we-vl--negativo">{{ invalidos.join(' e ') }} não passou no esquema: corrija o arquivo (veja a aba Validação) antes de editar aqui. Gravar agora apagaria o que está nele.</p>
   </WePainel>
   <div class="mestre-detalhe">
-    <WePainel titulo="Sem clube" sem-corpo>
-      <template #extra>{{ rascunho.exterior.length }} exterior · {{ rascunho.livres.length }} livres</template>
+    <WePainel titulo="Jogadores" sem-corpo>
+      <template #extra>{{ visiveis.length }} de {{ lista.length }}</template>
       <div class="we-panel__body">
-        <div class="acoes" role="group" aria-label="Lista">
-          <WeBotao :ativo="editor.listaSemClube === 'exterior'" @click="editor.listaSemClube = 'exterior'">Exterior ({{ rascunho.exterior.length }})</WeBotao>
-          <WeBotao :ativo="editor.listaSemClube === 'livres'" @click="editor.listaSemClube = 'livres'">Livres ({{ rascunho.livres.length }})</WeBotao>
-        </div>
-        <label class="campo busca"><span class="we-lb">Buscar</span><input v-model="busca" type="text" maxlength="40" /></label>
+        <FiltroJogadores v-model:busca="busca" :contagens="contagens" :alterado="alterado" />
         <p class="we-lb dica">
-          {{ editor.listaSemClube === 'exterior' ? 'Jogadores de clubes de fora do jogo: taxa fixa, só na janela de transferências.' : 'Livres iniciais: sem taxa, contratáveis a qualquer momento.' }}
+          {{ exterior ? 'Jogadores de clubes de fora do jogo: taxa fixa, só na janela de transferências.' : 'Livres iniciais: sem taxa, contratáveis a qualquer momento.' }}
         </p>
       </div>
       <div class="lista-itens">
@@ -162,7 +163,7 @@ function definirPais(valor: string): void {
           <span v-if="'taxa' in j" class="taxa we-lb">{{ dinheiro((j as JogadorExterior).taxa) }}</span>
           <WeTag v-if="temErro(j.id)" class="marcador" tipo="negativo">Erro</WeTag>
         </button>
-        <p v-if="!visiveis.length" class="we-lb vazio">{{ lista.length ? 'Nenhum jogador com esse nome.' : 'Nenhum jogador nesta lista.' }}</p>
+        <p v-if="!visiveis.length" class="we-lb vazio">{{ lista.length ? 'Nenhum jogador com esse filtro.' : 'Nenhum jogador nesta lista.' }}</p>
       </div>
       <div class="we-panel__body acoes">
         <WeBotao icone="nova" @click="novoJogador">Novo jogador</WeBotao>
@@ -199,7 +200,7 @@ function definirPais(valor: string): void {
       <div class="acoes rodape-form">
         <WeBotao icone="salvar" :desabilitado="!alterado || editor.ocupado || invalidos.length > 0" @click="salvar">Salvar</WeBotao>
         <WeBotao icone="descartar" :desabilitado="!alterado" @click="rascunho = copiar(original)">Descartar</WeBotao>
-        <WeBotao icone="enviar" @click="mover">{{ editor.listaSemClube === 'exterior' ? 'Tornar livre' : 'Mover para o exterior' }}</WeBotao>
+        <WeBotao icone="enviar" @click="mover">{{ exterior ? 'Tornar livre' : 'Mover para o exterior' }}</WeBotao>
         <WeBotao icone="lixeira" @click="removerJogador">Remover jogador</WeBotao>
       </div>
     </WePainel>
@@ -217,12 +218,6 @@ function definirPais(valor: string): void {
 .taxa {
   margin-left: auto;
   font-variant-numeric: tabular-nums;
-}
-.busca input {
-  width: 100%;
-}
-.busca {
-  margin-top: var(--space-3);
 }
 .dica {
   margin: var(--space-2) 0 0;

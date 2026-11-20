@@ -239,10 +239,33 @@ export const FaseSchema = z.discriminatedUnion('formato', [
 export type Fase = z.infer<typeof FaseSchema>
 
 export const ParticipantesSchema = z.discriminatedUnion('regra', [
-  z.object({ regra: z.literal('lista'), times: z.array(z.string()), quantidade: z.number().int().min(2).optional() }),
+  z.object({
+    regra: z.literal('lista'),
+    times: z.array(z.string()),
+    quantidade: z.number().int().min(2).optional(),
+    /**
+     * Participantes definidos no ano pelas vagas (ex.: Série D; 03-competicoes, "Competições por
+     * vagas"): `times` são só os garantidos (quem chega por acesso/rebaixamento; na 1ª temporada,
+     * os do pacote, em geral nenhum) e `quantidade` é obrigatória. Quando as competições de origem
+     * (as que têm saída para esta) acabam, as vagas delas completam a lista, depois os próximos
+     * colocados de cada origem, um por vez. As rodadas ficam reservadas no calendário até lá.
+     */
+    por_vagas: z.boolean().optional(),
+  }),
   z.object({ regra: z.literal('por_divisao'), divisao: z.string(), quantidade: z.number().int().min(2).optional() }),
   z.object({ regra: z.literal('classificados_de'), origens: z.array(z.string()).min(1), quantidade: z.number().int().min(2).optional() }),
 ])
+
+/** Critério de quem sobe ou desce entre duas divisões (`divisoes.json`). */
+export const CriterioDivisaoSchema = z.discriminatedUnion('criterio', [
+  /** Os N primeiros (sobem) ou os N últimos (descem) da classificação final. */
+  z.object({ criterio: z.literal('posicao') }),
+  /** Entre quem jogou a fase: os N melhores (sobem) ou os N piores (descem) da classificação final. */
+  z.object({ criterio: z.literal('fase'), fase: z.string().min(1) }),
+  /** Em cada grupo da fase: os `por_grupo` primeiros (sobem) ou últimos (descem). */
+  z.object({ criterio: z.literal('grupo'), fase: z.string().min(1), por_grupo: z.number().int().min(1) }),
+])
+export type CriterioDivisao = z.infer<typeof CriterioDivisaoSchema>
 
 /**
  * Saída de uma competição: quem vai para outra (acesso, rebaixamento, vaga).
@@ -256,10 +279,33 @@ export const SaidaSchema = z.object({
   ultimos: z.number().int().min(1).optional(),
   fase: z.string().optional(),
   por_grupo: z.object({ fase: z.string(), lado: z.enum(['primeiros', 'ultimos']), n: z.number().int().min(1) }).optional(),
+  /**
+   * Vaga "pulando" (campeão, posições ou primeiros): a vaga desce a classificação final pulando
+   * quem joga estas competições ou já entrou no destino. Soma-se ao `pula_quem_joga` do destino
+   * (o jeito recomendado, configurado uma vez no destino). Para destino `por_vagas` vale quem as
+   * joga no mesmo ano; para `classificados_de`, quem as joga na próxima temporada.
+   */
+  exceto_de: z.array(z.string()).optional(),
   destino: z.string(),
   tipo: z.string().optional(),
 })
 export type SaidaCompeticao = z.infer<typeof SaidaSchema>
+
+/**
+ * Segunda divisão fantasma de um estadual/regional (03-competicoes): não é jogada. Na virada,
+ * `troca` times caem do estadual (pelo critério `descem`; padrão, os últimos da classificação
+ * final) e o mesmo número sobe, sorteado entre os clubes aptos: os marcados em `times` ou, sem
+ * marcação, os dos `estados` (padrão: os estados dos participantes); menos quem jogou o estadual
+ * e quem está em outro estadual/regional. Quem caiu entra na lista de aptos.
+ */
+export const SegundaDivisaoSchema = z.object({
+  nome: z.string().min(1).optional(),
+  troca: z.number().int().min(1),
+  descem: CriterioDivisaoSchema.optional(),
+  estados: z.array(z.string().regex(/^[A-Z]{2}$/, 'sigla do estado (2 letras)')).optional(),
+  times: z.array(z.string()).optional(),
+})
+export type SegundaDivisao = z.infer<typeof SegundaDivisaoSchema>
 
 export const CompeticaoSchema = z.object({
   id: z.string().regex(/^[a-z0-9-]+$/),
@@ -275,22 +321,30 @@ export const CompeticaoSchema = z.object({
     })
     .optional(),
   substituicoes: z.number().int().min(0).max(5).optional(),
-  premiacao: z.object({ por_fase: z.record(z.string(), Centavos) }).optional(),
+  premiacao: z
+    .object({
+      /** Cota que todo participante recebe ao fim da competição (centavos). */
+      participacao: Centavos.optional(),
+      /** Prêmio por colocação final: [0] = campeão, [1] = vice... (centavos). Quem passa do fim não recebe. */
+      por_posicao: z.array(Centavos).optional(),
+      /** Formato antigo: só "campeao" e "vice" valem (ignorado se houver por_posicao). */
+      por_fase: z.record(z.string(), Centavos).optional(),
+    })
+    .optional(),
   fases: z.array(FaseSchema).min(1),
   saidas: z.array(SaidaSchema).optional(),
+  /** Só estadual/regional com participantes por lista. */
+  segunda_divisao: SegundaDivisaoSchema.optional(),
+  /**
+   * Classificação por vaga (03, "Pular quem joga"): quem joga estas competições não entra por
+   * vaga aqui; a vaga desce para o próximo colocado da origem. Vale para todas as vagas que
+   * chegam (campeão, posições, primeiros). Por vagas: quem as joga no mesmo ano;
+   * `classificados_de`: na próxima temporada. Ex.: Série D pula A, B e C; Sul-Americana pula
+   * a Libertadores.
+   */
+  pula_quem_joga: z.array(z.string()).optional(),
 })
 export type Competicao = z.infer<typeof CompeticaoSchema>
-
-/** Critério de quem sobe ou desce entre duas divisões (`divisoes.json`). */
-export const CriterioDivisaoSchema = z.discriminatedUnion('criterio', [
-  /** Os N primeiros (sobem) ou os N últimos (descem) da classificação final. */
-  z.object({ criterio: z.literal('posicao') }),
-  /** Entre quem jogou a fase: os N melhores (sobem) ou os N piores (descem) da classificação final. */
-  z.object({ criterio: z.literal('fase'), fase: z.string().min(1) }),
-  /** Em cada grupo da fase: os `por_grupo` primeiros (sobem) ou últimos (descem). */
-  z.object({ criterio: z.literal('grupo'), fase: z.string().min(1), por_grupo: z.number().int().min(1) }),
-])
-export type CriterioDivisao = z.infer<typeof CriterioDivisaoSchema>
 
 /**
  * Um degrau da escada. A 1ª divisão só tem `competicao`; as outras dizem quantos trocam

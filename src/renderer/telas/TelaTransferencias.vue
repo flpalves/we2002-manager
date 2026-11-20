@@ -48,7 +48,7 @@ async function carregar(): Promise<void> {
     ui.avisar((e as Error).message)
   }
 }
-watch(() => [time.value, ano.value, carreira.atual?.id, temporada.calendario?.passoAtual], carregar, { immediate: true })
+watch(() => [time.value, ano.value, carreira.atual?.id, temporada.calendario?.passoAtual, temporada.calendario?.semanaAtual], carregar, { immediate: true })
 
 const opcoes = computed(() => [...temporada.times.values()].map((t) => ({ sigla: t.sigla, nome: t.nome, cores: t.cores })))
 const escudo = (sigla: string) => urlArquivoCarreira(temporada.times.get(sigla)?.escudo ?? null)

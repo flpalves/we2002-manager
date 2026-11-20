@@ -1,5 +1,6 @@
 import type { Competicao, CriterioDivisao, Divisoes, Fase, SaidaCompeticao } from '@shared/esquemas/pacote'
 import { tamanhosDasFases } from './fases'
+import { tamanhoDaCompeticao } from './vagas'
 
 /**
  * Escada de divisões (`divisoes.json`, 03-competicoes): acesso e rebaixamento configurados
@@ -40,7 +41,7 @@ export function saidasDaEscada(divisoes: Divisoes): Map<string, SaidaCompeticao[
   return saidas
 }
 
-const tamanhoInicial = (c: Competicao) => (c.participantes.regra === 'lista' ? c.participantes.times.length : (c.participantes.quantidade ?? 0))
+const tamanhoInicial = (c: Competicao) => tamanhoDaCompeticao(c) ?? 0
 
 /**
  * Zona que pinta na tabela quem sobe ou desce, quando o critério cabe numa tabela:

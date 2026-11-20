@@ -174,7 +174,7 @@ Esses são os números de titulares de Série A. Para o reserva e para clube men
 
 ## 6. Kits, bandeira e escudo
 
-**Escudo (obrigatório):** `escudos/SIG.png`, PNG com transparência. Sem ele, o erro `escudo_faltando` bloqueia a carreira. Se o usuário não mandar um, **pare e peça**; não crie um escudo falso de clube real. Para time fictício, um escudo simples nas cores do clube serve, desde que o usuário saiba.
+**Escudo (obrigatório):** `escudos/SIG.png`, PNG com transparência. Sem ele, o aviso `escudo_faltando` aparece e a interface usa o escudo provisório (a carreira não é bloqueada, mas o time fica incompleto). Se o usuário não mandar um, **pare e peça**; não crie um escudo falso de clube real. Para time fictício, um escudo simples nas cores do clube serve, desde que o usuário saiba.
 
 **Uniformes** (`kit`, `kit_reserva`, `kit_goleiro`): o formato é o de `data/times`. O mínimo útil é o `design` com as cores:
 
@@ -222,7 +222,7 @@ Rode na pasta do projeto:
 npm run pacote:validar -- --time SIG
 ```
 
-- **Erros** precisam zerar no seu time: `escudo_faltando`, `elenco_incompleto`, `goleiros_insuficientes`, `camisa_repetida`, `jogador_id_repetido`, `nome_we_vazio`, `pais_inexistente`, `sigla_repetida`, `arquivo_invalido` (JSON fora do formato; a mensagem diz o campo).
+- **Erros** precisam zerar no seu time: `camisa_repetida`, `jogador_id_repetido`, `nome_we_vazio`, `pais_inexistente`, `sigla_repetida`, `arquivo_invalido` (JSON fora do formato; a mensagem diz o campo). `escudo_faltando`, `elenco_incompleto` e `goleiros_insuficientes` viraram avisos (não bloqueiam a carreira), mas também devem zerar num time entregue: sem 11 jogadores o time perde todos os jogos por W.O.
 - **Avisos** são aceitáveis, mas explique cada um no relatório: `nome_longo`, `sem_posicao_secundaria`, `contrato_sem_salario`, `financas_vazias`, `estadio_vazio`, `kit_goleiro_faltando`, `kit_arquivo_faltando`, `kit_design_invalido`.
 - Se mexeu numa competição, rode também `npm run pacote:validar` sem `--time` e confira que não surgiu erro novo na competição (`competicao_tamanho`, `time_inexistente`).
 

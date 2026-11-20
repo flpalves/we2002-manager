@@ -10,19 +10,25 @@ import {
   renomearFase,
   resumirFases,
   saidasQueCitam,
+  definirVagasDaOrigem,
+  tirarPuloDaOrigem,
   trocarFormato,
   type FormatoFase,
 } from '@core/pacote/editorFases'
 import WePainel from '../../componentes/WePainel.vue'
 import WeBotao from '../../componentes/WeBotao.vue'
-import WeEscudo from '../../componentes/WeEscudo.vue'
 import WeTag from '../../componentes/WeTag.vue'
 import { useEditor } from '../../stores/editor'
 import { useUi } from '../../stores/ui'
 import { copiar } from './rascunho'
 import CartaoFase from './CartaoFase.vue'
 import EditorSaidas from './EditorSaidas.vue'
-import { filtrarTimes } from '../../busca'
+import EditorPremiacao from './EditorPremiacao.vue'
+import EditorSegundaDivisao from './EditorSegundaDivisao.vue'
+import WeListaTimes from '../../componentes/WeListaTimes.vue'
+import EditorOrigensVagas from './EditorOrigensVagas.vue'
+import EditorPuloClassificacao from './EditorPuloClassificacao.vue'
+import { tamanhoDaCompeticao } from '@core/competicoes/vagas'
 
 const editor = useEditor()
 const ui = useUi()
@@ -39,8 +45,15 @@ const textoFases = ref('')
 const textoSaidas = ref('')
 const erroJson = ref<string | null>(null)
 
+/** Vagas por origem alteradas (competição por vagas): gravadas nas origens ao salvar. */
+const vagasOrigens = ref<Record<string, number>>({})
+/** Origens cujo pulo próprio passa para esta competição ao salvar. */
+const puloTrazido = ref<string[]>([])
+
 function carregar(c: Competicao | null): void {
   rascunho.value = c ? { ...copiar(c), saidas: copiar(c.saidas ?? []) } : null
+  vagasOrigens.value = {}
+  puloTrazido.value = []
   modoJson.value = false
   erroJson.value = null
 }
@@ -49,24 +62,58 @@ watch(original, (c) => !novo.value && carregar(c), { immediate: true })
 const problemas = (id: string) => editor.aberto?.problemas.filter((p) => p.competicao === id) ?? []
 const times = computed(() => [...(editor.aberto?.times ?? [])].sort((a, b) => a.nome.localeCompare(b.nome)))
 
-const buscaParticipantes = ref('')
-const timesFiltrados = computed(() => filtrarTimes(times.value, buscaParticipantes.value))
 const lista = computed(() => (rascunho.value?.participantes.regra === 'lista' ? rascunho.value.participantes : null))
-function alternarTime(sigla: string): void {
+const ehEstadual = computed(() => rascunho.value?.tipo === 'estadual' || rascunho.value?.tipo === 'regional')
+const recebeVagas = computed(() => {
+  const p = rascunho.value?.participantes
+  return p?.regra === 'classificados_de' || (p?.regra === 'lista' && !!p.por_vagas)
+})
+const pulaQuemJoga = computed({
+  get: () => rascunho.value?.pula_quem_joga,
+  set: (v) => {
+    if (!rascunho.value) return
+    if (v?.length) rascunho.value.pula_quem_joga = v
+    else delete rascunho.value.pula_quem_joga
+  },
+})
+const segundaDivisao = computed({
+  get: () => rascunho.value?.segunda_divisao,
+  set: (v) => {
+    if (!rascunho.value) return
+    if (v) rascunho.value.segunda_divisao = v
+    else delete rascunho.value.segunda_divisao
+  },
+})
+function definirPorVagas(sim: boolean): void {
   const l = lista.value
   if (!l) return
-  const i = l.times.indexOf(sigla)
-  if (i >= 0) l.times.splice(i, 1)
-  else l.times.push(sigla)
+  if (sim) l.por_vagas = true
+  else delete l.por_vagas
+}
+const timesDaLista = computed<string[]>({
+  get: () => lista.value?.times ?? [],
+  set: (v) => {
+    if (lista.value) lista.value.times = v
+  },
+})
+/** Quem já joga outro estadual/regional (um clube só joga um). */
+const outroEstadual = computed(() => {
+  const m = new Map<string, string>()
+  for (const c of competicoes.value) {
+    if (c.id === editor.competicaoSelecionada || (c.tipo !== 'estadual' && c.tipo !== 'regional') || c.participantes.regra !== 'lista') continue
+    for (const t of c.participantes.times) m.set(t, c.nome)
+  }
+  return m
+})
+const observacaoParticipante = (sigla: string) => {
+  const outro = ehEstadual.value ? outroEstadual.value.get(sigla) : undefined
+  return outro ? `também no ${outro}` : null
 }
 
 // ---------------------------------------------------------------- fases
 
-const participantes = computed(() => {
-  const p = rascunho.value?.participantes
-  if (!p) return null
-  return p.regra === 'lista' ? p.times.length : (p.quantidade ?? null)
-})
+// Quantos começam (por vagas: a quantidade configurada, não os garantidos).
+const participantes = computed(() => (rascunho.value ? tamanhoDaCompeticao(rascunho.value) : null))
 const resumos = computed(() => (rascunho.value ? resumirFases(rascunho.value, participantes.value) : []))
 const saidasRascunho = computed<SaidaCompeticao[]>({
   get: () => rascunho.value?.saidas ?? [],
@@ -168,8 +215,28 @@ async function salvar(): Promise<void> {
     return f
   })
   if (!limpo.saidas?.length) delete limpo.saidas
+  const pr = limpo.premiacao
+  if (pr) {
+    if (pr.por_posicao) {
+      while (pr.por_posicao.length && !pr.por_posicao[pr.por_posicao.length - 1]) pr.por_posicao.pop()
+      if (!pr.por_posicao.length) delete pr.por_posicao
+    }
+    if (!pr.participacao) delete pr.participacao
+    if (!pr.participacao && !pr.por_posicao && !pr.por_fase) delete limpo.premiacao
+  }
   const anterior = novo.value ? undefined : (editor.competicaoSelecionada ?? undefined)
+  // Guardadas antes de salvar: o recarregamento do pacote recarrega o rascunho e zera as pendentes.
+  const vagas = limpo.participantes.regra === 'lista' && limpo.participantes.por_vagas ? { ...vagasOrigens.value } : {}
+  const trazidas = [...puloTrazido.value]
   if (await editor.salvarCompeticao(limpo, anterior)) {
+    // Origens: vagas alteradas viram saídas; pulo trazido para cá sai das saídas delas (um arquivo cada).
+    for (const id of new Set([...Object.keys(vagas), ...trazidas])) {
+      let origem = competicoes.value.find((x) => x.id === id)
+      if (!origem) continue
+      if (vagas[id] !== undefined) origem = definirVagasDaOrigem(origem, limpo.id, vagas[id])
+      if (trazidas.includes(id)) origem = tirarPuloDaOrigem(origem, limpo.id)
+      await editor.salvarCompeticao(origem, id)
+    }
     novo.value = false
     editor.competicaoSelecionada = c.id
     carregar(original.value)
@@ -231,20 +298,46 @@ function definirQuantidade(v: string): void {
       </div>
 
       <template v-if="lista">
-        <h3 class="secao-form">Participantes ({{ lista.times.length }})</h3>
-        <label class="campo">
-          <span class="we-lb">Buscar time ({{ timesFiltrados.length }} de {{ times.length }})</span>
-          <input v-model="buscaParticipantes" type="search" placeholder="Nome, sigla, estado ou país" autocomplete="off" spellcheck="false" />
+        <h3 class="secao-form">
+          <template v-if="lista.por_vagas">Garantidos ({{ lista.times.length }})</template>
+          <template v-else>Participantes ({{ lista.times.length }}<template v-if="rascunho.participantes.quantidade"> de {{ rascunho.participantes.quantidade }}</template>)</template>
+        </h3>
+        <label class="campo campo--check">
+          <input type="checkbox" :checked="!!lista.por_vagas" @change="(e) => definirPorVagas((e.target as HTMLInputElement).checked)" />
+          Participantes definidos no ano pelas vagas dos estaduais/regionais (ex.: Série D)
         </label>
-        <div class="participantes">
-          <label v-for="t in timesFiltrados" :key="t.sigla" class="campo campo--check">
-            <input type="checkbox" :checked="lista.times.includes(t.sigla)" @change="alternarTime(t.sigla)" />
-            <WeEscudo :sigla="t.sigla" :cor="t.cores[0]" :src="editor.escudo(t.sigla)" />
-            {{ t.nome }}
-          </label>
-        </div>
+        <p v-if="lista.por_vagas" class="we-lb">
+          Garantidos: quem já tem lugar sem depender das vagas. O jogo põe aqui, na virada, quem chega por acesso ou rebaixamento (ex.: os que caem da Série C). Na 1ª temporada
+          deixe vazio para o jogo definir todos pelas vagas. Preencha "Quantidade de times" acima.
+        </p>
+        <WeListaTimes
+          v-model="timesDaLista"
+          :times="times"
+          :rotulo="lista.por_vagas ? 'Garantidos' : 'Participantes'"
+          :escudo="editor.escudo"
+          :observacao="observacaoParticipante"
+          :vazio="lista.por_vagas ? 'Nenhum garantido: todos virão das vagas.' : 'Nenhum clube incluído.'"
+        />
+        <template v-if="lista.por_vagas">
+          <h3 class="secao-form">Vagas por origem</h3>
+          <EditorOrigensVagas v-model="vagasOrigens" :competicao="rascunho" :id-salvo="novo ? null : editor.competicaoSelecionada" :competicoes="competicoes" />
+        </template>
       </template>
-      <p v-else class="we-lb">Participantes pela regra "{{ rascunho.participantes.regra }}" (editar no arquivo por enquanto).</p>
+      <template v-if="recebeVagas">
+        <h3 class="secao-form">Classificação: pular quem joga</h3>
+        <EditorPuloClassificacao
+          v-model="pulaQuemJoga"
+          v-model:trazidas="puloTrazido"
+          :competicao="rascunho"
+          :id-salvo="novo ? null : editor.competicaoSelecionada"
+          :competicoes="competicoes"
+        />
+      </template>
+      <template v-if="lista && ehEstadual">
+        <h3 class="secao-form">Segunda divisão</h3>
+        <EditorSegundaDivisao v-model="segundaDivisao" :competicao="rascunho" :times="times" :competicoes="competicoes" :escudo="editor.escudo" />
+      </template>
+      <p v-if="!lista" class="we-lb">Participantes pela regra "{{ rascunho.participantes.regra }}" (editar no arquivo por enquanto).</p>
 
       <div class="cabeca-fases">
         <h3 class="secao-form">Fases</h3>
@@ -294,6 +387,9 @@ function definirQuantidade(v: string): void {
         <label class="campo"><span class="we-lb">Fases</span><textarea v-model="textoFases" rows="18" spellcheck="false" aria-label="Fases em JSON"></textarea></label>
         <label class="campo"><span class="we-lb">Saídas</span><textarea v-model="textoSaidas" rows="6" spellcheck="false" aria-label="Saídas em JSON"></textarea></label>
       </template>
+
+      <h3 class="secao-form">Premiação</h3>
+      <EditorPremiacao v-model="rascunho.premiacao" :participantes="participantes" />
       <p v-if="erroJson" class="we-vl--negativo">{{ erroJson }}</p>
 
       <div class="acoes rodape-form">
@@ -307,11 +403,6 @@ function definirQuantidade(v: string): void {
 </template>
 
 <style scoped>
-.participantes {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
-  gap: 4px var(--space-4);
-}
 .problemas {
   margin: 0;
   padding-left: 18px;

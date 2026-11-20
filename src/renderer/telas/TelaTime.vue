@@ -57,7 +57,7 @@ async function carregar(): Promise<void> {
     ui.avisar((e as Error).message)
   }
 }
-watch(() => [rota.params['sigla'], carreira.atual?.id, temporada.calendario?.passoAtual], carregar, { immediate: true })
+watch(() => [rota.params['sigla'], carreira.atual?.id, temporada.calendario?.passoAtual, temporada.calendario?.semanaAtual], carregar, { immediate: true })
 
 function verTransferencias(): void {
   if (d.value) void router.push({ name: 'transferencias', query: { time: d.value.sigla } })

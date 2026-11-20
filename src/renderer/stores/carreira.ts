@@ -18,7 +18,7 @@ export function urlArquivoCarreira(caminho: string | null): string | undefined {
   return caminho ? `we-arquivo://carreira/${caminho.split('/').map(encodeURIComponent).join('/')}` : undefined
 }
 
-function textoPlacar(r: ResultadoContinuar, nome: (s: string) => string): string {
+function textoPlacar(r: ResultadoContinuar, nome: (s: string) => string, proximo: { semana: number } | null = null): string {
   const j = r.jogoDoUsuario
   let texto = ''
   if (j?.placar) {
@@ -26,9 +26,10 @@ function textoPlacar(r: ResultadoContinuar, nome: (s: string) => string): string
     const pen = p.penaltisCasa !== null ? ` (pên. ${p.penaltisCasa} x ${p.penaltisVisitante})` : ''
     texto = `${j.competicaoNome}: ${nome(j.casa)} ${p.golsCasa} x ${p.golsVisitante} ${nome(j.visitante)}${pen}.`
   } else if (r.preJogo) {
-    texto = r.passosJogados ? `${r.passosJogados} data(s) simulada(s). Seu jogo é o próximo.` : 'Seu jogo é o próximo.'
+    texto = `Semana ${r.semana}: ${r.passosJogados ? `${r.passosJogados} data(s) simulada(s). ` : ''}Seu jogo é nesta semana.`
   } else {
-    texto = `${r.passosJogados} data(s) simulada(s).`
+    texto = `Semana ${r.semana}: ${r.passosJogados ? `${r.passosJogados} data(s) simulada(s).` : 'sem jogos.'}`
+    if (proximo && !r.encerrada) texto += ` Seu próximo jogo: semana ${proximo.semana}.`
   }
   for (const c of r.campeoes) texto += ` ${nome(c.time)} é campeão: ${c.competicao}!`
   if (r.encerrada) texto += ' Fim da temporada!'
@@ -117,8 +118,8 @@ export const useCarreira = defineStore('carreira', () => {
   }
 
   /**
-   * START / CONTINUAR: simula as datas até a do próximo jogo do usuário e abre o pré-jogo.
-   * Se o jogo do usuário já é a data atual, vai direto para o pré-jogo.
+   * START / CONTINUAR: o tempo anda uma semana (com ou sem jogo). Se o jogo do usuário cai
+   * nela, abre o pré-jogo; se ele já é a data atual, vai direto para o pré-jogo.
    */
   async function continuar(): Promise<void> {
     if (!atual.value) return ui.avisar('Nenhuma carreira aberta. Crie ou carregue uma em Salvar / Carreiras.')
@@ -144,7 +145,7 @@ export const useCarreira = defineStore('carreira', () => {
         void router.push({ name: 'noticias' })
         return
       }
-      ui.avisar(textoPlacar(r, temporada.nome), 7000)
+      ui.avisar(textoPlacar(r, temporada.nome, temporada.proximoJogo), 7000)
       if (r.preJogo) void router.push({ name: 'prejogo' })
       else if (r.encerrada) void router.push({ name: 'fimTemporada' })
     } catch (e) {
@@ -157,13 +158,13 @@ export const useCarreira = defineStore('carreira', () => {
     }
   }
 
-  /** Depois do jogo do usuário (WE, simulado ou digitado): atualiza tudo e abre a súmula. */
+  /** Depois do jogo do usuário (WE, simulado ou digitado): atualiza tudo e abre a súmula com os destaques. */
   async function concluirJogo(r: ResultadoContinuar): Promise<void> {
     await temporada.recarregar()
     await atualizar()
     ui.avisar(`${textoPlacar(r, temporada.nome)}${r.eventoPendente ? ' Uma notícia espera a sua decisão.' : ''}`, 7000)
     const j = r.jogoDoUsuario
-    void router.push(j ? { name: 'partida', params: { id: j.id } } : { name: 'inicio' })
+    void router.push(j ? { name: 'partida', params: { id: j.id }, query: { destaques: '1' } } : { name: 'inicio' })
   }
 
   ui.registrarContinuar(continuar)

@@ -3,7 +3,7 @@ import { copyFileSync, existsSync, mkdirSync, readFileSync, renameSync, rmSync }
 import { join } from 'node:path'
 import { criarRng } from '@core/rng'
 import { empatado } from '@core/competicoes/mataMata'
-import { escalarTime } from '@core/partida/sessao'
+import { escalarTime, temElencoParaJogar } from '@core/partida/sessao'
 import { papeisDa } from '@core/partida/formacoes'
 import { seta } from '@core/jogadores/setas'
 import { ARQUIVO_ESTADO, escolherControle, vagasDoJogo, type Controle, type ModoWe } from '@core/we/controle'
@@ -132,6 +132,11 @@ function montar(sql: Sql) {
   const pend = jogoDoUsuarioPendente(sql)
   if (!pend) throw new ErroApp('sem_jogo', 'Não há jogo do seu time na data atual. Use Continuar.')
   const { partida, dados: d } = pend
+  for (const sigla of [partida.casa, partida.visitante]) {
+    if (!temElencoParaJogar(pend.elencos, sigla)) {
+      throw new ErroApp('elenco_incompleto', `${sigla} não tem 11 jogadores para ir ao WE; simule o jogo (o time sem elenco perde por W.O.).`)
+    }
+  }
   const escalacoes: Record<Lado, Escalacao> = {
     casa: escalarTime(pend.elencos, partida.casa, pend.competicao, d.regras, pend.rodizio(partida.casa)),
     visitante: escalarTime(pend.elencos, partida.visitante, pend.competicao, d.regras, pend.rodizio(partida.visitante)),

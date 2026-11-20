@@ -35,14 +35,35 @@
     "zera_na_fase": null
   },
   "substituicoes": 3,
+  "premiacao": {
+    "participacao": 1000000000,
+    "por_posicao": [
+      5000000000,
+      4000000000,
+      3500000000,
+      3000000000,
+      2500000000,
+      2000000000,
+      1800000000,
+      1600000000,
+      1400000000,
+      1200000000,
+      1000000000,
+      900000000,
+      800000000,
+      700000000,
+      600000000,
+      500000000,
+      400000000,
+      300000000,
+      200000000,
+      100000000
+    ]
+  },
   "fases": [
     {
       "id": "liga",
       "nome": "Turno e returno",
-      "formato": "pontos_corridos",
-      "pontos_corridos": {
-        "turnos": 2
-      },
       "desempate": [
         "pontos",
         "vitorias",
@@ -72,7 +93,11 @@
           "nome": "Rebaixamento",
           "cor": "negativo"
         }
-      ]
+      ],
+      "formato": "pontos_corridos",
+      "pontos_corridos": {
+        "turnos": 2
+      }
     }
   ]
 }

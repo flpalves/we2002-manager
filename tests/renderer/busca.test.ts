@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { filtrarTimes, normalizarBusca } from '@renderer/busca'
+import { filtrarJogadores, filtrarTimes, normalizarBusca } from '@renderer/busca'
 
 const times = [
   { sigla: 'ATG', nome: 'Atlético-GO', nome_curto: 'Atlético', estado: 'GO', pais: 'BRA' },
@@ -39,5 +39,29 @@ describe('busca de times', () => {
 
   it('nada encontrado devolve lista vazia', () => {
     expect(siglas('flamengo')).toEqual([])
+  })
+})
+
+describe('filtrarJogadores', () => {
+  const jogadores = [
+    { nome: 'João Lopes', nome_we: 'J LOPES', posicao: 'GK' },
+    { nome: 'Lucas Perri', nome_we: 'PERRI', posicao: 'GK' },
+    { nome: 'Lucas Moura', nome_we: 'L MOURA', posicao: 'OH' },
+    { nome: 'Gabriel Barbosa', nome_we: 'GABIGOL', posicao: 'CF' },
+  ]
+
+  it('sem termo nem posição devolve todos, na ordem', () => {
+    expect(filtrarJogadores(jogadores, '  ', null)).toEqual(jogadores)
+  })
+
+  it('filtra pela posição principal', () => {
+    expect(filtrarJogadores(jogadores, '', 'GK').map((j) => j.nome)).toEqual(['João Lopes', 'Lucas Perri'])
+  })
+
+  it('busca sem acento, no nome ou no nome do WE, e combina com a posição', () => {
+    expect(filtrarJogadores(jogadores, 'joao', null).map((j) => j.nome)).toEqual(['João Lopes'])
+    expect(filtrarJogadores(jogadores, 'gabigol', null).map((j) => j.nome)).toEqual(['Gabriel Barbosa'])
+    expect(filtrarJogadores(jogadores, 'lucas', 'OH').map((j) => j.nome)).toEqual(['Lucas Moura'])
+    expect(filtrarJogadores(jogadores, 'moura lucas', null).map((j) => j.nome)).toEqual(['Lucas Moura'])
   })
 })

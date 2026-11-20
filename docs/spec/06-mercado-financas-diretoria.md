@@ -8,11 +8,21 @@ Números são **propostas iniciais**, em `padroes.ts` / `regras.json`, cobertos 
 - Editadas na aba **Janelas** do editor (linha do tempo com as competições do `temporada.json`; "Voltar ao padrão" tira a chave do `regras.json`). Valem para carreiras novas.
 - Validação (`core/mercado/janelas.ts`): erro se o fim vem antes do início, se sai da temporada ou se duas janelas se sobrepõem; aviso se não há janela nenhuma ou se duas estão coladas.
 - As notícias de abertura e fechamento citam o nome da janela.
-- Fora da janela: só **jogadores livres** e **renovações** (os **disponíveis do exterior** só na janela).
+- Fora da janela: só **jogadores livres** e **renovações** (os **disponíveis do exterior** só na janela). Depois do prazo de renovação, também **pré-contratos** (ver "Renovações e pré-contratos").
 
 ## Tipos de negócio (v1)
 
-Compra, venda, **empréstimo** (com duração e divisão de salário), contratação de **livre**, contratação de **disponível do exterior**, **renovação**, pagamento de **multa rescisória** (o clube vendedor é obrigado a aceitar; o jogador ainda negocia salário). Troca (jogador + dinheiro) fica fora.
+Compra, venda, **empréstimo** (com duração e divisão de salário), contratação de **livre**, contratação de **disponível do exterior**, **renovação**, **pré-contrato**, pagamento de **multa rescisória** (o clube vendedor é obrigado a aceitar; o jogador ainda negocia salário). Troca (jogador + dinheiro) fica fora.
+
+## Renovações e pré-contratos
+
+- **Prazo de renovação**: contrato que termina na temporada só renova até a semana `mercado.pre_contrato.semana_limite_renovacao` (padrão **46**). O aviso de contratos (semana 30) já diz o prazo. Contratos mais longos renovam a qualquer momento.
+- **CPU**: na primeira data depois do prazo cada clube da CPU decide quem renova entre os definitivos que acabam (`virada.renovacao_cpu` pelo lugar no elenco, `fator_veterano`; renovado ganha `virada.temporadas_renovacao`, mesmo salário). Se a temporada acabar antes do prazo, a decisão sai na virada. Uma vez por temporada (`configuracao.renovacao_cpu_<temporada>`).
+- **Em fim de contrato**: quem não renovou (CPU ou usuário), contrato definitivo, sem pré-contrato. Emprestado não entra (volta ao clube de origem).
+- **Pré-contrato**: depois do prazo, clubes das **ligas nacionais** da temporada (A, B, C: competição `nacional`, pontos corridos, lista) assinam com quem está em fim de contrato de outro clube. Sem taxa; o jogador muda na **virada**, com o salário e a duração combinados (o contrato novo começa na temporada seguinte). Fica em `pre_contrato`.
+  - **Usuário**: tipo de negócio "Pré-contrato" no Mercado (filtro "Fim de contrato"). Pula a etapa do clube, vai direto ao salário e à duração, gasta 1 movimento; o jogador aceita pelas regras de quem muda de clube. Conta no elenco da temporada seguinte (máximo `elenco_maximo`). Com saldo negativo, só com salário dentro do orçamento da folha (como um livre).
+  - **CPU**: em cada data depois do prazo (a virada é a última), cada clube elegível busca `max(saídas × pre_contrato.por_saida, faltas do elenco projetado)` pré-contratos, até `pre_contrato.maximo` e o elenco máximo, espalhados pelas datas como as compras da janela. Alvo: o melhor para a carência mais grave do **elenco projetado** (quem fica + pré-contratos + emprestados que voltam), dentro do teto da folha e do limite do porte. **Jogadores do usuário também podem ser levados** (notícia); depois do prazo ele não pode mais renová-los.
+- **Virada**: os pré-contratos mudam de clube (transferência `pre_contrato`, valor 0; saída `pre_contrato` em `saida_elenco`); quem a CPU não renovou sai livre; os do usuário não renovados saem livres, mas a diretoria renova por 1 temporada os que faltarem para o mínimo (23 e 2 goleiros).
 
 ## Jogadores sem clube
 
@@ -39,6 +49,27 @@ Dois tipos de jogador ficam no mercado sem pertencer a nenhum clube do jogo (`jo
 - **Saída do pool** (`exterior.saida_por_virada`, padrão **15%**): na virada, um sorteio tira parte dos que sobraram ("renovou com o clube dele lá fora"). Quem tem 35 anos ou mais sai com o dobro da chance. Saem do banco como `status = 'fora'` (não aparecem em busca nenhuma). Sem reposição na v1 (o pacote de uma temporada nova traz outra lista).
 - Quem é contratado e depois sai do clube vira **livre** normalmente (não volta a ser do exterior).
 
+### Elenco mínimo na semana 1
+
+- Na geração da temporada (semana 1), todo clube que joga **alguma competição** (estadual, regional ou liga) com menos de `elenco_minimo` jogadores, ou com menos goleiros que o mínimo do grupo, puxa **livres** até completar. Um por clube por rodada, em ordem sorteada, pela carência mais grave; respeita o limite do porte. Salário = o de referência do clube.
+- Contrato: quem joga **só estadual/regional** assina até o fim da temporada (contrato curto: na semana limite a CPU decide se renova, como qualquer contrato acabando); clube de liga nacional, `virada.temporadas_renovacao`.
+- O clube do usuário só entra se estiver abaixo do mínimo (a diretoria completa; notícia).
+- Clubes que não jogam nada na temporada não vão ao mercado (nem na semana 1 nem nas janelas).
+
+### Limites por porte
+
+- Toda contratação da CPU (janela, livres, exterior, pré-contrato, semana 1) respeita `mercado.limites_porte[porte do comprador]`: `salario_maximo` (salário mensal do negócio) e `geral_maximo` (o jogador "famoso"); 0 = sem limite. Padrão: **pequeno** até R$ 80 mil e geral 13; médio e grande sem limite. O usuário segue só as regras da negociação.
+- Somam-se os limites pelo **nível** do comprador (`mercado.limites_nivel`, chave = nível): sem liga nacional até R$ 40 mil e geral 12 · Série D até R$ 60 mil e geral 13 · Série C até R$ 120 mil e geral 15 · B e A sem limite.
+
+### Nível do clube
+
+O porte sozinho não separa as divisões (174 dos 216 clubes do Brasil 2026 são pequenos, do LON da Série B ao clube sem liga). A hierarquia do mercado vem do **nível**: a liga nacional de maior nível que o clube joga na temporada (`mercado.nivel.liga`: A 5 · B 4 · C 3 · D 2; sem liga 1; estrangeiro 5). O porte só desempata dentro do mesmo nível. Código em `core/mercado/nivel.ts`.
+
+- **Vendedor** (CPU): fora da lista de venda, **titular não sai para clube de nível menor**; reserva sai com ágio de `agio_rotacao` (1,3) por nível de diferença; encostado e quem está à venda, pela pedida normal. Clube de nível menor vendendo para o de cima pede +10% (`porte_vendedor_menor`).
+- **Jogador**: para descer, pede (1 + `salario_por_nivel`) por nível — 30% por nível, no lugar do fator de porte menor. Titular ou reserva com menos de `idade_aceita_cair` (31) anos **recusa cair `queda_recusa` (2) níveis ou mais**; veterano e encostado aceitam pelo salário. Vale nas compras e pré-contratos da CPU e nas propostas pelos jogadores do usuário (o clube nem tenta); na negociação do usuário vale o salário (a recusa ainda não).
+- **Comprador** (CPU): mira até a média dos seus titulares + `margem_alvo` (2) de geral, em compras, livres, exterior e pré-contratos — time de baixo não vai atrás de craque.
+- Buscar fora da lista em clube de **patamar** maior (nível, depois porte) continua com `chance_porte_maior` por clube e data (a sortear por janela, em estudo).
+
 ### Livres
 
 - Já funcionam como estão nesta spec (taxa 0, só salário, a qualquer momento). O pacote pode trazer **livres iniciais** em `livres.json` (mesmo formato do `exterior.json`, sem `origem` e `taxa`), para que a CPU tenha quem contratar quando todo elenco tem 23 (decisão 31).
@@ -49,10 +80,10 @@ Dois tipos de jogador ficam no mercado sem pertencer a nenhum clube do jogo (`jo
 - Cada proposta ou contraproposta **do usuário** gasta **1 movimento**. O usuário tem **5 movimentos no total entre uma partida e outra do seu time**, somando todas as negociações. Acabou, só depois do próximo jogo.
 - **Propostas recebidas** pelos jogadores do usuário **não gastam** movimentos (nem as respostas a elas).
 - Resposta da IA vendedora:
-  - pedida = valor de mercado × fator de importância (titular 1,4 · reserva 1,15 · encostado 1,0) × fator de porte do vendedor (pequeno vendendo para grande +10%).
+  - pedida = valor de mercado × fator de importância (titular 1,4 · reserva 1,15 · encostado 1,0) × fator de patamar do vendedor (nível menor vendendo para o de cima, ou porte menor no mesmo nível, +10%).
   - oferta ≥ pedida → aceita · oferta ≥ 70% da pedida → contraproposta no meio do caminho (nunca abaixo da última contraproposta) · abaixo → recusa, e a pedida sobe 5% (paciência).
   - Uma negociação morre após 3 recusas seguidas.
-- Resposta do jogador: aceita se salário ≥ salário atual × (1,1 se muda de clube) ajustado pelo porte do clube que compra e pela moral; contraproposta semelhante.
+- Resposta do jogador: aceita se salário ≥ salário atual × (1,1 se muda de clube) ajustado pelo patamar do clube que compra (nível; ver "Nível do clube") e pela moral; contraproposta semelhante.
 
 ## Valor de mercado
 
@@ -94,7 +125,7 @@ Na primeira data de cada janela, cada clube da CPU recebe um plano (gravado em `
   - **Saídas** = quem saiu por fim de contrato na virada (`saida_elenco`) e, nas outras janelas, a previsão de quem sai no fim da temporada. Quem perde muitos jogadores repõe um número parecido.
   - Cada venda durante a janela que deixa um grupo abaixo do ideal soma uma reposição ao alvo.
 - As compras se espalham pelas datas: em cada data a chance é (alvo − feitas) / datas restantes na janela.
-- Alvos: só jogadores que melhoram o grupo da carência (ou o titular mais fraco, se não houver carência), de clube de porte igual ou menor (pequena chance para cima), dentro da verba e do teto da folha. Elenco do vendedor nunca abaixo do mínimo; jogador emprestado não é revendido.
+- Alvos: só jogadores que melhoram o grupo da carência (ou o titular mais fraco, se não houver carência), até a média dos titulares + 2, de clube de patamar igual ou menor (pequena chance para cima), dentro da verba, do teto da folha e das regras de nível (vendedor e jogador). Elenco do vendedor nunca abaixo do mínimo; jogador emprestado não é revendido. Quem já mudou de clube na temporada (vindo de outro clube, livre ou do exterior) não é comprado de novo pela CPU até a virada.
 
 ### Lista de venda e saídas
 
@@ -120,7 +151,7 @@ Na primeira data de cada janela, cada clube da CPU recebe um plano (gravado em `
 | Cota de TV | por série/competição, paga em parcelas a cada 4 semanas |
 | Patrocínio | valor fixo por temporada (do pacote), em parcelas |
 | Bilheteria | por jogo em casa = público × preço do ingresso |
-| Premiações | por competição e fase (tabela da competição) |
+| Premiações | por competição, no fim dela: cota de participação para todos + prêmio por colocação final (`premiacao.participacao` e `por_posicao`, editados na aba Competições do editor) |
 | Venda de jogadores | na conclusão |
 
 | Despesa | Regra |
@@ -130,7 +161,8 @@ Na primeira data de cada janela, cada clube da CPU recebe um plano (gravado em `
 
 - **Saldo negativo é permitido**: bloqueia contratações (exceto livres com salário dentro do orçamento) e aumenta a pressão da diretoria.
 - **Orçamento de folha** e **orçamento de contratações** vêm do pacote e da diretoria (por temporada, ajustados pela dificuldade).
-- Todos os valores iniciais são **preenchidos pelo usuário no editor** (times sem valor usam o padrão do porte).
+- Todos os valores iniciais são **preenchidos pelo usuário no editor** (times sem valor usam o padrão do porte; saldo e orçamento da folha × o fator da divisão inicial).
+- **Orçamento pela divisão** (`financas.orcamento_divisao`: A 1 · B 0,85 · C 0,6 · D 0,45 · sem liga 0,4): o saldo inicial e o orçamento da folha do padrão do porte são multiplicados pelo fator da divisão de quem não traz finanças no pacote. Na **virada**, quem sobe ou desce (o usuário também) tem o orçamento da folha × fator novo / fator antigo. O **patrocínio não muda** (a folha mínima de um elenco não cai com a divisão; cortá-lo deixava os clubes sem liga no vermelho) e o saldo também não. A migração 016 aplica o fator às carreiras em andamento (só quem ainda tinha a folha padrão do porte, fora o usuário).
 - Extrato: cada lançamento vira uma linha em `lancamento_financeiro`.
 
 ## Estádio e público

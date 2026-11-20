@@ -4,9 +4,9 @@ import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { Carreiras } from '../../src/main/carreira/servico'
 import { calendario, continuar, jogarDataDoUsuario, responderEvento } from '../../src/main/carreira/temporada'
-import { caixa, marcarLidas } from '../../src/main/carreira/noticias'
+import { caixa, destaquesDoJogo, marcarLidas } from '../../src/main/carreira/noticias'
 import type { Sql } from '../../src/main/db/sql'
-import { avancar, responderPendentes } from '../helpers/avancar'
+import { avancar, continuarAtePreJogo, responderPendentes } from '../helpers/avancar'
 import { abrirNodeSqlite } from '../helpers/sqlite'
 import { pacote as fixture, time } from '../fixtures/pacote'
 import { escreverPacote } from '../helpers/pacote'
@@ -77,10 +77,9 @@ describe('notícias na carreira', () => {
 
   it('evento com escolha interrompe o Continuar; a resposta aplica os efeitos e fica auditável', () => {
     const sql = criar({ catalogo: [escolhaSempre] })
-    // O 1º passo já é jogo do usuário: as semanas até ele são avaliadas quando a data é jogada.
-    expect(continuar(sql)).toMatchObject({ eventoPendente: false, passosJogados: 0 })
-    const r = jogarDataDoUsuario(sql)
-    expect(r.eventoPendente).toBe(true)
+    // A semana 1 passa (sem jogo) e o evento semanal surge: o Continuar para nele.
+    const r = continuar(sql)
+    expect(r).toMatchObject({ eventoPendente: true, passosJogados: 0, semana: 1 })
     expect(codigo(() => continuar(sql))).toBe('evento_pendente')
 
     const [n] = caixa(sql).noticias.filter((x) => x.pendente)
@@ -100,7 +99,8 @@ describe('notícias na carreira', () => {
     expect(codigo(() => responderEvento(sql, n!.id, 'liberar'))).toBe('noticia_sem_escolha')
 
     // Respondido, o Continuar volta a andar (intervalo mínimo de 100 semanas: não repete).
-    expect(continuar(sql).preJogo).not.toBeNull()
+    expect(continuar(sql)).toMatchObject({ eventoPendente: false, semana: 2 })
+    expect(continuarAtePreJogo(sql).preJogo).not.toBeNull()
   })
 
   it('temporada inteira com chance alta: informativas e eventos de todos os momentos, efeitos gravados', () => {
@@ -138,12 +138,31 @@ describe('notícias na carreira', () => {
     expect(rodar()).toEqual(a)
   })
 
+  it('destaques da volta do jogo: o resultado fica de fora; decisão pendente e notícia do elenco entram', () => {
+    const sql = criar({ catalogo: [escolhaSempre] })
+    const r = continuarAtePreJogo(sql)
+    const j = jogarDataDoUsuario(sql)
+    const semana = j.jogoDoUsuario!.semana
+    expect(r.preJogo!.semana).toBe(semana)
+    const lesao = sql.get<{ id: number }>("SELECT id FROM jogador j WHERE time_id = (SELECT id FROM time WHERE sigla = 'AAA') LIMIT 1")!.id
+    sql.run("INSERT INTO noticia (temporada, semana, tipo, origem, texto, jogador_id, time) VALUES (2026, ?, 'elenco', 'info', 'lesão', ?, 'AAA')", semana, lesao)
+    sql.run("INSERT INTO noticia (temporada, semana, tipo, origem, texto, time) VALUES (2026, ?, 'competicao', 'info', 'outro campeão', 'BBB')", semana)
+    sql.run("INSERT INTO noticia (temporada, semana, tipo, origem, texto, escolhas, pendente) VALUES (2026, ?, 'torcida', 'evento', 'decida', '[]', 1)", semana)
+    const d = destaquesDoJogo(sql, semana)
+    const textos = d.noticias.map((n) => n.texto)
+    expect(textos[0]).toBe('decida')
+    expect(textos).toContain('lesão')
+    expect(textos).not.toContain('outro campeão')
+    expect(d.noticias.every((n) => n.tipo !== 'jogo')).toBe(true)
+    expect(d.propostas).toEqual([])
+    expect(caixa(sql).noticias.some((n) => n.tipo === 'jogo' && n.semana === semana)).toBe(true)
+  })
+
   it('jogo do usuário com evento pendente também espera a resposta', () => {
     const sql = criar({ catalogo: [escolhaSempre] })
-    continuar(sql)
-    jogarDataDoUsuario(sql) // o evento surge nas semanas antes do 1º jogo
+    continuar(sql) // o evento surge na semana 1, antes do 1º jogo
     expect(responderPendentes(sql)).toBe(1)
-    const r = continuar(sql)
+    const r = continuarAtePreJogo(sql)
     expect(r.preJogo).not.toBeNull()
     // Um novo pendente antes do jogo trava a simulação do jogo também.
     sql.run("INSERT INTO noticia (temporada, semana, tipo, origem, texto, escolhas, pendente) VALUES (2026, 11, 'elenco', 'evento', 'x', '[{\"id\":\"a\",\"texto\":\"A\",\"resultado\":null,\"efeitos\":[]},{\"id\":\"b\",\"texto\":\"B\",\"resultado\":null,\"efeitos\":[]}]', 1)")
@@ -155,8 +174,8 @@ describe('ponte com evento pendente', () => {
   it('não prepara a partida do WE enquanto houver decisão pendente', async () => {
     const { preparar } = await import('../../src/main/we/ponte')
     const sql = criar({ catalogo: [escolhaSempre] })
-    continuar(sql)
-    jogarDataDoUsuario(sql)
+    continuarAtePreJogo(sql)
+    sql.run("INSERT INTO noticia (temporada, semana, tipo, origem, texto, escolhas, pendente) VALUES (2026, 11, 'elenco', 'evento', 'x', '[{\"id\":\"a\",\"texto\":\"A\",\"resultado\":null,\"efeitos\":[]},{\"id\":\"b\",\"texto\":\"B\",\"resultado\":null,\"efeitos\":[]}]', 1)")
     const cfg = { raiz: 'x', caminhos: { emulador: 'x', imagem: 'y', estados: 'z' }, pastaCarreira: 'x', carreiraId: 'x' }
     expect(codigo(() => preparar(sql, cfg, 'jogar'))).toBe('evento_pendente')
   })

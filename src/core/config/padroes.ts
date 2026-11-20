@@ -311,8 +311,43 @@ export interface ParametrosMercado {
   chance_porte_maior: number
   /** Geral abaixo da média do time que conta como carência. */
   carencia_geral: number
+  /**
+   * Contratações da CPU por porte do comprador (06, "Limites por porte"): teto do salário mensal
+   * e do geral (o jogador "famoso"). 0 = sem limite.
+   */
+  limites_porte: Record<'grande' | 'medio' | 'pequeno', { salario_maximo: number; geral_maximo: number }>
+  /** Nível do clube (06, "Nível do clube"): a divisão manda na hierarquia do mercado. */
+  nivel: ParametrosNivel
+  /** Limites de contratação da CPU pelo nível do comprador (chave = nível; 0 = sem limite). Somam-se aos do porte. */
+  limites_nivel: Record<string, { salario_maximo: number; geral_maximo: number }>
+  /** Fim de contrato (06, "Renovações e pré-contratos"). */
+  pre_contrato: {
+    /** Renovações de quem tem contrato acabando só até esta semana; depois, pré-contratos. */
+    semana_limite_renovacao: number
+    /** Pré-contratos que um clube da CPU busca = saídas por fim de contrato × isto (ou as carências do elenco projetado). */
+    por_saida: number
+    maximo: number
+  }
   /** IA de mercado dos clubes da CPU (06, "IA de mercado"). */
   ia: ParametrosIaMercado
+}
+
+export interface ParametrosNivel {
+  /** Liga nacional → nível (a de maior nível vale). */
+  liga: Record<string, number>
+  /** Clube sem liga nacional na temporada. */
+  sem_liga: number
+  /** Clube estrangeiro. */
+  exterior: number
+  /** Salário pedido × (1 + isto) por nível que o jogador desce. */
+  salario_por_nivel: number
+  /** Titular ou reserva abaixo de `idade_aceita_cair` recusa descer esta quantidade de níveis ou mais. */
+  queda_recusa: number
+  idade_aceita_cair: number
+  /** Reserva fora da lista vendido para clube de nível menor: pedida × isto por nível. */
+  agio_rotacao: number
+  /** O comprador da CPU mira até a média dos titulares + isto. */
+  margem_alvo: number
 }
 
 export type PerfilFinanceiro = 'rico' | 'equilibrado' | 'apertado' | 'crise'
@@ -396,6 +431,12 @@ export interface ParametrosFinancas {
   preco_maximo: number
   /** Ajuste do orçamento inicial pela dificuldade. */
   orcamento_dificuldade: PorDificuldade
+  /**
+   * Orçamento pela divisão (06): o padrão do porte (saldo e orçamento da folha) × o fator da liga
+   * para quem não traz finanças no pacote; na virada, o orçamento da folha de todos acompanha a
+   * divisão nova (× fator novo / antigo). O patrocínio não muda.
+   */
+  orcamento_divisao: { liga: Record<string, number>; sem_liga: number }
 }
 
 export interface ParametrosDiretoria {
@@ -665,6 +706,27 @@ export const PADROES: Regras = {
     intensidade: { baixa: 0.6, media: 1, alta: 1.4 },
     chance_porte_maior: 0.1,
     carencia_geral: 2,
+    limites_porte: {
+      grande: { salario_maximo: 0, geral_maximo: 0 },
+      medio: { salario_maximo: 0, geral_maximo: 0 },
+      pequeno: { salario_maximo: 8_000_000, geral_maximo: 13 }, // R$ 80 mil
+    },
+    nivel: {
+      liga: { 'serie-a': 5, 'serie-b': 4, 'serie-c': 3, 'serie-d': 2 },
+      sem_liga: 1,
+      exterior: 5,
+      salario_por_nivel: 0.3,
+      queda_recusa: 2,
+      idade_aceita_cair: 31,
+      agio_rotacao: 1.3,
+      margem_alvo: 2,
+    },
+    limites_nivel: {
+      '1': { salario_maximo: 4_000_000, geral_maximo: 12 }, // sem liga: R$ 40 mil
+      '2': { salario_maximo: 6_000_000, geral_maximo: 13 }, // Série D: R$ 60 mil
+      '3': { salario_maximo: 12_000_000, geral_maximo: 15 }, // Série C: R$ 120 mil
+    },
+    pre_contrato: { semana_limite_renovacao: 46, por_saida: 0.6, maximo: 5 },
     ia: {
       grupos: {
         gol: { posicoes: ['GK'], minimo: 2, ideal: 3 },
@@ -719,6 +781,7 @@ export const PADROES: Regras = {
     preco_minimo: 0.15,
     preco_maximo: 1,
     orcamento_dificuldade: { facil: 1.25, normal: 1, dificil: 0.75 },
+    orcamento_divisao: { liga: { 'serie-a': 1, 'serie-b': 0.85, 'serie-c': 0.6, 'serie-d': 0.45 }, sem_liga: 0.4 },
   },
   diretoria: {
     confianca_inicial: 60,

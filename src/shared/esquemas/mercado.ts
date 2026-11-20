@@ -2,7 +2,7 @@ import { z } from 'zod'
 
 /** DTOs do mercado, das finanças e da diretoria (fase 6). Dinheiro em centavos. */
 
-export const TipoNegocioSchema = z.enum(['compra', 'emprestimo', 'livre', 'renovacao', 'multa', 'exterior'])
+export const TipoNegocioSchema = z.enum(['compra', 'emprestimo', 'livre', 'renovacao', 'multa', 'exterior', 'pre_contrato'])
 
 export const SituacaoMercadoSchema = z.object({
   movimentos: z.number().int(),
@@ -17,6 +17,8 @@ export const SituacaoMercadoSchema = z.object({
   elencoMinimo: z.number().int(),
   elencoMaximo: z.number().int(),
   demitido: z.boolean(),
+  /** Renovações de contratos que acabam só até esta semana; depois, pré-contratos. */
+  semanaLimiteRenovacao: z.number().int().optional(),
 })
 export type SituacaoMercado = z.infer<typeof SituacaoMercadoSchema>
 
@@ -37,6 +39,8 @@ export const JogadorMercadoSchema = z.object({
   /** Disponível do exterior: clube e país de origem (informativos) e a taxa fixa. */
   origem: z.object({ clube: z.string(), pais: z.string() }).nullable().optional(),
   taxa: z.number().int().nullable().optional(),
+  /** Assinou pré-contrato com este clube (sigla): muda na virada. */
+  preContrato: z.string().nullable().optional(),
 })
 export type JogadorMercadoDto = z.infer<typeof JogadorMercadoSchema>
 
@@ -54,6 +58,8 @@ export const FiltrosMercadoSchema = z.object({
   somenteAVenda: z.boolean().optional(),
   /** Só os jogadores do time do usuário (renovações). */
   somenteMeus: z.boolean().optional(),
+  /** Só quem está em fim de contrato (termina nesta temporada, sem pré-contrato). */
+  somenteFimDeContrato: z.boolean().optional(),
 })
 
 export const MovimentoSchema = z.object({

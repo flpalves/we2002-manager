@@ -15,6 +15,14 @@
         "fase": "quad",
         "por_grupo": 2
       }
+    },
+    {
+      "competicao": "serie-d",
+      "troca": 4,
+      "sobem": {
+        "criterio": "fase",
+        "fase": "liga"
+      }
     }
   ]
 }

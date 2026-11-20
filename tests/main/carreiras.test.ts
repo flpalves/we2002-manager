@@ -9,6 +9,7 @@ import { lerResumo } from '../../src/main/db/repositorios/carreira'
 import { abrirNodeSqlite } from '../helpers/sqlite'
 import { exterior, livre, pacote as fixture } from '../fixtures/pacote'
 import { ErroApp } from '../../src/main/ipc/registrar'
+import { PADROES } from '../../src/core/config/padroes'
 
 describe('Carreiras (serviço)', () => {
   let pastaCarreiras: string
@@ -110,17 +111,18 @@ describe('Carreiras (serviço)', () => {
     c.fechar()
   })
 
-  it('times sem finanças usam o padrão do porte', () => {
+  it('times sem finanças usam o padrão do porte × o fator da divisão (BBB não joga liga nacional)', () => {
     const p = fixture()
     p.times[1] = { ...p.times[1]!, financas: undefined, porte: 'grande' }
     escreverPacote(join(pastaPacotes, 'teste'), p)
     const r = carreiras.criar({ ...entrada, time: 'BBB' })
-    expect(r.saldo).toBe(5_000_000_000)
+    expect(r.saldo).toBe(5_000_000_000 * PADROES.financas.orcamento_divisao.sem_liga)
   })
 
   it('recusa pacote com erros e não deixa pasta para trás', () => {
     const p = fixture()
-    p.times[0]!.jogadores.pop()
+    const elenco = p.times[0]!.jogadores
+    elenco[1] = { ...elenco[1]!, camisa: elenco[0]!.camisa } // camisa repetida segue sendo erro
     escreverPacote(join(pastaPacotes, 'teste'), p)
     expect(() => carreiras.criar(entrada)).toThrow(ErroApp)
     try {

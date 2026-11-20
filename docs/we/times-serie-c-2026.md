@@ -2,7 +2,7 @@
 
 ## No pacote do manager (`C:\Users\felip\OneDrive\Documentos\projetos\we2002-manager`)
 
-- 20 arquivos novos em `pacotes/brasil-2026/times/`: AMZ (Amazonas), ANA (Anápolis), BAR (Barra-SC), BPB (Botafogo-PB), BRU (Brusque), CAX (Caxias), CON (Confiança), FER (Ferroviária), FIG (Figueirense), FLO (Floresta), GUA (Guarani), INL (Inter de Limeira), ITA (Itabaiana), ITU (Ituano), MAC (Maranhão), MGA (Maringá), PAY (Paysandu), STA (Santa Cruz), VRE (Volta Redonda), YPI (Ypiranga-RS).
+- 20 arquivos novos em `pacotes/brasil-2026/times/`: AMZ (Amazonas), ANA (Anápolis), BAR (Barra-SC), BPB (Botafogo-PB), BRU (Brusque), CAX (Caxias), ADC (Confiança), FER (Ferroviária), FIG (Figueirense), FLO (Floresta), GUA (Guarani), INL (Inter de Limeira), ITA (Itabaiana), ITU (Ituano), MAC (Maranhão), MGA (Maringá), PAY (Paysandu), STA (Santa Cruz), VRE (Volta Redonda), YPI (Ypiranga-RS).
 - Competição nova `competicoes/serie-c.json`, com o formato real de 2026:
   - 1ª fase em turno único, 19 rodadas, e os 8 primeiros avançam.
   - Quadrangular com 2 grupos de 4, ida e volta, sorteio por potes.
@@ -15,7 +15,7 @@
 
 - Elenco vem do ogol.com.br (temporada 2026). São 26 jogadores por time: 3 goleiros e os 23 de linha do elenco atual com mais minutos na Série C. Posição detalhada, pé, altura, nascimento, nacionalidade e camisa saíram da ficha de cada jogador.
 - Notas pelo método do `montar.py` da Série B. A diferença é que o nível relativo de cada jogador vem dos minutos na Série C, não de ajuste à mão. A força do clube vem dos pontos na 1ª fase, com bônus para quem subiu ou foi à final. `AJUSTE = -0.2`.
-- Média dos 11 melhores, de 7,84 a 6,39: MGA 7,84 · FER 7,80 · STA 7,68 · BRU 7,67 · PAY 7,57 · INL 7,52 · BPB 7,42 · FIG 7,39 · MAC 7,38 · YPI 7,33 · FLO 7,27 · GUA 7,24 · CAX 7,15 · AMZ 7,09 · ITU 6,88 · BAR 6,86 · VRE 6,75 · ANA 6,73 · CON 6,47 · ITA 6,39. Tudo abaixo da Série B (7,9 a 9,1).
+- Média dos 11 melhores, de 7,84 a 6,39: MGA 7,84 · FER 7,80 · STA 7,68 · BRU 7,67 · PAY 7,57 · INL 7,52 · BPB 7,42 · FIG 7,39 · MAC 7,38 · YPI 7,33 · FLO 7,27 · GUA 7,24 · CAX 7,15 · AMZ 7,09 · ITU 6,88 · BAR 6,86 · VRE 6,75 · ANA 6,73 · ADC 6,47 · ITA 6,39. Tudo abaixo da Série B (7,9 a 9,1).
 - Formação automática: `4-3-3B` quando há pelo menos 3 pontas entre os 16 mais usados, senão `4-4-2B`. O Maringá só tem 1 lateral no elenco escolhido, então a 2ª vaga de lateral ficou com um jogador de outra posição.
 - Posição secundária deduzida (CB→DH, SB→SH, DH→OH, OH→SH, WG→SH, CF→WG). Os goleiros ficam sem ela, o que dá 60 avisos `sem_posicao_secundaria`.
 

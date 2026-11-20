@@ -12,13 +12,15 @@ import {
 } from '@core/mercado/negociacao'
 import { fatorSerieSalarioDoTime, importanciaNoTime, multaPadrao, salarioReferencia, type Porte } from '@core/mercado/valor'
 import { paraAscii } from '@core/texto'
-import type { Atributos } from '@shared/esquemas/pacote'
+import type { Atributos, Competicao } from '@shared/esquemas/pacote'
 import type { JogadorMercadoDto, NegociacaoDto, PropostaRecebida, ResultadoContraproposta, SituacaoMercado } from '@shared/esquemas/mercado'
 import type { z } from 'zod'
 import type { FiltrosMercadoSchema, PropostaSchema } from '@shared/esquemas/mercado'
 import { ErroApp } from '../ipc/registrar'
 import { registrarInfo } from './noticias'
-import { transferencia as noticiaTransferencia } from '@core/noticias/informativas'
+import { preContrato as noticiaPreContrato, transferencia as noticiaTransferencia } from '@core/noticias/informativas'
+import { ligasDosTimes } from './economia'
+import { nivelClube } from '@core/mercado/nivel'
 import { dinheiro } from '@shared/dinheiro'
 import type { Sql } from '../db/sql'
 
@@ -46,13 +48,9 @@ export function carreiraDe(sql: Sql): Carreira {
   return sql.get<Carreira>('SELECT time_usuario, temporada_atual, passo_atual, movimentos, demitido FROM carreira')!
 }
 
-/** Semana da data atual (a próxima a ser jogada; a última, com a temporada encerrada). */
+/** Semana em que o tempo está (o Continuar anda uma por vez; 1 antes da primeira). */
 export function semanaAgora(sql: Sql): number {
-  const c = carreiraDe(sql)
-  const s =
-    sql.get<{ semana: number }>('SELECT semana FROM passo WHERE temporada = ? AND indice = ?', c.temporada_atual, c.passo_atual) ??
-    sql.get<{ semana: number }>('SELECT MAX(semana) semana FROM passo WHERE temporada = ?', c.temporada_atual)
-  return s?.semana ?? 1
+  return Math.max(1, sql.get<{ semana_processada: number }>('SELECT semana_processada FROM carreira')?.semana_processada ?? 0)
 }
 
 export function folhaDe(sql: Sql, sigla: string): number {
@@ -63,6 +61,19 @@ export function folhaDe(sql: Sql, sigla: string): number {
 
 function tamanhoElenco(sql: Sql, sigla: string): number {
   return sql.get<{ n: number }>("SELECT COUNT(*) n FROM jogador j JOIN time t ON t.id = j.time_id WHERE t.sigla = ? AND j.status = 'ativo'", sigla)?.n ?? 0
+}
+
+/** Elenco do clube na temporada seguinte: contrato depois desta (sem pré-contrato com outro) + os pré-contratos assinados. */
+function elencoSeguinte(sql: Sql, sigla: string, temporada: number): number {
+  const ficam =
+    sql.get<{ n: number }>(
+      `SELECT COUNT(*) n FROM jogador j JOIN time t ON t.id = j.time_id JOIN contrato c ON c.jogador_id = j.id
+        WHERE t.sigla = ? AND j.status = 'ativo' AND c.ate_temporada > ? AND c.tipo = 'definitivo'
+          AND NOT EXISTS (SELECT 1 FROM pre_contrato pc WHERE pc.jogador_id = j.id AND pc.temporada = ?)`,
+      sigla, temporada, temporada,
+    )?.n ?? 0
+  const chegam = sql.get<{ n: number }>('SELECT COUNT(*) n FROM pre_contrato WHERE para = ? AND temporada = ?', sigla, temporada)?.n ?? 0
+  return ficam + chegam
 }
 
 export type Intensidade = 'baixa' | 'media' | 'alta'
@@ -95,6 +106,7 @@ export function situacao(sql: Sql): SituacaoMercado {
     elencoMinimo: r.mercado.elenco_minimo,
     elencoMaximo: r.mercado.elenco_maximo,
     demitido: !!c.demitido,
+    semanaLimiteRenovacao: r.mercado.pre_contrato.semana_limite_renovacao,
   }
 }
 
@@ -122,12 +134,15 @@ interface LinhaMercado {
   taxa_fixa: number | null
   origem_clube: string | null
   origem_pais: string | null
+  /** Pré-contrato assinado nesta temporada: clube de destino. */
+  pre_contrato: string | null
 }
 
 const SELECT_MERCADO = `
   SELECT j.id, j.nome, t.sigla, t.porte, j.posicao, j.idade, j.potencial, j.atributos, j.moral, j.valor, j.status, j.a_venda, t.saldo AS saldo_time,
-         j.taxa_fixa, j.origem_clube, j.origem_pais, c.salario_mensal, c.ate_temporada, c.multa, c.tipo AS contrato_tipo
-    FROM jogador j LEFT JOIN time t ON t.id = j.time_id LEFT JOIN contrato c ON c.jogador_id = j.id`
+         j.taxa_fixa, j.origem_clube, j.origem_pais, c.salario_mensal, c.ate_temporada, c.multa, c.tipo AS contrato_tipo, pc.para AS pre_contrato
+    FROM jogador j LEFT JOIN time t ON t.id = j.time_id LEFT JOIN contrato c ON c.jogador_id = j.id
+    LEFT JOIN pre_contrato pc ON pc.jogador_id = j.id AND pc.temporada = (SELECT temporada_atual FROM carreira)`
 
 function paraDto(l: LinhaMercado, regras: Regras, usuario: string): JogadorMercadoDto {
   return {
@@ -145,6 +160,7 @@ function paraDto(l: LinhaMercado, regras: Regras, usuario: string): JogadorMerca
     aVenda: l.sigla ? (l.a_venda as JogadorMercadoDto['aVenda']) : null,
     origem: l.status === 'exterior' && l.origem_clube ? { clube: l.origem_clube, pais: l.origem_pais ?? '' } : null,
     taxa: l.status === 'exterior' ? l.taxa_fixa : null,
+    preContrato: l.pre_contrato,
   }
 }
 
@@ -160,6 +176,15 @@ function fatorSalarialDoTime(sql: Sql, sigla: string, regras: Regras): number {
     )
     .map((l) => l.c)
   return fatorSerieSalarioDoTime(ligas, t?.pais ?? 'BRA', t?.fator_valor ?? 1, regras)
+}
+
+/** Nível do clube na temporada (06, "Nível do clube"): pelas ligas nacionais da competição; null = livre/sem clube. */
+function nivelDoTime(sql: Sql, sigla: string | null, regras: Regras): number | undefined {
+  if (!sigla) return undefined
+  const t = sql.get<{ pais: string }>('SELECT pais FROM time WHERE sigla = ?', sigla)
+  if (!t) return undefined
+  const competicoes = sql.all<{ definicao: string }>('SELECT definicao FROM competicao').map((x) => JSON.parse(x.definicao) as Competicao)
+  return nivelClube(ligasDosTimes(competicoes).get(sigla) ?? [], t.pais, regras)
 }
 
 /** Salário de referência do jogador se for jogar no clube `pagador` (06). */
@@ -193,25 +218,72 @@ export function buscar(sql: Sql, f: Filtros): JogadorMercadoDto[] {
         (!f.somenteLivres || j.time === null) &&
         (!f.somenteExterior || j.taxa != null) &&
         (!f.somenteAVenda || j.aVenda !== null) &&
-        (!f.somenteMeus || j.doUsuario),
+        (!f.somenteMeus || j.doUsuario) &&
+        (!f.somenteFimDeContrato || (j.time !== null && !j.preContrato && j.contratoAte !== null && j.contratoAte <= c.temporada_atual)),
     )
     .sort((a, b) => b.geral - a.geral || a.valor - b.valor || a.nome.localeCompare(b.nome))
     .slice(0, 200)
 }
 
-/** Tipos de negócio possíveis agora: fora da janela, só livres e renovações (o exterior, só na janela). */
-function tiposPossiveis(l: LinhaMercado, usuario: string, janela: boolean): TipoNegocio[] {
+/** O momento do mercado para o usuário: janela, prazo de renovação e se o clube pode assinar pré-contrato. */
+interface Momento {
+  usuario: string
+  temporada: number
+  janela: boolean
+  /** Passou da semana limite de renovação. */
+  prazoEncerrado: boolean
+  /** O clube do usuário joga uma liga nacional (A, B, C): pode assinar pré-contrato. */
+  ligaNacional: boolean
+}
+
+function momento(sql: Sql): Momento {
+  const r = regrasDe(sql)
+  const c = carreiraDe(sql)
+  const semana = semanaAgora(sql)
+  const competicoes = new Map(
+    sql.all<{ id: string; definicao: string }>('SELECT id, definicao FROM competicao').map((x) => [x.id, JSON.parse(x.definicao) as Competicao]),
+  )
+  return {
+    usuario: c.time_usuario,
+    temporada: c.temporada_atual,
+    janela: dentroDaJanela(semana, r),
+    prazoEncerrado: semana > r.mercado.pre_contrato.semana_limite_renovacao,
+    ligaNacional: (ligasDosTimes(competicoes).get(c.time_usuario)?.length ?? 0) > 0,
+  }
+}
+
+/** O contrato termina nesta temporada (definitivo). */
+const acabaAgora = (l: LinhaMercado, temporada: number) => l.contrato_tipo !== 'emprestimo' && l.ate_temporada !== null && l.ate_temporada <= temporada
+
+/**
+ * Tipos de negócio possíveis agora: fora da janela, só livres e renovações (o exterior, só na
+ * janela). Contrato acabando: renova só até a semana limite; depois dela, outros clubes da liga
+ * nacional assinam pré-contrato (o do usuário inclusive).
+ */
+function tiposPossiveis(l: LinhaMercado, m: Momento): TipoNegocio[] {
   if (l.status === 'fora') return []
-  if (l.status === 'exterior') return janela ? ['exterior'] : []
-  if (l.sigla === usuario) return l.contrato_tipo === 'emprestimo' ? [] : ['renovacao']
+  if (l.status === 'exterior') return m.janela ? ['exterior'] : []
+  if (l.pre_contrato) return []
+  if (l.sigla === m.usuario) {
+    if (l.contrato_tipo === 'emprestimo') return []
+    return m.prazoEncerrado && acabaAgora(l, m.temporada) ? [] : ['renovacao']
+  }
   if (!l.sigla) return ['livre']
-  return janela ? ['compra', 'emprestimo', 'multa'] : []
+  const tipos: TipoNegocio[] = m.janela ? ['compra', 'emprestimo', 'multa'] : []
+  if (m.prazoEncerrado && m.ligaNacional && acabaAgora(l, m.temporada)) tipos.push('pre_contrato')
+  return tipos
 }
 
 /** Por que não dá para negociar o jogador agora. */
-function motivoIndisponivel(l: LinhaMercado, possiveis: TipoNegocio[]): string {
+function motivoIndisponivel(sql: Sql, l: LinhaMercado, possiveis: TipoNegocio[], m: Momento): string {
   if (l.status === 'exterior') return 'Do exterior: só na janela de transferências.'
   if (l.status === 'fora') return 'Jogador fora do mercado.'
+  if (l.pre_contrato) {
+    const destino = sql.get<{ n: string }>('SELECT nome_curto n FROM time WHERE sigla = ?', l.pre_contrato)?.n ?? l.pre_contrato
+    return l.pre_contrato === m.usuario ? 'Pré-contrato assinado: ele chega na próxima temporada.' : `Assinou pré-contrato com o ${destino}: sai no fim da temporada.`
+  }
+  if (l.sigla === m.usuario && m.prazoEncerrado && acabaAgora(l, m.temporada)) return 'O prazo de renovação acabou: ele sai no fim da temporada.'
+  if (l.sigla && acabaAgora(l, m.temporada) && m.prazoEncerrado && !m.ligaNacional) return 'Pré-contrato só para clubes das ligas nacionais.'
   return possiveis.length ? 'Tipo de negócio indisponível para este jogador.' : 'Fora da janela: só jogadores livres e renovações.'
 }
 
@@ -238,6 +310,8 @@ function negociacaoAberta(sql: Sql, jogador: string): LinhaNegociacao | null {
 function iniciar(sql: Sql, l: LinhaMercado, tipo: TipoNegocio, regras: Regras, usuario: string): Negociacao {
   const comprador = sql.get<{ porte: Porte }>('SELECT porte FROM time WHERE sigla = ?', usuario)!.porte
   const porteAtual = l.porte ?? comprador
+  const nivelUsuario = nivelDoTime(sql, usuario, regras)
+  const nivelAtual = nivelDoTime(sql, l.sigla, regras) ?? nivelUsuario
   const ref = salarioReferenciaPara(sql, l, usuario, regras)
   const salarioAtual = l.salario_mensal ?? 0
   let pedida = 0
@@ -246,7 +320,10 @@ function iniciar(sql: Sql, l: LinhaMercado, tipo: TipoNegocio, regras: Regras, u
       .all<{ atributos: string; posicao: string }>("SELECT j.atributos, j.posicao FROM jogador j JOIN time t ON t.id = j.time_id WHERE t.sigla = ? AND j.status = 'ativo'", l.sigla)
       .map((x) => geral(JSON.parse(x.atributos) as Atributos, x.posicao, regras))
     const g = geral(JSON.parse(l.atributos) as Atributos, l.posicao, regras)
-    pedida = pedidaInicial({ valor: l.valor, importancia: importanciaNoTime(g, gerais, regras), porteVendedor: porteAtual, porteComprador: comprador }, regras)
+    pedida = pedidaInicial(
+      { valor: l.valor, importancia: importanciaNoTime(g, gerais, regras), porteVendedor: porteAtual, porteComprador: comprador, nivelVendedor: nivelAtual, nivelComprador: nivelUsuario },
+      regras,
+    )
     // À venda: desconto na pedida (maior se o vendedor está no vermelho).
     if (l.a_venda) pedida = Math.round(pedida * ((l.saldo_time ?? 0) < 0 ? regras.mercado.ia.desconto_crise : regras.mercado.ia.desconto_a_venda))
     if (tipo === 'emprestimo') pedida = Math.round(pedida * regras.mercado.taxa_emprestimo)
@@ -264,6 +341,8 @@ function iniciar(sql: Sql, l: LinhaMercado, tipo: TipoNegocio, regras: Regras, u
       porteComprador: comprador,
       moral: l.moral,
       salarioReferencia: ref,
+      nivelAtual,
+      nivelComprador: nivelUsuario,
     },
     regras,
   )
@@ -285,7 +364,7 @@ function paraNegociacaoDto(sql: Sql, id: number | null, l: LinhaMercado, n: Nego
     valorAcordado: n.valorAcordado,
     contraSalario: n.ultimaContraSalario,
     historico: n.historico,
-    tiposPossiveis: tiposPossiveis(l, c.time_usuario, dentroDaJanela(semanaAgora(sql), r)),
+    tiposPossiveis: tiposPossiveis(l, momento(sql)),
     mensagem,
   }
 }
@@ -295,13 +374,14 @@ export function negociacao(sql: Sql, jogador: string, tipo?: TipoNegocio): Negoc
   const r = regrasDe(sql)
   const c = carreiraDe(sql)
   const l = linha(sql, jogador)
-  const possiveis = tiposPossiveis(l, c.time_usuario, dentroDaJanela(semanaAgora(sql), r))
+  const mo = momento(sql)
+  const possiveis = tiposPossiveis(l, mo)
   const aberta = negociacaoAberta(sql, jogador)
   if (aberta && (!tipo || tipo === aberta.tipo)) return paraNegociacaoDto(sql, aberta.id, l, JSON.parse(aberta.estado) as Negociacao, null)
   const escolhido = tipo ?? possiveis[0]
   if (!escolhido || !possiveis.includes(escolhido)) {
     const n = iniciarNegociacao(escolhido ?? 'compra', 0, 0)
-    return paraNegociacaoDto(sql, null, l, { ...n, etapa: 'encerrada' }, motivoIndisponivel(l, possiveis))
+    return paraNegociacaoDto(sql, null, l, { ...n, etapa: 'encerrada' }, motivoIndisponivel(sql, l, possiveis, mo))
   }
   const n = iniciar(sql, l, escolhido, r, c.time_usuario)
   // Exterior: sem caixa para a taxa, não dá para começar a negociação.
@@ -320,8 +400,9 @@ export function propor(sql: Sql, p: Proposta): NegociacaoDto {
   const c = carreiraDe(sql)
   if (c.demitido) throw new ErroApp('demitido', 'Você foi demitido: escolha um novo clube antes de negociar.')
   const l = linha(sql, p.jogadorId)
-  const possiveis = tiposPossiveis(l, c.time_usuario, dentroDaJanela(semanaAgora(sql), r))
-  if (!possiveis.includes(p.tipo)) throw new ErroApp('negocio_indisponivel', motivoIndisponivel(l, possiveis))
+  const mo = momento(sql)
+  const possiveis = tiposPossiveis(l, mo)
+  if (!possiveis.includes(p.tipo)) throw new ErroApp('negocio_indisponivel', motivoIndisponivel(sql, l, possiveis, mo))
   // A taxa só sai do caixa no fechamento, mas sem caixa para ela a negociação nem começa (nem segue).
   if (p.tipo === 'exterior' && !cobreTaxa(sql, l, c.time_usuario)) throw new ErroApp('sem_caixa', 'Sem caixa para a taxa.')
   if (c.movimentos <= 0) throw new ErroApp('sem_movimentos', 'Sem movimentos: espere o próximo jogo do seu time.')
@@ -332,8 +413,10 @@ export function propor(sql: Sql, p: Proposta): NegociacaoDto {
 
   const saldo = sql.get<{ saldo: number; orcamento_folha_mensal: number }>('SELECT saldo, orcamento_folha_mensal FROM time WHERE sigla = ?', c.time_usuario)!
   const chegando = p.tipo !== 'renovacao'
-  if (chegando && tamanhoElenco(sql, c.time_usuario) >= r.mercado.elenco_maximo) {
-    throw new ErroApp('elenco_cheio', `Elenco cheio (${r.mercado.elenco_maximo} jogadores).`)
+  // Pré-contrato conta no elenco da temporada seguinte (quem fica + quem já assinou).
+  const tamanho = p.tipo === 'pre_contrato' ? elencoSeguinte(sql, c.time_usuario, c.temporada_atual) : tamanhoElenco(sql, c.time_usuario)
+  if (chegando && tamanho >= r.mercado.elenco_maximo) {
+    throw new ErroApp('elenco_cheio', `Elenco cheio (${r.mercado.elenco_maximo} jogadores${p.tipo === 'pre_contrato' ? ' na próxima temporada' : ''}).`)
   }
 
   let mensagem: string
@@ -354,7 +437,8 @@ export function propor(sql: Sql, p: Proposta): NegociacaoDto {
   } else if (n.etapa === 'jogador') {
     const salario = p.salario ?? 0
     // Saldo negativo: livre só com salário dentro do orçamento da folha.
-    if (saldo.saldo < 0 && (p.tipo !== 'livre' || folhaDe(sql, c.time_usuario) + salario > saldo.orcamento_folha_mensal)) {
+    const semTaxa = p.tipo === 'livre' || p.tipo === 'pre_contrato'
+    if (saldo.saldo < 0 && (!semTaxa || folhaDe(sql, c.time_usuario) + salario > saldo.orcamento_folha_mensal)) {
       throw new ErroApp('saldo_negativo', 'Saldo negativo: só livres com salário dentro do orçamento da folha.')
     }
     const res = proporAoJogador(n, salario, r)
@@ -437,6 +521,17 @@ function executar(sql: Sql, l: LinhaMercado, n: Negociacao, temporadas: number, 
   const salario = n.salarioAcordado ?? 0
   if (n.tipo === 'renovacao') {
     sql.run('UPDATE contrato SET salario_mensal = ?, ate_temporada = ? WHERE jogador_id = ?', salario, c.temporada_atual + temporadas, l.id)
+    return
+  }
+  if (n.tipo === 'pre_contrato') {
+    // Sem taxa e sem mudar agora: a virada leva o jogador com este contrato (começa na temporada seguinte).
+    const semana = semanaAgora(sql)
+    sql.run(
+      'INSERT OR REPLACE INTO pre_contrato (jogador_id, de, para, salario_mensal, ate_temporada, temporada, semana) VALUES (?, ?, ?, ?, ?, ?, ?)',
+      l.id, l.sigla, c.time_usuario, salario, c.temporada_atual + temporadas, c.temporada_atual, semana,
+    )
+    const nomeTime = (x: string) => sql.get<{ n: string }>('SELECT nome_curto n FROM time WHERE sigla = ?', x)?.n ?? x
+    registrarInfo(sql, c.temporada_atual, semana, noticiaPreContrato({ jogador: l.nome, jogadorId: String(l.id), de: nomeTime(l.sigla!), para: nomeTime(c.time_usuario), doUsuario: 'chega' }))
     return
   }
   const emprestimo = n.tipo === 'emprestimo'
@@ -540,6 +635,8 @@ function venderPelaProposta(sql: Sql, id: number, p: LinhaProposta, valor: numbe
       porteComprador: comprador,
       moral: l.moral,
       salarioReferencia: salarioReferenciaPara(sql, l, p.clube, r),
+      nivelAtual: nivelDoTime(sql, c.time_usuario, r),
+      nivelComprador: nivelDoTime(sql, p.clube, r),
     },
     r,
   )

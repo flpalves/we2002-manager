@@ -36,7 +36,17 @@
         "clube": "Leeds United",
         "pais": "ENG"
       },
-      "taxa": 3470000000
+      "taxa": 3470000000,
+      "aparencia": {
+        "pele": 1,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "B",
+        "barba": "C",
+        "cor_barba": "B",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-luiz-junior",
@@ -73,7 +83,17 @@
         "clube": "Villarreal",
         "pais": "ESP"
       },
-      "taxa": 2265000000
+      "taxa": 2265000000,
+      "aparencia": {
+        "pele": 4,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "B",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-matheus-magalhaes",
@@ -110,7 +130,17 @@
         "clube": "Braga",
         "pais": "POR"
       },
-      "taxa": 1225000000
+      "taxa": 1225000000,
+      "aparencia": {
+        "pele": 2,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "C",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-anthony-lopes",
@@ -147,7 +177,17 @@
         "clube": "Nantes",
         "pais": "FRA"
       },
-      "taxa": 680000000
+      "taxa": 680000000,
+      "aparencia": {
+        "pele": 1,
+        "fisico": "F",
+        "cabelo": "m1",
+        "cor_cabelo": "B",
+        "barba": "C",
+        "cor_barba": "B",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-franco-armani",
@@ -184,7 +224,17 @@
         "clube": "River Plate",
         "pais": "ARG"
       },
-      "taxa": 250000000
+      "taxa": 250000000,
+      "aparencia": {
+        "pele": 1,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-sergio-romero",
@@ -221,7 +271,17 @@
         "clube": "Boca Juniors",
         "pais": "ARG"
       },
-      "taxa": 250000000
+      "taxa": 250000000,
+      "aparencia": {
+        "pele": 2,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "B",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-fernando-muslera",
@@ -258,7 +318,17 @@
         "clube": "Estudiantes",
         "pais": "ARG"
       },
-      "taxa": 250000000
+      "taxa": 250000000,
+      "aparencia": {
+        "pele": 1,
+        "fisico": "G",
+        "cabelo": "i1",
+        "cor_cabelo": "B",
+        "barba": "B",
+        "cor_barba": "B",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-esteban-andrada",
@@ -295,7 +365,17 @@
         "clube": "Monterrey",
         "pais": "MEX"
       },
-      "taxa": 565000000
+      "taxa": 565000000,
+      "aparencia": {
+        "pele": 1,
+        "fisico": "G",
+        "cabelo": "i1",
+        "cor_cabelo": "B",
+        "barba": "C",
+        "cor_barba": "B",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-santiago-mele",
@@ -332,7 +412,17 @@
         "clube": "Monterrey",
         "pais": "MEX"
       },
-      "taxa": 1605000000
+      "taxa": 1605000000,
+      "aparencia": {
+        "pele": 1,
+        "fisico": "F",
+        "cabelo": "k1",
+        "cor_cabelo": "A",
+        "barba": "C",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-camilo-vargas",
@@ -369,7 +459,17 @@
         "clube": "Atlas",
         "pais": "MEX"
       },
-      "taxa": 1020000000
+      "taxa": 1020000000,
+      "aparencia": {
+        "pele": 3,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "C",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-kevin-mier",
@@ -406,7 +506,17 @@
         "clube": "Cruz Azul",
         "pais": "MEX"
       },
-      "taxa": 1890000000
+      "taxa": 1890000000,
+      "aparencia": {
+        "pele": 4,
+        "fisico": "F",
+        "cabelo": "k1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-alvaro-montero",
@@ -443,7 +553,17 @@
         "clube": "Vélez Sarsfield",
         "pais": "ARG"
       },
-      "taxa": 545000000
+      "taxa": 545000000,
+      "aparencia": {
+        "pele": 3,
+        "fisico": "G",
+        "cabelo": "k1",
+        "cor_cabelo": "A",
+        "barba": "C",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-brayan-cortes",
@@ -480,7 +600,17 @@
         "clube": "Peñarol",
         "pais": "URU"
       },
-      "taxa": 225000000
+      "taxa": 225000000,
+      "aparencia": {
+        "pele": 2,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-gabriel-arias",
@@ -517,7 +647,17 @@
         "clube": "Racing",
         "pais": "ARG"
       },
-      "taxa": 250000000
+      "taxa": 250000000,
+      "aparencia": {
+        "pele": 1,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "B",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-rodrigo-rey",
@@ -554,7 +694,17 @@
         "clube": "Independiente",
         "pais": "ARG"
       },
-      "taxa": 250000000
+      "taxa": 250000000,
+      "aparencia": {
+        "pele": 2,
+        "fisico": "F",
+        "cabelo": "k1",
+        "cor_cabelo": "A",
+        "barba": "C",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-moises-ramirez",
@@ -591,7 +741,17 @@
         "clube": "Kifisia",
         "pais": "GRE"
       },
-      "taxa": 700000000
+      "taxa": 700000000,
+      "aparencia": {
+        "pele": 4,
+        "fisico": "F",
+        "cabelo": "k1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-hernan-galindez",
@@ -628,7 +788,17 @@
         "clube": "Huracán",
         "pais": "ARG"
       },
-      "taxa": 140000000
+      "taxa": 140000000,
+      "aparencia": {
+        "pele": 4,
+        "fisico": "F",
+        "cabelo": "m1",
+        "cor_cabelo": "A",
+        "barba": "C",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-gatito-fernandez",
@@ -665,7 +835,17 @@
         "clube": "Cerro Porteño",
         "pais": "PAR"
       },
-      "taxa": 80000000
+      "taxa": 80000000,
+      "aparencia": {
+        "pele": 2,
+        "fisico": "G",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "C",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-pedro-gallese",
@@ -702,7 +882,17 @@
         "clube": "Orlando City",
         "pais": "USA"
       },
-      "taxa": 285000000
+      "taxa": 285000000,
+      "aparencia": {
+        "pele": 3,
+        "fisico": "G",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "B",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-nino",
@@ -739,7 +929,17 @@
         "clube": "Zenit",
         "pais": "RUS"
       },
-      "taxa": 3470000000
+      "taxa": 3470000000,
+      "aparencia": {
+        "pele": 1,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "B",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-marlon",
@@ -776,7 +976,17 @@
         "clube": "Shakhtar Donetsk",
         "pais": "UKR"
       },
-      "taxa": 1475000000
+      "taxa": 1475000000,
+      "aparencia": {
+        "pele": 3,
+        "fisico": "F",
+        "cabelo": "k1",
+        "cor_cabelo": "A",
+        "barba": "B",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-matheus-reis",
@@ -813,7 +1023,17 @@
         "clube": "Sporting",
         "pais": "POR"
       },
-      "taxa": 2655000000
+      "taxa": 2655000000,
+      "aparencia": {
+        "pele": 4,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-rodrigo-becao",
@@ -850,7 +1070,17 @@
         "clube": "Fenerbahçe",
         "pais": "TUR"
       },
-      "taxa": 2655000000
+      "taxa": 2655000000,
+      "aparencia": {
+        "pele": 4,
+        "fisico": "F",
+        "cabelo": "k1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-diego-carlos",
@@ -887,7 +1117,17 @@
         "clube": "Fenerbahçe",
         "pais": "TUR"
       },
-      "taxa": 1020000000
+      "taxa": 1020000000,
+      "aparencia": {
+        "pele": 4,
+        "fisico": "G",
+        "cabelo": "k1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-igor-julio",
@@ -924,7 +1164,17 @@
         "clube": "Brighton",
         "pais": "ENG"
       },
-      "taxa": 3470000000
+      "taxa": 3470000000,
+      "aparencia": {
+        "pele": 1,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "C",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-lucas-martinez-quarta",
@@ -961,7 +1211,17 @@
         "clube": "River Plate",
         "pais": "ARG"
       },
-      "taxa": 1770000000
+      "taxa": 1770000000,
+      "aparencia": {
+        "pele": 2,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-german-pezzella",
@@ -998,7 +1258,17 @@
         "clube": "River Plate",
         "pais": "ARG"
       },
-      "taxa": 455000000
+      "taxa": 455000000,
+      "aparencia": {
+        "pele": 1,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "C",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-marcos-rojo",
@@ -1035,7 +1305,17 @@
         "clube": "Racing",
         "pais": "ARG"
       },
-      "taxa": 250000000
+      "taxa": 250000000,
+      "aparencia": {
+        "pele": 1,
+        "fisico": "F",
+        "cabelo": "m1",
+        "cor_cabelo": "B",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-juan-foyth",
@@ -1072,7 +1352,17 @@
         "clube": "Villarreal",
         "pais": "ESP"
       },
-      "taxa": 6245000000
+      "taxa": 6245000000,
+      "aparencia": {
+        "pele": 1,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "B",
+        "barba": "B",
+        "cor_barba": "B",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-ayrton-costa",
@@ -1109,7 +1399,17 @@
         "clube": "Boca Juniors",
         "pais": "ARG"
       },
-      "taxa": 1510000000
+      "taxa": 1510000000,
+      "aparencia": {
+        "pele": 2,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-nehuen-perez",
@@ -1146,7 +1446,17 @@
         "clube": "Porto",
         "pais": "POR"
       },
-      "taxa": 4080000000
+      "taxa": 4080000000,
+      "aparencia": {
+        "pele": 1,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "B",
+        "barba": "C",
+        "cor_barba": "B",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-facundo-garces",
@@ -1183,7 +1493,17 @@
         "clube": "Alavés",
         "pais": "ESP"
       },
-      "taxa": 2265000000
+      "taxa": 2265000000,
+      "aparencia": {
+        "pele": 1,
+        "fisico": "G",
+        "cabelo": "i1",
+        "cor_cabelo": "H",
+        "barba": "B",
+        "cor_barba": "C",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-emanuel-mammana",
@@ -1220,7 +1540,17 @@
         "clube": "Vélez Sarsfield",
         "pais": "ARG"
       },
-      "taxa": 545000000
+      "taxa": 545000000,
+      "aparencia": {
+        "pele": 1,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "B",
+        "barba": "C",
+        "cor_barba": "B",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-sebastian-caceres",
@@ -1257,7 +1587,17 @@
         "clube": "América",
         "pais": "MEX"
       },
-      "taxa": 1890000000
+      "taxa": 1890000000,
+      "aparencia": {
+        "pele": 1,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-nicolas-marichal",
@@ -1294,7 +1634,17 @@
         "clube": "Dínamo Moscou",
         "pais": "RUS"
       },
-      "taxa": 2265000000
+      "taxa": 2265000000,
+      "aparencia": {
+        "pele": 1,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "B",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-sebastian-coates",
@@ -1331,7 +1681,17 @@
         "clube": "Nacional",
         "pais": "URU"
       },
-      "taxa": 190000000
+      "taxa": 190000000,
+      "aparencia": {
+        "pele": 1,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "B",
+        "barba": "C",
+        "cor_barba": "B",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-leandro-cabrera",
@@ -1368,7 +1728,17 @@
         "clube": "Espanyol",
         "pais": "ESP"
       },
-      "taxa": 680000000
+      "taxa": 680000000,
+      "aparencia": {
+        "pele": 1,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "B",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-yerry-mina",
@@ -1405,7 +1775,17 @@
         "clube": "Cagliari",
         "pais": "ITA"
       },
-      "taxa": 1835000000
+      "taxa": 1835000000,
+      "aparencia": {
+        "pele": 4,
+        "fisico": "G",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-paulo-diaz",
@@ -1442,7 +1822,17 @@
         "clube": "River Plate",
         "pais": "ARG"
       },
-      "taxa": 1225000000
+      "taxa": 1225000000,
+      "aparencia": {
+        "pele": 1,
+        "fisico": "G",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-johan-vasquez",
@@ -1479,7 +1869,17 @@
         "clube": "Genoa",
         "pais": "ITA"
       },
-      "taxa": 3470000000
+      "taxa": 3470000000,
+      "aparencia": {
+        "pele": 3,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-cesar-montes",
@@ -1516,7 +1916,17 @@
         "clube": "Lokomotiv Moscou",
         "pais": "RUS"
       },
-      "taxa": 1925000000
+      "taxa": 1925000000,
+      "aparencia": {
+        "pele": 1,
+        "fisico": "G",
+        "cabelo": "i1",
+        "cor_cabelo": "B",
+        "barba": "B",
+        "cor_barba": "B",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-alexander-callens",
@@ -1553,7 +1963,17 @@
         "clube": "AEK Atenas",
         "pais": "GRE"
       },
-      "taxa": 380000000
+      "taxa": 380000000,
+      "aparencia": {
+        "pele": 3,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-luis-abram",
@@ -1590,7 +2010,17 @@
         "clube": "Atlanta United",
         "pais": "USA"
       },
-      "taxa": 615000000
+      "taxa": 615000000,
+      "aparencia": {
+        "pele": 2,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-jackson-porozo",
@@ -1627,7 +2057,17 @@
         "clube": "Tijuana",
         "pais": "MEX"
       },
-      "taxa": 1050000000
+      "taxa": 1050000000,
+      "aparencia": {
+        "pele": 4,
+        "fisico": "F",
+        "cabelo": "k1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-shogo-taniguchi",
@@ -1664,7 +2104,17 @@
         "clube": "Sint-Truiden",
         "pais": "BEL"
       },
-      "taxa": 380000000
+      "taxa": 380000000,
+      "aparencia": {
+        "pele": 1,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "B",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-walker-zimmerman",
@@ -1701,7 +2151,17 @@
         "clube": "Nashville SC",
         "pais": "USA"
       },
-      "taxa": 765000000
+      "taxa": 765000000,
+      "aparencia": {
+        "pele": 3,
+        "fisico": "F",
+        "cabelo": "k1",
+        "cor_cabelo": "A",
+        "barba": "B",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-douglas-santos",
@@ -1738,7 +2198,17 @@
         "clube": "Zenit",
         "pais": "RUS"
       },
-      "taxa": 1835000000
+      "taxa": 1835000000,
+      "aparencia": {
+        "pele": 1,
+        "fisico": "E",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "B",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-abner",
@@ -1775,7 +2245,17 @@
         "clube": "Lyon",
         "pais": "FRA"
       },
-      "taxa": 2265000000
+      "taxa": 2265000000,
+      "aparencia": {
+        "pele": 4,
+        "fisico": "E",
+        "cabelo": "k1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-marcelo-saracchi",
@@ -1812,7 +2292,17 @@
         "clube": "Boca Juniors",
         "pais": "ARG"
       },
-      "taxa": 715000000
+      "taxa": 715000000,
+      "aparencia": {
+        "pele": 1,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "C",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-marcos-acuna",
@@ -1849,7 +2339,17 @@
         "clube": "River Plate",
         "pais": "ARG"
       },
-      "taxa": 815000000
+      "taxa": 815000000,
+      "aparencia": {
+        "pele": 1,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "B",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-nicolas-tagliafico",
@@ -1886,7 +2386,17 @@
         "clube": "Lyon",
         "pais": "FRA"
       },
-      "taxa": 2205000000
+      "taxa": 2205000000,
+      "aparencia": {
+        "pele": 2,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "C",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-lautaro-blanco",
@@ -1923,7 +2433,17 @@
         "clube": "Boca Juniors",
         "pais": "ARG"
       },
-      "taxa": 840000000
+      "taxa": 840000000,
+      "aparencia": {
+        "pele": 2,
+        "fisico": "F",
+        "cabelo": "k1",
+        "cor_cabelo": "H",
+        "barba": "B",
+        "cor_barba": "C",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-frank-fabra",
@@ -1960,7 +2480,17 @@
         "clube": "Atlético Nacional",
         "pais": "COL"
       },
-      "taxa": 105000000
+      "taxa": 105000000,
+      "aparencia": {
+        "pele": 2,
+        "fisico": "F",
+        "cabelo": "k1",
+        "cor_cabelo": "A",
+        "barba": "B",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-gabriel-suazo",
@@ -1997,7 +2527,17 @@
         "clube": "Sevilla",
         "pais": "ESP"
       },
-      "taxa": 1925000000
+      "taxa": 1925000000,
+      "aparencia": {
+        "pele": 1,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "B",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-johan-mojica",
@@ -2034,7 +2574,17 @@
         "clube": "Mallorca",
         "pais": "ESP"
       },
-      "taxa": 680000000
+      "taxa": 680000000,
+      "aparencia": {
+        "pele": 4,
+        "fisico": "F",
+        "cabelo": "k1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-jesus-gallardo",
@@ -2071,7 +2621,17 @@
         "clube": "Toluca",
         "pais": "MEX"
       },
-      "taxa": 470000000
+      "taxa": 470000000,
+      "aparencia": {
+        "pele": 3,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-lucas-olaza",
@@ -2108,7 +2668,17 @@
         "clube": "Krasnodar",
         "pais": "RUS"
       },
-      "taxa": 1020000000
+      "taxa": 1020000000,
+      "aparencia": {
+        "pele": 2,
+        "fisico": "F",
+        "cabelo": "k1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-agustin-sandez",
@@ -2145,7 +2715,17 @@
         "clube": "Rosario Central",
         "pais": "ARG"
       },
-      "taxa": 465000000
+      "taxa": 465000000,
+      "aparencia": {
+        "pele": 2,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "C",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-francisco-ortega",
@@ -2182,7 +2762,17 @@
         "clube": "Olympiacos",
         "pais": "GRE"
       },
-      "taxa": 2265000000
+      "taxa": 2265000000,
+      "aparencia": {
+        "pele": 1,
+        "fisico": "E",
+        "cabelo": "i1",
+        "cor_cabelo": "B",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-cristian-borja",
@@ -2219,7 +2809,17 @@
         "clube": "América",
         "pais": "MEX"
       },
-      "taxa": 470000000
+      "taxa": 470000000,
+      "aparencia": {
+        "pele": 4,
+        "fisico": "E",
+        "cabelo": "k1",
+        "cor_cabelo": "A",
+        "barba": "C",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-gonzalo-montiel",
@@ -2256,7 +2856,17 @@
         "clube": "River Plate",
         "pais": "ARG"
       },
-      "taxa": 2315000000
+      "taxa": 2315000000,
+      "aparencia": {
+        "pele": 1,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "H",
+        "barba": "B",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-santiago-arias",
@@ -2293,7 +2903,17 @@
         "clube": "Independiente",
         "pais": "ARG"
       },
-      "taxa": 250000000
+      "taxa": 250000000,
+      "aparencia": {
+        "pele": 4,
+        "fisico": "E",
+        "cabelo": "k1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-luis-advincula",
@@ -2330,7 +2950,17 @@
         "clube": "Boca Juniors",
         "pais": "ARG"
       },
-      "taxa": 250000000
+      "taxa": 250000000,
+      "aparencia": {
+        "pele": 2,
+        "fisico": "E",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-marcelo-weigandt",
@@ -2367,7 +2997,17 @@
         "clube": "Inter Miami",
         "pais": "USA"
       },
-      "taxa": 525000000
+      "taxa": 525000000,
+      "aparencia": {
+        "pele": 1,
+        "fisico": "E",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "C",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-dodo",
@@ -2404,7 +3044,17 @@
         "clube": "Cremonese",
         "pais": "ITA"
       },
-      "taxa": 1925000000
+      "taxa": 1925000000,
+      "aparencia": {
+        "pele": 4,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-sergino-dest",
@@ -2441,7 +3091,17 @@
         "clube": "PSV",
         "pais": "NED"
       },
-      "taxa": 4080000000
+      "taxa": 4080000000,
+      "aparencia": {
+        "pele": 1,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "B",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-byron-castillo",
@@ -2478,7 +3138,17 @@
         "clube": "León",
         "pais": "MEX"
       },
-      "taxa": 890000000
+      "taxa": 890000000,
+      "aparencia": {
+        "pele": 4,
+        "fisico": "E",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-juan-caceres",
@@ -2515,7 +3185,17 @@
         "clube": "Dínamo Moscou",
         "pais": "RUS"
       },
-      "taxa": 1260000000
+      "taxa": 1260000000,
+      "aparencia": {
+        "pele": 1,
+        "fisico": "E",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "B",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-yan-couto",
@@ -2552,7 +3232,17 @@
         "clube": "Borussia Dortmund",
         "pais": "GER"
       },
-      "taxa": 4490000000
+      "taxa": 4490000000,
+      "aparencia": {
+        "pele": 1,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-jorge-sanchez",
@@ -2589,7 +3279,17 @@
         "clube": "Cruz Azul",
         "pais": "MEX"
       },
-      "taxa": 890000000
+      "taxa": 890000000,
+      "aparencia": {
+        "pele": 1,
+        "fisico": "E",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "B",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-vinicius-tobias",
@@ -2626,7 +3326,17 @@
         "clube": "Shakhtar Donetsk",
         "pais": "UKR"
       },
-      "taxa": 770000000
+      "taxa": 770000000,
+      "aparencia": {
+        "pele": 4,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "B",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-mauricio-isla",
@@ -2663,7 +3373,17 @@
         "clube": "Independiente",
         "pais": "ARG"
       },
-      "taxa": 80000000
+      "taxa": 80000000,
+      "aparencia": {
+        "pele": 1,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "C",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-facundo-mura",
@@ -2700,7 +3420,17 @@
         "clube": "Racing",
         "pais": "ARG"
       },
-      "taxa": 840000000
+      "taxa": 840000000,
+      "aparencia": {
+        "pele": 1,
+        "fisico": "E",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "C",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-kevin-alvarez",
@@ -2737,7 +3467,17 @@
         "clube": "América",
         "pais": "MEX"
       },
-      "taxa": 1890000000
+      "taxa": 1890000000,
+      "aparencia": {
+        "pele": 2,
+        "fisico": "E",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-gaston-martirena",
@@ -2774,7 +3514,17 @@
         "clube": "Racing",
         "pais": "ARG"
       },
-      "taxa": 1510000000
+      "taxa": 1510000000,
+      "aparencia": {
+        "pele": 2,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "C",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-guido-rodriguez",
@@ -2811,7 +3561,17 @@
         "clube": "Valencia",
         "pais": "ESP"
       },
-      "taxa": 1835000000
+      "taxa": 1835000000,
+      "aparencia": {
+        "pele": 2,
+        "fisico": "F",
+        "cabelo": "k1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-federico-redondo",
@@ -2848,7 +3608,17 @@
         "clube": "Inter Miami",
         "pais": "USA"
       },
-      "taxa": 1040000000
+      "taxa": 1040000000,
+      "aparencia": {
+        "pele": 1,
+        "fisico": "E",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-matias-galarza",
@@ -2885,7 +3655,17 @@
         "clube": "Atlanta United",
         "pais": "USA"
       },
-      "taxa": 1040000000
+      "taxa": 1040000000,
+      "aparencia": {
+        "pele": 1,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "B",
+        "barba": "C",
+        "cor_barba": "B",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-andres-cubas",
@@ -2922,7 +3702,17 @@
         "clube": "Vancouver Whitecaps",
         "pais": "CAN"
       },
-      "taxa": 1105000000
+      "taxa": 1105000000,
+      "aparencia": {
+        "pele": 1,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "B",
+        "barba": "B",
+        "cor_barba": "B",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-wilmar-barrios",
@@ -2959,7 +3749,17 @@
         "clube": "Zenit",
         "pais": "RUS"
       },
-      "taxa": 1835000000
+      "taxa": 1835000000,
+      "aparencia": {
+        "pele": 1,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-gustavo-puerta",
@@ -2996,7 +3796,17 @@
         "clube": "Racing Santander",
         "pais": "ESP"
       },
-      "taxa": 1385000000
+      "taxa": 1385000000,
+      "aparencia": {
+        "pele": 4,
+        "fisico": "F",
+        "cabelo": "k1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-erick-gutierrez",
@@ -3033,7 +3843,17 @@
         "clube": "Chivas",
         "pais": "MEX"
       },
-      "taxa": 680000000
+      "taxa": 680000000,
+      "aparencia": {
+        "pele": 2,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-luis-chavez",
@@ -3070,7 +3890,17 @@
         "clube": "Dínamo Moscou",
         "pais": "RUS"
       },
-      "taxa": 820000000
+      "taxa": 820000000,
+      "aparencia": {
+        "pele": 2,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "B",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-santiago-ascacibar",
@@ -3107,7 +3937,17 @@
         "clube": "Estudiantes",
         "pais": "ARG"
       },
-      "taxa": 1285000000
+      "taxa": 1285000000,
+      "aparencia": {
+        "pele": 1,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-vinicius-souza",
@@ -3144,7 +3984,17 @@
         "clube": "Sheffield United",
         "pais": "ENG"
       },
-      "taxa": 1260000000
+      "taxa": 1260000000,
+      "aparencia": {
+        "pele": 1,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "B",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-felipe-loyola",
@@ -3181,7 +4031,17 @@
         "clube": "Independiente",
         "pais": "ARG"
       },
-      "taxa": 840000000
+      "taxa": 840000000,
+      "aparencia": {
+        "pele": 1,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "H",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-fernando-gorriaran",
@@ -3218,7 +4078,17 @@
         "clube": "Tigres",
         "pais": "MEX"
       },
-      "taxa": 850000000
+      "taxa": 850000000,
+      "aparencia": {
+        "pele": 1,
+        "fisico": "F",
+        "cabelo": "k1",
+        "cor_cabelo": "A",
+        "barba": "C",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-vitor-carvalho",
@@ -3255,7 +4125,17 @@
         "clube": "Braga",
         "pais": "POR"
       },
-      "taxa": 2495000000
+      "taxa": 2495000000,
+      "aparencia": {
+        "pele": 4,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "C",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-erik-lira",
@@ -3292,7 +4172,17 @@
         "clube": "Cruz Azul",
         "pais": "MEX"
       },
-      "taxa": 1050000000
+      "taxa": 1050000000,
+      "aparencia": {
+        "pele": 1,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "C",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-wendel",
@@ -3329,7 +4219,17 @@
         "clube": "Zenit",
         "pais": "RUS"
       },
-      "taxa": 6245000000
+      "taxa": 6245000000,
+      "aparencia": {
+        "pele": 2,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "C",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-marlon-gomes",
@@ -3366,7 +4266,17 @@
         "clube": "Shakhtar Donetsk",
         "pais": "UKR"
       },
-      "taxa": 2495000000
+      "taxa": 2495000000,
+      "aparencia": {
+        "pele": 1,
+        "fisico": "F",
+        "cabelo": "k1",
+        "cor_cabelo": "B",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-gabriel-sara",
@@ -3403,7 +4313,17 @@
         "clube": "Galatasaray",
         "pais": "TUR"
       },
-      "taxa": 7345000000
+      "taxa": 7345000000,
+      "aparencia": {
+        "pele": 1,
+        "fisico": "E",
+        "cabelo": "i1",
+        "cor_cabelo": "B",
+        "barba": "C",
+        "cor_barba": "B",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-marcelino-nunez",
@@ -3440,7 +4360,17 @@
         "clube": "Norwich City",
         "pais": "ENG"
       },
-      "taxa": 2265000000
+      "taxa": 2265000000,
+      "aparencia": {
+        "pele": 1,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "C",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-cesar-araujo",
@@ -3477,7 +4407,17 @@
         "clube": "Orlando City",
         "pais": "USA"
       },
-      "taxa": 1700000000
+      "taxa": 1700000000,
+      "aparencia": {
+        "pele": 1,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-jhon-solis",
@@ -3514,7 +4454,17 @@
         "clube": "Girona",
         "pais": "ESP"
       },
-      "taxa": 1385000000
+      "taxa": 1385000000,
+      "aparencia": {
+        "pele": 3,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "B",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-wilder-cartagena",
@@ -3551,7 +4501,17 @@
         "clube": "Orlando City",
         "pais": "USA"
       },
-      "taxa": 235000000
+      "taxa": 235000000,
+      "aparencia": {
+        "pele": 2,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "C",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-agustin-palavecino",
@@ -3588,7 +4548,17 @@
         "clube": "Necaxa",
         "pais": "MEX"
       },
-      "taxa": 680000000
+      "taxa": 680000000,
+      "aparencia": {
+        "pele": 1,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "B",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-matias-zaracho",
@@ -3625,7 +4595,17 @@
         "clube": "Racing",
         "pais": "ARG"
       },
-      "taxa": 1285000000
+      "taxa": 1285000000,
+      "aparencia": {
+        "pele": 2,
+        "fisico": "E",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "B",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-agustin-almendra",
@@ -3662,7 +4642,17 @@
         "clube": "Racing",
         "pais": "ARG"
       },
-      "taxa": 840000000
+      "taxa": 840000000,
+      "aparencia": {
+        "pele": 2,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-mauro-arambarri",
@@ -3699,7 +4689,17 @@
         "clube": "Getafe",
         "pais": "ESP"
       },
-      "taxa": 2655000000
+      "taxa": 2655000000,
+      "aparencia": {
+        "pele": 1,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-patrik-mercado",
@@ -3736,7 +4736,17 @@
         "clube": "Independiente del Valle",
         "pais": "ECU"
       },
-      "taxa": 575000000
+      "taxa": 575000000,
+      "aparencia": {
+        "pele": 4,
+        "fisico": "F",
+        "cabelo": "k1",
+        "cor_cabelo": "A",
+        "barba": "B",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-vicente-pizarro",
@@ -3773,7 +4783,17 @@
         "clube": "Colo-Colo",
         "pais": "CHI"
       },
-      "taxa": 320000000
+      "taxa": 320000000,
+      "aparencia": {
+        "pele": 2,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "C",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-braian-ojeda",
@@ -3810,7 +4830,17 @@
         "clube": "Real Salt Lake",
         "pais": "USA"
       },
-      "taxa": 945000000
+      "taxa": 945000000,
+      "aparencia": {
+        "pele": 1,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "H",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-telasco-segovia",
@@ -3847,7 +4877,17 @@
         "clube": "Inter Miami",
         "pais": "USA"
       },
-      "taxa": 1040000000
+      "taxa": 1040000000,
+      "aparencia": {
+        "pele": 1,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "B",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-cristian-casseres-jr",
@@ -3884,7 +4924,17 @@
         "clube": "Toulouse",
         "pais": "FRA"
       },
-      "taxa": 2265000000
+      "taxa": 2265000000,
+      "aparencia": {
+        "pele": 2,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "C",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-carlos-rodriguez",
@@ -3921,7 +4971,17 @@
         "clube": "Cruz Azul",
         "pais": "MEX"
       },
-      "taxa": 1605000000
+      "taxa": 1605000000,
+      "aparencia": {
+        "pele": 2,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-luis-romo",
@@ -3958,7 +5018,17 @@
         "clube": "Chivas",
         "pais": "MEX"
       },
-      "taxa": 680000000
+      "taxa": 680000000,
+      "aparencia": {
+        "pele": 2,
+        "fisico": "G",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "C",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-rodrigo-zalazar",
@@ -3995,7 +5065,17 @@
         "clube": "Braga",
         "pais": "POR"
       },
-      "taxa": 4080000000
+      "taxa": 4080000000,
+      "aparencia": {
+        "pele": 1,
+        "fisico": "E",
+        "cabelo": "i1",
+        "cor_cabelo": "H",
+        "barba": "C",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-matheus-savio",
@@ -4032,7 +5112,17 @@
         "clube": "Kashiwa Reysol",
         "pais": "JPN"
       },
-      "taxa": 760000000
+      "taxa": 760000000,
+      "aparencia": {
+        "pele": 4,
+        "fisico": "F",
+        "cabelo": "o1",
+        "cor_cabelo": "A",
+        "barba": "B",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-marcos-junior",
@@ -4069,7 +5159,17 @@
         "clube": "Sanfrecce Hiroshima",
         "pais": "JPN"
       },
-      "taxa": 400000000
+      "taxa": 400000000,
+      "aparencia": {
+        "pele": 1,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "B",
+        "barba": "C",
+        "cor_barba": "B",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-evander",
@@ -4106,7 +5206,17 @@
         "clube": "FC Cincinnati",
         "pais": "USA"
       },
-      "taxa": 2600000000
+      "taxa": 2600000000,
+      "aparencia": {
+        "pele": 3,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "B",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-juan-fernando-quintero",
@@ -4143,7 +5253,17 @@
         "clube": "River Plate",
         "pais": "ARG"
       },
-      "taxa": 1225000000
+      "taxa": 1225000000,
+      "aparencia": {
+        "pele": 4,
+        "fisico": "E",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "C",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-gonzalo-martinez",
@@ -4180,7 +5300,17 @@
         "clube": "River Plate",
         "pais": "ARG"
       },
-      "taxa": 680000000
+      "taxa": 680000000,
+      "aparencia": {
+        "pele": 1,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "C",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-manuel-lanzini",
@@ -4217,7 +5347,17 @@
         "clube": "Vélez Sarsfield",
         "pais": "ARG"
       },
-      "taxa": 680000000
+      "taxa": 680000000,
+      "aparencia": {
+        "pele": 2,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-kevin-zenon",
@@ -4254,7 +5394,17 @@
         "clube": "Boca Juniors",
         "pais": "ARG"
       },
-      "taxa": 1510000000
+      "taxa": 1510000000,
+      "aparencia": {
+        "pele": 1,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "B",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-ezequiel-barco",
@@ -4291,7 +5441,17 @@
         "clube": "River Plate",
         "pais": "ARG"
       },
-      "taxa": 1510000000
+      "taxa": 1510000000,
+      "aparencia": {
+        "pele": 1,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "B",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-diego-valdes",
@@ -4328,7 +5488,17 @@
         "clube": "Vélez Sarsfield",
         "pais": "ARG"
       },
-      "taxa": 680000000
+      "taxa": 680000000,
+      "aparencia": {
+        "pele": 2,
+        "fisico": "F",
+        "cabelo": "k1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-piero-quispe",
@@ -4365,7 +5535,17 @@
         "clube": "Sydney FC",
         "pais": "AUS"
       },
-      "taxa": 465000000
+      "taxa": 465000000,
+      "aparencia": {
+        "pele": 2,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "C",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-leonardo-fernandez",
@@ -4402,7 +5582,17 @@
         "clube": "Peñarol",
         "pais": "URU"
       },
-      "taxa": 535000000
+      "taxa": 535000000,
+      "aparencia": {
+        "pele": 1,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-yaser-asprilla",
@@ -4439,7 +5629,17 @@
         "clube": "Girona",
         "pais": "ESP"
       },
-      "taxa": 2495000000
+      "taxa": 2495000000,
+      "aparencia": {
+        "pele": 4,
+        "fisico": "F",
+        "cabelo": "k1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-julio-enciso",
@@ -4476,7 +5676,17 @@
         "clube": "Strasbourg",
         "pais": "FRA"
       },
-      "taxa": 4490000000
+      "taxa": 4490000000,
+      "aparencia": {
+        "pele": 1,
+        "fisico": "E",
+        "cabelo": "i1",
+        "cor_cabelo": "B",
+        "barba": "B",
+        "cor_barba": "B",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-facundo-farias",
@@ -4513,7 +5723,17 @@
         "clube": "Estudiantes",
         "pais": "ARG"
       },
-      "taxa": 925000000
+      "taxa": 925000000,
+      "aparencia": {
+        "pele": 1,
+        "fisico": "F",
+        "cabelo": "k1",
+        "cor_cabelo": "B",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-miguel-almiron",
@@ -4550,7 +5770,17 @@
         "clube": "Atlanta United",
         "pais": "USA"
       },
-      "taxa": 765000000
+      "taxa": 765000000,
+      "aparencia": {
+        "pele": 2,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "C",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-jaminton-campaz",
@@ -4587,7 +5817,17 @@
         "clube": "Rosario Central",
         "pais": "ARG"
       },
-      "taxa": 840000000
+      "taxa": 840000000,
+      "aparencia": {
+        "pele": 4,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-yan-matheus",
@@ -4624,7 +5864,17 @@
         "clube": "Yokohama F. Marinos",
         "pais": "JPN"
       },
-      "taxa": 760000000
+      "taxa": 760000000,
+      "aparencia": {
+        "pele": 1,
+        "fisico": "E",
+        "cabelo": "i1",
+        "cor_cabelo": "B",
+        "barba": "B",
+        "cor_barba": "B",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-gustavo-mantuan",
@@ -4661,7 +5911,17 @@
         "clube": "Zenit",
         "pais": "RUS"
       },
-      "taxa": 1260000000
+      "taxa": 1260000000,
+      "aparencia": {
+        "pele": 4,
+        "fisico": "F",
+        "cabelo": "o1",
+        "cor_cabelo": "H",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-eguinaldo",
@@ -4698,7 +5958,17 @@
         "clube": "Shakhtar Donetsk",
         "pais": "UKR"
       },
-      "taxa": 1385000000
+      "taxa": 1385000000,
+      "aparencia": {
+        "pele": 4,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-newerton",
@@ -4735,7 +6005,17 @@
         "clube": "Shakhtar Donetsk",
         "pais": "UKR"
       },
-      "taxa": 1510000000
+      "taxa": 1510000000,
+      "aparencia": {
+        "pele": 2,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "B",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-alisson-santana",
@@ -4772,7 +6052,17 @@
         "clube": "Shakhtar Donetsk",
         "pais": "UKR"
       },
-      "taxa": 840000000
+      "taxa": 840000000,
+      "aparencia": {
+        "pele": 3,
+        "fisico": "F",
+        "cabelo": "k1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-douglas-costa",
@@ -4809,7 +6099,17 @@
         "clube": "Sydney FC",
         "pais": "AUS"
       },
-      "taxa": 250000000
+      "taxa": 250000000,
+      "aparencia": {
+        "pele": 2,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "C",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-lucas-ribeiro",
@@ -4846,7 +6146,17 @@
         "clube": "Mamelodi Sundowns",
         "pais": "RSA"
       },
-      "taxa": 1285000000
+      "taxa": 1285000000,
+      "aparencia": {
+        "pele": 1,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "B",
+        "barba": "C",
+        "cor_barba": "B",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-facundo-pellistri",
@@ -4883,7 +6193,17 @@
         "clube": "Panathinaikos",
         "pais": "GRE"
       },
-      "taxa": 2265000000
+      "taxa": 2265000000,
+      "aparencia": {
+        "pele": 1,
+        "fisico": "E",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-brian-rodriguez",
@@ -4920,7 +6240,17 @@
         "clube": "América",
         "pais": "MEX"
       },
-      "taxa": 3400000000
+      "taxa": 3400000000,
+      "aparencia": {
+        "pele": 1,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "B",
+        "barba": "B",
+        "cor_barba": "B",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-dario-osorio",
@@ -4957,7 +6287,17 @@
         "clube": "Midtjylland",
         "pais": "DEN"
       },
-      "taxa": 2495000000
+      "taxa": 2495000000,
+      "aparencia": {
+        "pele": 1,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "B",
+        "barba": "B",
+        "cor_barba": "B",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-victor-davila",
@@ -4994,7 +6334,17 @@
         "clube": "CSKA Moscou",
         "pais": "RUS"
       },
-      "taxa": 1925000000
+      "taxa": 1925000000,
+      "aparencia": {
+        "pele": 2,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-jeremy-sarmiento",
@@ -5031,7 +6381,17 @@
         "clube": "Cremonese",
         "pais": "ITA"
       },
-      "taxa": 1385000000
+      "taxa": 1385000000,
+      "aparencia": {
+        "pele": 4,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-john-yeboah",
@@ -5068,7 +6428,17 @@
         "clube": "Venezia",
         "pais": "ITA"
       },
-      "taxa": 1260000000
+      "taxa": 1260000000,
+      "aparencia": {
+        "pele": 3,
+        "fisico": "E",
+        "cabelo": "i1",
+        "cor_cabelo": "H",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-alan-velasco",
@@ -5105,7 +6475,17 @@
         "clube": "Boca Juniors",
         "pais": "ARG"
       },
-      "taxa": 925000000
+      "taxa": 925000000,
+      "aparencia": {
+        "pele": 1,
+        "fisico": "F",
+        "cabelo": "m1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-exequiel-zeballos",
@@ -5142,7 +6522,17 @@
         "clube": "Boca Juniors",
         "pais": "ARG"
       },
-      "taxa": 925000000
+      "taxa": 925000000,
+      "aparencia": {
+        "pele": 1,
+        "fisico": "E",
+        "cabelo": "i1",
+        "cor_cabelo": "B",
+        "barba": "C",
+        "cor_barba": "B",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-luca-langoni",
@@ -5179,7 +6569,17 @@
         "clube": "New England Revolution",
         "pais": "USA"
       },
-      "taxa": 575000000
+      "taxa": 575000000,
+      "aparencia": {
+        "pele": 2,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "B",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-tomas-chancalay",
@@ -5216,7 +6616,17 @@
         "clube": "Minnesota United",
         "pais": "USA"
       },
-      "taxa": 945000000
+      "taxa": 945000000,
+      "aparencia": {
+        "pele": 2,
+        "fisico": "F",
+        "cabelo": "k1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-lucas-ocampos",
@@ -5253,7 +6663,17 @@
         "clube": "Monterrey",
         "pais": "MEX"
       },
-      "taxa": 1530000000
+      "taxa": 1530000000,
+      "aparencia": {
+        "pele": 1,
+        "fisico": "E",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-diego-rossi",
@@ -5290,7 +6710,17 @@
         "clube": "Columbus Crew",
         "pais": "USA"
       },
-      "taxa": 1445000000
+      "taxa": 1445000000,
+      "aparencia": {
+        "pele": 1,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "B",
+        "barba": "C",
+        "cor_barba": "B",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-uriel-antuna",
@@ -5327,7 +6757,17 @@
         "clube": "Tigres",
         "pais": "MEX"
       },
-      "taxa": 890000000
+      "taxa": 890000000,
+      "aparencia": {
+        "pele": 2,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-alexis-vega",
@@ -5364,7 +6804,17 @@
         "clube": "Toluca",
         "pais": "MEX"
       },
-      "taxa": 1605000000
+      "taxa": 1605000000,
+      "aparencia": {
+        "pele": 1,
+        "fisico": "E",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "B",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-orbelin-pineda",
@@ -5401,7 +6851,17 @@
         "clube": "AEK Atenas",
         "pais": "GRE"
       },
-      "taxa": 1475000000
+      "taxa": 1475000000,
+      "aparencia": {
+        "pele": 2,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "C",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-yuki-soma",
@@ -5438,7 +6898,17 @@
         "clube": "Machida Zelvia",
         "pais": "JPN"
       },
-      "taxa": 760000000
+      "taxa": 760000000,
+      "aparencia": {
+        "pele": 1,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-jonathan-rodriguez",
@@ -5475,7 +6945,17 @@
         "clube": "Portland Timbers",
         "pais": "USA"
       },
-      "taxa": 425000000
+      "taxa": 425000000,
+      "aparencia": {
+        "pele": 1,
+        "fisico": "E",
+        "cabelo": "m1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-hirving-lozano",
@@ -5512,7 +6992,17 @@
         "clube": "San Diego FC",
         "pais": "USA"
       },
-      "taxa": 1990000000
+      "taxa": 1990000000,
+      "aparencia": {
+        "pele": 1,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "B",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-sebastian-villa",
@@ -5549,7 +7039,17 @@
         "clube": "Independiente Rivadavia",
         "pais": "ARG"
       },
-      "taxa": 985000000
+      "taxa": 985000000,
+      "aparencia": {
+        "pele": 4,
+        "fisico": "F",
+        "cabelo": "k1",
+        "cor_cabelo": "A",
+        "barba": "C",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-anderson-lopes",
@@ -5586,7 +7086,17 @@
         "clube": "Yokohama F. Marinos",
         "pais": "JPN"
       },
-      "taxa": 725000000
+      "taxa": 725000000,
+      "aparencia": {
+        "pele": 3,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-leo-ceara",
@@ -5623,7 +7133,17 @@
         "clube": "Kashima Antlers",
         "pais": "JPN"
       },
-      "taxa": 580000000
+      "taxa": 580000000,
+      "aparencia": {
+        "pele": 3,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-erison",
@@ -5660,7 +7180,17 @@
         "clube": "Kawasaki Frontale",
         "pais": "JPN"
       },
-      "taxa": 890000000
+      "taxa": 890000000,
+      "aparencia": {
+        "pele": 3,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "B",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-jhon-cordoba",
@@ -5697,7 +7227,17 @@
         "clube": "Krasnodar",
         "pais": "RUS"
       },
-      "taxa": 1835000000
+      "taxa": 1835000000,
+      "aparencia": {
+        "pele": 2,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-sebastian-driussi",
@@ -5734,7 +7274,17 @@
         "clube": "River Plate",
         "pais": "ARG"
       },
-      "taxa": 1770000000
+      "taxa": 1770000000,
+      "aparencia": {
+        "pele": 1,
+        "fisico": "E",
+        "cabelo": "k1",
+        "cor_cabelo": "B",
+        "barba": "C",
+        "cor_barba": "B",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-miguel-borja",
@@ -5771,7 +7321,17 @@
         "clube": "River Plate",
         "pais": "ARG"
       },
-      "taxa": 680000000
+      "taxa": 680000000,
+      "aparencia": {
+        "pele": 2,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "B",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-salomon-rondon",
@@ -5808,7 +7368,17 @@
         "clube": "Pachuca",
         "pais": "MEX"
       },
-      "taxa": 315000000
+      "taxa": 315000000,
+      "aparencia": {
+        "pele": 2,
+        "fisico": "G",
+        "cabelo": "m1",
+        "cor_cabelo": "A",
+        "barba": "B",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-german-berterame",
@@ -5845,7 +7415,17 @@
         "clube": "Monterrey",
         "pais": "MEX"
       },
-      "taxa": 2890000000
+      "taxa": 2890000000,
+      "aparencia": {
+        "pele": 2,
+        "fisico": "F",
+        "cabelo": "k1",
+        "cor_cabelo": "A",
+        "barba": "C",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-agustin-alvarez",
@@ -5882,7 +7462,17 @@
         "clube": "Monza",
         "pais": "ITA"
       },
-      "taxa": 1260000000
+      "taxa": 1260000000,
+      "aparencia": {
+        "pele": 1,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "B",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-federico-vinas",
@@ -5919,7 +7509,17 @@
         "clube": "Oviedo",
         "pais": "ESP"
       },
-      "taxa": 1925000000
+      "taxa": 1925000000,
+      "aparencia": {
+        "pele": 1,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-rodrigo-aguirre",
@@ -5956,7 +7556,17 @@
         "clube": "Tigres",
         "pais": "MEX"
       },
-      "taxa": 850000000
+      "taxa": 850000000,
+      "aparencia": {
+        "pele": 2,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "H",
+        "barba": "B",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-milton-gimenez",
@@ -5993,7 +7603,17 @@
         "clube": "Boca Juniors",
         "pais": "ARG"
       },
-      "taxa": 545000000
+      "taxa": 545000000,
+      "aparencia": {
+        "pele": 1,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "B",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-adam-bareiro",
@@ -6030,7 +7650,17 @@
         "clube": "Boca Juniors",
         "pais": "ARG"
       },
-      "taxa": 545000000
+      "taxa": 545000000,
+      "aparencia": {
+        "pele": 1,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "C",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-miguel-merentiel",
@@ -6067,7 +7697,17 @@
         "clube": "Boca Juniors",
         "pais": "ARG"
       },
-      "taxa": 985000000
+      "taxa": 985000000,
+      "aparencia": {
+        "pele": 1,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-enner-valencia",
@@ -6104,7 +7744,17 @@
         "clube": "Pachuca",
         "pais": "MEX"
       },
-      "taxa": 315000000
+      "taxa": 315000000,
+      "aparencia": {
+        "pele": 4,
+        "fisico": "F",
+        "cabelo": "m1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-kevin-rodriguez",
@@ -6141,7 +7791,17 @@
         "clube": "Union Saint-Gilloise",
         "pais": "BEL"
       },
-      "taxa": 1260000000
+      "taxa": 1260000000,
+      "aparencia": {
+        "pele": 2,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-ben-brereton-diaz",
@@ -6178,7 +7838,17 @@
         "clube": "Derby County",
         "pais": "ENG"
       },
-      "taxa": 1260000000
+      "taxa": 1260000000,
+      "aparencia": {
+        "pele": 1,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "B",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-lucas-alario",
@@ -6215,7 +7885,17 @@
         "clube": "Estudiantes",
         "pais": "ARG"
       },
-      "taxa": 140000000
+      "taxa": 140000000,
+      "aparencia": {
+        "pele": 1,
+        "fisico": "F",
+        "cabelo": "m1",
+        "cor_cabelo": "B",
+        "barba": "B",
+        "cor_barba": "B",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-guido-carrillo",
@@ -6252,7 +7932,17 @@
         "clube": "Estudiantes",
         "pais": "ARG"
       },
-      "taxa": 250000000
+      "taxa": 250000000,
+      "aparencia": {
+        "pele": 1,
+        "fisico": "G",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "B",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-cristian-arango",
@@ -6289,7 +7979,17 @@
         "clube": "San Jose Earthquakes",
         "pais": "USA"
       },
-      "taxa": 1105000000
+      "taxa": 1105000000,
+      "aparencia": {
+        "pele": 3,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-luis-muriel",
@@ -6326,7 +8026,17 @@
         "clube": "Orlando City",
         "pais": "USA"
       },
-      "taxa": 285000000
+      "taxa": 285000000,
+      "aparencia": {
+        "pele": 2,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "C",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-alfredo-morelos",
@@ -6363,7 +8073,17 @@
         "clube": "Atlético Nacional",
         "pais": "COL"
       },
-      "taxa": 410000000
+      "taxa": 410000000,
+      "aparencia": {
+        "pele": 4,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-lucas-beltran",
@@ -6400,7 +8120,17 @@
         "clube": "Valencia",
         "pais": "ESP"
       },
-      "taxa": 1260000000
+      "taxa": 1260000000,
+      "aparencia": {
+        "pele": 1,
+        "fisico": "E",
+        "cabelo": "i1",
+        "cor_cabelo": "B",
+        "barba": "B",
+        "cor_barba": "B",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-henry-martin",
@@ -6437,7 +8167,17 @@
         "clube": "América",
         "pais": "MEX"
       },
-      "taxa": 315000000
+      "taxa": 315000000,
+      "aparencia": {
+        "pele": 2,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "B",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-paulinho",
@@ -6474,7 +8214,17 @@
         "clube": "Toluca",
         "pais": "MEX"
       },
-      "taxa": 1020000000
+      "taxa": 1020000000,
+      "aparencia": {
+        "pele": 2,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "B",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-martin-satriano",
@@ -6511,7 +8261,17 @@
         "clube": "Getafe",
         "pais": "ESP"
       },
-      "taxa": 1260000000
+      "taxa": 1260000000,
+      "aparencia": {
+        "pele": 1,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "B",
+        "barba": "B",
+        "cor_barba": "B",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-walter-benitez",
@@ -6548,7 +8308,17 @@
         "clube": "Crystal Palace",
         "pais": "ENG"
       },
-      "taxa": 1835000000
+      "taxa": 1835000000,
+      "aparencia": {
+        "pele": 1,
+        "fisico": "G",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "B",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-facundo-cambeses",
@@ -6585,7 +8355,17 @@
         "clube": "Racing",
         "pais": "ARG"
       },
-      "taxa": 715000000
+      "taxa": 715000000,
+      "aparencia": {
+        "pele": 1,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "B",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-zaid-romero",
@@ -6622,7 +8402,17 @@
         "clube": "Getafe",
         "pais": "ESP"
       },
-      "taxa": 2265000000
+      "taxa": 2265000000,
+      "aparencia": {
+        "pele": 1,
+        "fisico": "G",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "C",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-bruno-mendez",
@@ -6659,7 +8449,17 @@
         "clube": "Toluca",
         "pais": "MEX"
       },
-      "taxa": 1050000000
+      "taxa": 1050000000,
+      "aparencia": {
+        "pele": 1,
+        "fisico": "G",
+        "cabelo": "i1",
+        "cor_cabelo": "H",
+        "barba": "C",
+        "cor_barba": "C",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-kevin-lomonaco",
@@ -6696,7 +8496,17 @@
         "clube": "Independiente",
         "pais": "ARG"
       },
-      "taxa": 925000000
+      "taxa": 925000000,
+      "aparencia": {
+        "pele": 1,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "H",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-julio-soler",
@@ -6733,7 +8543,17 @@
         "clube": "Bournemouth",
         "pais": "ENG"
       },
-      "taxa": 2720000000
+      "taxa": 2720000000,
+      "aparencia": {
+        "pele": 1,
+        "fisico": "E",
+        "cabelo": "i1",
+        "cor_cabelo": "B",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-leonel-di-placido",
@@ -6770,7 +8590,17 @@
         "clube": "Lanús",
         "pais": "ARG"
       },
-      "taxa": 380000000
+      "taxa": 380000000,
+      "aparencia": {
+        "pele": 1,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "B",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-oscar-opazo",
@@ -6807,7 +8637,17 @@
         "clube": "Colo-Colo",
         "pais": "CHI"
       },
-      "taxa": 85000000
+      "taxa": 85000000,
+      "aparencia": {
+        "pele": 1,
+        "fisico": "E",
+        "cabelo": "i1",
+        "cor_cabelo": "B",
+        "barba": "C",
+        "cor_barba": "B",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-milton-delgado",
@@ -6844,7 +8684,17 @@
         "clube": "Boca Juniors",
         "pais": "ARG"
       },
-      "taxa": 1010000000
+      "taxa": 1010000000,
+      "aparencia": {
+        "pele": 1,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-carlos-gruezo",
@@ -6881,7 +8731,17 @@
         "clube": "Santos Laguna",
         "pais": "MEX"
       },
-      "taxa": 680000000
+      "taxa": 680000000,
+      "aparencia": {
+        "pele": 4,
+        "fisico": "G",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "B",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-dixon-arroyo",
@@ -6918,7 +8778,17 @@
         "clube": "Barcelona SC",
         "pais": "ECU"
       },
-      "taxa": 85000000
+      "taxa": 85000000,
+      "aparencia": {
+        "pele": 4,
+        "fisico": "F",
+        "cabelo": "k1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-ivan-marcone",
@@ -6955,7 +8825,17 @@
         "clube": "Independiente",
         "pais": "ARG"
       },
-      "taxa": 250000000
+      "taxa": 250000000,
+      "aparencia": {
+        "pele": 1,
+        "fisico": "F",
+        "cabelo": "m1",
+        "cor_cabelo": "A",
+        "barba": "C",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-nicolas-dominguez",
@@ -6992,7 +8872,17 @@
         "clube": "Nottingham Forest",
         "pais": "ENG"
       },
-      "taxa": 1925000000
+      "taxa": 1925000000,
+      "aparencia": {
+        "pele": 1,
+        "fisico": "G",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-martin-payero",
@@ -7029,7 +8919,17 @@
         "clube": "Udinese",
         "pais": "ITA"
       },
-      "taxa": 1925000000
+      "taxa": 1925000000,
+      "aparencia": {
+        "pele": 2,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "H",
+        "barba": "C",
+        "cor_barba": "C",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-andres-perea",
@@ -7066,7 +8966,17 @@
         "clube": "Puebla",
         "pais": "MEX"
       },
-      "taxa": 585000000
+      "taxa": 585000000,
+      "aparencia": {
+        "pele": 1,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "B",
+        "barba": "C",
+        "cor_barba": "B",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-matias-rojas",
@@ -7103,7 +9013,17 @@
         "clube": "Racing",
         "pais": "ARG"
       },
-      "taxa": 985000000
+      "taxa": 985000000,
+      "aparencia": {
+        "pele": 2,
+        "fisico": "E",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "B",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-marcelino-moreno",
@@ -7140,7 +9060,17 @@
         "clube": "Lanús",
         "pais": "ARG"
       },
-      "taxa": 380000000
+      "taxa": 380000000,
+      "aparencia": {
+        "pele": 1,
+        "fisico": "E",
+        "cabelo": "i1",
+        "cor_cabelo": "H",
+        "barba": "C",
+        "cor_barba": "C",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-emiliano-rigoni",
@@ -7177,7 +9107,17 @@
         "clube": "Austin FC",
         "pais": "USA"
       },
-      "taxa": 425000000
+      "taxa": 425000000,
+      "aparencia": {
+        "pele": 1,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "B",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-ignacio-pussetto",
@@ -7214,7 +9154,17 @@
         "clube": "Huracán",
         "pais": "ARG"
       },
-      "taxa": 305000000
+      "taxa": 305000000,
+      "aparencia": {
+        "pele": 1,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "B",
+        "barba": "C",
+        "cor_barba": "B",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-darwin-machis",
@@ -7251,7 +9201,17 @@
         "clube": "Real Valladolid",
         "pais": "ESP"
       },
-      "taxa": 315000000
+      "taxa": 315000000,
+      "aparencia": {
+        "pele": 3,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-angel-romero",
@@ -7288,7 +9248,17 @@
         "clube": "Cruz Azul",
         "pais": "MEX"
       },
-      "taxa": 315000000
+      "taxa": 315000000,
+      "aparencia": {
+        "pele": 1,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "A",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-joaquin-torres",
@@ -7325,7 +9295,17 @@
         "clube": "Philadelphia Union",
         "pais": "USA"
       },
-      "taxa": 805000000
+      "taxa": 805000000,
+      "aparencia": {
+        "pele": 2,
+        "fisico": "F",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "C",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-braian-romero",
@@ -7362,7 +9342,17 @@
         "clube": "Vélez Sarsfield",
         "pais": "ARG"
       },
-      "taxa": 250000000
+      "taxa": 250000000,
+      "aparencia": {
+        "pele": 1,
+        "fisico": "E",
+        "cabelo": "i1",
+        "cor_cabelo": "A",
+        "barba": "C",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     },
     {
       "id": "ext-maxi-gomez",
@@ -7399,7 +9389,17 @@
         "clube": "Trabzonspor",
         "pais": "TUR"
       },
-      "taxa": 1475000000
+      "taxa": 1475000000,
+      "aparencia": {
+        "pele": 2,
+        "fisico": "F",
+        "cabelo": "k1",
+        "cor_cabelo": "A",
+        "barba": "B",
+        "cor_barba": "A",
+        "chuteira": "A"
+      },
+      "aparencia_gerada": true
     }
   ]
 }

@@ -6,6 +6,8 @@ import WeBotao from '../../componentes/WeBotao.vue'
 import WeEscudo from '../../componentes/WeEscudo.vue'
 import WeTag from '../../componentes/WeTag.vue'
 import CampoDinheiro from '../../componentes/CampoDinheiro.vue'
+import WeSeletorTime from '../../componentes/WeSeletorTime.vue'
+import PainelUniformes from './PainelUniformes.vue'
 import { useEditor } from '../../stores/editor'
 import { useUi } from '../../stores/ui'
 import { copiar, igual } from './rascunho'
@@ -17,6 +19,10 @@ const times = computed(() => [...(editor.aberto?.times ?? [])].sort((a, b) => a.
 const original = computed(() => editor.aberto?.times.find((t) => t.sigla === editor.timeSelecionado) ?? null)
 const rascunho = ref<Time | null>(null)
 const novo = ref(false)
+/** Seção mostrada do time: os dados (identificação, estádio, finanças) ou os uniformes. */
+const secao = ref<'dados' | 'uniformes'>('dados')
+const painelUniformes = ref<InstanceType<typeof PainelUniformes> | null>(null)
+const uniformesAlterados = computed(() => !!painelUniformes.value?.algumAlterado)
 const alterado = computed(() => novo.value || (rascunho.value !== null && !igual(rascunho.value, original.value)))
 
 const problemasDoTime = (sigla: string) => editor.aberto?.problemas.filter((p) => p.time === sigla && !p.jogador) ?? []
@@ -33,9 +39,11 @@ watch(
 
 if (!editor.timeSelecionado && times.value[0]) editor.timeSelecionado = times.value[0].sigla
 
+const confirmarDescarte = () => ui.confirmar('Descartar alterações', 'Há alterações não salvas neste time. Descartar?', 'Descartar')
+
 async function selecionar(sigla: string): Promise<void> {
   if (sigla === editor.timeSelecionado && !novo.value) return
-  if (alterado.value && !(await ui.confirmar('Descartar alterações', 'Há alterações não salvas neste time. Descartar?', 'Descartar'))) return
+  if ((alterado.value || uniformesAlterados.value) && !(await confirmarDescarte())) return
   novo.value = false
   editor.timeSelecionado = sigla
   rascunho.value = original.value ? copiar(original.value) : null
@@ -49,8 +57,27 @@ function siglaLivre(): string {
   }
 }
 
+const timeEscolhido = computed({
+  get: () => (novo.value ? '' : (editor.timeSelecionado ?? '')),
+  set: (sigla: string) => void selecionar(sigla),
+})
+
+/**
+ * Dados e uniformes gravam o mesmo arquivo do time, e cada um recarrega o seu rascunho quando o
+ * outro salva: para não perder nada calado, trocar de seção com alterações pendentes pede descarte.
+ */
+async function mudarSecao(s: 'dados' | 'uniformes'): Promise<void> {
+  if (s === secao.value) return
+  const pendente = s === 'uniformes' ? alterado.value : uniformesAlterados.value
+  if (pendente && !(await confirmarDescarte())) return
+  if (s === 'uniformes') descartar()
+  else painelUniformes.value?.recarregar()
+  secao.value = s
+}
+
 async function criarTime(): Promise<void> {
-  if (alterado.value && !(await ui.confirmar('Descartar alterações', 'Há alterações não salvas neste time. Descartar?', 'Descartar'))) return
+  if ((alterado.value || uniformesAlterados.value) && !(await confirmarDescarte())) return
+  secao.value = 'dados'
   novo.value = true
   rascunho.value = {
     sigla: siglaLivre(),
@@ -83,6 +110,11 @@ function descartar(): void {
   rascunho.value = original.value ? copiar(original.value) : null
 }
 
+function editarJogadores(): void {
+  editor.origemJogadores = 'times'
+  editor.aba = 'jogadores'
+}
+
 async function remover(): Promise<void> {
   const t = original.value
   if (!t) return
@@ -112,19 +144,22 @@ function removerCor(i: number): void {
 </script>
 
 <template>
-  <div class="mestre-detalhe">
-    <WePainel titulo="Times" sem-corpo>
-      <div class="lista-itens">
-        <button v-for="t in times" :key="t.sigla" type="button" :aria-current="!novo && t.sigla === editor.timeSelecionado" @click="selecionar(t.sigla)">
-          <WeEscudo :sigla="t.sigla" :cor="t.cores[0]" :src="editor.escudo(t.sigla)" />
-          {{ t.nome }}
-          <WeTag v-if="errosDoTime(t.sigla)" class="marcador" tipo="negativo">{{ errosDoTime(t.sigla) }}</WeTag>
-        </button>
-      </div>
-      <div class="we-panel__body"><WeBotao icone="nova" @click="criarTime">Novo time</WeBotao></div>
-    </WePainel>
+  <div class="barra-time">
+    <span class="we-lb">Time</span>
+    <div class="seletor">
+      <WeSeletorTime v-model="timeEscolhido" :times="times" rotulo="Time" :escudo="editor.escudo" :placeholder="novo ? 'Novo time (não salvo)' : 'Escolha um time'" />
+    </div>
+    <WeTag v-if="!novo && editor.timeSelecionado && errosDoTime(editor.timeSelecionado)" tipo="negativo">{{ errosDoTime(editor.timeSelecionado) }} erro(s)</WeTag>
+    <div class="acoes" role="group" aria-label="Seção do time">
+      <WeBotao icone="clube" :ativo="secao === 'dados'" @click="mudarSecao('dados')">Dados do clube</WeBotao>
+      <WeBotao icone="camisa" :ativo="secao === 'uniformes'" :desabilitado="novo" @click="mudarSecao('uniformes')">Uniformes</WeBotao>
+    </div>
+    <WeBotao class="novo" icone="nova" @click="criarTime">Novo time</WeBotao>
+  </div>
 
-    <WePainel v-if="rascunho" :titulo="novo ? 'Novo time' : rascunho.nome" clube>
+  <template v-if="rascunho">
+    <PainelUniformes v-if="!novo && original" v-show="secao === 'uniformes'" ref="painelUniformes" :time="original" />
+    <WePainel v-show="secao === 'dados'" :titulo="novo ? 'Novo time' : rascunho.nome" clube>
       <template #extra>{{ rascunho.jogadores.length }} jogadores</template>
 
       <div class="escudo-linha">
@@ -199,14 +234,27 @@ function removerCor(i: number): void {
       <div class="acoes rodape-form">
         <WeBotao icone="salvar" :desabilitado="!alterado || editor.ocupado" @click="salvar">Salvar time</WeBotao>
         <WeBotao icone="descartar" :desabilitado="!alterado" @click="descartar">Descartar</WeBotao>
-        <WeBotao v-if="!novo" icone="elenco" @click="editor.aba = 'jogadores'">Editar jogadores</WeBotao>
+        <WeBotao v-if="!novo" icone="elenco" @click="editarJogadores">Editar jogadores</WeBotao>
         <WeBotao v-if="!novo" icone="lixeira" @click="remover">Remover time</WeBotao>
       </div>
     </WePainel>
-  </div>
+  </template>
+  <WePainel v-else titulo="Times"><p>Escolha um time ou crie um novo.</p></WePainel>
 </template>
 
 <style scoped>
+.barra-time {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+.seletor {
+  width: min(360px, 100%);
+}
+.novo {
+  margin-left: auto;
+}
 .escudo-linha {
   display: flex;
   gap: var(--space-4);

@@ -6,7 +6,7 @@ import type { Carreiras } from '../../src/main/carreira/servico'
 import { calendario } from '../../src/main/carreira/temporada'
 import { previaVirada, relatorioTemporada, virarTemporada } from '../../src/main/carreira/virada'
 import { buscar, propor } from '../../src/main/carreira/mercado'
-import { exterior } from '../fixtures/pacote'
+import { exterior, livre, time } from '../fixtures/pacote'
 import type { Sql } from '../../src/main/db/sql'
 import { avancar } from '../helpers/avancar'
 import { escreverPacote } from '../helpers/pacote'
@@ -71,6 +71,27 @@ describe('virada de temporada (serviço + SQLite)', () => {
     expect(() => virarTemporada(sql)).toThrow(/ainda não acabou/)
   })
 
+  it('orçamento pela divisão: quem cai tem o orçamento da folha cortado, quem sobe ganha; patrocínio não muda', () => {
+    // As ligas do pacote de teste são 'a' e 'b': o fator da divisão vem das regras da carreira.
+    sql.run(`UPDATE regras SET dados = json_set(dados, '$.financas.orcamento_divisao.liga', json('{"a":1,"b":0.5}'))`)
+    jogarTemporada(sql)
+    const antes = new Map(
+      sql.all<{ sigla: string; orcamento_folha_mensal: number; patrocinio_temporada: number }>('SELECT sigla, orcamento_folha_mensal, patrocinio_temporada FROM time').map((t) => [t.sigla, t]),
+    )
+    const deA = timesDe(sql, 'a')
+    virarTemporada(sql)
+    const depoisA = new Set(timesDe(sql, 'a'))
+    const saldo = new Map(sql.all<{ sigla: string; saldo: number }>('SELECT sigla, saldo FROM time').map((t) => [t.sigla, t.saldo]))
+    for (const t of sql.all<{ sigla: string; orcamento_folha_mensal: number; patrocinio_temporada: number }>('SELECT sigla, orcamento_folha_mensal, patrocinio_temporada FROM time')) {
+      const a = antes.get(t.sigla)!
+      const fator = deA.includes(t.sigla) === depoisA.has(t.sigla) ? 1 : depoisA.has(t.sigla) ? 2 : 0.5
+      expect(t.orcamento_folha_mensal).toBe(Math.round((a.orcamento_folha_mensal * fator) / 100_000) * 100_000 || a.orcamento_folha_mensal * fator)
+      expect(t.patrocinio_temporada).toBe(a.patrocinio_temporada)
+    }
+    expect([...depoisA].some((s) => !deA.includes(s))).toBe(true)
+    expect(saldo.size).toBe(antes.size)
+  })
+
   it('a escada do divisoes.json move os times mesmo sem saídas nas competições', () => {
     const base = mkdtempSync(join(tmpdir(), 'we-virada-escada-'))
     const p = pacoteDuasDivisoes()
@@ -90,6 +111,72 @@ describe('virada de temporada (serviço + SQLite)', () => {
     expect(timesDe(sql2, 'b')).toEqual([...finais['a']!.slice(2), ...finais['b']!.slice(2)].sort())
   })
 
+  it('segunda divisão fantasma: o pior do estadual cai e sobe um clube do estado configurado', () => {
+    const base = mkdtempSync(join(tmpdir(), 'we-virada-fantasma-'))
+    const p = pacoteDuasDivisoes()
+    p.times = [...p.times, time('III'), time('JJJ', { estado: 'RJ' })]
+    p.escudos = p.times.map((t) => t.sigla)
+    p.competicoes = p.competicoes.map((c) => (c.id === 'b' ? { ...c, nome: 'Paulistão', tipo: 'estadual' as const, segunda_divisao: { troca: 1, nome: 'Série A2', estados: ['RJ'] } } : c))
+    escreverPacote(join(base, 'pacotes', 'teste'), p)
+    const sql2 = novaCarreira(base).sql()
+    jogarTemporada(sql2)
+    const finais = Object.fromEntries(
+      sql2
+        .all<{ competicao_id: string; estado: string }>('SELECT competicao_id, estado FROM edicao WHERE temporada = 2026')
+        .map((e) => [e.competicao_id, (JSON.parse(e.estado) as { classificacaoFinal: string[] }).classificacaoFinal]),
+    )
+    const previa = previaVirada(sql2)
+    // Só sobe quem é do RJ: JJJ (os outros são de SP).
+    expect(previa.movimentos).toContainEqual({ time: finais['b']![3], de: 'Paulistão', para: 'Série A2', tipo: 'rebaixamento' })
+    expect(previa.movimentos).toContainEqual({ time: 'JJJ', de: 'Série A2', para: 'Paulistão', tipo: 'acesso' })
+    virarTemporada(sql2)
+    expect(timesDe(sql2, 'b')).toEqual([...finais['a']!.slice(2), finais['b']![2]!, 'JJJ'].sort())
+  })
+
+  it('Série D por vagas: estadual do mesmo ano define os participantes e a virada guarda só os garantidos', () => {
+    const base = mkdtempSync(join(tmpdir(), 'we-virada-serie-d-'))
+    const p = pacoteDuasDivisoes()
+    const extras = ['III', 'JJJ', 'KKK', 'LLL']
+    p.times = [...p.times, ...extras.map((s) => time(s))]
+    p.escudos = p.times.map((t) => t.sigla)
+    const liga1: Competicao['fases'] = [{ id: 'f1', nome: 'Turno', formato: 'pontos_corridos', pontos_corridos: { turnos: 1 } }]
+    p.competicoes = [
+      ...p.competicoes.map((c) => (c.id === 'b' ? { ...c, saidas: [...(c.saidas ?? []), { ultimos: 1, destino: 'd', tipo: 'rebaixamento' }] } : c)),
+      {
+        id: 'est',
+        nome: 'Estadual',
+        tipo: 'estadual',
+        participantes: { regra: 'lista', times: ['EEE', 'FFF', 'GGG', 'HHH', ...extras] },
+        fases: liga1,
+        saidas: [{ primeiros: 2, destino: 'd', exceto_de: ['a', 'b'] }],
+      },
+      { id: 'd', nome: 'Série D', tipo: 'nacional', participantes: { regra: 'lista', times: [], quantidade: 4, por_vagas: true }, fases: liga1 },
+    ]
+    p.temporada = {
+      blocos: [
+        { competicao: 'est', datas: 'fds', semana_inicio: 2, semana_fim: 9 },
+        { competicao: 'a', datas: 'fds', semana_inicio: 10, semana_fim: 40 },
+        { competicao: 'b', datas: 'fds', semana_inicio: 10, semana_fim: 40 },
+        { competicao: 'd', datas: 'meio', semana_inicio: 12, semana_fim: 40 },
+      ],
+    }
+    escreverPacote(join(base, 'pacotes', 'teste'), p)
+    const sql2 = novaCarreira(base).sql()
+    expect(sql2.get<{ n: number }>("SELECT COUNT(*) n FROM rodada_reservada WHERE edicao_id = 'd-2026'")!.n).toBeGreaterThan(0)
+    jogarTemporada(sql2)
+    const estado = (id: string) => JSON.parse(sql2.get<{ estado: string }>('SELECT estado FROM edicao WHERE id = ?', id)!.estado) as { participantes: string[]; classificacaoFinal: string[] | null; campeao: string | null }
+    const d = estado('d-2026')
+    // Os 4 do estadual que não jogam a A nem a B: as 2 vagas e os 2 próximos.
+    expect([...d.participantes].sort()).toEqual([...extras].sort())
+    expect(d.campeao).not.toBeNull()
+    expect(sql2.get<{ n: number }>("SELECT COUNT(*) n FROM partida WHERE edicao_id = 'd-2026' AND gols_casa IS NOT NULL")!.n).toBe(6)
+    expect(sql2.get<{ n: number }>('SELECT COUNT(*) n FROM rodada_reservada')!.n).toBe(0)
+    const ultimoDaB = estado('b-2026').classificacaoFinal!.at(-1)!
+    virarTemporada(sql2)
+    // Na próxima temporada a D começa só com o rebaixado da B (o resto vem do estadual de 2027).
+    expect(timesDe(sql2, 'd')).toEqual([ultimoDaB])
+  })
+
   it('empréstimo volta ao clube de origem na virada', () => {
     const id = sql.get<{ id: number }>("SELECT j.id FROM jogador j JOIN time t ON t.id = j.time_id WHERE t.sigla = 'BBB' ORDER BY j.id LIMIT 1")!.id
     sql.run("UPDATE jogador SET time_id = (SELECT id FROM time WHERE sigla = 'AAA'), camisa = 30 WHERE id = ?", id)
@@ -104,16 +191,30 @@ describe('virada de temporada (serviço + SQLite)', () => {
     expect(j).toEqual({ sigla: 'BBB', tipo: 'definitivo', ate: 2028 })
   })
 
-  it('segunda virada: contratos do usuário que acabam saem, mas o elenco fica no mínimo; ninguém abaixo do mínimo', () => {
+  it('segunda virada: pré-contratos levam jogadores do usuário, o resto sai livre; a semana 1 deixa todo mundo com 23 e 2 goleiros', () => {
+    // Livres no pacote (goleiros inclusive) para a semana 1 ter de onde completar.
+    const base = mkdtempSync(join(tmpdir(), 'we-virada-livres-'))
+    const p = pacoteDuasDivisoes()
+    p.livres = { jogadores: Array.from({ length: 30 }, (_, i) => livre(i + 1, i < 10 ? { posicao: 'GK', posicao_secundaria: null } : {})) }
+    escreverPacote(join(base, 'pacotes', 'teste'), p)
+    const sql = novaCarreira(base).sql()
     jogarTemporada(sql)
     virarTemporada(sql)
     jogarTemporada(sql)
     const previa = previaVirada(sql)
     expect(previa.contratosAcabando).toHaveLength(25)
     expect(previa.elencoAtual).toBe(25)
+    // A temporada do pacote acaba na semana 40: o prazo de renovação ainda está aberto.
+    expect(previa.renovacaoAberta).toBe(true)
     const r = virarTemporada(sql)
-    expect(r.saidas).toHaveLength(2)
-    expect(r.renovadosPelaDiretoria).toHaveLength(23)
+    const levados = sql.all<{ id: number; para: string }>("SELECT jogador_id id, para FROM pre_contrato WHERE temporada = 2027 AND de = 'AAA'")
+    // A virada é a última data dos pré-contratos: a CPU leva alguns do usuário (sem renovação, todos em fim de contrato).
+    expect(levados.length).toBeGreaterThan(0)
+    for (const x of levados) expect(sql.get<{ sigla: string }>('SELECT t.sigla FROM jogador j JOIN time t ON t.id = j.time_id WHERE j.id = ?', x.id)!.sigla).toBe(x.para)
+    expect(sql.get<{ n: number }>("SELECT COUNT(*) n FROM transferencia WHERE temporada = 2027 AND tipo = 'pre_contrato' AND de = 'AAA'")!.n).toBe(levados.length)
+    // O resto: a diretoria segura o mínimo (renova por 1 temporada) e quem passa dele sai livre.
+    expect(r.saidas.length).toBeGreaterThanOrEqual(levados.length)
+    expect(r.renovadosPelaDiretoria.length).toBe(Math.min(25 - levados.length, 23))
     const elencos = sql.all<{ sigla: string; n: number; gk: number }>(
       "SELECT t.sigla, COUNT(j.id) n, SUM(j.posicao = 'GK') gk FROM time t LEFT JOIN jogador j ON j.time_id = t.id AND j.status = 'ativo' GROUP BY t.sigla",
     )
@@ -121,12 +222,14 @@ describe('virada de temporada (serviço + SQLite)', () => {
       expect(e.n).toBeGreaterThanOrEqual(23)
       expect(e.gk).toBeGreaterThanOrEqual(2)
     }
-    expect(sql.get<{ n: number }>("SELECT COUNT(*) n FROM jogador WHERE status = 'livre' AND time_id IS NULL")!.n).toBeGreaterThanOrEqual(2)
+    // Contratos que acabavam: renovados, transferidos por pré-contrato ou encerrados.
     expect(sql.get<{ n: number }>('SELECT COUNT(*) n FROM contrato WHERE ate_temporada <= 2027')!.n).toBe(0)
     // Quem saiu fica registrado por clube para a IA de mercado repor na janela principal.
-    const saidas = sql.all<{ time: string; n: number }>("SELECT time, COUNT(*) n FROM saida_elenco WHERE temporada = 2028 AND motivo = 'fim_contrato' GROUP BY time")
-    expect(saidas.find((x) => x.time === 'AAA')?.n).toBe(2)
-    expect(saidas.reduce((a, x) => a + x.n, 0)).toBe(sql.get<{ n: number }>("SELECT COUNT(*) n FROM jogador WHERE status = 'livre' AND time_id IS NULL")!.n)
+    const saidas = sql.all<{ time: string; motivo: string; n: number }>('SELECT time, motivo, COUNT(*) n FROM saida_elenco WHERE temporada = 2028 GROUP BY time, motivo')
+    expect(saidas.find((x) => x.time === 'AAA' && x.motivo === 'pre_contrato')?.n).toBe(levados.length)
+    expect(saidas.find((x) => x.time === 'AAA' && x.motivo === 'fim_contrato')?.n ?? 0).toBe(r.saidas.length - levados.length)
+    // Semana 1: quem completou o elenco tem a transferência de livre na semana 1.
+    expect(sql.get<{ n: number }>("SELECT COUNT(*) n FROM transferencia WHERE temporada = 2028 AND semana = 1 AND tipo = 'livre'")!.n).toBeGreaterThan(0)
     // A terceira temporada anda.
     avancar(sql)
     expect(calendario(sql)).toMatchObject({ temporada: 2028, encerrada: false })
@@ -147,7 +250,7 @@ describe('virada de temporada (serviço + SQLite)', () => {
     expect(sql.get('SELECT ate_temporada ate FROM contrato WHERE jogador_id = ?', Number(j!.id))).toEqual({ ate: 2030 })
   })
 
-  it('mesma semente, mesmas duas temporadas (relatórios idênticos)', () => {
+  it('mesma semente, mesmas duas temporadas (relatórios idênticos)', { timeout: 30_000 }, () => {
     const rodar = (c: Carreiras) => {
       const s = c.sql()
       jogarTemporada(s)

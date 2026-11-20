@@ -3,13 +3,17 @@ import type { Competicao, JogadorSemClube, Pacote, Time } from '@shared/esquemas
 import { ehAsciiImprimivel } from '../texto'
 import { problemasDoDesign } from '../we/estampas'
 import { validarDivisoes } from '../competicoes/divisoes'
+import { candidatosSegundaDivisao, estadosDaSegundaDivisao, nomeSegundaDivisao } from '../competicoes/virada'
 import { validarBlocos } from '../competicoes/blocos'
+import { origensDasVagas, saidasDeVaga, tamanhoDaCompeticao } from '../competicoes/vagas'
 import { validarJanelas } from '../mercado/janelas'
 import { validarCatalogo } from '../noticias/editor'
+import { JOGADORES_EM_CAMPO } from '../partida/sessao'
+import { ensaiarTemporada } from './ensaio'
 
 /**
  * Regras de consistência do pacote (docs/spec/02-dados.md, "Validação do pacote").
- * Erros bloqueiam criar carreira; avisos só informam.
+ * Erros bloqueiam criar carreira; avisos só informam (escudo faltando e elenco curto são avisos).
  */
 
 export type NivelProblema = 'erro' | 'aviso'
@@ -37,10 +41,7 @@ export function exigenciaDoFormato(c: Competicao): { exato?: number; potenciaDe2
   return {}
 }
 
-function quantidadeParticipantes(c: Competicao): number | null {
-  if (c.participantes.regra === 'lista') return c.participantes.times.length
-  return c.participantes.quantidade ?? null
-}
+const quantidadeParticipantes = (c: Competicao): number | null => tamanhoDaCompeticao(c)
 
 export function validarPacote(pacote: Pacote, regras: Regras): Problema[] {
   const p: Problema[] = []
@@ -95,7 +96,8 @@ export function validarPacote(pacote: Pacote, regras: Regras): Problema[] {
 
   function validarTime(t: Time): void {
     const ref = { time: t.sigla, arquivo: `times/${t.sigla}.json` }
-    if (!escudos.has(t.sigla)) erro('escudo_faltando', `${t.nome}: falta o escudo escudos/${t.sigla}.png.`, ref)
+    // Sem escudo a interface mostra o provisório (sigla nas cores do clube).
+    if (!escudos.has(t.sigla)) aviso('escudo_faltando', `${t.nome}: falta o escudo escudos/${t.sigla}.png (usa o provisório).`, ref)
     if (!paises.has(t.pais)) erro('pais_inexistente', `${t.nome}: país ${t.pais} não está em paises.json.`, ref)
     if (!t.nome_curto.trim()) erro('nome_curto_vazio', `${t.nome}: nome curto (para o WE) vazio.`, ref)
     else if (t.nome_curto.length > regras.elenco.tamanho_nome_we || !ehAsciiImprimivel(t.nome_curto)) {
@@ -104,11 +106,13 @@ export function validarPacote(pacote: Pacote, regras: Regras): Problema[] {
 
     const minimo = regras.elenco.convocaveis_minimo
     const goleiros = t.jogadores.filter((j) => j.posicao === 'GK').length
+    // Elenco curto não bloqueia a carreira: quem não tiver 11 perde por W.O. nos jogos simulados
+    // (core/partida/sessao.ts), e o time do usuário é conferido ao criar a carreira.
     if (t.jogadores.length < minimo) {
-      erro('elenco_incompleto', `${t.nome}: ${t.jogadores.length} jogadores; precisa de pelo menos ${minimo} convocáveis.`, ref)
+      aviso('elenco_incompleto', `${t.nome}: ${t.jogadores.length} jogadores; o ideal são ${minimo} convocáveis${t.jogadores.length < JOGADORES_EM_CAMPO ? ' (sem 11, perde por W.O.)' : ''}.`, ref)
     }
     if (goleiros < regras.elenco.goleiros_minimo) {
-      erro('goleiros_insuficientes', `${t.nome}: ${goleiros} goleiro(s); precisa de pelo menos ${regras.elenco.goleiros_minimo}.`, ref)
+      aviso('goleiros_insuficientes', `${t.nome}: ${goleiros} goleiro(s); precisa de pelo menos ${regras.elenco.goleiros_minimo}.`, ref)
     }
 
     if (!t.financas) aviso('financas_vazias', `${t.nome}: sem finanças (usa o padrão do porte ${t.porte}).`, ref)
@@ -141,6 +145,88 @@ export function validarPacote(pacote: Pacote, regras: Regras): Problema[] {
   }
 
   const idsCompeticao = new Set(pacote.competicoes.map((c) => c.id))
+  const clubes = pacote.times.map((t) => ({ sigla: t.sigla, estado: t.estado ?? null }))
+  // Quem joga algum estadual/regional por lista não sobe da segunda divisão de outro.
+  const emEstaduais = new Set(
+    pacote.competicoes.flatMap((c) => ((c.tipo === 'estadual' || c.tipo === 'regional') && c.participantes.regra === 'lista' ? c.participantes.times : [])),
+  )
+  const blocos = pacote.temporada?.blocos ?? []
+  /** Competição por vagas no ano (03, "Competições por vagas"): quantidade, origens e calendário. */
+  function validarPorVagas(c: Competicao, ref: Partial<Problema>): void {
+    if (c.participantes.regra !== 'lista') return
+    const q = c.participantes.quantidade
+    const garantidos = c.participantes.times.length
+    if (q === undefined) {
+      erro('competicao_tamanho', `${c.nome}: com participantes definidos pelas vagas, diga a quantidade de times.`, ref)
+      return
+    }
+    if (garantidos > q) erro('competicao_tamanho', `${c.nome}: ${garantidos} garantidos na lista, mas a competição tem ${q} times.`, ref)
+    const origens = origensDasVagas(c, pacote.competicoes)
+    if (!origens.length) {
+      aviso('sem_vagas', `${c.nome}: nenhuma competição manda vagas para ela; só é disputada se os garantidos fecharem ${q} times.`, ref)
+      return
+    }
+    // Vagas configuradas (as que dá para contar) e o máximo de times que as origens têm.
+    let vagas = 0
+    for (const o of origens) {
+      for (const s of saidasDeVaga(o, c.id)) {
+        if (s.campeao) vagas += 1
+        if (s.primeiros) vagas += s.primeiros
+        const pos = s.posicoes?.split('-').map(Number)
+        if (pos?.[0]) vagas += (pos[1] ?? pos[0]) - pos[0] + 1
+      }
+    }
+    const maximo = garantidos + origens.reduce((t, o) => t + (tamanhoDaCompeticao(o) ?? 0), 0)
+    if (maximo < q) {
+      aviso('sem_vagas', `${c.nome}: as origens (${origens.map((o) => o.nome).join(', ')}) têm no máximo ${maximo} times para ${q} vagas; enquanto não fechar, a competição não é disputada.`, ref)
+    } else if (garantidos + vagas < q) {
+      aviso('vagas_completadas', `${c.nome}: ${vagas} vaga(s) configurada(s) nas origens para ${q} times; as que faltam vão para os próximos colocados das origens.`, ref)
+    }
+    const bloco = blocos.find((b) => b.competicao === c.id)
+    if (!bloco) {
+      erro('calendario_vagas', `${c.nome}: defina a janela dela no temporada.json, depois do fim das origens (${origens.map((o) => o.nome).join(', ')}).`, ref)
+      return
+    }
+    for (const o of origens) {
+      const bo = blocos.find((b) => b.competicao === o.id)
+      if (!bo) erro('calendario_vagas', `${c.nome}: ${o.nome} manda vagas mas não tem janela no temporada.json (precisa acabar antes da semana ${bloco.semana_inicio}).`, ref)
+      else if (bo.semana_fim >= bloco.semana_inicio) {
+        erro('calendario_vagas', `${c.nome} começa na semana ${bloco.semana_inicio}, mas ${o.nome} (origem das vagas) vai até a semana ${bo.semana_fim}.`, ref)
+      }
+    }
+  }
+  function validarSegundaDivisao(c: Competicao, ref: Partial<Problema>): void {
+    const sd = c.segunda_divisao
+    if (!sd) return
+    const nome = nomeSegundaDivisao(c)
+    if ((c.tipo !== 'estadual' && c.tipo !== 'regional') || c.participantes.regra !== 'lista') {
+      erro('segunda_divisao', `${c.nome}: segunda divisão só vale para estadual ou regional com participantes por lista.`, ref)
+      return
+    }
+    const times = c.participantes.times
+    if (sd.troca >= times.length) erro('segunda_divisao', `${c.nome}: ${sd.troca} caem para a ${nome}, mas o estadual tem ${times.length} times.`, ref)
+    const crit = sd.descem
+    if (crit && crit.criterio !== 'posicao') {
+      const f = c.fases.find((x) => x.id === crit.fase)
+      if (!f) erro('segunda_divisao', `${c.nome}: quem cai para a ${nome} sai da fase "${crit.fase}", que não existe.`, ref)
+      else if (crit.criterio === 'grupo') {
+        if (f.formato !== 'grupos') erro('segunda_divisao', `${c.nome}: "${f.nome}" não é fase de grupos.`, ref)
+        else if (crit.por_grupo * f.grupos.quantidade !== sd.troca) {
+          erro('segunda_divisao', `${c.nome}: ${crit.por_grupo} por grupo × ${f.grupos.quantidade} grupos não dá os ${sd.troca} que caem para a ${nome}.`, ref)
+        }
+      }
+    }
+    for (const s of sd.times ?? []) {
+      if (!siglas.has(s)) erro('time_inexistente', `${c.nome}: a ${nome} marca o time ${s} como apto, mas ele não existe no pacote.`, { ...ref, time: s })
+      else if (times.includes(s)) aviso('segunda_divisao', `${c.nome}: ${s} está marcado como apto a subir da ${nome}, mas já joga o estadual.`, { ...ref, time: s })
+      else if (emEstaduais.has(s)) aviso('segunda_divisao', `${c.nome}: ${s} está marcado como apto a subir da ${nome}, mas joga outro estadual/regional (não sobe).`, { ...ref, time: s })
+    }
+    const n = candidatosSegundaDivisao(c, times, clubes, emEstaduais).length
+    const origem = sd.times?.length ? 'aptos marcados' : `estados: ${estadosDaSegundaDivisao(c, times, clubes).join(', ') || 'nenhum'}`
+    if (n < sd.troca) {
+      aviso('segunda_divisao', `${c.nome}: só ${n} clube(s) podem subir da ${nome} (${origem}) para ${sd.troca} vagas; caem só tantos quantos sobem.`, ref)
+    }
+  }
   for (const c of pacote.competicoes) {
     const ref = { competicao: c.id, arquivo: `competicoes/${c.id}.json` }
     if (c.participantes.regra === 'lista') {
@@ -151,13 +237,18 @@ export function validarPacote(pacote: Pacote, regras: Regras): Problema[] {
         vistos.add(s)
       }
       const q = c.participantes.quantidade
-      if (q !== undefined && q !== c.participantes.times.length) {
+      if (c.participantes.por_vagas) validarPorVagas(c, ref)
+      else if (q !== undefined && q !== c.participantes.times.length) {
         erro('competicao_tamanho', `${c.nome}: lista com ${c.participantes.times.length} times, mas a competição pede ${q}.`, ref)
       }
     }
 
     const n = quantidadeParticipantes(c)
     const exige = exigenciaDoFormato(c)
+    const premios = c.premiacao?.por_posicao
+    if (premios && n !== null && premios.length > n) {
+      aviso('premiacao_sobra', `${c.nome}: premiação para ${premios.length} colocações, mas só ${n} times disputam (as sobras não são pagas).`, ref)
+    }
     if (n !== null) {
       if (n < 2) erro('competicao_tamanho', `${c.nome}: precisa de pelo menos 2 times (tem ${n}).`, ref)
       else if (exige.exato !== undefined && n !== exige.exato) {
@@ -207,6 +298,28 @@ export function validarPacote(pacote: Pacote, regras: Regras): Problema[] {
         aviso('saida_invalida', `${c.nome}: ${s.tipo} para "${s.destino}" só funciona entre competições com participantes por "lista".`, ref)
       }
     }
+    for (const s of c.saidas ?? []) {
+      const destino = pacote.competicoes.find((x) => x.id === s.destino)
+      const vaga = !s.tipo || !(s.tipo === 'acesso' || s.tipo === 'rebaixamento')
+      if (vaga && destino?.participantes.regra === 'lista' && !destino.participantes.por_vagas) {
+        aviso('saida_invalida', `${c.nome}: vaga para "${destino.nome}" não tem efeito (marque nela "participantes definidos pelas vagas" ou use "classificados_de").`, ref)
+      }
+      if (!s.exceto_de?.length) continue
+      if (s.ultimos || s.por_grupo) {
+        erro('saida_invalida', `${c.nome}: saída para "${s.destino}" pulando outras competições só funciona com campeão, posições ou primeiros.`, ref)
+      }
+      for (const id of s.exceto_de) {
+        if (!idsCompeticao.has(id)) erro('saida_invalida', `${c.nome}: saída para "${s.destino}" pula quem joga "${id}", competição que não existe.`, ref)
+      }
+    }
+    validarSegundaDivisao(c, ref)
+    for (const id of c.pula_quem_joga ?? []) {
+      if (id === c.id) erro('pula_quem_joga', `${c.nome}: a classificação não pode pular quem joga a própria competição.`, ref)
+      else if (!idsCompeticao.has(id)) erro('pula_quem_joga', `${c.nome}: a classificação pula quem joga "${id}", competição que não existe.`, ref)
+    }
+    if (c.pula_quem_joga?.length && !(c.participantes.regra === 'classificados_de' || (c.participantes.regra === 'lista' && c.participantes.por_vagas))) {
+      aviso('pula_quem_joga', `${c.nome}: "pular quem joga" só vale para competições que recebem vagas (por vagas ou classificados_de).`, ref)
+    }
     for (const f of c.fases) {
       if (f.entram?.length) aviso('nao_suportado', `${c.nome} / ${f.nome}: "entram" (times que entram em fases seguintes) ainda não é suportado.`, ref)
       if (f.formato === 'pontos_corridos' && f.classificam_para && !f.pontos_corridos.classificam) {
@@ -237,6 +350,10 @@ export function validarPacote(pacote: Pacote, regras: Regras): Problema[] {
       p.push({ nivel: n.nivel, codigo: n.codigo, mensagem: n.evento ? `Notícia ${n.evento}: ${n.mensagem}` : n.mensagem, arquivo: 'noticias.json' })
     }
   }
+
+  // Ensaio da 1ª temporada: o que só apareceria ao criar a carreira (calendário que não fecha...).
+  // Só com as competições coerentes; com erro nelas, o ensaio repetiria o mesmo problema.
+  if (!p.some((x) => x.nivel === 'erro' && (x.competicao || x.arquivo === 'temporada.json' || x.arquivo === 'divisoes.json'))) p.push(...ensaiarTemporada(pacote, regras))
 
   return p
 }

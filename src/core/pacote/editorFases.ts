@@ -196,8 +196,9 @@ export function renomearFase(c: Competicao, antigo: string, novo: string): Compe
     })
   }
   if (c.suspensao?.zera_na_fase === antigo) r.suspensao = { ...c.suspensao, zera_na_fase: novo }
-  if (c.premiacao && antigo in c.premiacao.por_fase) {
-    r.premiacao = { por_fase: Object.fromEntries(Object.entries(c.premiacao.por_fase).map(([k, v]) => [k === antigo ? novo : k, v])) }
+  const porFase = c.premiacao?.por_fase
+  if (porFase && antigo in porFase) {
+    r.premiacao = { ...c.premiacao, por_fase: Object.fromEntries(Object.entries(porFase).map(([k, v]) => [k === antigo ? novo : k, v])) }
   }
   return r
 }
@@ -260,9 +261,10 @@ export function modoDaSaida(s: SaidaCompeticao): ModoSaida {
 /** Mesma saída (destino e tipo) com outro jeito de escolher os times. */
 export function trocarModoSaida(s: SaidaCompeticao, modo: ModoSaida, c: Pick<Competicao, 'fases'>): SaidaCompeticao {
   const base: SaidaCompeticao = { destino: s.destino, ...(s.tipo && { tipo: s.tipo }) }
-  if (modo === 'campeao') return { campeao: true, ...base }
-  if (modo === 'posicoes') return { posicoes: s.posicoes ?? '1-4', ...base }
-  if (modo === 'primeiros') return { primeiros: s.primeiros ?? s.ultimos ?? 4, ...base }
+  const pulo = s.exceto_de?.length ? { exceto_de: s.exceto_de } : {}
+  if (modo === 'campeao') return { campeao: true, ...pulo, ...base }
+  if (modo === 'posicoes') return { posicoes: s.posicoes ?? '1-4', ...pulo, ...base }
+  if (modo === 'primeiros') return { primeiros: s.primeiros ?? s.ultimos ?? 4, ...(s.exceto_de?.length && { exceto_de: s.exceto_de }), ...base }
   if (modo === 'ultimos') return { ultimos: s.ultimos ?? s.primeiros ?? 4, ...base }
   const fase = c.fases.find((f) => f.formato === 'grupos') ?? c.fases[0]
   return { por_grupo: { fase: fase?.id ?? '', lado: 'primeiros', n: 1 }, ...base }
@@ -288,11 +290,12 @@ export function descreverSaida(s: SaidaCompeticao, c: Pick<Competicao, 'fases'>,
     return `${plural ? 'vão' : 'vai'} para ${destino} (${tipo})`
   }
   const modo = modoDaSaida(s)
-  if (modo === 'campeao') return `O campeão ${acao(false)}.`
+  const pula = s.exceto_de?.length ? ` (pulando quem joga ${s.exceto_de.map(nomeCompeticao).join(', ')}; a vaga desce)` : ''
+  if (modo === 'campeao') return `O campeão ${acao(false)}${pula}.`
   if (modo === 'posicoes') {
     const p = lerPosicoes(s.posicoes ?? '')
     if (!p) return `Posições "${s.posicoes ?? ''}" inválidas (use 1-4 ou 3).`
-    return p[0] === p[1] ? `O ${p[0]}º colocado ${acao(false)}.` : `Do ${p[0]}º ao ${p[1]}º ${acao(true)}.`
+    return p[0] === p[1] ? `O ${p[0]}º colocado ${acao(false)}${pula}.` : `Do ${p[0]}º ao ${p[1]}º ${acao(true)}${pula}.`
   }
   if (modo === 'por_grupo') {
     const g = s.por_grupo!
@@ -300,6 +303,76 @@ export function descreverSaida(s: SaidaCompeticao, c: Pick<Competicao, 'fases'>,
     return `${um ? 'O' : `Os ${g.n}`} ${g.lado === 'primeiros' ? (um ? 'primeiro' : 'primeiros') : um ? 'último' : 'últimos'} de cada grupo de "${fase(g.fase)}" ${acao(!um)}.`
   }
   const n = (modo === 'primeiros' ? s.primeiros : s.ultimos) ?? 0
+  if (modo === 'primeiros' && s.exceto_de?.length) {
+    const pula = s.exceto_de.map(nomeCompeticao).join(', ')
+    const onde = s.fase ? `entre quem jogou "${fase(s.fase)}"` : 'na classificação final'
+    return `${n === 1 ? 'O melhor' : `Os ${n} melhores`} ${onde}, pulando quem joga ${pula} na próxima temporada ou já está em ${destino}, ${acao(n !== 1)}.`
+  }
   if (s.fase) return `Entre quem jogou "${fase(s.fase)}", ${n === 1 ? 'o' : `os ${n}`} ${modo === 'primeiros' ? (n === 1 ? 'melhor' : 'melhores') : n === 1 ? 'pior' : 'piores'} ${acao(n !== 1)}.`
   return `${n === 1 ? 'O' : `Os ${n}`} ${modo === 'primeiros' ? (n === 1 ? 'primeiro' : 'primeiros') : n === 1 ? 'último' : 'últimos'} da classificação final ${acao(n !== 1)}.`
+}
+
+// ---------------------------------------------------------------- vagas de uma competição por vagas (Série D)
+
+const ehVagaPara = (s: SaidaCompeticao, destino: string) => s.destino === destino && !['acesso', 'rebaixamento'].includes(s.tipo ?? 'vaga')
+
+/** Quantas vagas `origem` dá para `destino` (soma de "primeiros"; campeão e posições também contam). */
+export function vagasDaOrigem(origem: Pick<Competicao, 'saidas'>, destino: string): number {
+  let n = 0
+  for (const s of origem.saidas ?? []) {
+    if (!ehVagaPara(s, destino)) continue
+    if (s.primeiros) n += s.primeiros
+    if (s.campeao) n += 1
+    const p = s.posicoes ? lerPosicoes(s.posicoes) : null
+    if (p) n += p[1] - p[0] + 1
+  }
+  return n
+}
+
+/** Sugestão de "pular quem joga" para uma competição por vagas: as nacionais por lista que não são por vagas. */
+export function excetoPadrao(competicoes: readonly Competicao[], destino: string): string[] {
+  return competicoes.filter((c) => c.id !== destino && c.tipo === 'nacional' && c.participantes.regra === 'lista' && !c.participantes.por_vagas).map((c) => c.id)
+}
+
+/**
+ * A origem com `n` vagas para `destino` ("os N melhores"; quem é pulado é regra do destino,
+ * `pula_quem_joga`): troca as saídas de vaga para o destino por uma só (0 = tira). Mantém a fase,
+ * o tipo e o `exceto_de` de uma vaga "primeiros" que já existia.
+ */
+export function definirVagasDaOrigem(origem: Competicao, destino: string, n: number): Competicao {
+  const atuais = (origem.saidas ?? []).filter((s) => ehVagaPara(s, destino))
+  const antiga = atuais.find((s) => s.primeiros)
+  const outras = (origem.saidas ?? []).filter((s) => !ehVagaPara(s, destino))
+  const nova: SaidaCompeticao | null =
+    n > 0
+      ? {
+          primeiros: n,
+          ...(antiga?.fase && { fase: antiga.fase }),
+          destino,
+          ...(antiga?.exceto_de?.length && { exceto_de: [...antiga.exceto_de] }),
+          ...(antiga?.tipo && { tipo: antiga.tipo }),
+        }
+      : null
+  const saidas = nova ? [...outras, nova] : outras
+  const r: Competicao = { ...origem, saidas }
+  if (!saidas.length) delete r.saidas
+  return r
+}
+
+/** Competições que a origem pula na(s) própria(s) saída(s) para `destino` (`exceto_de`). */
+export function puloDaOrigem(origem: Pick<Competicao, 'saidas'>, destino: string): string[] {
+  return [...new Set((origem.saidas ?? []).filter((s) => ehVagaPara(s, destino)).flatMap((s) => s.exceto_de ?? []))]
+}
+
+/** A origem sem o pulo próprio nas saídas para `destino` (quando a regra passa para o destino). */
+export function tirarPuloDaOrigem(origem: Competicao, destino: string): Competicao {
+  return {
+    ...origem,
+    saidas: (origem.saidas ?? []).map((s) => {
+      if (!ehVagaPara(s, destino) || !s.exceto_de) return s
+      const resto = { ...s }
+      delete resto.exceto_de
+      return resto
+    }),
+  }
 }

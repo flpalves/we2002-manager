@@ -4,7 +4,7 @@ import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { Carreiras } from '../../src/main/carreira/servico'
 import { artilharia, calendario, continuar, detalheEdicao, edicoes, jogarDataDoUsuario, sumula, times } from '../../src/main/carreira/temporada'
-import { avancar } from '../helpers/avancar'
+import { avancar, continuarAtePreJogo } from '../helpers/avancar'
 import { lerResumo } from '../../src/main/db/repositorios/carreira'
 import { abrirNodeSqlite } from '../helpers/sqlite'
 import { pacote as fixture, time } from '../fixtures/pacote'
@@ -49,6 +49,40 @@ describe('temporada na carreira (serviço + SQLite)', () => {
     expect(sql.get<{ n: number }>('SELECT COUNT(*) n FROM partida WHERE gols_casa IS NOT NULL')?.n).toBe(2)
     expect(sql.get<{ origem: string }>('SELECT origem FROM partida WHERE gols_casa IS NOT NULL')?.origem).toBe('motor')
     expect(lerResumo(sql)?.semana_atual).toBe(calendario(sql).passos[0]!.semana)
+  })
+
+  it('Continuar anda uma semana por vez, mesmo sem jogo, e para na semana do jogo do usuário', () => {
+    const sql = carreiras.sql()
+    const primeira = calendario(sql).passos[0]!.semana
+    expect(primeira).toBeGreaterThan(2)
+    for (let w = 1; w < primeira; w++) {
+      const r = continuar(sql)
+      expect(r).toMatchObject({ semana: w, passosJogados: 0, preJogo: null, jogoDoUsuario: null })
+      expect(lerResumo(sql)?.semana_atual).toBe(w)
+    }
+    // A semana do 1º jogo: o tempo chega nela e o pré-jogo abre (o jogo não é simulado).
+    const r = continuar(sql)
+    expect(r.semana).toBe(primeira)
+    expect(r.preJogo?.semana).toBe(primeira)
+    expect(calendario(sql).passoAtual).toBe(0)
+    // Continuar de novo não pula o jogo nem o tempo.
+    expect(continuar(sql)).toMatchObject({ semana: primeira, preJogo: { id: r.preJogo!.id } })
+    jogarDataDoUsuario(sql)
+    // Depois do jogo, a próxima semana (sem jogo) é uma só.
+    expect(continuar(sql)).toMatchObject({ semana: primeira + 1, passosJogados: 0 })
+  })
+
+  it('semana a semana chega ao mesmo fim de temporada; o relógio persiste ao reabrir', () => {
+    const sql = carreiras.sql()
+    for (let i = 0; i < 5; i++) continuar(sql)
+    const id = carreiras.resumoAtual()!.id
+    carreiras.fechar()
+    carreiras.abrir(id)
+    expect(continuar(carreiras.sql()).semana).toBe(6)
+    let r = avancar(carreiras.sql())
+    while (!r.encerrada) r = avancar(carreiras.sql())
+    expect(calendario(carreiras.sql()).encerrada).toBe(true)
+    expect(carreiras.sql().get<{ n: number }>('SELECT COUNT(*) n FROM partida WHERE gols_casa IS NULL')!.n).toBe(0)
   })
 
   it('temporada inteira até o fim, com campeão e tabela coerente', () => {
@@ -143,7 +177,7 @@ describe('pré-jogo: o Continuar para antes do jogo do usuário', () => {
       sufixoId: () => 'p1',
     })
     c.criar({ pacote: 'teste', time: 'AAA', tecnico: 'Felipe', nome: 'P', dificuldade: 'normal' })
-    const r = continuar(c.sql())
+    const r = continuarAtePreJogo(c.sql())
     expect(r.preJogo).not.toBeNull()
     expect(r.jogoDoUsuario).toBeNull()
     // Continuar de novo não pula o jogo

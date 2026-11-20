@@ -38,6 +38,7 @@ const idadeMax = ref<number | null>(null)
 const somenteLivres = ref(false)
 const somenteExterior = ref(false)
 const somenteAVenda = ref(false)
+const somenteFimDeContrato = ref(false)
 
 // Proposta recebida aberta no painel da direita (contraproposta).
 const propostaSel = ref<PropostaRecebida | null>(null)
@@ -75,6 +76,7 @@ async function buscar(): Promise<void> {
       ...(somenteLivres.value && { somenteLivres: true }),
       ...(somenteExterior.value && { somenteExterior: true }),
       ...(somenteAVenda.value && { somenteAVenda: true }),
+      ...(somenteFimDeContrato.value && { somenteFimDeContrato: true }),
     }
     lista.value = await chamar('mercado:buscar', filtros)
   } catch (e) {
@@ -91,8 +93,8 @@ async function carregar(): Promise<void> {
   }
   await buscar()
 }
-watch(() => [carreira.atual?.id, temporada.calendario?.passoAtual], carregar, { immediate: true })
-watch([posicao, somenteLivres, somenteExterior, somenteAVenda, aba], buscar)
+watch(() => [carreira.atual?.id, temporada.calendario?.passoAtual, temporada.calendario?.semanaAtual], carregar, { immediate: true })
+watch([posicao, somenteLivres, somenteExterior, somenteAVenda, somenteFimDeContrato, aba], buscar)
 
 /** Disponível do exterior: "joga no Zenit (RUS)". */
 const origemDe = (j: JogadorMercadoDto) => (j.origem ? `joga no ${j.origem.clube}${j.origem.pais ? ` (${j.origem.pais})` : ''}` : '')
@@ -116,7 +118,9 @@ async function abrir(j: { id: string }, tipo?: NegociacaoDto['tipo']): Promise<v
 }
 
 // `?renovar=<id>` (fim de temporada): abre direto a renovação do jogador.
+// `?aba=propostas` (destaques da volta do jogo): abre as propostas recebidas.
 onMounted(() => {
+  if (route.query['aba'] === 'propostas') aba.value = 'propostas'
   const id = route.query['renovar']
   if (typeof id !== 'string' || !id) return
   aba.value = 'meus'
@@ -209,7 +213,10 @@ const NOME_TIPO: Record<NegociacaoDto['tipo'], string> = {
   renovacao: 'Renovação',
   multa: 'Multa rescisória',
   exterior: 'Do exterior',
+  pre_contrato: 'Pré-contrato',
 }
+/** Passou da semana limite: contratos que acabam não renovam mais; vale o pré-contrato. */
+const prazoEncerrado = computed(() => !!m.value?.semanaLimiteRenovacao && m.value.semana > m.value.semanaLimiteRenovacao)
 const NOME_QUEM = { usuario: 'Você', clube: 'Clube', jogador: 'Jogador' } as const
 const NOME_MOV = { proposta: 'propôs', aceita: 'aceitou', contraproposta: 'contrapropôs', recusa: 'recusou', encerrada: 'encerrou' } as const
 
@@ -223,7 +230,10 @@ const etapaAberta = computed(() => neg.value && (neg.value.etapa === 'clube' || 
   <template v-else>
     <div v-if="m" class="resumo">
       <span class="we-kv"><span class="we-lb">Janela</span>
-        <WeTag :tipo="m.janelaAberta ? 'positivo' : 'atencao'">{{ m.janelaAberta ? 'Aberta' : 'Fechada: só livres e renovações' }}</WeTag>
+        <WeTag :tipo="m.janelaAberta ? 'positivo' : 'atencao'">{{ m.janelaAberta ? 'Aberta' : prazoEncerrado ? 'Fechada: só livres e pré-contratos' : 'Fechada: só livres e renovações' }}</WeTag>
+      </span>
+      <span v-if="m.semanaLimiteRenovacao" class="we-kv"><span class="we-lb">Renovações</span>
+        <WeTag :tipo="prazoEncerrado ? 'negativo' : 'info'">{{ prazoEncerrado ? 'Prazo encerrado' : `Até a semana ${m.semanaLimiteRenovacao}` }}</WeTag>
       </span>
       <span class="we-kv"><span class="we-lb">Movimentos</span><span class="we-vl" :class="{ 'we-vl--atencao': m.movimentos === 0 }">{{ m.movimentos }} de {{ m.movimentosMaximo }}</span></span>
       <span class="we-kv"><span class="we-lb">Saldo</span><span class="we-vl" :class="{ 'we-vl--negativo': m.saldo < 0 }">{{ dinheiro(m.saldo) }}</span></span>
@@ -248,6 +258,7 @@ const etapaAberta = computed(() => neg.value && (neg.value.etapa === 'clube' || 
             <WeBotao :ativo="somenteLivres" @click="somenteLivres = !somenteLivres">Sem clube</WeBotao>
             <WeBotao :ativo="somenteExterior" @click="somenteExterior = !somenteExterior">Exterior</WeBotao>
             <WeBotao :ativo="somenteAVenda" @click="somenteAVenda = !somenteAVenda">À venda</WeBotao>
+            <WeBotao :ativo="somenteFimDeContrato" @click="somenteFimDeContrato = !somenteFimDeContrato">Fim de contrato</WeBotao>
           </div>
         </WePainel>
 
@@ -260,6 +271,7 @@ const etapaAberta = computed(() => neg.value && (neg.value.etapa === 'clube' || 
                 <td>
                   <button type="button" class="link" @click="abrir(j)">{{ j.nome }}</button>
                   <WeTag v-if="j.aVenda" :tipo="j.aVenda === 'financeiro' ? 'negativo' : 'atencao'" class="tag-venda">{{ NOME_A_VENDA[j.aVenda] }}</WeTag>
+                  <WeTag v-if="j.preContrato" :tipo="j.preContrato === carreira.atual.time.sigla ? 'positivo' : 'atencao'" class="tag-venda">Pré-contrato</WeTag>
                 </td>
                 <td>{{ nomePosicao(j.posicao) }}</td>
                 <td>{{ j.idade }}</td>
@@ -360,7 +372,8 @@ const etapaAberta = computed(() => neg.value && (neg.value.etapa === 'clube' || 
               <CampoDinheiro v-if="neg.tipo !== 'multa'" v-model="valor" rotulo="Sua oferta" />
             </div>
             <div v-else class="proposta">
-              <p v-if="neg.tipo === 'exterior'" class="we-lb">Taxa fixa: <strong>{{ dinheiro(neg.valorAcordado ?? 0) }}</strong> (sai do caixa só se o negócio fechar). Agora o salário mensal e a duração.</p>
+              <p v-if="neg.tipo === 'pre_contrato'" class="we-lb">Sem taxa: o contrato dele termina nesta temporada e ele chega na próxima. Agora o salário mensal e a duração.</p>
+              <p v-else-if="neg.tipo === 'exterior'" class="we-lb">Taxa fixa: <strong>{{ dinheiro(neg.valorAcordado ?? 0) }}</strong> (sai do caixa só se o negócio fechar). Agora o salário mensal e a duração.</p>
               <p v-else class="we-lb">Acordo com o clube: <strong>{{ dinheiro(neg.valorAcordado ?? 0) }}</strong>. Agora o salário mensal{{ neg.tipo === 'emprestimo' ? '' : ' e a duração' }}.</p>
               <p v-if="neg.contraSalario" class="we-lb">O jogador pede <strong>{{ dinheiro(neg.contraSalario) }}</strong> por mês.</p>
               <CampoDinheiro v-model="salario" rotulo="Salário mensal" />

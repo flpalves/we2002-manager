@@ -8,7 +8,6 @@ import { useEditor } from '../stores/editor'
 import { useUi } from '../stores/ui'
 import EditorTimes from './editor/EditorTimes.vue'
 import EditorJogadores from './editor/EditorJogadores.vue'
-import EditorSemClube from './editor/EditorSemClube.vue'
 import EditorUniformes from './editor/EditorUniformes.vue'
 import EditorCompeticoes from './editor/EditorCompeticoes.vue'
 import EditorDivisoes from './editor/EditorDivisoes.vue'
@@ -21,12 +20,17 @@ const editor = useEditor()
 const ui = useUi()
 const pacoteId = ref('')
 
-const ids = ['times', 'uniformes', 'jogadores', 'semClube', 'competicoes', 'divisoes', 'temporada', 'janelas', 'noticias', 'validacao'] as const
+const ids = ['times', 'uniformes', 'jogadores', 'competicoes', 'divisoes', 'temporada', 'janelas', 'noticias', 'validacao'] as const
 const abas = computed(() => [
   { id: 'times' as const, titulo: 'Times', contagem: editor.aberto?.times.length },
   { id: 'uniformes' as const, titulo: 'Uniformes' },
-  { id: 'jogadores' as const, titulo: 'Jogadores' },
-  { id: 'semClube' as const, titulo: 'Sem clube', contagem: (editor.aberto?.semClube.exterior?.jogadores.length ?? 0) + (editor.aberto?.semClube.livres?.jogadores.length ?? 0) },
+  {
+    id: 'jogadores' as const,
+    titulo: 'Jogadores',
+    contagem: editor.aberto
+      ? editor.aberto.times.reduce((n, t) => n + t.jogadores.length, 0) + (editor.aberto.semClube.exterior?.jogadores.length ?? 0) + (editor.aberto.semClube.livres?.jogadores.length ?? 0)
+      : undefined,
+  },
   { id: 'competicoes' as const, titulo: 'Competições', contagem: editor.aberto?.competicoes.length },
   { id: 'divisoes' as const, titulo: 'Divisões', contagem: editor.aberto?.divisoes?.divisoes.length },
   { id: 'temporada' as const, titulo: 'Temporada', contagem: editor.aberto?.temporada.arquivo?.blocos.length },
@@ -88,7 +92,6 @@ watch(pacoteId, async (id) => {
     <EditorTimes v-if="editor.aba === 'times'" />
     <EditorUniformes v-else-if="editor.aba === 'uniformes'" />
     <EditorJogadores v-else-if="editor.aba === 'jogadores'" />
-    <EditorSemClube v-else-if="editor.aba === 'semClube'" />
     <EditorCompeticoes v-else-if="editor.aba === 'competicoes'" />
     <EditorDivisoes v-else-if="editor.aba === 'divisoes'" />
     <EditorTemporada v-else-if="editor.aba === 'temporada'" />

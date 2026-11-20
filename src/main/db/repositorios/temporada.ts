@@ -157,7 +157,11 @@ export function gravarPasso(
     inserirPartida(sql, e.temporada, p)
     sql.run('DELETE FROM rodada_reservada WHERE edicao_id = ? AND fase = ? AND rodada = ? AND jogo = ?', p.edicao, p.fase, p.rodada, p.jogo)
   }
-  for (const ed of e.edicoes) sql.run('UPDATE edicao SET estado = ?, campeao = ? WHERE id = ?', JSON.stringify(ed), ed.campeao, ed.id)
+  for (const ed of e.edicoes) {
+    sql.run('UPDATE edicao SET estado = ?, campeao = ? WHERE id = ?', JSON.stringify(ed), ed.campeao, ed.id)
+    // Competição por vagas que não fechou: as rodadas reservadas ficam livres.
+    if (ed.cancelada) sql.run('DELETE FROM rodada_reservada WHERE edicao_id = ?', ed.id)
+  }
   // Semana atual = a do último passo jogado.
   const ultimo = e.passos[e.passoAtual - 1]
   sql.run('UPDATE carreira SET passo_atual = ?, semana_atual = ?', e.passoAtual, ultimo?.semana ?? 1)

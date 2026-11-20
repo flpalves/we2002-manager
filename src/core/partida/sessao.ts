@@ -185,6 +185,31 @@ export function contextoRodizio(
   }
 }
 
+/** Mínimo de jogadores no elenco para entrar em campo; abaixo disso o time perde por W.O. */
+export const JOGADORES_EM_CAMPO = 11
+/** Placar do W.O. (o time presente vence por 3 × 0). */
+export const PLACAR_WO = 3
+
+/** O time tem gente para entrar em campo (contando lesionados e suspensos, como `escalarTime`)? */
+export function temElencoParaJogar(elencos: Elencos, sigla: string): boolean {
+  return elencos.doTime(sigla).length >= JOGADORES_EM_CAMPO
+}
+
+/**
+ * W.O.: quem não tem 11 jogadores perde por 3 × 0 (os dois sem elenco: 0 × 0). Se o jogo
+ * fecha um mata-mata e o agregado empata, o time presente (ou o mandante) leva nos pênaltis.
+ * Sem detalhe do motor: ninguém ganha minutos, cartões ou lesões.
+ */
+export function resultadoWo(p: Partida, casaJoga: boolean, foraJoga: boolean, ctx: Pick<ContextoPartida, 'mataMata'>): Resultado {
+  const r: Resultado = { golsCasa: casaJoga && !foraJoga ? PLACAR_WO : 0, golsVisitante: foraJoga && !casaJoga ? PLACAR_WO : 0 }
+  const mm = ctx.mataMata
+  if (mm && p.jogo === mm.regra.jogos && empatado([...mm.anteriores, { ...p, resultado: r }], mm.regra)) {
+    const casaVence = casaJoga || !foraJoga
+    return { ...r, penaltisCasa: casaVence ? 1 : 0, penaltisVisitante: casaVence ? 0 : 1 }
+  }
+  return r
+}
+
 /** Escala um time para a partida (IA de técnico). Se faltar gente, completa com quem estiver suspenso. */
 export function escalarTime(elencos: Elencos, sigla: string, competicao: Competicao | undefined, regras: Regras, rodizio?: ContextoRodizio) {
   const info = elencos.times.get(sigla)
@@ -211,6 +236,9 @@ export function criarSimuladorMotor(op: OpcoesSimulador): Simulador {
   return (p: Partida, ctx: ContextoPartida): Resultado => {
     const { elencos, regras } = op
     const competicao = op.competicoes.get(ctx.competicao)
+    const casaJoga = temElencoParaJogar(elencos, p.casa)
+    const foraJoga = temElencoParaJogar(elencos, p.visitante)
+    if (!casaJoga || !foraJoga) return resultadoWo(p, casaJoga, foraJoga, ctx)
     const rng = raiz.derivar('partida', p.id)
     const escalaCasa = escalarTime(elencos, p.casa, competicao, regras, op.agenda?.(p, p.casa, ctx))
     const escalaFora = escalarTime(elencos, p.visitante, competicao, regras, op.agenda?.(p, p.visitante, ctx))
