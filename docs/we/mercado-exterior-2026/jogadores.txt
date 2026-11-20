@@ -199,3 +199,104 @@ Darwin Machís|MACHIS|WG||1993|VEN|d||Real Valladolid|ESP|14.4||1
 Joaquín Torres|J. TORRES|WG||1997|ARG|c||Philadelphia Union|USA|14.8||1
 Braian Romero|BRAIAN|CF||1991|ARG|d||Vélez Sarsfield|ARG|14.8||1
 Maxi Gómez|MAXI GOMEZ|CF||1996|URU|d|186|Trabzonspor|TUR|15.7||1
+# Lote 2 (20/11/2026): 100 jogadores um pouco acima dos melhores da Série A (geral alvo 17,5 a 19). 50 brasileiros e 50 estrangeiros de países que costumam mandar jogador para o Brasil.
+Ederson Moraes|EDERSON|GK||1993|BRA|c|188|Fenerbahçe|TUR|18.5||0
+Alisson Becker|ALISSON|GK||1992|BRA|d|193|Liverpool|ENG|19.0||0
+Bento|BENTO|GK||1999|BRA|d|190|Al-Nassr|KSA|17.5||0
+Neto|NETO|GK||1989|BRA|d|190|Bournemouth|ENG|17.5||1
+Marquinhos|MARQUINHOS|CB||1994|BRA|d|183|Paris Saint-Germain|FRA|19.0||0
+Gabriel Magalhães|GABRIEL|CB||1997|BRA|c|190|Arsenal|ENG|19.0||0
+Éder Militão|MILITAO|CB||1998|BRA|d|186|Real Madrid|ESP|18.5|vel|0
+Gleison Bremer|BREMER|CB||1997|BRA|d|188|Juventus|ITA|18.5|for|0
+Roger Ibañez|IBANEZ|CB||1998|BRA|d|186|Al-Ahli|KSA|17.5||0
+Murillo|MURILLO|CB||2002|BRA|d|182|Nottingham Forest|ENG|18.0|vel|0
+Lucas Beraldo|BERALDO|CB||2003|BRA|c|186|Paris Saint-Germain|FRA|17.5||1
+Vitor Reis|VITOR REIS|CB||2006|BRA|d|187|Girona|ESP|17.5||1
+Wesley|WESLEY|SB||2003|BRA|d|175|Roma|ITA|18.0||0
+Vanderson|VANDERSON|SB||2001|BRA|d|175|Monaco|FRA|17.5||0
+Carlos Augusto|C. AUGUSTO|SB||1999|BRA|c|184|Inter de Milão|ITA|18.0||0
+Caio Henrique|CAIO|SB||1997|BRA|c|178|Monaco|FRA|17.5|bola|0
+Arthur Augusto|ARTHUR A.|SB||2003|BRA|d|175|Girona|ESP|17.5||1
+Casemiro|CASEMIRO|DH||1992|BRA|d|185|Manchester United|ENG|18.5|for|1
+Fabinho|FABINHO|DH||1993|BRA|d|188|Al-Ittihad|KSA|18.0||0
+João Gomes|J. GOMES|DH||2001|BRA|d|176|Wolverhampton|ENG|18.0||0
+André Trindade|ANDRE|DH||2001|BRA|d|176|Wolverhampton|ENG|17.5||0
+Douglas Luiz|D. LUIZ|DH|OH|1998|BRA|d|175|Juventus|ITA|18.0|bola|1
+Joelinton|JOELINTON|DH|OH|1996|BRA|d|186|Newcastle|ENG|18.0|for|0
+Andrey Santos|ANDREY|DH|OH|2004|BRA|d|180|Chelsea|ENG|17.5||1
+Ederson|EDERSON J.|DH||1999|BRA|d|183|Atalanta|ITA|18.0||0
+Luiz Henrique|L.HENRIQUE|SH|WG|2001|BRA|d|182|Zenit|RUS|17.5|dri|0
+Igor Paixão|PAIXAO|SH|WG|2000|BRA|d|170|Olympique de Marseille|FRA|17.5|vel,dri|0
+Kevin|KEVIN|SH|WG|2003|BRA|c|170|Fulham|ENG|17.5|vel,dri|1
+Bruno Guimarães|BRUNO G.|OH|DH|1997|BRA|d|182|Newcastle|ENG|19.0||0
+Anderson Talisca|TALISCA|OH|CF|1994|BRA|c|191|Fenerbahçe|TUR|18.0|bola,fin|1
+Roberto Firmino|FIRMINO|OH|CF|1991|BRA|d|181|Al-Sadd|QAT|17.5||1
+Arthur Melo|ARTHUR|OH|DH|1996|BRA|d|171|Juventus|ITA|17.5||1
+Matheus França|M. FRANCA|OH||2004|BRA|d|182|Crystal Palace|ENG|17.5|dri|1
+Raphael Veiga|VEIGA|OH||1995|BRA|c|176|América|MEX|18.0|bola|1
+Antony|ANTONY|WG|SH|2000|BRA|c|172|Real Betis|ESP|18.0|dri|0
+David Neres|NERES|WG||1997|BRA|c|175|Napoli|ITA|18.0|dri|0
+Malcom|MALCOM|WG||1997|BRA|c|171|Al-Hilal|KSA|18.0||1
+Galeno|GALENO|WG||1997|BRA|d|179|Al-Ahli|KSA|17.5|vel|0
+Ângelo|ANGELO|WG||2004|BRA|c|170|Al-Nassr|KSA|17.5||1
+Gabriel Martinelli|MARTINELLI|WG||2001|BRA|d|178|Arsenal|ENG|18.5|fin|0
+Savinho|SAVINHO|WG||2004|BRA|c|176|Manchester City|ENG|18.5|dri|0
+Gabriel Jesus|G. JESUS|CF|WG|1997|BRA|d|175|Arsenal|ENG|18.5|dri|0
+Richarlison|RICHARLISO|CF|WG|1997|BRA|d|184|Tottenham|ENG|18.0|cab|0
+Evanilson|EVANILSON|CF||1999|BRA|d|183|Bournemouth|ENG|18.0|fin|0
+Igor Jesus|IGOR JESUS|CF||2001|BRA|d|186|Nottingham Forest|ENG|17.5|for|0
+Igor Thiago|I. THIAGO|CF||2001|BRA|d|191|Brentford|ENG|18.0|fin|0
+Marcos Leonardo|M.LEONARDO|CF||2003|BRA|d|178|Al-Hilal|KSA|17.5|fin|0
+Rodrigo Muniz|MUNIZ|CF||2001|BRA|d|185|Fulham|ENG|17.5||0
+João Pedro|JOAO PEDRO|CF|OH|2001|BRA|d|182|Chelsea|ENG|19.0|fin|0
+Matheus Cunha|CUNHA|CF|OH|1999|BRA|d|184|Manchester United|ENG|19.0|dri|0
+Gerónimo Rulli|RULLI|GK||1992|ARG|d|189|Olympique de Marseille|FRA|18.0||0
+Juan Musso|MUSSO|GK||1994|ARG|d|191|Atlético de Madrid|ESP|17.5||1
+Leonardo Balerdi|BALERDI|CB||1999|ARG|d|187|Olympique de Marseille|FRA|18.0||0
+Facundo Medina|MEDINA|CB|SB|1999|ARG|c|184|Olympique de Marseille|FRA|17.5||1
+Marcos Senesi|SENESI|CB||1997|ARG|c|185|Bournemouth|ENG|18.0||1
+Nicolás Otamendi|OTAMENDI|CB||1988|ARG|d|183|Benfica|POR|17.5||1
+José María Giménez|GIMENEZ|CB||1995|URU|d|185|Atlético de Madrid|ESP|18.0|for|0
+Ronald Araújo|R. ARAUJO|CB|SB|1999|URU|d|188|Barcelona|ESP|18.5|vel|0
+Santiago Bueno|S. BUENO|CB||1998|URU|d|190|Wolverhampton|ENG|17.5||1
+Davinson Sánchez|D. SANCHEZ|CB||1996|COL|d|187|Galatasaray|TUR|18.0||0
+Jhon Lucumí|LUCUMI|CB||1998|COL|c|187|Bologna|ITA|18.0||0
+Omar Alderete|ALDERETE|CB||1996|PAR|c|188|Sunderland|ENG|17.5||0
+Piero Hincapié|HINCAPIE|CB|SB|2002|ECU|c|184|Arsenal|ENG|18.5|vel|0
+Nahuel Molina|MOLINA|SB||1998|ARG|d|175|Atlético de Madrid|ESP|18.0||0
+Mathías Olivera|OLIVERA|SB|CB|1997|URU|c|185|Napoli|ITA|17.5||0
+Daniel Muñoz|D. MUNOZ|SB||1996|COL|d|180|Crystal Palace|ENG|18.0||0
+Pervis Estupiñán|ESTUPINAN|SB||1998|ECU|c|175|Milan|ITA|18.0||0
+Jon Aramburu|ARAMBURU|SB||2002|VEN|d|179|Real Sociedad|ESP|17.5||0
+Rodrigo De Paul|DE PAUL|DH|OH|1994|ARG|d|180|Inter Miami|USA|18.5||0
+Leandro Paredes|PAREDES|DH||1994|ARG|d|180|Boca Juniors|ARG|18.0|bola|0
+Exequiel Palacios|PALACIOS|DH|OH|1998|ARG|d|177|Bayer Leverkusen|GER|18.0||0
+Manuel Ugarte|UGARTE|DH||2001|URU|d|182|Manchester United|ENG|18.0||0
+Rodrigo Bentancur|BENTANCUR|DH|OH|1997|URU|d|187|Tottenham|ENG|18.0||0
+Lucas Torreira|TORREIRA|DH||1996|URU|d|166|Galatasaray|TUR|17.5||0
+Matías Vecino|VECINO|DH|OH|1991|URU|d|187|Lazio|ITA|17.5||1
+Richard Ríos|RIOS|DH|OH|2000|COL|c|180|Benfica|POR|18.0||0
+Jefferson Lerma|LERMA|DH||1994|COL|d|179|Crystal Palace|ENG|17.5||0
+Diego Gómez|D. GOMEZ|DH|OH|2003|PAR|d|180|Brighton|ENG|17.5||0
+Yangel Herrera|Y. HERRERA|DH||1998|VEN|d|184|Girona|ESP|17.5||1
+Maximiliano Araújo|MAXI ARAUJ|SH|SB|2000|URU|c|178|Sporting|POR|17.5|vel|0
+Otávio Monteiro|OTAVIO|SH|OH|1995|POR|d|172|Al-Qadsiah|KSA|17.5||1
+Paulo Dybala|DYBALA|OH|CF|1993|ARG|c|177|Roma|ITA|18.5|bola|1
+Giovani Lo Celso|LO CELSO|OH||1996|ARG|c|177|Real Betis|ESP|18.0||0
+Thiago Almada|ALMADA|OH|SH|2001|ARG|d|171|Atlético de Madrid|ESP|18.0|bola|0
+Nico Paz|NICO PAZ|OH||2004|ARG|c|186|Como|ITA|18.5||1
+Emiliano Buendía|BUENDIA|OH|SH|1996|ARG|d|172|Aston Villa|ENG|17.5||1
+James Rodríguez|JAMES|OH||1991|COL|c|180|León|MEX|17.5|bola|1
+Kendry Páez|K. PAEZ|OH||2007|ECU|c|176|River Plate|ARG|17.5|dri|1
+Nicolás González|N.GONZALEZ|WG|SH|1998|ARG|c|180|Atlético de Madrid|ESP|18.0||1
+Giuliano Simeone|G. SIMEONE|WG|SH|2002|ARG|d|178|Atlético de Madrid|ESP|17.5||0
+Ángel Di María|DI MARIA|WG|OH|1988|ARG|c|180|Rosario Central|ARG|17.5|bola,dri|0
+Ricardo Horta|R. HORTA|WG|OH|1994|POR|d|173|Braga|POR|17.5||0
+Ángel Correa|A. CORREA|CF|WG|1995|ARG|d|171|Tigres|MEX|18.0|dri|0
+Valentín Castellanos|CASTELLANO|CF||1998|ARG|d|178|West Ham|ENG|17.5|fin|1
+Luis Suárez|SUAREZ|CF||1987|URU|d|182|Inter Miami|USA|17.5|fin|1
+Darwin Núñez|D. NUNEZ|CF||1999|URU|d|187|Al-Hilal|KSA|18.0|vel|0
+Jhon Durán|DURAN|CF||2003|COL|d|185|Fenerbahçe|TUR|17.5|for|1
+Cucho Hernández|CUCHO|CF||1999|COL|d|175|Real Betis|ESP|17.5||0
+Luis Javier Suárez|LJ SUAREZ|CF||1997|COL|d|185|Sporting|POR|18.0|fin|0
+Alexis Sánchez|ALEXIS|CF|WG|1988|CHI|d|169|Sevilla|ESP|17.5||1

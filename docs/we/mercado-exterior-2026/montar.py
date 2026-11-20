@@ -47,7 +47,7 @@ FATOR_IDADE = [(21, 1.2), (24, 1.1), (27, 1), (29, .85), (31, .65), (33, .45), (
 REALIZACAO = [(19, .5), (21, .4), (23, .3), (25, .2), (27, .1), (999, 0)]
 # Quanto um clube brasileiro paga a mais (ou a menos) pela liga de origem. CONMEBOL = fator_valor do paises.json.
 EUROPA = {"ENG", "ESP", "ITA", "GER", "FRA", "POR", "NED", "BEL", "TUR", "RUS", "UKR", "GRE", "DEN"}
-FATOR_ORIGEM = {**{p: 1.2 for p in EUROPA}, "MEX": 1.0, "USA": 0.9, "CAN": 0.9, "JPN": 0.85, "AUS": 0.8, "RSA": 0.8,
+FATOR_ORIGEM = {**{p: 1.2 for p in EUROPA}, "MEX": 1.0, "USA": 0.9, "CAN": 0.9, "JPN": 0.85, "AUS": 0.8, "RSA": 0.8, "KSA": 1.0, "QAT": 0.9,
                 "ARG": 0.8, "URU": 0.6, "COL": 0.6, "CHI": 0.5, "ECU": 0.5, "PAR": 0.45, "PER": 0.4}
 
 def h(s): return hashlib.md5(s.encode()).digest()[0]
